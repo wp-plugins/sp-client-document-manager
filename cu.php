@@ -4,12 +4,12 @@ Plugin Name: Smarty Pants Client Document Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.0.0
+Version: 1.0.1
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.0.0";
+$sp_client_upload = "1.0.1";
 
 add_action('admin_menu', 'sp_client_upload_menu');
 
