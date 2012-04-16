@@ -1,4 +1,10 @@
 <?php
+require( '../../../wp-load.php' );
+	
+	global $wpdb;
+	
+	
+
 if(!function_exists('mime_content_type')) {
 
     function mime_content_type($filename) {
@@ -74,8 +80,16 @@ if(!function_exists('mime_content_type')) {
         }
     }
 }
-header('Content-disposition: attachment; filename='.$_GET['file'].'');
-$file = '../../uploads/sp-client-document-manager/'.$_GET['uid'].'/'.$_GET['file'].'';
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$_GET['fid']."'  order by date desc", ARRAY_A);
+$r_rev_check = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where parent= '".$r[0]['id']."'  order by date desc", ARRAY_A);
+if(count($r_rev_check) > 0){
+
+unset($r);
+$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$r_rev_check[0]['id']."'  order by date desc", ARRAY_A);
+}
+header('Content-disposition: attachment; filename='.htmlspecialchars($r[0]['name']).'');
+$file = '../../uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'';
+
 header('Content-type: '.mime_content_type($file).'');
 readfile($file);
 

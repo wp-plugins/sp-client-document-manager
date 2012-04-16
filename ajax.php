@@ -38,6 +38,7 @@ require( '../../../wp-load.php' );
 					}
 					
 				$html .= '
+				<div id="view_file_refresh">
 				<div id="sp_cu_viewfile">
 				 <h2> '.stripslashes($r[0]['name']).'</h2>
 				<div class="sp_cu_manage">';
@@ -45,7 +46,7 @@ require( '../../../wp-load.php' );
 				$html .= sp_cdm_revision_button();
 				 }
 				
-				$html .='<a href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?uid='.$user_ID.'&file='.$r[0]['file'].'" title="Download" style="margin-right:15px"  ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/download.png"> Download File</a> 
+				$html .='<a href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'" title="Download" style="margin-right:15px"  ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/download.png"> Download File</a> 
 	<a href="javascript:sp_cu_confirm(\'#sp_cu_confirm_delete\',200,\'?dlg-delete-file='.$r[0]['id'].'#downloads\');" title="Delete" ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/delete.png"> Delete File</a>
 	<br> <em>'.date('F jS Y h:i A', strtotime($r[0]['date'])).'</em>
 				</div>
@@ -69,7 +70,7 @@ require( '../../../wp-load.php' );
  if (CU_PREMIUM == 1){ 
  
  
-//$html .='<div class="sp_su_history"><p><strong>Revision History</strong></p>'.sp_cdm_file_history($r[0]['id']).'</div>';
+$html .='<div class="sp_su_history"><p><strong>Revision History</strong></p>'.sp_cdm_file_history($r[0]['id']).'</div>';
  }
 $html .='
 
@@ -77,7 +78,7 @@ $html .='
 </td>
 </tr>
 
-  </table></div></div>';
+  </table></div></div></div>';
   echo $html;		
 		break;
 		
@@ -99,17 +100,18 @@ $root = ABSPATH;
 										FROM ".$wpdb->prefix."sp_cu   
 										LEFT JOIN ".$wpdb->prefix."sp_cu_project  ON ".$wpdb->prefix."sp_cu.pid = ".$wpdb->prefix."sp_cu_project.id
 										WHERE ".$wpdb->prefix."sp_cu.uid = '".$_GET['uid']."'  
-										AND pid != 0 
+										AND pid != 0
+										AND parent = 0 
 										ORDER by date desc", ARRAY_A);
 	
 										
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = '".$_GET['uid']."'  AND pid = 0 order by date desc", ARRAY_A);
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = '".$_GET['uid']."'  AND pid = 0 	AND parent = 0  order by date desc", ARRAY_A);
 	
 	}else{
 		
 		$rel_ex = explode("PID", $_REQUEST['dir']); 
 	
-		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$rel_ex[1]."' order by date desc", ARRAY_A);	
+		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$rel_ex[1]."' AND parent = 0  order by date desc", ARRAY_A);	
 	
 	}
 	

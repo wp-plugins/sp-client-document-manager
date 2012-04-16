@@ -13,7 +13,7 @@ $sp_client_upload = "1.0.0";
 
 add_action('admin_menu', 'sp_client_upload_menu');
 
-
+include 'common.php';
 if(file_exists(ABSPATH.'wp-content/plugins/sp-client-document-manager/premium/index.php')){
   include(ABSPATH.'wp-content/plugins/sp-client-document-manager/premium/index.php');
   $cu_ver =  'Premium version';
@@ -40,6 +40,7 @@ function sp_client_upload_init() {
 			  wp_enqueue_script( 'jquery-ui-core' );
 			   wp_enqueue_script( 'jquery-ui-dialog' );
 			   wp_enqueue_script( 'jquery-ui-tabs' );
+			   wp_enqueue_script( 'jquery-form' );
 	}
 }
 
