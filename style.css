@@ -1,0 +1,54 @@
+#sp_cu_viewfile{ }
+td{ vertical-align:top}
+.sp_su_project, .sp_su_notes,.sp_su_history{ background-color:#F0F0F0;padding:5px;margin:5px;}
+#sp_cu_viewfile h2{float:left;width:40%;font-size:1.2em;font-weight:bold; }
+.sp_cu_filetree{border:1px solid #ccc;border-radius:5px;padding:5px;font-size:12px;margin:5px; background-color:#f4f4f4;height:440px; overflow-x: hidden;
+overflow-y: scroll;}
+.sp_cu_manage{ text-align:right;padding:5px;font-size:.9em;}
+.sp_cu_manage em{ font-size:.8em;}
+.sp_cu_item{border-radius:5px;padding:5px;font-size:12px;margin:5px; }
+.sp_cu_item h3{font-size:18px;font-weight:bold;margin:0px  !important;padding:0px !important;}
+.sp_cu_item td,.sp_cu_item table{border:none !important;}
+#upload-message {
+	background-color:#FFFFEE;
+	border:1px dashed #CC3300;
+	font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size:14px;
+	width:400px;
+	padding:10px;
+	margin:10px 0px;
+}
+
+.upload-progress {
+	background-image: url('images/infobox200x40.gif');
+	width:200px;
+	height:40px;
+}
+
+.upload-progress div.meter {
+	width:20px;
+	height:7px;
+	font-size:1px; /* IE display hack */
+	background-color:#FFCC00;
+	margin-left:10px;
+	margin-top:1px;
+	border:1px solid black;
+}
+
+.upload-progress div.readout {
+	padding:5px 0px 0px 12px;
+	font-family:"Courier New", Courier, monospace;
+	font-size:10px;
+	line-height:10px;
+}
+
+.upload-progress div.readout span {
+	font-weight:bold;
+}
+
+
+
+
+.sp_upload_div{border:1px solid #CCC;margin:2px;padding:2px; background-color:#FFF}
+.sp_upload_div input{padding:1px;margin:1px;font-size:.6em !important;}
+.sp_upload_name{width:360px;float:left;}
