@@ -4,12 +4,12 @@ Plugin Name: Smarty Pants Client Document Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.0.1
+Version: 1.0.2
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.0.1";
+$sp_client_upload = "1.0.2";
 
 add_action('admin_menu', 'sp_client_upload_menu');
 
@@ -73,6 +73,7 @@ function sp_client_upload_install() {
   `file` varchar(255) NOT NULL,
   `notes` text NOT NULL,
   `uid` int(11) NOT NULL,
+  `cid` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
    `parent` int(11) NOT NULL,
   `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -125,6 +126,32 @@ $updatesql = $wpdb->query('ALTER TABLE `'.$wpdb->prefix.'sp_cu` ADD `pid` INT( 1
 }
 register_activation_hook(__FILE__,'sp_client_upload_install');
 
+
+
+
+
+
+
+function sp_cdm_update_db_check() {
+    global $sp_client_upload,$wpdb;
+	
+    if (get_site_option('sp_client_upload') != $sp_client_upload) {        
+		
+		$cur_sp_client_upload = get_site_option('sp_client_upload');
+		
+		//upgrade 1.0.2
+		if($cur_sp_client_upload == '1.0.0' or $cur_sp_client_upload == '1.0.1'){
+			
+			$wpdb->query('ALTER TABLE `'.$wpdb->prefix . 'sp_cu` ADD `cid` INT( 11 ) NOT NULL;');
+			
+			update_option('sp_client_upload',$sp_client_upload);
+		}
+		
+	}
+}
+
+
+add_action('plugins_loaded', 'sp_cdm_update_db_check');
 
 
 function sp_client_upload_menu() {

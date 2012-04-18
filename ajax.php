@@ -12,6 +12,7 @@ require( '../../../wp-load.php' );
 		
 		case"view-file":
 		
+		
 		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id = '".$_GET['id']."'  order by date desc", ARRAY_A);
 		//print_r($r);
 		
@@ -102,8 +103,9 @@ $root = ABSPATH;
 										WHERE ".$wpdb->prefix."sp_cu.uid = '".$_GET['uid']."'  
 										AND pid != 0
 										AND parent = 0 
+										GROUP BY pid
 										ORDER by date desc", ARRAY_A);
-	
+
 										
 	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = '".$_GET['uid']."'  AND pid = 0 	AND parent = 0  order by date desc", ARRAY_A);
 	

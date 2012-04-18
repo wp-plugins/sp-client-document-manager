@@ -2,7 +2,7 @@
 
 
 
-
+if (!function_exists('sp_client_upload_settings')){
 
 function sp_client_upload_settings(){
 	
@@ -143,6 +143,8 @@ $content .='<h3>Thanks for upgrading!</h3>
 	echo $content;
 	
 }
+}
+if (!function_exists('sp_client_upload_help')){
 function sp_client_upload_help(){
 	
 echo '<h2>Smarty Pants Client Document Manager</h2>'.sp_client_upload_nav_menu().'
@@ -155,8 +157,8 @@ echo '<h2>Smarty Pants Client Document Manager</h2>'.sp_client_upload_nav_menu()
 ';	
 	
 }
-
-
+}
+if (!function_exists('sp_client_upload_nav_menu')){
 function sp_client_upload_nav_menu(){
 	global $cu_ver,$sp_client_upload,$sp_cdm_ver ;
 	
@@ -183,7 +185,7 @@ $content .= '<a href="admin.php?page=sp-client-document-manager-help" class="but
 	return $content;
 }
 
-
+}
 if (!function_exists('sp_client_upload_admin')){
 
 function sp_client_upload_admin(){
@@ -215,12 +217,12 @@ if($_GET['dlg-delete-file'] != ""){
 	
 	if($user_id != ""){
 		echo '<h2>User Uploads</h2><a name="downloads"></a>';
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = $user_id  order by date desc", ARRAY_A);
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = $user_id  and parent = 0 order by date desc", ARRAY_A);
 	$delete_page = 'user-edit.php?user_id='.$user_id.'';
 	
 	$download_user = '<a href="../wp-content/plugins/sp-client-document-manager/ajax.php?function=download-archive&id='.$user_id.'" class="button">Click to Download all files</a>';
 	}else{
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu  order by id desc LIMIT 150", ARRAY_A);	
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where  parent = 0 order by id desc LIMIT 150", ARRAY_A);	
 	$html .='<form id="your-profile">';	
 	$delete_page = 'admin.php?page=sp-client-document-manager';
 		$download_user = '';
@@ -305,7 +307,7 @@ function sp_client_upload_email_vendor(){
 	<td><a href="user-edit.php?user_id='.$r[$i]['uid'].'">'.$r_user[0]['display_name'].'</a></td>
 	 <td >'.date('F jS Y h:i A', strtotime($r[$i]['date'])).'</td>
    
-    <td><a style="margin-right:15px" href="' . get_bloginfo('wpurl') . '/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'" target="blank">Download</a> <a href="'.$delete_page .'&dlg-delete-file='.$r[$i]['id'].'&user_id='.$r[$i]['uid'].'#downloads">Delete</a> </td>
+    <td><a style="margin-right:15px" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[$i]['id'].'" target="blank">Download</a> <a href="'.$delete_page .'&dlg-delete-file='.$r[$i]['id'].'&user_id='.$r[$i]['uid'].'#downloads">Delete</a> </td>
 <td><input type="checkbox" name="vendor_email[]" value="'.$r[$i]['id'].'"></td>	</tr>
 
 

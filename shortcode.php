@@ -34,8 +34,8 @@ function display_sp_thumbnails($r ){
                     dialog.remove();
                 },
                 modal: true,
-				height:400,
-				width:700
+				height:450,
+				width:850
             });
             // load remote content
             dialog.load(
@@ -199,7 +199,7 @@ return true;
 
 
 
-			$html .='<div style="margin:5px;padding:5px;border:1px solid #CCC; background-color:#f5f5f5">
+			$html .='<div>
 				  <table width="100%" cellpadding="2" cellspacing="2" style="border:none;padding:0px;margin:0px;">
   <tr>
     <td width="90">File name:</td>
@@ -331,13 +331,6 @@ jQuery(document).ready(function() {
 $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = $user_ID  order by date desc", ARRAY_A);
 
 
-if($r == FALSE){
-	
-	
-$html .=  '<p style="color:red">You do not currently have any uploads, use the form below to upload files.</p>'.display_sp_upload_form().'';
-	
-}else{
-
 
 
 //show uploaded documents
@@ -345,33 +338,31 @@ $html .=  '<p style="color:red">You do not currently have any uploads, use the f
   
   <script type="text/javascript">
   jQuery(function() {
-		jQuery( "#sp-cdm-tabs" ).tabs();
+		
 	});
   </script>
   
-  <div id="sp-cdm-tabs">
-	<ul>
-		<li><a href="#tabs-1">Add A File</a></li>
-		<li><a href="#tabs-2">View All Files</a></li>
-		
-	</ul>
-	<div id="tabs-1">
-	
-	
-  <h3>Add new file</h3>
+  
+  
+    <div style="display:none">
+  <div id="cp_cdm_upload_form">
   '.display_sp_upload_form().'
   </div>
+  </div>
+  
+
+
 	
-	<div id="tabs-2">
-  <h3>Uploaded Files</h3> <a href="" name="downloads"></a>
+	<div >
+
+  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/add.png"> Add File</a>  
 ';
 
 
 
 		$html .=display_sp_thumbnails($r );
 				
-		$html .='</div></div>';
-}
+		$html .='</div>';
 
 
 
