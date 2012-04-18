@@ -384,4 +384,5 @@ return $html;
 }
 }
 	add_shortcode( 'sp-client-media-manager', 'display_sp_client_upload' );	
+	add_shortcode( 'sp-client-document-manager', 'display_sp_client_upload' );	
 ?>
