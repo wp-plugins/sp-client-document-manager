@@ -111,7 +111,12 @@ $content .='<h3>Thanks for upgrading!</h3>
        <tr>
     <td width="300"><strong>Delete Message</strong><br><em>The confirmation screen asking the user if they want to delete the file.</em></td>
     <td><input type="text" name="sp_cu_delete"  value="'.get_option('sp_cu_delete').'"  size=80"> </td>
-  </tr>';
+  </tr>
+  <tr>
+    <td width="300"><strong>WP Folder</strong><br><em>Use this option only if your wp installation is in a sub folder of your url. For instance if your site is www.example.com/blog/ then put /blog/ in the field. This helps find the uploads directory.</em></td>
+    <td><input type="text" name="sp_cu_wp_folder"  value="'.get_option('sp_cu_wp_folder').'"  size=80"> </td>
+  </tr>
+  ';
   
   if (CU_PREMIUM == 1){
 	  $content .='

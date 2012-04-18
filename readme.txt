@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: client upload, document manager, file upload, file manager
 Requires at least: 2.0.2
 Tested up to: 3.3.1
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 A WordPress plug-in that allows your business to manage client files securely.
 
@@ -27,3 +27,6 @@ Smarty Pant,s Document Manager is a WordPress plug-in that allows your business 
 = 1.0.2 =
 	* database bug fix
 	* small zip error
+= 1.0.3 =
+	* error with file tree fixed.
+	* there was an error with wordpress in a folder, now in the settings you have to set the directory if you have wordpress in a folder.

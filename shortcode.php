@@ -4,8 +4,15 @@
 function display_sp_thumbnails($r ){
 	global $wpdb,$current_user,$user_ID;
 	
-	$html .= '<script type="text/javascript" src="/wp-content/plugins/sp-client-document-manager/js/jqueryFileTree/jqueryFileTree.js"></script>
-			<link rel="stylesheet" type="text/css" media="all" href="/wp-content/plugins/sp-client-document-manager/js/jqueryFileTree/jqueryFileTree.css" />
+	
+	
+	if(get_option('sp_cu_wp_folder') == ''){
+	$wp_con_folder = '/';	
+	}else{
+		$wp_con_folder = get_option('sp_cu_wp_folder') ;
+	}
+	$html .= '<script type="text/javascript" src="'. get_bloginfo('url').'/wp-content/plugins/sp-client-document-manager/js/jqueryFileTree/jqueryFileTree.js"></script>
+			<link rel="stylesheet" type="text/css" media="all" href="'. get_bloginfo('url').'/wp-content/plugins/sp-client-document-manager/js/jqueryFileTree/jqueryFileTree.css" />
 		';
 	$html .="
 	<div class=\"sp_cu_filetree\">
@@ -13,8 +20,8 @@ function display_sp_thumbnails($r ){
 	
 	jQuery(document).ready( function() {
     jQuery('#file_manager').fileTree({
-        root: '/wp-content/uploads/sp-client-document-manager/".$user_ID."/',
-        script: '/wp-content/plugins/sp-client-document-manager/ajax.php?function=file-tree&uid=".$user_ID."',
+        root: '". $wp_con_folder."wp-content/uploads/sp-client-document-manager/".$user_ID."/',
+        script: '".$wp_con_folder."wp-content/plugins/sp-client-document-manager/ajax.php?function=file-tree&uid=".$user_ID."',
         expandSpeed: 1000,
         collapseSpeed: 1000,
         multiFolder: false
@@ -22,7 +29,7 @@ function display_sp_thumbnails($r ){
        // alert(file);
 	   
 	   
-	   	  var url = '/wp-content/plugins/sp-client-document-manager/ajax.php?function=view-file&id=' + file;
+	   	  var url = '". $wp_con_folder."wp-content/plugins/sp-client-document-manager/ajax.php?function=view-file&id=' + file;
 		 //alert( url);
             // show a spinner or something via css
             var dialog = jQuery('<div style=\"display:none\" class=\"loading\"></div>').appendTo('body');
@@ -94,7 +101,7 @@ function display_sp_thumbnails2($r ){
 					
 					
 					if($ext== 'png' or $ext == 'jpg' or $ext = 'jpeg' or $ext = 'gif' ){
-					$icon = '<td><img src="/wp-content/uploads/sp-client-document-manager/'.$user_ID.'/'.$r[$i]['file'].'" width="90"></td>';	
+					$icon = '<td><img src="'. get_bloginfo('url').'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/'.$r[$i]['file'].'" width="90"></td>';	
 					}else{
 					$icon = '';		
 					}
