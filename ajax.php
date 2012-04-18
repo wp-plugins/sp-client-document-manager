@@ -11,7 +11,11 @@ require( '../../../wp-load.php' );
 	switch($function){
 		
 		case"view-file":
-		
+		if(get_option('sp_cu_wp_folder') == ''){
+	$wp_con_folder = '/';	
+	}else{
+		$wp_con_folder = get_option('sp_cu_wp_folder') ;
+	}
 		
 		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id = '".$_GET['id']."'  order by date desc", ARRAY_A);
 		//print_r($r);
@@ -33,7 +37,7 @@ require( '../../../wp-load.php' );
 					
 					
 					if($ext== 'png' or $ext == 'jpg' or $ext = 'jpeg' or $ext = 'gif' ){
-					$icon = '<td width="160"><img src="/wp-content/uploads/sp-client-document-manager/'.$user_ID.'/'.$r[0]['file'].'" width="150"></td>';	
+					$icon = '<td width="160"><img src="'.$wp_con_folder.'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/'.$r[0]['file'].'" width="150"></td>';	
 					}else{
 					$icon = '';		
 					}
@@ -47,7 +51,13 @@ require( '../../../wp-load.php' );
 				$html .= sp_cdm_revision_button();
 				 }
 				
-				$html .='<a href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'" title="Download" style="margin-right:15px"  ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/download.png"> Download File</a> 
+				
+				if(get_option('sp_cu_js_redirect') == 1){
+				$target = 'target="_blank"';	
+				}else{
+				$target = ' ';	
+				}
+				$html .='<a '.$target.' href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'" title="Download" style="margin-right:15px"  ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/download.png"> Download File</a> 
 	<a href="javascript:sp_cu_confirm(\'#sp_cu_confirm_delete\',200,\'?dlg-delete-file='.$r[0]['id'].'#downloads\');" title="Delete" ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/delete.png"> Delete File</a>
 	<br> <em>'.date('F jS Y h:i A', strtotime($r[0]['date'])).'</em>
 				</div>

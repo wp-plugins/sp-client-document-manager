@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: client upload, document manager, file upload, file manager
 Requires at least: 2.0.2
 Tested up to: 3.3.1
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 
 A WordPress plug-in that allows your business to manage client files securely.
 

@@ -87,10 +87,21 @@ if(count($r_rev_check) > 0 && $_GET['original'] == ''){
 unset($r);
 $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$r_rev_check[0]['id']."'  order by date desc", ARRAY_A);
 }
-header('Content-disposition: attachment; filename='.htmlspecialchars($r[0]['name']).'');
+
+
 $file = '../../uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'';
+
+if(get_option('sp_cu_js_redirect') == 1){
+	echo '<script type="text/javascript">
+<!--
+window.location = "'.$file.'"
+//-->
+</script>';
+}else{
+header('Content-disposition: attachment; filename='.htmlspecialchars($r[0]['name']).'');
+
 
 header('Content-type: '.mime_content_type($file).'');
 readfile($file);
-
+}
 ?>

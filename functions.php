@@ -25,13 +25,14 @@ global $wpdb;
 			
 				
 	if($_POST['sp_cu_user_projects'] == "1"){update_option('sp_cu_user_projects','1' ); }else{update_option('sp_cu_user_projects','0' );	}
-			
+	if($_POST['sp_cu_js_redirect'] == "1"){update_option('sp_cu_js_redirect','1' ); }else{update_option('sp_cu_js_redirect','0' );	}		
 			
 	}
 	
 	
 	
 	if(get_option('sp_cu_user_projects') == 1){ $sp_cu_user_projects = ' checked="checked" ';	}else{ $sp_cu_user_projects = '  '; }
+	if(get_option('sp_cu_js_redirect') == 1){ $sp_cu_js_redirect = ' checked="checked" ';	}else{ $sp_cu_js_redirect = '  '; }
 	echo '<h2>Settings</h2>'.sp_client_upload_nav_menu().'';	 
 	
 	
@@ -115,6 +116,11 @@ $content .='<h3>Thanks for upgrading!</h3>
   <tr>
     <td width="300"><strong>WP Folder</strong><br><em>Use this option only if your wp installation is in a sub folder of your url. For instance if your site is www.example.com/blog/ then put /blog/ in the field. This helps find the uploads directory.</em></td>
     <td><input type="text" name="sp_cu_wp_folder"  value="'.get_option('sp_cu_wp_folder').'"  size=80"> </td>
+  </tr>
+  
+     <tr>
+    <td width="300"><strong>Javascript Redirect?</strong><br><em>If your on a windows system you need to use javascript redirection as FastCGI does not allow force download files.</em></td>
+    <td><input type="checkbox" name="sp_cu_js_redirect"   value="1" '. $sp_cu_js_redirect.'> </td>
   </tr>
   ';
   
@@ -299,7 +305,11 @@ function sp_client_upload_email_vendor(){
 					}
 					
 			$r_user = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."users where ID = ".$r[$i]['uid']."", ARRAY_A);				
-					
+				if(get_option('sp_cu_js_redirect') == 1){
+				$target = 'target="_blank"';	
+				}else{
+				$target = ' ';	
+				}	
 					
 					
 				$html .= '
@@ -312,7 +322,7 @@ function sp_client_upload_email_vendor(){
 	<td><a href="user-edit.php?user_id='.$r[$i]['uid'].'">'.$r_user[0]['display_name'].'</a></td>
 	 <td >'.date('F jS Y h:i A', strtotime($r[$i]['date'])).'</td>
    
-    <td><a style="margin-right:15px" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[$i]['id'].'" target="blank">Download</a> <a href="'.$delete_page .'&dlg-delete-file='.$r[$i]['id'].'&user_id='.$r[$i]['uid'].'#downloads">Delete</a> </td>
+    <td><a style="margin-right:15px" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[$i]['id'].'" target="_blank">Download</a> <a href="'.$delete_page .'&dlg-delete-file='.$r[$i]['id'].'&user_id='.$r[$i]['uid'].'#downloads">Delete</a> </td>
 <td><input type="checkbox" name="vendor_email[]" value="'.$r[$i]['id'].'"></td>	</tr>
 
 
