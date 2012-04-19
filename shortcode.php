@@ -101,7 +101,7 @@ function display_sp_thumbnails2($r ){
 					
 					
 					if($ext== 'png' or $ext == 'jpg' or $ext = 'jpeg' or $ext = 'gif' ){
-					$icon = '<td><img src="'. get_bloginfo('url').'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/'.$r[$i]['file'].'" width="90"></td>';	
+					$icon = '<td><img src="'. get_bloginfo('url').'/wp-content/uploads/sp-client-document-manager/'.$user_ID.'/'.$r[$i]['file'].'" width="90"></td>';	
 					}else{
 					$icon = '';		
 					}
@@ -168,7 +168,7 @@ jQuery(".sp_change_indicator").slideDown();
 
 
 
-jQuery(\'.sp_change_indicator\').html(\'<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"  width="204" height="16"  id="mymoviename"><param name="movie" value="'. get_bloginfo("wpurl"). '/wp-content/plugins/sp-client-document-manager/image_138464.swf" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="'. get_bloginfo("wpurl"). '/wp-content/plugins/sp-client-document-manager/image_138464.swf" quality="high" bgcolor="#ffffff" width="204" height="16" name="mymoviename" align="" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object><br><em>Please wait, your file is currently uploading! </em>\');
+jQuery(\'.sp_change_indicator\').html(\'<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"  width="204" height="16"  id="mymoviename"><param name="movie" value="'. get_bloginfo("url"). '/wp-content/plugins/sp-client-document-manager/image_138464.swf" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="'. get_bloginfo("url"). '/wp-content/plugins/sp-client-document-manager/image_138464.swf" quality="high" bgcolor="#ffffff" width="204" height="16" name="mymoviename" align="" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object><br><em>Please wait, your file is currently uploading! </em>\');
 document.forms["sp_upload_form"].submit();
 return true;
 
@@ -362,7 +362,7 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = $us
 	
 	<div >
 
-  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/add.png"> Add File</a>  
+  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . get_bloginfo('url') . '/wp-content/plugins/sp-client-document-manager/images/add.png"> Add File</a>  
 ';
 
 
@@ -380,7 +380,7 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = $us
 	  
 	  return '<script type="text/javascript">
 <!--
-window.location = "'.bloginfo('url').'/login/?redirect_to='.urlencode($_SERVER['REQUEST_URI']).'"
+window.location = "'. get_bloginfo('url').'/login/?redirect_to='.urlencode($_SERVER['REQUEST_URI']).'"
 //-->
 </script>';
 	 
