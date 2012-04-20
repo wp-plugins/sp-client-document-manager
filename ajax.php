@@ -94,12 +94,13 @@ $root = ABSPATH;
 
 
 	if (strpos( $_REQUEST['dir'], 'PID') === false){
-	$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,".$wpdb->prefix."sp_cu.id,".$wpdb->prefix."sp_cu.pid  ,".$wpdb->prefix."sp_cu.uid,
+	$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,".$wpdb->prefix."sp_cu.id,".$wpdb->prefix."sp_cu.pid  ,".$wpdb->prefix."sp_cu.uid,".$wpdb->prefix."sp_cu.parent,
 											".$wpdb->prefix."sp_cu_project.name AS project_name
 										FROM ".$wpdb->prefix."sp_cu   
 										LEFT JOIN ".$wpdb->prefix."sp_cu_project  ON ".$wpdb->prefix."sp_cu.pid = ".$wpdb->prefix."sp_cu_project.id
 										WHERE ".$wpdb->prefix."sp_cu.uid = '".$_GET['uid']."'  
-										AND pid != 0 
+										AND pid != 0  
+										AND parent = 0 
 										ORDER by date desc", ARRAY_A);
 	
 										
@@ -147,16 +148,28 @@ $root = ABSPATH;
 			$user_ID = $_GET['id'];
 			
 				
-		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = $user_ID  order by date desc", ARRAY_A);		
+		$d = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = $user_ID   and parent = 0 order by date desc", ARRAY_A);		
 		$r_project = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu_project where id = $user_ID  ", ARRAY_A);			
 			$return_file = "".preg_replace('/[^\w\d_ -]/si', '',stripslashes($r_project[0]['name'])).".zip";
 			$zip = new Zip();
 			//@unlink($dir.$return_file);
 				
-				for($i=0; $i<count($r); $i++){
+				for($i=0; $i<count($d); $i++){
 			
-		$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/';	
+			$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/';	
 			$path = '../../../wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/';	
+			
+			
+					$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$d[$i]['id']."'  order by date desc", ARRAY_A);
+					$r_rev_check = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where parent= '".$r[0]['id']."'  order by date desc", ARRAY_A);
+					if(count($r_rev_check) > 0 ){
+					
+					unset($r);
+					$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$r_rev_check[0]['id']."'  order by date desc", ARRAY_A);
+					}
+			
+			
+			
 					  $zip->addFile(file_get_contents($dir.$r[$i]['file']), $r[$i]['file'] , filectime($dir.$r[$i]['file']));
 					
 				}
@@ -180,16 +193,33 @@ $zip->setZipFile($dir.$return_file);
 			$return_file = "Account.zip";
 				$zip = new Zip();
 				
-		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = $user_ID  order by date desc", ARRAY_A);		
+		$d = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = $user_ID  and parent = 0 order by date desc", ARRAY_A);		
+		
+		for($i=0; $i<count($d); $i++){
+					
+					
+					
+					$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$d[$i]['id']."'  order by date desc", ARRAY_A);
+					$r_rev_check = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where parent= '".$r[0]['id']."'  order by date desc", ARRAY_A);
+					if(count($r_rev_check) > 0 ){
+					
+					unset($r);
+					$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$r_rev_check[0]['id']."'  order by date desc", ARRAY_A);
+					}
+					
+					
+					
+					  $zip->addFile(file_get_contents($dir.$r[0]['file']), $r[0]['file'] , filectime($dir.$r[0]['file']));
+					
+		}
+		
+
+		
+		
 			
 			//@unlink($dir.$return_file);
 				
-				for($i=0; $i<count($r); $i++){
-			
-		
-					  $zip->addFile(file_get_contents($dir.$r[$i]['file']), $r[$i]['file'] , filectime($dir.$r[$i]['file']));
-					
-				}
+	
 		
 		
 $zip->finalize(); // as we are not using getZipData or getZipFile, we need to call finalize ourselves.

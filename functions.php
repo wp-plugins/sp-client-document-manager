@@ -2,29 +2,6 @@
 
 
 
-function sp_client_upload_filename($user_id){
-	global $wpdb;
-	
-	
-	$r = $wpdb->get_results("SELECT*
-									 FROM ".$wpdb->prefix."users  where id = $user_id", ARRAY_A);	
-	
-	
-	
-	$extra = get_option('sp_cu_filename_format') ;
-	$extra = str_replace('%y',date('Y'), $extra);
-	$extra = str_replace('%h',date('H'), $extra );
-	$extra = str_replace('%min',date('i'), $extra );
-	$extra = str_replace('%m',date('m'), $extra );
-	$extra = str_replace('%d',date('d'), $extra);
-	$extra = str_replace('%t',time(), $extra );
-	$extra = str_replace('%uid',$user_id, $extra );
-	$extra = str_replace('%u',$r[0]['display_name'], $extra );	
-	$extra = str_replace('%r',rand(100000, 100000000000), $extra );
-	return $extra;
-	
-}
-
 
 
 
