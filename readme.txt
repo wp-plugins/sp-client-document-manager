@@ -10,7 +10,6 @@ A WordPress plug-in that allows your business to manage client files easily.
 
 == Description ==
 
-
 Smarty Pant's Document Manager is a WordPress plug-in that allows your business to manage client files easily and securely.  
 Designed for Businesses that require clients to send files and those files need to be managed or assigned to Supplies or internal staff.  
 The Smarty Pants Document manager has user across many industry lines. Originaly developed for print brokers to manage client graphic files and assign to graphic designers and printing companies.
