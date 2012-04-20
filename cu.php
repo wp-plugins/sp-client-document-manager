@@ -4,12 +4,12 @@ Plugin Name: Smarty Pants Client Document Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.0.5
+Version: 1.0.6
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.0.5";
+$sp_client_upload = "1.0.6";
 
 ini_set('upload_max_filesize', '1000M');  
 ini_set('post_max_size', '1000M');  
@@ -130,12 +130,6 @@ $updatesql = $wpdb->query('ALTER TABLE `'.$wpdb->prefix.'sp_cu` ADD `pid` INT( 1
 }
 register_activation_hook(__FILE__,'sp_client_upload_install');
 
-
-
-
-
-
-
 function sp_cdm_update_db_check() {
     global $sp_client_upload,$wpdb;
 	
@@ -162,14 +156,11 @@ function sp_client_upload_menu() {
 
 
 
-
-
-
-  add_menu_page( 'sp_cu', 'Client Documents',  'manage_options', 'sp-client-document-manager', 'sp_client_upload_options');
-	  add_submenu_page( 'sp_cu', 'Vendors', 'Vendors', 'manage_options', 'sp-client-document-manager-vendors', 'sp_client_upload_options_vendors');
-	   add_submenu_page( 'sp_cu', 'Help', 'Help', 'manage_options', 'sp-client-document-manager-help', 'sp_client_upload_help');
-	   
-		 add_submenu_page( 'sp_cu', 'Settings', 'Settings', 'manage_options', 'sp-client-document-manager-settings', 'sp_client_upload_settings');
+		  add_menu_page( 'sp_cu', 'Client Documents',  'manage_options', 'sp-client-document-manager', 'sp_client_upload_options');
+		  add_submenu_page( 'sp_cu', 'Vendors', 'Vendors', 'manage_options', 'sp-client-document-manager-vendors', 'sp_client_upload_options_vendors');
+	      add_submenu_page( 'sp_cu', 'Help', 'Help', 'manage_options', 'sp-client-document-manager-help', 'sp_client_upload_help');
+	   	  add_submenu_page( 'sp_cu', 'Settings', 'Settings', 'manage_options', 'sp-client-document-manager-settings', 'sp_client_upload_settings');
+		 
 		 if (CU_PREMIUM == 1){
 		 add_submenu_page( 'sp_cu', 'Projects', 'Projects', 'manage_options', 'sp-client-document-manager-projects', 'sp_client_upload_projects');
 		 add_submenu_page( 'sp_cu', 'Categories', 'Categories', 'manage_options', 'sp-client-document-manager-categories', 'sp_client_upload_cat_view');
@@ -186,29 +177,8 @@ if($_POST['sp-client-document-manager-submit'] != ""){
 	update_option('sp_client_upload_page', $_POST['sp_client_upload_page']);
 	echo '<p style="color:green">Updated Settings!</p>';
 }
-
-
-
-echo  '
-
-
-';
-
-
-
-
-echo '
-				
-			<h2>Latest uploads</h2>'.sp_client_upload_nav_menu().'
-				'. sp_client_upload_admin().'
-				';
-
-
-
-
-
-
-
+echo '<h2>Latest uploads</h2>'.sp_client_upload_nav_menu().'
+				'. sp_client_upload_admin().'';
 }
 
 ?>
