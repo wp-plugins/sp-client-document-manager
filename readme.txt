@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: client upload, document manager, file upload, file manager, customer file manager, customer files, document version system
 Requires at least: 2.0.2
 Tested up to: 3.3.1
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 
 A WordPress plug-in that allows your business to manage client files easily.
 
@@ -16,7 +16,7 @@ The Smarty Pants Document manager has user across many industry lines. Originaly
 
 
 We also now offer a premium version, please check out our website for more information: 
-(http://smartypantsplugins.com/sp-client-document-manager/ "SP Client Document Manager")
+http://smartypantsplugins.com/sp-client-document-manager/
 
 
 Client Side Features
@@ -48,8 +48,9 @@ Premium Features
 * Custom Notifications
 * Allow the user to create projects
 * Full Support through email or skype
+* Auto deletion of files based on a time you set.
 
-For more information check out the plugin page (http://smartypantsplugins.com/sp-client-document-manager/ "SP Client Document Manager")
+For more information check out the plugin page http://smartypantsplugins.com/sp-client-document-manager/
 
 == Installation ==
 
@@ -88,10 +89,13 @@ This could be one of two reasons, either you did not install theme my login or y
 = 1.0.4 =
 * increased the upload size for php to 1000mb
 	
-= 1.0.4 =
-* increased the upload size for php to 1000mb
+= 1.0.7 =
+* Fixed a few bugs and added auto file deletion to the premium version. Now you can set how many days a file should exist in the system.
 
 == Upgrade Notice ==
 
 = 1.0.5 =
 Major fixes to bugs that were found during our initial release
+
+= 1.0.7 =
+Not a major issue to upgrade unless your a premium user.

@@ -59,7 +59,7 @@ remove_filter('filesystem_method', '_return_direct');
 	echo  unzip_file( $_FILES['premium']['tmp_name'],''.ABSPATH.'wp-content/plugins/sp-client-document-manager/' );	
 	echo '<script type="text/javascript">
 <!--
-window.location = "admin.php?page=sp-client-document-manager-settings"
+window.location = "admin.php?page=sp-client-document-manager-settings&cdm-upgrade=1"
 //-->
 </script>';
 	
@@ -134,7 +134,10 @@ $content .='<h3>Thanks for upgrading!</h3>
     <td width="300"><strong>Categories Text</strong><br><em>This is the text you want to call categories, for example you may want to use it as a status.</em></td>
     <td><input type="text" name="sp_cu_cat_text"  value="'.get_option('sp_cu_cat_text').'"  size=80"> </td>
   </tr>
-  
+   <tr>
+    <td width="300"><strong>File Deletion Period</strong><br><em>How many days should a file exist before its deleted from the system? Leave blank if you do not wish to use this function.</em></td>
+    <td><input type="text" name="sp_cu_file_delete"  value="'.get_option('sp_cu_file_delete').'"  size=80"> </td>
+  </tr>
   
   ';
   
