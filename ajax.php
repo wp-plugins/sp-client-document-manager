@@ -32,7 +32,7 @@ require( '../../../wp-load.php' );
 									 
 							$project_title ='Project: '.stripslashes($projecter[0]['name']).'';		 	
 					}else{
-						$project_title = 'Project: None';
+						$project_title = ''.__("Project: None","sp-cdm").'';
 					}
 					
 					
@@ -57,8 +57,8 @@ require( '../../../wp-load.php' );
 				}else{
 				$target = ' ';	
 				}
-				$html .='<a '.$target.' href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'" title="Download" style="margin-right:15px"  ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/download.png"> Download File</a> 
-	<a href="javascript:sp_cu_confirm(\'#sp_cu_confirm_delete\',200,\'?dlg-delete-file='.$r[0]['id'].'#downloads\');" title="Delete" ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/delete.png"> Delete File</a>
+				$html .='<a '.$target.' href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'" title="Download" style="margin-right:15px"  ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/download.png"> '.__("Download File","sp-cdm").'</a> 
+	<a href="javascript:sp_cu_confirm(\'#sp_cu_confirm_delete\',200,\'?dlg-delete-file='.$r[0]['id'].'#downloads\');" title="Delete" ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/delete.png">'.__("Delete File","sp-cdm").'</a>
 	<br> <em>'.date('F jS Y h:i A', strtotime($r[0]['date'])).'</em>
 				</div>
 				
@@ -72,16 +72,16 @@ require( '../../../wp-load.php' );
 '.$icon .'
 <td>
 <div class="sp_su_project">
-<strong>Project: </strong>'.$project_title .'
+<strong>'.__("Project: ","sp-cdm").' </strong>'.$project_title .'
 </div>
 <div class="sp_su_notes">
-<strong>Notes:</strong> <em>'.$r[0]['notes'].'</em>
+<strong>'.__("Notes: ","sp-cdm").':</strong> <em>'.$r[0]['notes'].'</em>
 </div>';
 
  if (CU_PREMIUM == 1){ 
  
  
-$html .='<div class="sp_su_history"><p><strong>Revision History</strong></p>'.sp_cdm_file_history($r[0]['id']).'</div>';
+$html .='<div class="sp_su_history"><p><strong>'.__("Revision History","sp-cdm").'</strong></p>'.sp_cdm_file_history($r[0]['id']).'</div>';
  }
 $html .='
 
@@ -222,7 +222,7 @@ $zip->setZipFile($dir.$return_file);
 	
 	if(count($_POST['vendor_email']) == 0){
 		
-		echo '<p style="color:red;font-weight:bold">Please select at least one file!</p>';
+		echo '<p style="color:red;font-weight:bold">'.__("Please select at least one file!","sp-cdm").'</p>';
 	}else{
 	$files = implode(",",$_POST['vendor_email']);
 	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu  WHERE id IN (".$files.")", ARRAY_A);
@@ -266,12 +266,12 @@ $zip->setZipFile($dir.$return_file);
 	$message .= $attachment_links;	
 	}
 
-	$subject = 'New files from: '.get_option('blogname').'';
+	$subject = ''.__("New files from:","sp-cdm").' '.get_option('blogname').'';
 	wp_mail( $to, $subject, $message, $h, $attachments );
 	
 	
 	
-echo '<p style="color:green;font-weight:bold">Files Sent to '.$_POST['vendor'].'</p>';
+echo '<p style="color:green;font-weight:bold">'.__("Files Sent to","sp-cdm").' '.$_POST['vendor'].'</p>';
 	}
 	break;	
 		

@@ -183,7 +183,7 @@ return true;
 <div style="display:none">
 	<div  id="sp_cu_add_project">
 		<form action="'.$_SERVER['REQUEST_URI'].'" method="post">
-		Project Name: <input type="text" name="project-name"  style="width:200px !important"> <input type="submit" value="Add Project" name="add-project">
+		'.__("Project Name:","sp-cdm").' <input type="text" name="project-name"  style="width:200px !important"> <input type="submit" value="'.__("Add Project","sp-cdm").'" name="add-project">
 	</form>
 	</div>
 <div id="sp_cu_confirm_delete">
@@ -209,7 +209,7 @@ return true;
 			$html .='<div>
 				  <table width="100%" cellpadding="2" cellspacing="2" style="border:none;padding:0px;margin:0px;">
   <tr>
-    <td width="90">File name:</td>
+    <td width="90">'.__("File Name:","sp-cdm").'</td>
     <td><input  type="text" name="dlg-upload-name"></td>
   </tr>
   
@@ -226,13 +226,13 @@ return true;
  
   $html .= '
   <tr>
-    <td>File:</td>
+    <td>'.__("File:","sp-cdm").'</td>
     <td>	    <input id="file_upload" name="dlg-upload-file[]" type="file" multiple>
 <div id="upload_list"></div>
 							</td>
   </tr>
   <tr>
-    <td>Notes:</td>
+    <td>'.__("Notes:","sp-cdm").'</td>
     <td><textarea style="width:90%;height:70px" name="dlg-upload-notes"></textarea></td>
   </tr>
   <tr>
@@ -312,9 +312,9 @@ if($_POST['submit'] != ""){
     $wpdb->insert(  "".$wpdb->prefix."sp_cu", $a );
 	
 	$to = get_option('admin_email');
-	$headers .= "From: ".$current_user->user_firstname." ".$current_user->user_lastname." <".$current_user->user_email.">\r\n";
-	$message  = "Client uploaded a new document<br><br> Click here view the files: " . get_bloginfo('wpurl') . "/wp-admin/user-edit.php?user_id=".$user_ID."#downloads";
-	$subject = 'New file upload from client';
+	$headers .= "".__("From:","sp-cdm")." ".$current_user->user_firstname." ".$current_user->user_lastname." <".$current_user->user_email.">\r\n";
+	$message  = "".__("Client uploaded a new document","sp-cdm")."<br><br> ".__("Click here view the files:","sp-cdm")." " . get_bloginfo('wpurl') . "/wp-admin/user-edit.php?user_id=".$user_ID."#downloads";
+	$subject = __("New file upload from client","sp-cdm");
 	wp_mail( $to, $subject, $message, $headers, $attachments );
 	
 		$html .= '<script type="text/javascript">
@@ -326,7 +326,7 @@ jQuery(document).ready(function() {
 </script>';
 }else{
 	
-	$html .= '<p style="color:red">Please upload a file!</p>';
+	$html .= '<p style="color:red">'.__("Please upload a file!","sp-cdm").'</p>';
 	
 }
 }
@@ -362,7 +362,7 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = $us
 	
 	<div >
 
-  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . get_bloginfo('url') . '/wp-content/plugins/sp-client-document-manager/images/add.png"> Add File</a>  
+  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . get_bloginfo('url') . '/wp-content/plugins/sp-client-document-manager/images/add.png"> '.__("Add File","sp-cdm").'</a>  
 ';
 
 

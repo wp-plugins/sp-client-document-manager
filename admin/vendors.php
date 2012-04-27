@@ -37,19 +37,19 @@ if($_GET['delete-vendor'] != ""){
 
 
 echo '
- <h2>Vendors</h2>'.sp_client_upload_nav_menu().'
- <p>You can use this section to route downloads to a certain vendor in the users section, when you click on a user there will be checkboxes next to the file. Check the checkboxes you would like to send then scroll down, choose a vencor and click send. This works well for sending files to department members or different vendors</p>
+ <h2>'.__("Vendors","sp-cdm").'</h2>'.sp_client_upload_nav_menu().'
+ <p>'.__("You can use this section to route downloads to a certain vendor in the users section, when you click on a user there will be checkboxes next to the file. Check the checkboxes you would like to send then scroll down, choose a vencor and click send. This works well for sending files to department members or different vendors","sp-cdm").'</p>
 
 
 <form action="admin.php?page=sp-client-document-manager-vendors" method="post" style="margin:15px">
-Name: <input type="text" name="name">  Email: <input type="text" name="email"> <input type="submit" name="submit-vendor" value="Add new vendor">
+'.__("Name:","sp-cdm").' <input type="text" name="name">  '.__("Email:","sp-cdm").' <input type="text" name="email"> <input type="submit" name="submit-vendor" value="Add new vendor">
 </form>
 <table class="wp-list-table widefat fixed posts" cellspacing="0">
 	<thead>
 	<tr>
-<th>Name</th>
-<th>Email</th>
-<th>Delete</th>
+<th>'.__("Name","sp-cdm").'</th>
+<th>'.__("Email","sp-cdm").'</th>
+<th>'.__("Delete","sp-cdm").'</th>
 </tr>
 	</thead>';
 				for($i=0; $i<count(	$vendors); $i++){
@@ -59,7 +59,7 @@ Name: <input type="text" name="name">  Email: <input type="text" name="email"> <
 				echo '	<tr>
 <td>'.$vendor_info[$i]['name'].'</td>
 <td>'.$vendor_info[$i]['email'].'</td>
-<td><a href="admin.php?page=sp-client-document-manager-vendors&delete-vendor='.$vendors[$i]['option_id'].'">Delete</a></td>
+<td><a href="admin.php?page=sp-client-document-manager-vendors&delete-vendor='.$vendors[$i]['option_id'].'">'.__("Delete","sp-cdm").'</a></td>
 </tr>';	
 					
 				}
