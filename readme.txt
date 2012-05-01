@@ -4,18 +4,19 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: client upload, document manager, file upload, file manager, customer file manager, customer files, document version system
 Requires at least: 2.0.2
 Tested up to: 3.3.1
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 
-A WordPress plug-in that allows your business to manage client files easily.
+A Translatable WordPress plug-in that allows your business to manage client files easily.
 
 == Description ==
 
-Smarty Pant's Document Manager is a WordPress plug-in that allows your business to manage client files easily and securely.  
+Smarty Pants Document Manager is a WordPress plug-in that allows your business to manage client files easily and securely.  
 Designed for Businesses that require clients to send files and those files need to be managed or assigned to Supplies or internal staff.  
-The Smarty Pants Document manager has user across many industry lines. Originaly developed for print brokers to manage client graphic files and assign to graphic designers and printing companies.
+The Smarty Pants Document manager has user across many industry lines. Originally developed for print brokers to manage client graphic files and assign to graphic designers and printing companies.
+The Client Document Manager now supports localization so the plugin can be converted to any language you want! Check out our website for a tutorial on how to do this.
 
 
-We also now offer a premium version, please check out our website for more information: 
+We also now offer a premium version; please check out our website for more information: 
 http://smartypantsplugins.com/sp-client-document-manager/
 
 
@@ -24,8 +25,9 @@ Client Side Features
 * Clients upload files on their own personal page
 * Ability to choose multiple files
 * Delete uploaded documents
-* Automaticly zip multiple files
+* Automatically zip multiple files
 * User login with help from "Theme my login"
+* Ability to translate plugin to multiple languages using the .po files.
 
 Administrator Side Features
 
@@ -34,11 +36,12 @@ Administrator Side Features
 * Custom Naming of files
 * Create multiple upload locations
 * 50 latest uploads on main plugin page
-* Force download of file 
+* Force downloads of file 
 * Delete confirmation with custom notification
 * Thank you confirmation with custom notification
 * Add vendors so you can distribute the files to other people
 * Attach file or send the file as a link
+
 
 Premium Features
 
@@ -47,7 +50,7 @@ Premium Features
 * Categories allow an admin to designate categories for the user to select, for example a print company could use categories as statuses (Mockup, Draft and Final)
 * Custom Notifications
 * Allow the user to create projects
-* Full Support through email or skype
+* Full Support through email or Skype
 * Auto deletion of files based on a time you set.
 
 For more information check out the plugin page http://smartypantsplugins.com/sp-client-document-manager/
@@ -59,13 +62,13 @@ For more information check out the plugin page http://smartypantsplugins.com/sp-
 * Install "Theme my login" plugin for seamless user experience
 * Create a new page and enter the shortcode [sp-client-document-manager]  
 * Go to the plugin admin page and click settings to configure the plugin  (VERY IMPORTANT!)  
-* If your using the premium version please upload the zip archive in the settings area. 
+* If you're using the premium version please upload the zip archive in the settings area. 
 
 == Frequently Asked Questions ==
 
 = How come I'm getting a 404 error? =
 
-This could be one of two reasons, either you did not install theme my login or your running wordpress in a directory in which you can go to settings and set the directory for wordpress.
+This could be one of two reasons, either you did not install theme my login or you're running wordpress in a directory in which you can go to settings and set the directory for wordpress.
 
 == Screenshots ==
 
@@ -79,12 +82,12 @@ This could be one of two reasons, either you did not install theme my login or y
 * Created first version
 	
 = 1.0.2 =
-* database bug fix
-* small zip error
+* Database bug fix
+* Small zip error
 	
 = 1.0.3 =
-* error with file tree fixed.
-* there was an error with wordpress in a folder, now in the settings you have to set the directory if you have wordpress in a folder.
+* Error with file tree fixed.
+* There was an error with wordpress in a folder, now in the settings you have to set the directory if you have wordpress in a folder.
 	
 = 1.0.4 =
 * increased the upload size for php to 1000mb
@@ -92,13 +95,16 @@ This could be one of two reasons, either you did not install theme my login or y
 = 1.0.7 =
 * Fixed a few bugs and added auto file deletion to the premium version. Now you can set how many days a file should exist in the system.
 
+= 1.0.9 =
+* Update to enable localization. Please translate the language files and get them back to us so other users can use them!
+
 == Upgrade Notice ==
 
 = 1.0.5 =
 Major fixes to bugs that were found during our initial release
 
 = 1.0.7 =
-Not a major issue to upgrade unless your a premium user.
+Not a major issue to upgrade unless you're a premium user.
 
 = 1.0.8 =
 Added localization for multiple languages

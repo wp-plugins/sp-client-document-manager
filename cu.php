@@ -4,19 +4,21 @@ Plugin Name: Smarty Pants Client Document Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.0.8
+Version: 1.0.9
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.0.8";
+$sp_client_upload = "1.0.9";
+
 load_plugin_textdomain( 'sp-cdm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 
 ini_set('upload_max_filesize', '1000M');  
 ini_set('post_max_size', '1000M');  
 ini_set('max_input_time', 300);  
-ini_set('max_execution_time', 300);  
+ini_set('max_execution_time', 300); 
+ 
 add_action('admin_menu', 'sp_client_upload_menu');
 
 include 'common.php';
@@ -161,9 +163,13 @@ function sp_client_upload_menu() {
 
 
 		  add_menu_page( 'sp_cu', 'Client Documents',  'manage_options', 'sp-client-document-manager', 'sp_client_upload_options');
+		  
 		  add_submenu_page( 'sp_cu', 'Vendors', 'Vendors', 'manage_options', 'sp-client-document-manager-vendors', 'sp_client_upload_options_vendors');
+		  
 	      add_submenu_page( 'sp_cu', 'Help', 'Help', 'manage_options', 'sp-client-document-manager-help', 'sp_client_upload_help');
+		  
 	   	  add_submenu_page( 'sp_cu', 'Settings', 'Settings', 'manage_options', 'sp-client-document-manager-settings', 'sp_client_upload_settings');
+		  
 		 
 		 if (CU_PREMIUM == 1){
 		 add_submenu_page( 'sp_cu', 'Projects', 'Projects', 'manage_options', 'sp-client-document-manager-projects', 'sp_client_upload_projects');
