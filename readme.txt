@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: client upload, document manager, file upload, file manager, customer file manager, customer files, document version system
 Requires at least: 2.0.2
 Tested up to: 3.3.1
-Stable tag: 1.0.9
+Stable tag: 1.1.0
 
 A Translatable WordPress plug-in that allows your business to manage client files easily.
 
@@ -29,6 +29,7 @@ Client Side Features
 * User login with help from "Theme my login"
 * Ability to translate plugin to multiple languages using the .po files.
 
+
 Administrator Side Features
 
 * Notification via email when a client uploads a file
@@ -52,7 +53,7 @@ Premium Features
 * Allow the user to create projects
 * Full Support through email or Skype
 * Auto deletion of files based on a time you set.
-
+* Thumbnail view mode for a windows explorer type look and feel.
 For more information check out the plugin page http://smartypantsplugins.com/sp-client-document-manager/
 
 == Installation ==
@@ -108,3 +109,6 @@ Not a major issue to upgrade unless you're a premium user.
 
 = 1.0.8 =
 Added localization for multiple languages
+
+= 1.1.0 =
+Bug fixes, added thumbnail mode for premium users.

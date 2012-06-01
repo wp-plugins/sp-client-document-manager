@@ -1,3 +1,12 @@
+
+
+#dlg_cdm_thumbnails .dlg_cdm_thumbnail_folder{ float:left;width:135px;height:150px; text-align:center;padding-top:10px;}
+#dlg_cdm_thumbnails .dlg_cdm_thumbnail_folder a {display:block; text-decoration:none;}
+#dlg_cdm_thumbnails .dlg_cdm_thumbnail_folder a:hover { background-color:#D9EFFB;border-radius:10px}
+#dlg_cdm_thumbnails .dlg_cdm_thumbnail_image {padding-top:20px;}
+#cmd_file_thumbs{border:1px solid #ccc;border-radius:5px;padding:5px;font-size:12px;margin:5px; background-color:#f4f4f4;height:540px; overflow-x: hidden;
+overflow-y: scroll;}
+
 #sp_cu_viewfile{ }
 td{ vertical-align:top}
 .sp_su_project, .sp_su_notes,.sp_su_history{ background-color:#F0F0F0;padding:5px;margin:5px;}

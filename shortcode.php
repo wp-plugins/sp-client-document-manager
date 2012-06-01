@@ -1,6 +1,7 @@
 <?php
 
 
+
 function display_sp_thumbnails($r ){
 	global $wpdb,$current_user,$user_ID;
 	
@@ -343,12 +344,7 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = $us
 //show uploaded documents
   $html .= '
   
-  <script type="text/javascript">
-  jQuery(function() {
-		
-	});
-  </script>
-  
+
   
   
     <div style="display:none">
@@ -366,9 +362,11 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = $us
 ';
 
 
-
+if(get_option('sp_cu_user_projects_thumbs') == 1){
+		$html .=display_sp_cdm_thumbnails($r );
+}else{
 		$html .=display_sp_thumbnails($r );
-				
+}
 		$html .='</div>';
 
 

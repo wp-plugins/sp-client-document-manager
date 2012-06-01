@@ -37,7 +37,7 @@ require( '../../../wp-load.php' );
 					
 					
 					if($ext== 'png' or $ext == 'jpg' or $ext = 'jpeg' or $ext = 'gif' ){
-					$icon = '<td width="160"><img src="'.$wp_con_folder.'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/'.$r[0]['file'].'" width="150"></td>';	
+					$icon = '<td width="160"><img src="'.$wp_con_folder.'wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'" width="150"></td>';	
 					}else{
 					$icon = '';		
 					}
@@ -93,6 +93,110 @@ $html .='
   echo $html;		
 		break;
 		
+		
+		
+		case "thumbnails":
+		
+		$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,".$wpdb->prefix."sp_cu.id,".$wpdb->prefix."sp_cu.pid  ,".$wpdb->prefix."sp_cu.uid,
+											".$wpdb->prefix."sp_cu_project.name AS project_name
+										FROM ".$wpdb->prefix."sp_cu   
+										LEFT JOIN ".$wpdb->prefix."sp_cu_project  ON ".$wpdb->prefix."sp_cu.pid = ".$wpdb->prefix."sp_cu_project.id
+										WHERE ".$wpdb->prefix."sp_cu.uid = '".$_GET['uid']."'  
+										AND pid != 0
+										AND parent = 0 
+										GROUP BY pid
+										ORDER by date desc", ARRAY_A);
+										
+										
+		echo '<div id="dlg_cdm_thumbnails">';
+		
+		
+		if($_GET['pid'] == ""){
+		
+		
+		for($i=0; $i<count($r_projects); $i++){
+		
+		
+		echo '<div class="dlg_cdm_thumbnail_folder">
+				<a href="javascript:sp_cdm_load_project('.$r_projects[$i]['pid'].')"><img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/my_projects_folder.png">
+				<div class="dlg_cdm_thumb_title">
+				'.htmlentities(stripslashes($r_projects[$i]['project_name'])).'
+				</div>
+				</a>
+				</div>
+		
+		';
+			
+	}
+		}else{
+		
+		echo '<div class="dlg_cdm_thumbnail_folder">
+				<a href="javascript:sp_cdm_load_file_manager()"><img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/my_projects_folder.png">
+				<div class="dlg_cdm_thumb_title">
+			<< Go Back
+				</div>
+				</a>
+				</div>
+		
+		';	
+			
+		}
+	
+	
+	if($_GET['pid'] == ""){
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = '".$_GET['uid']."'  AND pid = 0 	AND parent = 0  order by date desc", ARRAY_A);
+	}else{
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$_GET['pid']."' AND parent = 0  order by date desc", ARRAY_A);		
+	}
+	
+	for($i=0; $i<count( $r ); $i++){
+		
+		
+		
+		$ext = preg_replace('/^.*\./', '', $r[$i]['file']);
+		
+		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
+		
+		if(in_array(strtolower($ext), $images_arr)){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/classes/thumb.php?src='.get_bloginfo('wpurl').'/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
+		
+		}elseif($ext == 'xls' or $ext == 'xlsx'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
+		}elseif($ext == 'doc' or $ext == 'docx'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_word.png">';	
+		}elseif($ext == 'pub' or $ext == 'pubx'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_publisher.png">';		
+		}elseif($ext == 'ppt' or $ext == 'pptx'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_powerpoint.png">';
+		}elseif($ext == 'adb' or $ext == 'accdb'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_access.png">';	
+		}elseif($ext == 'pdf' or $ext == 'tiff'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/adobe.png">';					
+		}else{
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/package_labled.png">';
+		}
+		
+		echo '<div class="dlg_cdm_thumbnail_folder">
+			<div class="dlg_cdm_thumbnail_image">
+				<a href="javascript:sp_cdm_showFile('.$r[$i]['id'].')">'.$img .'
+				<div class="dlg_cdm_thumb_title">
+				'. htmlentities(stripslashes($r[$i]['name'])).'
+				</div>
+				</a>
+				</div>
+				</div>
+		
+		';
+		
+		
+	
+		
+	}
+	
+		
+		$content .='<div style="clear:both"></div></div>';
+		
+		break;
 		case"file-tree":
 
 		

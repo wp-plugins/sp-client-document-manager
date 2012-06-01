@@ -25,6 +25,7 @@ global $wpdb;
 			
 				
 	if($_POST['sp_cu_user_projects'] == "1"){update_option('sp_cu_user_projects','1' ); }else{update_option('sp_cu_user_projects','0' );	}
+	if($_POST['sp_cu_user_projects_thumbs'] == "1"){update_option('sp_cu_user_projects_thumbs','1' ); }else{update_option('sp_cu_user_projects_thumbs','0' );	}
 	if($_POST['sp_cu_js_redirect'] == "1"){update_option('sp_cu_js_redirect','1' ); }else{update_option('sp_cu_js_redirect','0' );	}		
 			
 	}
@@ -32,6 +33,7 @@ global $wpdb;
 	
 	
 	if(get_option('sp_cu_user_projects') == 1){ $sp_cu_user_projects = ' checked="checked" ';	}else{ $sp_cu_user_projects = '  '; }
+	if(get_option('sp_cu_user_projects_thumbs') == 1){ $sp_cu_user_projects_thumbs = ' checked="checked" ';	}else{ $sp_cu_user_projects_thumbs = '  '; }
 	if(get_option('sp_cu_js_redirect') == 1){ $sp_cu_js_redirect = ' checked="checked" ';	}else{ $sp_cu_js_redirect = '  '; }
 	echo '<h2>Settings</h2>'.sp_client_upload_nav_menu().'';	 
 	
@@ -129,6 +131,10 @@ $content .='<h3>Thanks for upgrading!</h3>
      <tr>
     <td width="300"><strong>User Projects?</strong><br><em>If you want to allow the user to create projects check this box.</em></td>
     <td><input type="checkbox" name="sp_cu_user_projects"   value="1" '. $sp_cu_user_projects.'> </td>
+  </tr>
+     <tr>
+    <td width="300"><strong>Thumbnail Mode?</strong><br><em>Would you like to display all images as thumbnails?</em></td>
+    <td><input type="checkbox" name="sp_cu_user_projects_thumbs"   value="1" '. $sp_cu_user_projects_thumbs.'> </td>
   </tr>
   <tr>
     <td width="300"><strong>Categories Text</strong><br><em>This is the text you want to call categories, for example you may want to use it as a status.</em></td>
