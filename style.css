@@ -4,8 +4,7 @@
 #dlg_cdm_thumbnails .dlg_cdm_thumbnail_folder a {display:block; text-decoration:none;}
 #dlg_cdm_thumbnails .dlg_cdm_thumbnail_folder a:hover { background-color:#D9EFFB;border-radius:10px}
 #dlg_cdm_thumbnails .dlg_cdm_thumbnail_image {padding-top:20px;}
-#cmd_file_thumbs{border:1px solid #ccc;border-radius:5px;padding:5px;font-size:12px;margin:5px; background-color:#f4f4f4;height:540px; overflow-x: hidden;
-overflow-y: scroll;}
+#cdm_wrapper{border:1px solid #ccc;border-radius:5px;padding:5px;font-size:12px;margin:5px; background-color:#f4f4f4;}
 
 #sp_cu_viewfile{ }
 td{ vertical-align:top}

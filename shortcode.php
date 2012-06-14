@@ -216,10 +216,10 @@ return true;
   
   ';
   
-
+ $html .= sp_cdm_display_projects(); 
   
  if (CU_PREMIUM == 1){ 
- $html .= sp_cdm_display_projects(); 
+
  $html .= sp_cdm_display_categories(); 
  }
  

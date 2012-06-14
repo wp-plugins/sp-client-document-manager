@@ -42,6 +42,38 @@ require( '../../../wp-load.php' );
 					$icon = '';		
 					}
 					
+					
+		$ext = preg_replace('/^.*\./', '', $r[0]['file']);
+		
+		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
+		
+		if(in_array(strtolower($ext), $images_arr)){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/classes/thumb.php?src='.get_bloginfo('wpurl').'/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'&w=250&h=250">';
+		
+		}elseif($ext == 'xls' or $ext == 'xlsx'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
+		}elseif($ext == 'doc' or $ext == 'docx'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_word.png">';	
+		}elseif($ext == 'pub' or $ext == 'pubx'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_publisher.png">';		
+		}elseif($ext == 'ppt' or $ext == 'pptx'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_powerpoint.png">';
+		}elseif($ext == 'adb' or $ext == 'accdb'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_access.png">';	
+		}elseif(($ext == 'pdf' or $ext == 'psd' or $ext == 'html' or $ext == 'eps') && get_option('sp_cu_user_projects_thumbs_pdf') == 1){
+			if(file_exists(''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'_big.png')){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'_big.png" width="250">';		
+			}else{
+				$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/adobe.png">';	
+			}
+		}elseif($ext == 'pdf' ){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/adobe.png">';	
+			
+		}else{
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/package_labled.png">';
+		}
+					
+					
 				$html .= '
 				<div id="view_file_refresh">
 				<div id="sp_cu_viewfile">
@@ -68,20 +100,29 @@ require( '../../../wp-load.php' );
 				  <table width="100%" cellpadding="2" cellspacing="2" style="border:none;padding:0px;margin:0px;">
 
 <tr>
-
-'.$icon .'
+<td width="200" >
+<a '.$target.' href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'" title="Download" style="margin-right:15px"  >
+'.$img  .'
+</a>
+</td>
 <td>
 <div class="sp_su_project">
 <strong>'.__("Project: ","sp-cdm").' </strong>'.$project_title .'
 </div>
+<div class="sp_su_project">
+<strong>'.__("File Type: ","sp-cdm").' </strong>'.$ext .'
+</div>';
+if($r[0]['notes'] != ""){
+$content .='
 <div class="sp_su_notes">
 <strong>'.__("Notes: ","sp-cdm").':</strong> <em>'.$r[0]['notes'].'</em>
 </div>';
-
+}
  if (CU_PREMIUM == 1){ 
  
- 
+ if(sp_cdm_file_history_exists($r[0]['id']) == true){
 $html .='<div class="sp_su_history"><p><strong>'.__("Revision History","sp-cdm").'</strong></p>'.sp_cdm_file_history($r[0]['id']).'</div>';
+ }
  }
 $html .='
 
@@ -170,8 +211,15 @@ $html .='
 			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_powerpoint.png">';
 		}elseif($ext == 'adb' or $ext == 'accdb'){
 			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_access.png">';	
-		}elseif($ext == 'pdf' or $ext == 'tiff'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/adobe.png">';					
+			}elseif(($ext == 'pdf' or $ext == 'psd' or $ext == 'html' or $ext == 'eps') && get_option('sp_cu_user_projects_thumbs_pdf') == 1){
+			if(file_exists(''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png')){			
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png">';	
+			}else{
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/adobe.png">';		
+			}
+		}elseif($ext == 'pdf' ){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/adobe.png">';	
+		
 		}else{
 			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/package_labled.png">';
 		}

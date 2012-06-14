@@ -3,8 +3,8 @@ Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
 Tags: client upload, document manager, file upload, file manager, customer file manager, customer files, document version system
 Requires at least: 2.0.2
-Tested up to: 3.3.1
-Stable tag: 1.1.0
+Tested up to: 3.4.0
+Stable tag: 1.1.1
 
 A Translatable WordPress plug-in that allows your business to manage client files easily.
 
@@ -42,18 +42,18 @@ Administrator Side Features
 * Thank you confirmation with custom notification
 * Add vendors so you can distribute the files to other people
 * Attach file or send the file as a link
-
+* Projects allow you or the users to create projects to store files in
+* Allow the user to create projects
 
 Premium Features
 
-* Projects allow you or the users to create projects to store files in
 * Admin can download all the files of a project in a single zip file
 * Categories allow an admin to designate categories for the user to select, for example a print company could use categories as statuses (Mockup, Draft and Final)
 * Custom Notifications
-* Allow the user to create projects
 * Full Support through email or Skype
 * Auto deletion of files based on a time you set.
 * Thumbnail view mode for a windows explorer type look and feel.
+* Automaticly create thumbnails of pdfs and psds (must have imagemagick installed on server)
 For more information check out the plugin page http://smartypantsplugins.com/sp-client-document-manager/
 
 == Installation ==
@@ -99,6 +99,12 @@ This could be one of two reasons, either you did not install theme my login or y
 = 1.0.9 =
 * Update to enable localization. Please translate the language files and get them back to us so other users can use them!
 
+= 1.1.1 =
+* Projects now come with free version! Create projects and folders for your files
+* Premium users can now view thumbnails and
+* Thumbnails created from psds and pdfs
+
+
 == Upgrade Notice ==
 
 = 1.0.5 =
@@ -112,3 +118,7 @@ Added localization for multiple languages
 
 = 1.1.0 =
 Bug fixes, added thumbnail mode for premium users.
+
+= 1.1.1 =
+Projects now come with free version! Create projects and folders for your files
+

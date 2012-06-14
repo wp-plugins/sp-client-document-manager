@@ -1,6 +1,34 @@
 <?php
 
 
+function cdm_thumbPdf($pdf)
+{
+    try
+    {
+        $tmp = '../../../uploads/wp-client-document-manager';
+        $format = "png";
+        $source = $pdf;
+		
+        $dest =  "".$pdf."_small.$format";
+ 		$dest2 = "".$pdf."_big.$format";
+      
+	  
+            $exec = "convert -scale 80x80 ".$source."[0] $dest";
+			
+            exec($exec);
+			 $exec2 = "convert -scale 250x250 ".$source."[0] $dest2";			
+            exec($exec2);
+		
+ 
+        $im = new Imagick($dest);
+   
+    }
+    catch(Exception $e)
+    {
+       // echo $e->getMessage();
+    }
+	
+}
 
 if (!function_exists('sp_client_upload_settings')){
 
@@ -26,6 +54,7 @@ global $wpdb;
 				
 	if($_POST['sp_cu_user_projects'] == "1"){update_option('sp_cu_user_projects','1' ); }else{update_option('sp_cu_user_projects','0' );	}
 	if($_POST['sp_cu_user_projects_thumbs'] == "1"){update_option('sp_cu_user_projects_thumbs','1' ); }else{update_option('sp_cu_user_projects_thumbs','0' );	}
+	if($_POST['sp_cu_user_projects_thumbs_pdf'] == "1"){update_option('sp_cu_user_projects_thumbs_pdf','1' ); }else{update_option('sp_cu_user_projects_thumbs_pdf','0' );	}
 	if($_POST['sp_cu_js_redirect'] == "1"){update_option('sp_cu_js_redirect','1' ); }else{update_option('sp_cu_js_redirect','0' );	}		
 			
 	}
@@ -34,6 +63,7 @@ global $wpdb;
 	
 	if(get_option('sp_cu_user_projects') == 1){ $sp_cu_user_projects = ' checked="checked" ';	}else{ $sp_cu_user_projects = '  '; }
 	if(get_option('sp_cu_user_projects_thumbs') == 1){ $sp_cu_user_projects_thumbs = ' checked="checked" ';	}else{ $sp_cu_user_projects_thumbs = '  '; }
+	if(get_option('sp_cu_user_projects_thumbs_pdf') == 1){ $sp_cu_user_projects_thumbs_pdf = ' checked="checked" ';	}else{ $sp_cu_user_projects_thumbs_pdf = '  '; }
 	if(get_option('sp_cu_js_redirect') == 1){ $sp_cu_js_redirect = ' checked="checked" ';	}else{ $sp_cu_js_redirect = '  '; }
 	echo '<h2>Settings</h2>'.sp_client_upload_nav_menu().'';	 
 	
@@ -127,6 +157,9 @@ $content .='<h3>Thanks for upgrading!</h3>
   ';
   
   if (CU_PREMIUM == 1){
+	  
+	
+
 	  $content .='
      <tr>
     <td width="300"><strong>User Projects?</strong><br><em>If you want to allow the user to create projects check this box.</em></td>
@@ -136,6 +169,10 @@ $content .='<h3>Thanks for upgrading!</h3>
     <td width="300"><strong>Thumbnail Mode?</strong><br><em>Would you like to display all images as thumbnails?</em></td>
     <td><input type="checkbox" name="sp_cu_user_projects_thumbs"   value="1" '. $sp_cu_user_projects_thumbs.'> </td>
   </tr>
+    <tr>
+    <td width="300"><strong>Create thumbnails for pdfs and psds?</strong><br><em>You must have Image Magick Installed on your server. '. $imagemagick.' </em></td>
+    <td><input type="checkbox" name="sp_cu_user_projects_thumbs_pdf"   value="1" '. $sp_cu_user_projects_thumbs_pdf.'> </td>
+  </tr>
   <tr>
     <td width="300"><strong>Categories Text</strong><br><em>This is the text you want to call categories, for example you may want to use it as a status.</em></td>
     <td><input type="text" name="sp_cu_cat_text"  value="'.get_option('sp_cu_cat_text').'"  size=80"> </td>
@@ -144,7 +181,14 @@ $content .='<h3>Thanks for upgrading!</h3>
     <td width="300"><strong>File Deletion Period</strong><br><em>How many days should a file exist before its deleted from the system? Leave blank if you do not wish to use this function.</em></td>
     <td><input type="text" name="sp_cu_file_delete"  value="'.get_option('sp_cu_file_delete').'"  size=80"> </td>
   </tr>
-  
+     <tr>
+    <td width="300"><strong>Dropbox App Key</strong><br><em>App key from your <a href="https://www.dropbox.com/developers/apps" target="_blank">Dropbox app page</a>.</em></td>
+    <td><input type="text" name="sp_cu_db_app_key"  value="'.get_option('sp_cu_db_app_key').'"  size=80"> </td>
+  </tr>
+      <tr>
+    <td width="300"><strong>Dropbox App Secret</strong><br><em>App secret from your <a href="https://www.dropbox.com/developers/apps" target="_blank">Dropbox app page</a>.</em></td>
+    <td><input type="text" name="sp_cu_db_secret"  value="'.get_option('sp_cu_db_secret').'"  size=80"> </td>
+  </tr>
   ';
   
   }
@@ -194,9 +238,9 @@ $content .= '<strong>Version:</strong> '.$cu_ver .' '.$ver.'<div style="padding:
 <a href="admin.php?page=sp-client-document-manager" class="button" style="margin-right:10px">'.__("Home","sp-cdm").'</a>
 <a href="admin.php?page=sp-client-document-manager-settings" class="button" style="margin-right:10px">'.__("Settings","sp-cdm").'</a>
 <a href="admin.php?page=sp-client-document-manager-vendors" class="button" style="margin-right:10px">'.__("Vendors","sp-cdm").'</a>';
-
-if (CU_PREMIUM == 1){
 $content .= '<a href="admin.php?page=sp-client-document-manager-projects" class="button" style="margin-right:10px">'.__("Projects","sp-cdm").'</a>';
+if (CU_PREMIUM == 1){
+
 $content .= '<a href="admin.php?page=sp-client-document-manager-categories" class="button" style="margin-right:10px">'.__("Categories","sp-cdm").'</a>';
 }
 $content .= '<a href="admin.php?page=sp-client-document-manager-help" class="button" style="margin-right:10px">'.__("Instructions","sp-cdm").'</a>
