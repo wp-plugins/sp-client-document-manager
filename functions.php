@@ -154,6 +154,10 @@ $content .='<h3>Thanks for upgrading!</h3>
     <td width="300"><strong>Javascript Redirect?</strong><br><em>If your on a windows system you need to use javascript redirection as FastCGI does not allow force download files.</em></td>
     <td><input type="checkbox" name="sp_cu_js_redirect"   value="1" '. $sp_cu_js_redirect.'> </td>
   </tr>
+    <tr>
+    <td width="300"><strong>User Projects?</strong><br><em>If you want to allow the user to create projects check this box.</em></td>
+    <td><input type="checkbox" name="sp_cu_user_projects"   value="1" '. $sp_cu_user_projects.'> </td>
+  </tr>
   ';
   
   if (CU_PREMIUM == 1){
@@ -161,10 +165,7 @@ $content .='<h3>Thanks for upgrading!</h3>
 	
 
 	  $content .='
-     <tr>
-    <td width="300"><strong>User Projects?</strong><br><em>If you want to allow the user to create projects check this box.</em></td>
-    <td><input type="checkbox" name="sp_cu_user_projects"   value="1" '. $sp_cu_user_projects.'> </td>
-  </tr>
+   
      <tr>
     <td width="300"><strong>Thumbnail Mode?</strong><br><em>Would you like to display all images as thumbnails?</em></td>
     <td><input type="checkbox" name="sp_cu_user_projects_thumbs"   value="1" '. $sp_cu_user_projects_thumbs.'> </td>
