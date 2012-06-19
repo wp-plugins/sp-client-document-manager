@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: client upload, document manager, file upload, file manager, customer file manager, customer files, document version system
 Requires at least: 2.0.2
 Tested up to: 3.4.0
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 
 A Translatable WordPress plug-in that allows your business to manage client files easily.
 
@@ -107,6 +107,9 @@ This could be one of two reasons, either you did not install theme my login or y
 
 = 1.1.2 =
 * Premium users can now add fields to the upload form, add textboxes,selectboxes or textareas!
+
+= 1.1.3 =
+* Force download works better with mime types!
 
 == Upgrade Notice ==
 

@@ -3,7 +3,6 @@ require( '../../../wp-load.php' );
 	
 	global $wpdb;
 	
-	
 
 if(!function_exists('mime_content_type')) {
 
