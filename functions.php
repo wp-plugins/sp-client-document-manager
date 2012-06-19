@@ -158,6 +158,11 @@ $content .='<h3>Thanks for upgrading!</h3>
     <td width="300"><strong>User Projects?</strong><br><em>If you want to allow the user to create projects check this box.</em></td>
     <td><input type="checkbox" name="sp_cu_user_projects"   value="1" '. $sp_cu_user_projects.'> </td>
   </tr>
+  
+    <tr>
+    <td width="300"><strong>Form Instructions</strong><br><em>Just a short statement that will go above the upload form, you can use html!</em></td>
+    <td><textarea  name="sp_cu_form_instructions"  style="width:100%;height:60px" >'. stripslashes(get_option('sp_cu_form_instructions')).'</textarea> </td>
+  </tr>
   ';
   
   if (CU_PREMIUM == 1){
@@ -242,6 +247,7 @@ $content .= '<strong>Version:</strong> '.$cu_ver .' '.$ver.'<div style="padding:
 $content .= '<a href="admin.php?page=sp-client-document-manager-projects" class="button" style="margin-right:10px">'.__("Projects","sp-cdm").'</a>';
 if (CU_PREMIUM == 1){
 
+$content .= '<a href="admin.php?page=sp-client-document-manager-forms" class="button" style="margin-right:10px">'.__("Forms","sp-cdm").'</a>';
 $content .= '<a href="admin.php?page=sp-client-document-manager-categories" class="button" style="margin-right:10px">'.__("Categories","sp-cdm").'</a>';
 }
 $content .= '<a href="admin.php?page=sp-client-document-manager-help" class="button" style="margin-right:10px">'.__("Instructions","sp-cdm").'</a>
@@ -331,6 +337,7 @@ function sp_client_upload_email_vendor(){
   <table class="wp-list-table widefat fixed posts" cellspacing="0">
 	<thead>
 	<tr>
+<th style="width:80px">'.__("Thumbnail","sp-cdm").'</th>	
 <th>'.__("File Name","sp-cdm").'</th>
 <th>'.__("User","sp-cdm").'</th>
 <th>'.__("Date","sp-cdm").'</th>
@@ -366,17 +373,61 @@ function sp_client_upload_email_vendor(){
 				}	
 					
 					
+					
+			$ext = preg_replace('/^.*\./', '', $r[$i]['file']);
+		
+		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
+		
+		if(in_array(strtolower($ext), $images_arr)){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/classes/thumb.php?src='.get_bloginfo('wpurl').'/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
+		
+		}elseif($ext == 'xls' or $ext == 'xlsx'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
+		}elseif($ext == 'doc' or $ext == 'docx'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_word.png">';	
+		}elseif($ext == 'pub' or $ext == 'pubx'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_publisher.png">';		
+		}elseif($ext == 'ppt' or $ext == 'pptx'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_powerpoint.png">';
+		}elseif($ext == 'adb' or $ext == 'accdb'){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_access.png">';	
+			}elseif(($ext == 'pdf' or $ext == 'psd' or $ext == 'html' or $ext == 'eps') && get_option('sp_cu_user_projects_thumbs_pdf') == 1){
+			if(file_exists(''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png')){			
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png">';	
+			}else{
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/adobe.png">';		
+			}
+		}elseif($ext == 'pdf' ){
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/adobe.png">';	
+		
+		}else{
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/package_labled.png">';
+		}		
+					
+					
+					
 				$html .= '
 	
  <tr>
-    <td ><strong>'.stripslashes($name).'</strong>
-	<br><em>'.__("Notes: ","sp-cdm").' '.$r[$i]['notes'].'</em>
+ <td>'.$img.'</td>
+    <td ><strong>'.stripslashes($name).'</strong>';
+	
+	
+	if(CU_PREMIUM == 1){
+		
+		$html .=sp_cdm_get_form_fields($r[$i]['id']);
+	}else{
+		
+		$html .='<br><em>'.__("Notes: ","sp-cdm").' '.$r[$i]['notes'].'</em>';
+	}
+	$html .='
+	
 	
 	</td>
 	<td><a href="user-edit.php?user_id='.$r[$i]['uid'].'">'.$r_user[0]['display_name'].'</a></td>
 	 <td >'.date('F jS Y h:i A', strtotime($r[$i]['date'])).'</td>
    
-    <td><a style="margin-right:15px" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[$i]['id'].'" target="_blank">'.__("Download","sp-cdm").'</a> <a href="'.$delete_page .'&dlg-delete-file='.$r[$i]['id'].'&user_id='.$r[$i]['uid'].'#downloads">'.__("Delete","sp-cdm").'</a> </td>
+    <td><a style="margin-right:15px" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[$i]['id'].'" >'.__("Download","sp-cdm").'</a> <a href="'.$delete_page .'&dlg-delete-file='.$r[$i]['id'].'&user_id='.$r[$i]['uid'].'#downloads">'.__("Delete","sp-cdm").'</a> </td>
 <td><input type="checkbox" name="vendor_email[]" value="'.$r[$i]['id'].'"></td>	</tr>
 
 

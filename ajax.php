@@ -112,12 +112,22 @@ require( '../../../wp-load.php' );
 <div class="sp_su_project">
 <strong>'.__("File Type: ","sp-cdm").' </strong>'.$ext .'
 </div>';
-if($r[0]['notes'] != ""){
-$content .='
+
+ if (CU_PREMIUM == 1){ 
+
+$html .='
+<div class="sp_su_notes">
+'.sp_cdm_get_form_fields($r[0]['id']).'
+</div>';	 
+	 
+ }else{
+	 if($r[0]['notes'] != ""){
+$html .='
 <div class="sp_su_notes">
 <strong>'.__("Notes: ","sp-cdm").':</strong> <em>'.$r[0]['notes'].'</em>
 </div>';
 }
+ }
  if (CU_PREMIUM == 1){ 
  
  if(sp_cdm_file_history_exists($r[0]['id']) == true){

@@ -1,5 +1,12 @@
+#upload_form .error {
+  clear: both;
+  color: #f00;
+  position:absolute; background-color:#F7DFE0;width:75px;
 
+  font-size: 12px;
 
+}
+#upload_form {font-size:12px;}
 #dlg_cdm_thumbnails .dlg_cdm_thumbnail_folder{ float:left;width:135px;height:150px; text-align:center;padding-top:10px;}
 #dlg_cdm_thumbnails .dlg_cdm_thumbnail_folder a {display:block; text-decoration:none;}
 #dlg_cdm_thumbnails .dlg_cdm_thumbnail_folder a:hover { background-color:#D9EFFB;border-radius:10px}

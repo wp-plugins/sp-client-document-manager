@@ -157,15 +157,11 @@ $html .='
 <script type="text/javascript">
 
 
-jQuery(document).ready(function() {
-jQuery("#dlg-upload").bind("click", function() {
+function sp_cdm_change_indicator(){
+	
 
 jQuery(".sp_change_indicator_button").hide();
 jQuery(".sp_change_indicator").slideDown();
-
-
-
-
 
 
 
@@ -173,11 +169,19 @@ jQuery(\'.sp_change_indicator\').html(\'<object classid="clsid:d27cdb6e-ae6d-11c
 document.forms["sp_upload_form"].submit();
 return true;
 
-});
+}
 
 
-
-
+jQuery(document).ready(function() {
+	jQuery("#upload_form").simpleValidate({
+	  errorElement: "em",
+	  ajaxRequest: false,
+	  errorText: "'.__("Required","sp-cdm").'",
+	   completeCallback: function() {
+      
+	  sp_cdm_change_indicator();
+	  }
+	});
 });
 
 </script>
@@ -200,18 +204,17 @@ return true;
 
 </div>
 
-
-
 <form  action="'.$_SERVER['REQUEST_URI'].'" method="post" enctype="multipart/form-data" id="upload_form" name="sp_upload_form" >';
 
 
 
 
 			$html .='<div>
+			<p>'.stripslashes(get_option('sp_cu_form_instructions')).'</p>
 				  <table width="100%" cellpadding="2" cellspacing="2" style="border:none;padding:0px;margin:0px;">
   <tr>
-    <td width="90">'.__("File Name:","sp-cdm").'</td>
-    <td><input  type="text" name="dlg-upload-name"></td>
+    <td>'.__("File Name:","sp-cdm").'</td>
+    <td><input  type="text" name="dlg-upload-name" class="required"></td>
   </tr>
   
   ';
@@ -223,26 +226,39 @@ return true;
  $html .= sp_cdm_display_categories(); 
  }
  
- 
+
  
   $html .= '
   <tr>
     <td>'.__("File:","sp-cdm").'</td>
-    <td>	    <input id="file_upload" name="dlg-upload-file[]" type="file" multiple>
+    <td>	    <input id="file_upload" name="dlg-upload-file[]" type="file" class="required" multiple>
 <div id="upload_list"></div>
 							</td>
-  </tr>
-  <tr>
+  </tr>';
+  
+    if (CU_PREMIUM == 1){ 
+  
+  $html .=display_sp_cdm_form();
+  
+  }else{
+	  
+  $html .='<tr>
     <td>'.__("Notes:","sp-cdm").'</td>
     <td><textarea style="width:90%;height:70px" name="dlg-upload-notes"></textarea></td>
   </tr>
+  ';
+  }
+  $html .='
   <tr>
     <td>&nbsp;</td>
     <td>
 						<div class="sp_change_indicator_button"><input id="dlg-upload" onclick="sp_change_indicator()" type="submit" name="submit" value="Upload" ></div>
 						<div class="sp_change_indicator" ></div>	
 							</td>
-  </tr>
+  </tr>';
+
+  
+  $html .='
 </table></div>';
 
 
@@ -312,6 +328,11 @@ if($_POST['submit'] != ""){
 	$a['file'] = sp_uploadFile($files);
     $wpdb->insert(  "".$wpdb->prefix."sp_cu", $a );
 	
+	 if (CU_PREMIUM == 1){ 
+	  
+	 process_sp_cdm_form_vars($data['custom_forms'],$wpdb->insert_id);
+	 
+	 }
 	$to = get_option('admin_email');
 	$headers .= "".__("From:","sp-cdm")." ".$current_user->user_firstname." ".$current_user->user_lastname." <".$current_user->user_email.">\r\n";
 	$message  = "".__("Client uploaded a new document","sp-cdm")."<br><br> ".__("Click here view the files:","sp-cdm")." " . get_bloginfo('wpurl') . "/wp-admin/user-edit.php?user_id=".$user_ID."#downloads";

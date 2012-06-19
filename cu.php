@@ -4,12 +4,12 @@ Plugin Name: Smarty Pants Client Document Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.1.1
+Version: 1.1.2
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.1.1";
+$sp_client_upload = "1.1.2";
 
 load_plugin_textdomain( 'sp-cdm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -20,6 +20,24 @@ ini_set('max_input_time', 300);
 ini_set('max_execution_time', 300); 
  
 add_action('admin_menu', 'sp_client_upload_menu');
+
+
+add_filter('wp_head','sp_cdm_tinymce_editor');
+
+ function sp_cdm_tinymce_editor(){
+  wp_admin_css('thickbox');
+  wp_enqueue_script('post');
+  wp_enqueue_script('media-upload');
+  wp_enqueue_script('jquery');
+  wp_enqueue_script('jquery-ui-core');
+  wp_enqueue_script('jquery-ui-tabs');
+  wp_enqueue_script('tiny_mce');
+  wp_enqueue_script('editor');
+  wp_enqueue_script('editor-functions');
+  add_thickbox();
+ }
+
+
 
 include 'common.php';
 if(file_exists(ABSPATH.'wp-content/plugins/sp-client-document-manager/premium/index.php')){
@@ -50,6 +68,7 @@ function sp_client_upload_init() {
 			   wp_enqueue_script( 'jquery-ui-dialog' );
 			   wp_enqueue_script( 'jquery-ui-tabs' );
 			   wp_enqueue_script( 'jquery-form' );
+			 wp_enqueue_script('smcdmvalidate', ''.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/js/jquery.validate.js');
 	}
 }
 
@@ -150,6 +169,36 @@ function sp_cdm_update_db_check() {
 			
 		}
 		
+		
+		if($cur_sp_client_upload < '1.1.2'){
+			$sql1 = '
+CREATE TABLE  `'.$wpdb->prefix.'sp_cu_forms` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `template` text NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `defaults` text NOT NULL,
+  `sort` int(11) NOT NULL DEFAULT "0",
+  `required` varchar(11) NOT NULL DEFAULT "No",
+  PRIMARY KEY (`id`)
+) ;';
+
+$sql2 = 'CREATE TABLE IF NOT EXISTS `'.$wpdb->prefix.'sp_cu_form_entries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `fid` int(11) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `file_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ';
+
+  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+  dbDelta($sql1);
+  dbDelta($sql2); 
+  
+		}
+		
+		
 		update_option('sp_client_upload',$sp_client_upload);
 		
 	}
@@ -162,7 +211,8 @@ add_action('plugins_loaded', 'sp_cdm_update_db_check');
 function sp_client_upload_menu() {
 
 		$projects = new cdmProjects;
-
+		
+	
 		  add_menu_page( 'sp_cu', 'Client Documents',  'manage_options', 'sp-client-document-manager', 'sp_client_upload_options');
 		  
 		  add_submenu_page( 'sp_cu', 'Vendors', 'Vendors', 'manage_options', 'sp-client-document-manager-vendors', 'sp_client_upload_options_vendors');
@@ -174,7 +224,10 @@ function sp_client_upload_menu() {
 		   add_submenu_page( 'sp_cu', 'Projects', 'Projects', 'manage_options', 'sp-client-document-manager-projects',   array(  $projects ,'view'));
 		   
 		 if (CU_PREMIUM == 1){
-		 
+			 	if(class_exists('cdmForms')){
+		$forms = new cdmForms;
+		}
+		  add_submenu_page( 'sp_cu', 'Forms', 'Forms', 'manage_options', 'sp-client-document-manager-forms',   array(  $forms ,'view'));
 		 add_submenu_page( 'sp_cu', 'Categories', 'Categories', 'manage_options', 'sp-client-document-manager-categories', 'sp_client_upload_cat_view');
 		 }
 		 

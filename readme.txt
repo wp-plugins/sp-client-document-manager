@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: client upload, document manager, file upload, file manager, customer file manager, customer files, document version system
 Requires at least: 2.0.2
 Tested up to: 3.4.0
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 
 A Translatable WordPress plug-in that allows your business to manage client files easily.
 
@@ -54,6 +54,7 @@ Premium Features
 * Auto deletion of files based on a time you set.
 * Thumbnail view mode for a windows explorer type look and feel.
 * Automaticly create thumbnails of pdfs and psds (must have imagemagick installed on server)
+* New form manager! Now add custom fields to your upload form! Sort the fields, view them in the file view page or in admin!
 For more information check out the plugin page http://smartypantsplugins.com/sp-client-document-manager/
 
 == Installation ==
@@ -104,6 +105,8 @@ This could be one of two reasons, either you did not install theme my login or y
 * Premium users can now view thumbnails and
 * Thumbnails created from psds and pdfs
 
+= 1.1.2 =
+* Premium users can now add fields to the upload form, add textboxes,selectboxes or textareas!
 
 == Upgrade Notice ==
 
