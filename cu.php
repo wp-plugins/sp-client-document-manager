@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Smarty Pants Client Document Manager
+Plugin Name: SP Client Document & Project Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
