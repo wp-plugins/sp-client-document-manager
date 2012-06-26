@@ -1,28 +1,34 @@
 === Plugin Name ===
 Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
-Tags: client upload, document manager, file upload, file manager, customer file manager, customer files, document version system
+Tags: client upload,project management, document manager, file uploader, customer file manager, customer files, document version system
 Requires at least: 2.0.2
 Tested up to: 3.4.0
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 
-A Translatable WordPress plug-in that allows your business to manage client files easily.
+A WordPress plug-in that allows your business to manage client files and projects to assign to vendors or sub-contractors.
 
 == Description ==
 
-Smarty Pants Document Manager is a WordPress plug-in that allows your business to manage client files easily and securely.  
-Designed for Businesses that require clients to send files and those files need to be managed or assigned to Supplies or internal staff.  
-The Smarty Pants Document manager has user across many industry lines. Originally developed for print brokers to manage client graphic files and assign to graphic designers and printing companies.
+Smarty Pants Document Manager is a WordPress plug-in that allows your business to manage client/customers files and projects easily and securely.  
+Designed for Businesses that require clients to send files and those files need to be managed or assigned to Supplier's, vendors, sub-contractors or internal staff.  
+The Smarty Pants Document manager has user across many industry lines. 
 The Client Document Manager now supports localization so the plugin can be converted to any language you want! Check out our website for a tutorial on how to do this.
 
 
 We also now offer a premium version; please check out our website for more information: 
 http://smartypantsplugins.com/sp-client-document-manager/
 
+Current Languages
+
+* English
+* French
+* German
 
 Client Side Features
 
 * Clients upload files on their own personal page
+* Clients can create or add to existing projects
 * Ability to choose multiple files
 * Delete uploaded documents
 * Automatically zip multiple files
@@ -33,6 +39,7 @@ Client Side Features
 Administrator Side Features
 
 * Notification via email when a client uploads a file
+* Add files and documents to client page and projects
 * Download file archive of a user
 * Custom Naming of files
 * Create multiple upload locations
@@ -44,6 +51,7 @@ Administrator Side Features
 * Attach file or send the file as a link
 * Projects allow you or the users to create projects to store files in
 * Allow the user to create projects
+* Admin has the ability to add files to any user
 
 Premium Features
 
@@ -111,6 +119,10 @@ This could be one of two reasons, either you did not install theme my login or y
 = 1.1.3 =
 * Force download works better with mime types!
 
+= 1.1.4 =
+* Admin now has ability to add files to any user
+* Added German Translation
+
 == Upgrade Notice ==
 
 = 1.0.5 =
@@ -127,4 +139,3 @@ Bug fixes, added thumbnail mode for premium users.
 
 = 1.1.1 =
 Projects now come with free version! Create projects and folders for your files
-

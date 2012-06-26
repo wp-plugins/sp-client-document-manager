@@ -245,6 +245,7 @@ $content .= '<strong>Version:</strong> '.$cu_ver .' '.$ver.'<div style="padding:
 <a href="admin.php?page=sp-client-document-manager-settings" class="button" style="margin-right:10px">'.__("Settings","sp-cdm").'</a>
 <a href="admin.php?page=sp-client-document-manager-vendors" class="button" style="margin-right:10px">'.__("Vendors","sp-cdm").'</a>';
 $content .= '<a href="admin.php?page=sp-client-document-manager-projects" class="button" style="margin-right:10px">'.__("Projects","sp-cdm").'</a>';
+$content .= '<a href="admin.php?page=sp-client-document-manager-uploader" class="button" style="margin-right:10px">'.__("Uploader","sp-cdm").'</a>';
 if (CU_PREMIUM == 1){
 
 $content .= '<a href="admin.php?page=sp-client-document-manager-forms" class="button" style="margin-right:10px">'.__("Forms","sp-cdm").'</a>';

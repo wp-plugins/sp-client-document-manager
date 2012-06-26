@@ -4,12 +4,12 @@ Plugin Name: Smarty Pants Client Document Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.1.3
+Version: 1.1.4
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.1.3";
+$sp_client_upload = "1.1.4";
 
 load_plugin_textdomain( 'sp-cdm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -52,6 +52,7 @@ include 'zip.class.php';
 
 include 'admin/vendors.php';
 include 'admin/projects.php';
+include 'admin/uploader.php';
 include 'user/projects.php';
 include 'functions.php';
 include 'shortcode.php';
@@ -60,7 +61,7 @@ include 'shortcode.php';
 
 
 function sp_client_upload_init() {
-	if (!is_admin()) {
+	
 
 		wp_enqueue_script('jquery');
 			wp_enqueue_script('smUpload', ''.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/upload.js');
@@ -69,22 +70,22 @@ function sp_client_upload_init() {
 			   wp_enqueue_script( 'jquery-ui-tabs' );
 			   wp_enqueue_script( 'jquery-form' );
 			 wp_enqueue_script('smcdmvalidate', ''.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/js/jquery.validate.js');
-	}
+	
 }
 
 function sp_client_upload_load_css(){
-	if (!is_admin()) {
+	
 echo '<link type="text/css" rel="stylesheet" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/style.css" />
 <link type="text/css" rel="stylesheet" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/css/smoothness/jquery-ui-1.8.18.custom.css" />
 
 ';
 
-	}
+	
 }
 
 add_action('wp_head', 'sp_client_upload_load_css');	
 add_action('init', 'sp_client_upload_init');
-
+ add_action( 'admin_init', 'sp_client_upload_load_css' );
 
 
 function sp_client_upload_install() {
@@ -211,7 +212,7 @@ add_action('plugins_loaded', 'sp_cdm_update_db_check');
 function sp_client_upload_menu() {
 
 		$projects = new cdmProjects;
-		
+		$uploader = new sp_cdm_admin_uploader;
 	
 		  add_menu_page( 'sp_cu', 'Client Documents',  'manage_options', 'sp-client-document-manager', 'sp_client_upload_options');
 		  
@@ -222,13 +223,14 @@ function sp_client_upload_menu() {
 	   	  add_submenu_page( 'sp_cu', 'Settings', 'Settings', 'manage_options', 'sp-client-document-manager-settings', 'sp_client_upload_settings');
 		  
 		   add_submenu_page( 'sp_cu', 'Projects', 'Projects', 'manage_options', 'sp-client-document-manager-projects',   array(  $projects ,'view'));
+		    add_submenu_page( 'sp_cu', 'Uploader', 'Uploader', 'manage_options', 'sp-client-document-manager-uploader',   array( $uploader ,'display_sp_upload_form'));
 		   
 		 if (CU_PREMIUM == 1){
 			 	if(class_exists('cdmForms')){
 		$forms = new cdmForms;
 		}
 		  add_submenu_page( 'sp_cu', 'Forms', 'Forms', 'manage_options', 'sp-client-document-manager-forms',   array(  $forms ,'view'));
-		 add_submenu_page( 'sp_cu', 'Categories', 'Categories', 'manage_options', 'sp-client-document-manager-categories', 'sp_client_upload_cat_view');
+		 add_submenu_page( 'sp_cu', 'Categories', 'Categories', 'manage_options', 'sp-client-document-manager-categories', 'display_sp_client_upload');
 		 }
 		 
 		 
