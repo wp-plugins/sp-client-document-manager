@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: client upload,project management, document manager, file uploader, customer file manager, customer files, document version system
 Requires at least: 2.0.2
 Tested up to: 3.4.0
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 
 A WordPress plug-in that allows your business to manage client files and projects to assign to vendors or sub-contractors.
 
