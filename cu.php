@@ -231,7 +231,7 @@ function sp_client_upload_menu() {
 		$forms = new cdmForms;
 		}
 		  add_submenu_page( 'sp_cu', 'Forms', 'Forms', 'manage_options', 'sp-client-document-manager-forms',   array(  $forms ,'view'));
-		 add_submenu_page( 'sp_cu', 'Categories', 'Categories', 'manage_options', 'sp-client-document-manager-categories', 'display_sp_client_upload');
+		 add_submenu_page( 'sp_cu', 'Categories', 'Categories', 'manage_options', 'sp-client-document-manager-categories', 'sp_client_upload_cat_view');
 		 }
 		 
 		 
