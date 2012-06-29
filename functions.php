@@ -239,7 +239,49 @@ function sp_client_upload_nav_menu(){
 	}else{
 	$ver = $sp_client_upload;	
 	}
-$content .= '<strong>Version:</strong> '.$cu_ver .' '.$ver.'<div style="padding:10px;font-weight:bold">
+$content .= '<strong>Version:</strong> '.$cu_ver .' '.$ver.'';
+
+
+
+if($_GET['sphidemessage'] == 1){
+	
+$content .='		
+			<script type="text/javascript">
+				jQuery(document).ready( function() {
+				 sp_cu_dialog("#sp_cdm_ignore",400,200);
+			 
+				});
+			</script>
+
+			<div style="display:none">
+			
+			<div id="sp_cdm_ignore">
+			<h2>It\'s OK!</h2>
+			<p>Hey no hard feelings, we hate nag messages too! If you change your mind and want to give us some love checkout the settings page for a link to the our website!</p>
+			</div>
+		    </div>';	
+			update_option("sp_cdm_ignore",1);
+}
+
+if($_GET['sphidemessage'] == '2'){
+	
+update_option("sp_cdm_ignore",0);	
+}
+if(CU_PREMIUM != 1 && get_option("sp_cdm_ignore") != 1){
+	
+	$content .='	
+	<div style="border:1px solid #CCC;padding:5px;margin:5px;background-color:#eaf0ea; border-radius:10px">
+	<p><strong>Upgrade to the premium version today to get enhanced features and support. Features include: File versioning system, Categories for files, Thumbnails for files, auto generation of thumbnails from PDF and PSD, Additional fields form builder, Support and many more enhanced settings!</strong> <br />
+<br />
+<a href="http://smartypantsplugins.com/sp-client-document-manager/" target="_blank" class="button">Click here to upgrade! </a> <a style="margin-left:10px" href="http://www.youtube.com/watch?feature=player_embedded&v=m6szdA3r-1Q" target="_blank" class="button">View the youtube video</a> <a style="margin-left:10px" href="http://smartypantsplugins.com/donate/" target="_blank" class="button">Click here to donate</a> <a href="admin.php?page=sp-client-document-manager&sphidemessage=1"  class="button" style="margin-left:10px">Click here to ignore us!</a></p>
+	</div>';
+
+}
+
+	
+	
+$content .='
+<div style="padding:10px;font-weight:bold">
 
 <a href="admin.php?page=sp-client-document-manager" class="button" style="margin-right:10px">'.__("Home","sp-cdm").'</a>
 <a href="admin.php?page=sp-client-document-manager-settings" class="button" style="margin-right:10px">'.__("Settings","sp-cdm").'</a>

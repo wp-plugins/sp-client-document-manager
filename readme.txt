@@ -4,9 +4,9 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: client upload,project management, document manager, file uploader, customer file manager, customer files, document version system
 Requires at least: 2.0.2
 Tested up to: 3.4.0
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 
-A WordPress plug-in that allows your business to manage client files and projects to assign to vendors or sub-contractors.
+A WordPress plug-in that allows your business to manage client files and projects to assign to vendors,manufacturers sub-contractors.
 
 == Description ==
 
@@ -63,6 +63,7 @@ Premium Features
 * Thumbnail view mode for a windows explorer type look and feel.
 * Automaticly create thumbnails of pdfs and psds (must have imagemagick installed on server)
 * New form manager! Now add custom fields to your upload form! Sort the fields, view them in the file view page or in admin!
+* File versioning system, don't lose old versions 
 For more information check out the plugin page http://smartypantsplugins.com/sp-client-document-manager/
 
 == Installation ==

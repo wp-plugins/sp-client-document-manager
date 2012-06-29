@@ -56,11 +56,11 @@ function sp_uploadFile($files, $history = NULL){
 	
 			$target_path = "uploads/";
 			$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/';
-$count = sp_array_remove_empty($files['dlg-upload-file']['name']);
+			$count = sp_array_remove_empty($files['dlg-upload-file']['name']);
 
 
 
-if($history == 1){
+			if($history == 1){
 		$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$current_user->ID.'/';
 	
 	$filename = ''.sp_client_upload_filename($current_user->ID) .''.$files['dlg-upload-file']['name'][0].'';
