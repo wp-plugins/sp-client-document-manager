@@ -13,10 +13,16 @@ if($_POST['add-project'] != ""){
 			$insert['uid'] = $current_user->ID;
 	$wpdb->insert( "".$wpdb->prefix . "sp_cu_project",$insert );
 }
+
+
+if (CU_PREMIUM == 1){  	
+		$find_groups = cdmFindGroups($current_user->ID,'_project');
+			 }
+
   $projects = $wpdb->get_results("SELECT *
 	
 									 FROM ".$wpdb->prefix."sp_cu_project
-									 WHERE uid = '".$current_user->ID."'
+									WHERE  ( uid = '".$current_user->ID."' ".$find_groups.") 
 									 ", ARRAY_A);	
 
 

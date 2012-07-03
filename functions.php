@@ -1,6 +1,7 @@
 <?php
 
 
+
 function cdm_thumbPdf($pdf)
 {
     try
@@ -119,7 +120,10 @@ $content .='<h3>Thanks for upgrading!</h3>
 
 	<form action="admin.php?page=sp-client-document-manager-settings&save_options=1" method="post">
 	 <table class="wp-list-table widefat fixed posts" cellspacing="0">
-  
+    <tr>
+    <td width="300"><strong>Company Name</strong><br><em>This could be your name or your company name which will go in the "from" area in the vendor email.</em></td>
+    <td><input type="text" name="sp_cu_company_name"  value="'.get_option('sp_cu_company_name').'"  size=80"> </td>
+  </tr>
    
          <tr>
     <td width="300"><strong>Filename Format</strong><br><em>Use the below codes to determine the file format, whatever you put in the box will show up before the actual file name.If you keep this blank then you leave the risk to existing files. Please see the example to the right.</em><br><br>
@@ -289,7 +293,7 @@ $content .='
 $content .= '<a href="admin.php?page=sp-client-document-manager-projects" class="button" style="margin-right:10px">'.__("Projects","sp-cdm").'</a>';
 $content .= '<a href="admin.php?page=sp-client-document-manager-uploader" class="button" style="margin-right:10px">'.__("Uploader","sp-cdm").'</a>';
 if (CU_PREMIUM == 1){
-
+$content .= '<a href="admin.php?page=sp-client-document-manager-groups" class="button" style="margin-right:10px">'.__("Groups","sp-cdm").'</a>';
 $content .= '<a href="admin.php?page=sp-client-document-manager-forms" class="button" style="margin-right:10px">'.__("Forms","sp-cdm").'</a>';
 $content .= '<a href="admin.php?page=sp-client-document-manager-categories" class="button" style="margin-right:10px">'.__("Categories","sp-cdm").'</a>';
 }

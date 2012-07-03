@@ -4,12 +4,12 @@ Plugin Name: SP Client Document & Project Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.1.6
+Version: 1.1.7
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.1.6";
+$sp_client_upload = "1.1.7";
 
 load_plugin_textdomain( 'sp-cdm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -91,7 +91,7 @@ add_action('admin_head', 'sp_client_upload_load_css');
 
 function sp_client_upload_install() {
    global $wpdb;
-   global $sp_portfolio_version;
+   global  $sp_client_upload;
 
 	 $table_name = $wpdb->prefix . "sp_cu";
  	  $project_table_name = $wpdb->prefix . "sp_cu_project";  
@@ -142,8 +142,8 @@ $sql3 = 'CREATE TABLE IF NOT EXISTS `'.$project_cat_name.'` (
 	
 		@mkdir($dir, 0777);
 	}
-if ( get_option( 'sp_client_upload_version') == '') {
-  add_option("sp_client_upload_version", $sp_client_upload);
+if ( get_option( 'sp_client_upload') == '') {
+  add_option("sp_client_upload", $sp_client_upload);
   add_option("sp_client_upload_page", 'Please enter the page');
 
 }
@@ -197,7 +197,28 @@ $sql2 = 'CREATE TABLE IF NOT EXISTS `'.$wpdb->prefix.'sp_cu_form_entries` (
   require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
   dbDelta($sql1);
   dbDelta($sql2); 
-  
+
+	}
+	
+	
+	if($cur_sp_client_upload < '1.1.7' ){
+			$sql3 = '
+CREATE TABLE IF NOT EXISTS `'.$wpdb->prefix.'sp_cu_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);';
+
+$sql4 = 'CREATE TABLE IF NOT EXISTS `'.$wpdb->prefix.'sp_cu_groups_assign` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `gid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ;';
+
+  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+  dbDelta($sql3);
+  dbDelta($sql4);
 		}
 		
 		
@@ -229,8 +250,10 @@ function sp_client_upload_menu() {
 		 if (CU_PREMIUM == 1){
 			 	if(class_exists('cdmForms')){
 		$forms = new cdmForms;
+		$groups = new cdmGroups;
 		}
 		  add_submenu_page( 'sp_cu', 'Forms', 'Forms', 'manage_options', 'sp-client-document-manager-forms',   array(  $forms ,'view'));
+		    add_submenu_page( 'sp_cu', 'Groups', 'Groups', 'manage_options', 'sp-client-document-manager-groups',   array(  $groups ,'view'));
 		 add_submenu_page( 'sp_cu', 'Categories', 'Categories', 'manage_options', 'sp-client-document-manager-categories', 'sp_client_upload_cat_view');
 		 }
 		 

@@ -17,6 +17,9 @@ require( '../../../wp-load.php' );
 		$wp_con_folder = get_option('sp_cu_wp_folder') ;
 	}
 		
+		
+
+		
 		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id = '".$_GET['id']."'  order by date desc", ARRAY_A);
 		//print_r($r);
 		
@@ -148,11 +151,17 @@ $html .='
 		
 		case "thumbnails":
 		
+			 if (CU_PREMIUM == 1){  	
+		$find_groups = cdmFindGroups($_GET['uid']);
+			 }
+		
+	
+
 		$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,".$wpdb->prefix."sp_cu.id,".$wpdb->prefix."sp_cu.pid  ,".$wpdb->prefix."sp_cu.uid,
 											".$wpdb->prefix."sp_cu_project.name AS project_name
 										FROM ".$wpdb->prefix."sp_cu   
 										LEFT JOIN ".$wpdb->prefix."sp_cu_project  ON ".$wpdb->prefix."sp_cu.pid = ".$wpdb->prefix."sp_cu_project.id
-										WHERE ".$wpdb->prefix."sp_cu.uid = '".$_GET['uid']."'  
+										WHERE (".$wpdb->prefix."sp_cu.uid = '".$_GET['uid']."'  ".$find_groups .")
 										AND pid != 0
 										AND parent = 0 
 										GROUP BY pid
@@ -195,7 +204,7 @@ $html .='
 	
 	
 	if($_GET['pid'] == ""){
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = '".$_GET['uid']."'  AND pid = 0 	AND parent = 0  order by date desc", ARRAY_A);
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.")  AND pid = 0 	AND parent = 0  order by date desc", ARRAY_A);
 	}else{
 	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$_GET['pid']."' AND parent = 0  order by date desc", ARRAY_A);		
 	}
@@ -264,7 +273,10 @@ $_REQUEST['dir'] = urldecode($_REQUEST['dir']);
 $root = ABSPATH;
 
 
+	 if (CU_PREMIUM == 1){  	
+		$find_groups = cdmFindGroups($_GET['uid']);
 	
+			 }
 
 
 	if (strpos( $_REQUEST['dir'], 'PID') === false){
@@ -272,14 +284,14 @@ $root = ABSPATH;
 											".$wpdb->prefix."sp_cu_project.name AS project_name
 										FROM ".$wpdb->prefix."sp_cu   
 										LEFT JOIN ".$wpdb->prefix."sp_cu_project  ON ".$wpdb->prefix."sp_cu.pid = ".$wpdb->prefix."sp_cu_project.id
-										WHERE ".$wpdb->prefix."sp_cu.uid = '".$_GET['uid']."'  
+										WHERE (".$wpdb->prefix."sp_cu.uid = '".$_GET['uid']."'   ".$find_groups." )
 										AND pid != 0
 										AND parent = 0 
 										GROUP BY pid
 										ORDER by date desc", ARRAY_A);
 
-										
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = '".$_GET['uid']."'  AND pid = 0 	AND parent = 0  order by date desc", ARRAY_A);
+									
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.") AND pid = 0 	AND parent = 0  order by date desc", ARRAY_A);
 	
 	}else{
 		
@@ -410,7 +422,7 @@ $zip->setZipFile($dir.$return_file);
 	
 	$to = $_POST['vendor'];
 	
-	$headers = array("From: ".get_option('admin_email')."",
+	$headers = array('From: "'.get_option('sp_cu_company_name').'" <'.get_option('admin_email').'>',
 	         "Content-Type: text/html"
 	         );
 	$h = implode("\r\n",$headers) . "\r\n";
@@ -428,7 +440,7 @@ $zip->setZipFile($dir.$return_file);
 	$message .= $attachment_links;	
 	}
 
-	$subject = ''.__("New files from:","sp-cdm").' '.get_option('blogname').'';
+	$subject = ''.__("New files from:","sp-cdm").' '.get_option('sp_cu_company_name').'';
 	wp_mail( $to, $subject, $message, $h, $attachments );
 	
 	
