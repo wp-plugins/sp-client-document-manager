@@ -2,7 +2,7 @@
 require( '../../../wp-load.php' );
 	
 	global $wpdb;
-	
+$upload_dir = wp_upload_dir();	
 	
 	
 	$function = $_GET['function'];
@@ -51,7 +51,7 @@ require( '../../../wp-load.php' );
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/classes/thumb.php?src='.get_bloginfo('wpurl').'/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'&w=250&h=250">';
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/classes/thumb.php?src=/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'&w=250&h=250">';
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
 			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
@@ -218,7 +218,7 @@ $html .='
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/classes/thumb.php?src='.get_bloginfo('wpurl').'/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/classes/thumb.php?src=/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
 			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
@@ -339,12 +339,15 @@ $root = ABSPATH;
 		$r_project = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu_project where id = $user_ID  ", ARRAY_A);			
 			$return_file = "".preg_replace('/[^\w\d_ -]/si', '',stripslashes($r_project[0]['name'])).".zip";
 			$zip = new Zip();
+			
+			
+				$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$r_project[0]['uid'].'/';	
+			$path = '../../../wp-content/uploads/sp-client-document-manager/'.$r_project[0]['uid'].'/';	
 			//@unlink($dir.$return_file);
 				
 				for($i=0; $i<count($r); $i++){
 			
-		$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/';	
-			$path = '../../../wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/';	
+	
 					  $zip->addFile(file_get_contents($dir.$r[$i]['file']), $r[$i]['file'] , filectime($dir.$r[$i]['file']));
 					
 				}
@@ -416,8 +419,8 @@ $zip->setZipFile($dir.$return_file);
 					}
 		
 		
-	$attachment_links .= '<a href="' . get_bloginfo('wpurl') . '/wp-content/uploads/sp-client-document-manager/'.$_POST['user_id'].'/'.$r[$i]['file'].'">'.$name.'</a><br>';
-	$attachment_array[$i] = ''.WP_CONTENT_DIR .'/uploads/sp-client-document-manager/'.$_POST['user_id'].'/'.$r[$i]['file'].'';	
+	$attachment_links .= '<a href="' . get_bloginfo('wpurl') . '/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'">'.$name.'</a><br>';
+	$attachment_array[$i] = ''.WP_CONTENT_DIR .'/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'';	
 	}
 	
 	$to = $_POST['vendor'];

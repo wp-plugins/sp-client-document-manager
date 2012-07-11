@@ -13,24 +13,17 @@ echo '
 <form action="admin.php?page=sp-client-document-manager-projects" method="post">';
 
 if($_GET['id'] != ""){
+	echo 1;
 $r = $wpdb->get_results("SELECT  * FROM ".$wpdb->prefix."sp_cu_project where id = '".$_GET['id']."'  ", ARRAY_A);	
 
 echo '<input type="hidden" name="id" value="'.$r[0]['id'].'">';
 }
 
 
-$users = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."users order by display_name  ", ARRAY_A);	
+$users = $wpdb->get_results("SELECT * FROM ".$wpdb->base_prefix."users order by display_name  ", ARRAY_A);	
 
-$userselect .='<select name="uid">';
-if($_GET['id'] != ""){
-	$user = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."users  where id = ".$r[0]['uid']."  ", ARRAY_A);	
 
-$userselect .= '<option selected value="'.$r[0]['uid'].'">'.stripslashes($user[0]['display_name']).'</option>';	
-}
-for($i=0; $i<count($users ); $i++){
-	$userselect .= '<option value="'.$users[$i]['ID'].'">'.$users[$i]['display_name'].'</option>';
-}
-$userselect .= '</select>';
+
 
 
 
@@ -44,7 +37,10 @@ echo '
   </tr>
   <tr>
     <td>'.__("User:","sp-cdm").'</td>
-    <td>'.$userselect.'</td>
+    <td>';
+	
+	wp_dropdown_users(array('name' => 'uid', 'selected' => $r[0]['uid']));
+	echo '</td>
   </tr>
   <tr>
     <td>&nbsp;</td>
@@ -111,17 +107,14 @@ window.location = "admin.php?page=sp-client-document-manager-projects"
 	$r = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu_project.name as projectName,
 									".$wpdb->prefix."sp_cu_project.uid,
 									".$wpdb->prefix."sp_cu_project.id AS projectID,
-									".$wpdb->prefix."users.ID,
-									".$wpdb->prefix."users.user_nicename
+									".$wpdb->base_prefix."users.ID,
+									".$wpdb->base_prefix."users.user_nicename
 										
 	
 									 FROM ".$wpdb->prefix."sp_cu_project
-									 LEFT JOIN ".$wpdb->prefix."users ON ".$wpdb->prefix."sp_cu_project.uid = ".$wpdb->prefix."users.ID
+									 LEFT JOIN ".$wpdb->base_prefix."users ON ".$wpdb->prefix."sp_cu_project.uid = ".$wpdb->base_prefix."users.ID
 									 order by ".$wpdb->prefix."sp_cu_project.name", ARRAY_A);	
-								
-
-
-
+		
 echo '<h2>'.__("Projects","sp-cdm").'</h2>'.sp_client_upload_nav_menu().'';	 
 									 
 									 echo '

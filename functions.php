@@ -426,7 +426,7 @@ function sp_client_upload_email_vendor(){
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/classes/thumb.php?src='.get_bloginfo('wpurl').'/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
+			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/classes/thumb.php?src=/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
 			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
