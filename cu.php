@@ -4,12 +4,12 @@ Plugin Name: SP Client Document & Project Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.1.8
+Version: 1.1.9
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.1.8";
+$sp_client_upload = "1.1.9";
 
 load_plugin_textdomain( 'sp-cdm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -39,7 +39,7 @@ add_filter('wp_head','sp_cdm_tinymce_editor');
 
 
 
-include 'common.php';
+include ''.dirname(__FILE__).'/common.php';
 if(file_exists(ABSPATH.'wp-content/plugins/sp-client-document-manager/premium/index.php')){
   include(ABSPATH.'wp-content/plugins/sp-client-document-manager/premium/index.php');
   $cu_ver =  'Premium version';
@@ -48,14 +48,14 @@ if(file_exists(ABSPATH.'wp-content/plugins/sp-client-document-manager/premium/in
 }
 
 
-include 'zip.class.php';
+include ''.dirname(__FILE__).'/zip.class.php';
 
-include 'admin/vendors.php';
-include 'admin/projects.php';
-include 'admin/uploader.php';
-include 'user/projects.php';
-include 'functions.php';
-include 'shortcode.php';
+include ''.dirname(__FILE__).'/admin/vendors.php';
+include ''.dirname(__FILE__).'/admin/projects.php';
+include ''.dirname(__FILE__).'/admin/uploader.php';
+include ''.dirname(__FILE__).'/user/projects.php';
+include ''.dirname(__FILE__).'/functions.php';
+include ''.dirname(__FILE__).'/shortcode.php';
 
 
 
