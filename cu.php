@@ -4,12 +4,12 @@ Plugin Name: SP Client Document & Project Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.1.9
+Version: 1.2.0
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.1.9";
+$sp_client_upload = "1.2.0";
 
 load_plugin_textdomain( 'sp-cdm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -64,18 +64,18 @@ function sp_client_upload_init() {
 	
 
 		wp_enqueue_script('jquery');
-			wp_enqueue_script('smUpload', ''.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/upload.js');
+			wp_enqueue_script('smUpload', plugins_url('upload.js', __FILE__) );
 			  wp_enqueue_script( 'jquery-ui-core' );
 			   wp_enqueue_script( 'jquery-ui-dialog' );
 			   wp_enqueue_script( 'jquery-ui-tabs' );
 			   wp_enqueue_script( 'jquery-form' );
-			 wp_enqueue_script('smcdmvalidate', ''.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/js/jquery.validate.js');
+			 wp_enqueue_script('smcdmvalidate', plugins_url('js/jquery.validate.js', __FILE__));
 	
 }
 
 function sp_client_upload_load_css(){
 	
-	wp_register_style( 'cdm-style', plugins_url('style.css', __FILE__) );
+	wp_register_style( 'cdm-style',plugins_url('style.css', __FILE__) );
 	     wp_register_style( 'jqueruistyle', plugins_url('css/smoothness/jquery-ui-1.8.18.custom.css', __FILE__) );
        
 	

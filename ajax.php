@@ -40,7 +40,7 @@ $upload_dir = wp_upload_dir();
 					
 					
 					if($ext== 'png' or $ext == 'jpg' or $ext = 'jpeg' or $ext = 'gif' ){
-					$icon = '<td width="160"><img src="'.$wp_con_folder.'wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'" width="150"></td>';	
+					$icon = '<td width="160"><img src="'.content_url().'/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'" width="150"></td>';	
 					}else{
 					$icon = '';		
 					}
@@ -51,29 +51,29 @@ $upload_dir = wp_upload_dir();
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/classes/thumb.php?src=/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'&w=250&h=250">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/classes/thumb.php?src=/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'&w=250&h=250">';
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
 		}elseif($ext == 'doc' or $ext == 'docx'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_word.png">';	
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_word.png">';	
 		}elseif($ext == 'pub' or $ext == 'pubx'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_publisher.png">';		
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_publisher.png">';		
 		}elseif($ext == 'ppt' or $ext == 'pptx'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_powerpoint.png">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_powerpoint.png">';
 		}elseif($ext == 'adb' or $ext == 'accdb'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_access.png">';	
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_access.png">';	
 		}elseif(($ext == 'pdf' or $ext == 'psd' or $ext == 'html' or $ext == 'eps') && get_option('sp_cu_user_projects_thumbs_pdf') == 1){
 			if(file_exists(''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'_big.png')){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'_big.png" width="250">';		
+			$img = '<img src="'.content_url().'/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'_big.png" width="250">';		
 			}else{
-				$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/adobe.png">';	
+				$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/adobe.png">';	
 			}
 		}elseif($ext == 'pdf' ){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/adobe.png">';	
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/adobe.png">';	
 			
 		}else{
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/package_labled.png">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/package_labled.png">';
 		}
 					
 					
@@ -178,7 +178,7 @@ $html .='
 		
 		
 		echo '<div class="dlg_cdm_thumbnail_folder">
-				<a href="javascript:sp_cdm_load_project('.$r_projects[$i]['pid'].')"><img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/my_projects_folder.png">
+				<a href="javascript:sp_cdm_load_project('.$r_projects[$i]['pid'].')"><img src="'.content_url().'/plugins/sp-client-document-manager/images/my_projects_folder.png">
 				<div class="dlg_cdm_thumb_title">
 				'.htmlentities(stripslashes($r_projects[$i]['project_name'])).'
 				</div>
@@ -191,7 +191,7 @@ $html .='
 		}else{
 		
 		echo '<div class="dlg_cdm_thumbnail_folder">
-				<a href="javascript:sp_cdm_load_file_manager()"><img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/my_projects_folder.png">
+				<a href="javascript:sp_cdm_load_file_manager()"><img src="'.content_url().'/plugins/sp-client-document-manager/images/my_projects_folder.png">
 				<div class="dlg_cdm_thumb_title">
 			<< Go Back
 				</div>
@@ -218,29 +218,29 @@ $html .='
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/classes/thumb.php?src=/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/classes/thumb.php?src=/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
 		}elseif($ext == 'doc' or $ext == 'docx'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_word.png">';	
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_word.png">';	
 		}elseif($ext == 'pub' or $ext == 'pubx'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_publisher.png">';		
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_publisher.png">';		
 		}elseif($ext == 'ppt' or $ext == 'pptx'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_powerpoint.png">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_powerpoint.png">';
 		}elseif($ext == 'adb' or $ext == 'accdb'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_access.png">';	
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_access.png">';	
 			}elseif(($ext == 'pdf' or $ext == 'psd' or $ext == 'html' or $ext == 'eps') && get_option('sp_cu_user_projects_thumbs_pdf') == 1){
 			if(file_exists(''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png')){			
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png">';	
+			$img = '<img src="'.content_url().'/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png">';	
 			}else{
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/adobe.png">';		
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/adobe.png">';		
 			}
 		}elseif($ext == 'pdf' ){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/adobe.png">';	
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/adobe.png">';	
 		
 		}else{
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/package_labled.png">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/package_labled.png">';
 		}
 		
 		echo '<div class="dlg_cdm_thumbnail_folder">

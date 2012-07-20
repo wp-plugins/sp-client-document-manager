@@ -12,8 +12,8 @@ function display_sp_thumbnails($r ){
 	}else{
 		$wp_con_folder = get_option('sp_cu_wp_folder') ;
 	}
-	$html .= '<script type="text/javascript" src="'. get_bloginfo('url').'/wp-content/plugins/sp-client-document-manager/js/jqueryFileTree/jqueryFileTree.js"></script>
-			<link rel="stylesheet" type="text/css" media="all" href="'. get_bloginfo('url').'/wp-content/plugins/sp-client-document-manager/js/jqueryFileTree/jqueryFileTree.css" />
+	$html .= '<script type="text/javascript" src="'. plugins_url('js/jqueryFileTree/jqueryFileTree.js', __FILE__).'"></script>
+			<link rel="stylesheet" type="text/css" media="all" href="'. plugins_url('js/jqueryFileTree/jqueryFileTree.css', __FILE__).'" />
 		';
 	$html .="
 	<div class=\"sp_cu_filetree\">
@@ -21,8 +21,8 @@ function display_sp_thumbnails($r ){
 	
 	jQuery(document).ready( function() {
     jQuery('#file_manager').fileTree({
-        root: '". $wp_con_folder."wp-content/uploads/sp-client-document-manager/".$user_ID."/',
-        script: '".$wp_con_folder."wp-content/plugins/sp-client-document-manager/ajax.php?function=file-tree&uid=".$user_ID."',
+        root: '". content_url()."/uploads/sp-client-document-manager/".$user_ID."/',
+        script: '".content_url()."/plugins/sp-client-document-manager/ajax.php?function=file-tree&uid=".$user_ID."',
         expandSpeed: 1000,
         collapseSpeed: 1000,
         multiFolder: false
@@ -30,7 +30,7 @@ function display_sp_thumbnails($r ){
        // alert(file);
 	   
 	   
-	   	  var url = '". $wp_con_folder."wp-content/plugins/sp-client-document-manager/ajax.php?function=view-file&id=' + file;
+	   	  var url = '".content_url()."/plugins/sp-client-document-manager/ajax.php?function=view-file&id=' + file;
 		 //alert( url);
             // show a spinner or something via css
             var dialog = jQuery('<div style=\"display:none\" class=\"loading\"></div>').appendTo('body');
@@ -102,7 +102,7 @@ function display_sp_thumbnails2($r ){
 					
 					
 					if($ext== 'png' or $ext == 'jpg' or $ext = 'jpeg' or $ext = 'gif' ){
-					$icon = '<td><img src="'. get_bloginfo('url').'/wp-content/uploads/sp-client-document-manager/'.$user_ID.'/'.$r[$i]['file'].'" width="90"></td>';	
+					$icon = '<td><img src="'. content_url().'/uploads/sp-client-document-manager/'.$user_ID.'/'.$r[$i]['file'].'" width="90"></td>';	
 					}else{
 					$icon = '';		
 					}
@@ -125,8 +125,8 @@ function display_sp_thumbnails2($r ){
     <td style="text-align:right;width:170px;">
 	
 	
-	<a href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?uid='.$user_ID.'&file='.$r[$i]['file'].'" title="Download" style="margin-right:15px"  ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/download.png"></a> 
-	<a href="javascript:sp_cu_confirm(\'#sp_cu_confirm_delete\',200,\'?dlg-delete-file='.$r[$i]['id'].'#downloads\');" title="Delete" ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/delete.png"></a> </td>
+	<a href="' . plugins_url('download.php?uid='.$user_ID.'&file='.$r[$i]['file'].'', __FILE__). '" title="Download" style="margin-right:15px"  ><img src="' . plugins_url('images/download.png', __FILE__).'"></a> 
+	<a href="javascript:sp_cu_confirm(\'#sp_cu_confirm_delete\',200,\'?dlg-delete-file='.$r[$i]['id'].'#downloads\');" title="Delete" ><img src="' .plugins_url('images/delete.png', __FILE__).'"></a> </td>
 	</tr>
 
   </tr>
@@ -165,7 +165,7 @@ jQuery(".sp_change_indicator").slideDown();
 
 
 
-jQuery(\'.sp_change_indicator\').html(\'<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"  width="204" height="16"  id="mymoviename"><param name="movie" value="'. get_bloginfo("url"). '/wp-content/plugins/sp-client-document-manager/image_138464.swf" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="'. get_bloginfo("url"). '/wp-content/plugins/sp-client-document-manager/image_138464.swf" quality="high" bgcolor="#ffffff" width="204" height="16" name="mymoviename" align="" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object><br><em>Please wait, your file is currently uploading! </em>\');
+jQuery(\'.sp_change_indicator\').html(\'<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"  width="204" height="16"  id="mymoviename"><param name="movie" value="'. content_url(). '/plugins/sp-client-document-manager/image_138464.swf" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="'.content_url(). '/plugins/sp-client-document-manager/image_138464.swf" quality="high" bgcolor="#ffffff" width="204" height="16" name="mymoviename" align="" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object><br><em>Please wait, your file is currently uploading! </em>\');
 document.forms["sp_upload_form"].submit();
 return true;
 
@@ -379,7 +379,7 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = $us
 	
 	<div >
 
-  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . get_bloginfo('url') . '/wp-content/plugins/sp-client-document-manager/images/add.png"> '.__("Add File","sp-cdm").'</a>  
+  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/add.png"> '.__("Add File","sp-cdm").'</a>  
 ';
 
 

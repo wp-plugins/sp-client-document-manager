@@ -365,7 +365,7 @@ function sp_client_upload_email_vendor(){
     	jQuery.ajax({
 			 
 		  type: "POST",
-		  url:  "../wp-content/plugins/sp-client-document-manager/ajax.php?function=email-vendor" ,
+		  url:  "'.content_url().'/wp-content/plugins/sp-client-document-manager/ajax.php?function=email-vendor" ,
 		 
 		 data:  jQuery("#your-profile" ).serialize(),
 		  success: function(msg){
@@ -426,29 +426,29 @@ function sp_client_upload_email_vendor(){
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/classes/thumb.php?src=/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/classes/thumb.php?src=/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
 		}elseif($ext == 'doc' or $ext == 'docx'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_word.png">';	
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_word.png">';	
 		}elseif($ext == 'pub' or $ext == 'pubx'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_publisher.png">';		
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_publisher.png">';		
 		}elseif($ext == 'ppt' or $ext == 'pptx'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_powerpoint.png">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_powerpoint.png">';
 		}elseif($ext == 'adb' or $ext == 'accdb'){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/microsoft_office_access.png">';	
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_access.png">';	
 			}elseif(($ext == 'pdf' or $ext == 'psd' or $ext == 'html' or $ext == 'eps') && get_option('sp_cu_user_projects_thumbs_pdf') == 1){
 			if(file_exists(''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png')){			
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png">';	
+			$img = '<img src="'.content_url().'/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png">';	
 			}else{
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/adobe.png">';		
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/adobe.png">';		
 			}
 		}elseif($ext == 'pdf' ){
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/adobe.png">';	
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/adobe.png">';	
 		
 		}else{
-			$img = '<img src="'.get_bloginfo('wpurl').'/wp-content/plugins/sp-client-document-manager/images/package_labled.png">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/package_labled.png">';
 		}		
 					
 					
@@ -474,7 +474,7 @@ function sp_client_upload_email_vendor(){
 	<td><a href="user-edit.php?user_id='.$r[$i]['uid'].'">'.$r_user[0]['display_name'].'</a></td>
 	 <td >'.date('F jS Y h:i A', strtotime($r[$i]['date'])).'</td>
    
-    <td><a style="margin-right:15px" href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[$i]['id'].'" >'.__("Download","sp-cdm").'</a> <a href="'.$delete_page .'&dlg-delete-file='.$r[$i]['id'].'&user_id='.$r[$i]['uid'].'#downloads">'.__("Delete","sp-cdm").'</a> </td>
+    <td><a style="margin-right:15px" href="' .content_url() . '/plugins/sp-client-document-manager/download.php?fid='.$r[$i]['id'].'" >'.__("Download","sp-cdm").'</a> <a href="'.$delete_page .'&dlg-delete-file='.$r[$i]['id'].'&user_id='.$r[$i]['uid'].'#downloads">'.__("Delete","sp-cdm").'</a> </td>
 <td><input type="checkbox" name="vendor_email[]" value="'.$r[$i]['id'].'"></td>	</tr>
 
 
