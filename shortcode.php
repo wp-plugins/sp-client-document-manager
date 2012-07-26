@@ -1,6 +1,89 @@
 <?php
 
+function display_sp_thumbnails2($r){
+	
+	global $wpdb,$current_user,$user_ID;
+	if(get_option('sp_cu_wp_folder') == ''){
+	$wp_con_folder = '/';	
+	}else{
+		$wp_con_folder = get_option('sp_cu_wp_folder') ;
+	}
+	
+	
+	$content .='
+	
+	<script type="text/javascript">
+	
+	
+	
+	function sp_cdm_loading_image(){
+		jQuery("#cmd_file_thumbs").html(\'<div style="padding:100px; text-align:center"><img src="'.$wp_con_folder.'wp-content/plugins/sp-client-document-manager/images/loading.gif"></div>\');		
+	}
+	function sp_cdm_load_file_manager(){
+		sp_cdm_loading_image();
+	jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$user_ID.'");	
+	cdm_ajax_search();
+	}
+	
+	jQuery(document).ready( function() {
+			
+			
+		
+		 sp_cdm_load_file_manager();
 
+			
+		});
+		
+		
+		function sp_cdm_load_project(pid){
+			sp_cdm_loading_image();
+		jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$user_ID.'&pid=" + pid);	
+			
+		}
+		
+		
+		function sp_cdm_showFile(file){
+			
+		  var url = "'. content_url().'/plugins/sp-client-document-manager/ajax.php?function=view-file&id=" + file;
+		  
+		 
+            // show a spinner or something via css
+            var dialog = jQuery(\'<div style="display:none" class="loading"></div>\').appendTo(\'body\');
+          
+            dialog.dialog({
+               
+                close: function(event, ui) {
+                    // remove div with all data and events
+                    dialog.remove();
+                },
+                modal: true,
+				height:450,
+				width:850
+            });
+			
+			 // load remote content
+            dialog.load(
+                url, 
+                {}, // omit this param object to issue a GET request instead a POST request, otherwise you may provide post parameters within the object
+                function (responseText, textStatus, XMLHttpRequest) {
+                    // remove the loading class
+                    dialog.removeClass(\'loading\');
+                }
+            );
+		}
+	</script>
+	
+	<div id="cdm_wrapper">
+	<div id="cmd_file_thumbs">
+	<div style="padding:100px; text-align:center"><img src="'.content_url().'/plugins/sp-client-document-manager/images/loading.gif"></div>	
+	
+	</div>
+	<div style="clear:both"></div>
+	</div>
+	';
+	return $content;
+	
+}
 
 function display_sp_thumbnails($r ){
 	global $wpdb,$current_user,$user_ID;
@@ -180,8 +263,8 @@ jQuery(document).ready(function() {
   $html .= '
   <tr>
     <td>'.__("File:","sp-cdm").'</td>
-    <td>	    <input id="file_upload" name="dlg-upload-file[]" type="file" class="required" multiple>
-<div id="upload_list"></div>
+    <td>	<div id="cdm_upload_fields">    <input id="file_upload" name="dlg-upload-file[]" type="file" class="required" multiple>
+<div id="upload_list"></div></div>
 							</td>
   </tr>';
   
@@ -363,7 +446,9 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 	
 	function cdm_ajax_search(){
 		
-	 cdm_load_simple_file_manager();	
+	var cdm_search = jQuery("#search_files").val();
+	jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$user_ID.'&search=" + cdm_search);		
+		
 	}
 	</script>
 	
@@ -376,7 +461,7 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 if(get_option('sp_cu_user_projects_thumbs') == 1){
 		$html .=display_sp_cdm_thumbnails($r );
 }else{
-		$html .=display_sp_thumbnails($r );
+		$html .=display_sp_thumbnails2($r );
 }
 		$html .='</div>';
 

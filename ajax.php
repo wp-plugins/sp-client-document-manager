@@ -154,7 +154,102 @@ $html .='
   echo $html;		
 		break;
 		
+		case "file-list":
 		
+			 if (CU_PREMIUM == 1){  	
+		$find_groups = cdmFindGroups($_GET['uid']);
+			 }
+		
+	
+if($_REQUEST['search'] != ""){
+
+
+$search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST['search']."%' ";	
+$search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$_REQUEST['search']."%')  ";		
+}
+		$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,".$wpdb->prefix."sp_cu.id,".$wpdb->prefix."sp_cu.pid  ,".$wpdb->prefix."sp_cu.uid,
+											".$wpdb->prefix."sp_cu_project.name AS project_name
+										FROM ".$wpdb->prefix."sp_cu   
+										LEFT JOIN ".$wpdb->prefix."sp_cu_project  ON ".$wpdb->prefix."sp_cu.pid = ".$wpdb->prefix."sp_cu_project.id
+										WHERE (".$wpdb->prefix."sp_cu.uid = '".$_GET['uid']."'  ".$find_groups .")
+										AND pid != 0
+										AND parent = 0 
+										".$search_project."
+										GROUP BY pid
+										ORDER by date desc", ARRAY_A);
+										
+										
+		echo '<div id="dlg_cdm_file_list">
+		<table border="0" cellpadding="0" cellspacing="0">';
+		
+		echo '<tr>
+		<th></th>
+		<th class="cdm_file_info">File Name</th>
+		<th class="cdm_file_date">File Date</th>
+		<th class="cdm_file_type">File Type</th>	
+		</tr>	
+		';
+			
+		if($_GET['pid'] == ""){
+		
+		
+		for($i=0; $i<count($r_projects); $i++){
+		
+		
+		echo '<tr onclick="sp_cdm_load_project('.$r_projects[$i]['pid'].')">
+		<td class="cdm_file_icon ext_directory"></td>
+		<td class="cdm_file_info"><a href="javascript:sp_cdm_load_project('.$r_projects[$i]['pid'].')">'.htmlentities(stripslashes($r_projects[$i]['project_name'])).'</a></td>
+		<td class="cdm_file_date">&nbsp;</td>
+		<td class="cdm_file_type">Folder</td>	
+		</tr>	
+		';
+			
+	}
+		}else{
+		
+		echo '<tr onclick="sp_cdm_load_file_manager();" >
+	<td class="cdm_file_icon ext_directory"></td>
+		<td class="cdm_file_info"><a href="javascript:sp_cdm_load_file_manager()">&laquo; Go Back</a></td>
+		<td class="cdm_file_date">&nbsp;</td>
+		<td class="cdm_file_type"></td>
+	</tr>	
+		';	
+			
+		}
+	
+	
+	if($_GET['pid'] == ""){
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.")  AND pid = 0 	AND parent = 0  ".$search_file." order by date desc", ARRAY_A);
+	}else{
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$_GET['pid']."' AND parent = 0   ".$search_file."  order by date desc", ARRAY_A);		
+	}
+	
+	for($i=0; $i<count( $r ); $i++){
+		
+		
+		
+		$ext = preg_replace('/^.*\./', '', $r[$i]['file']);
+		
+
+		
+		
+		echo '<tr onclick="sp_cdm_showFile('.$r[$i]['id'].')">
+				<td class="cdm_file_icon ext_'.$ext.'"></td>
+		<td class="cdm_file_info"><a href="javascript:sp_cdm_showFile('.$r[$i]['id'].')">'.htmlentities(stripslashes($r[$i]['name'])).'</a></td>
+		<td class="cdm_file_date">'.date("F Y g:i A",strtotime($r[$i]['date'])).'</td>
+		<td class="cdm_file_type">'.$ext.'</td>	
+		</tr>	
+		';
+		
+		
+	
+		
+	}
+	
+		
+		$content .='</table><div style="clear:both"></div></div>';
+		
+		break;
 		
 		case "thumbnails":
 		

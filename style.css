@@ -65,6 +65,85 @@ overflow-y: scroll;}
 
 
 
-.sp_upload_div{border:1px solid #CCC;margin:2px;padding:2px; background-color:#FFF}
+.sp_upload_div{border:1px solid #CCC;margin:2px;padding:2px; background-color:#FFF;}
 .sp_upload_div input{padding:1px;margin:1px;font-size:.6em !important;}
 .sp_upload_name{width:360px;float:left;}
+
+
+
+#dlg_cdm_file_list table {margin:5px;padding:0px;border:0px;}
+#dlg_cdm_file_list table tr:hover{background-color: #CEE8F4; cursor:pointer}
+#dlg_cdm_file_list td {margin:1px;padding:0px;border:0px; text-align:center }
+#dlg_cdm_file_list th {margin:1px;padding:0px;border:0px; text-align:center; background-color:#E8E8E8;border-bottom:2px solid #CCC;  }
+#dlg_cdm_file_list td.cdm_file_icon {width:30px;border-bottom:1px dotted #CCC;background: url(images/types/file.png) left top no-repeat; }
+#dlg_cdm_file_list td.cdm_file_info { border-bottom:1px dotted #CCC; text-align:left}
+#dlg_cdm_file_list td.cdm_file_date { border-bottom:1px dotted #CCC;}
+#dlg_cdm_file_list td.cdm_file_type {width:20px;border-bottom:1px dotted #CCC;}
+
+
+
+
+/* Core Styles */
+#dlg_cdm_file_list td.ext_directory { background: url(images/types/directory.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_expanded { background: url(images/types/folder_open.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_file { background: url(images/types/file.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_wait { background: url(images/types/spinner.gif) left top no-repeat; }
+/* File Extensions*/
+#dlg_cdm_file_list td.ext_3gp { background: url(images/types/film.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_afp { background: url(images/types/code.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_afpa { background: url(images/types/code.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_asp { background: url(images/types/code.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_aspx { background: url(images/types/code.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_avi { background: url(images/types/film.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_bat { background: url(images/types/application.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_bmp { background: url(images/types/picture.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_c { background: url(images/types/code.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_cfm { background: url(images/types/code.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_cgi { background: url(images/types/code.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_com { background: url(images/types/application.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_cpp { background: url(images/types/code.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_css { background: url(images/types/css.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_doc { background: url(images/types/doc.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_exe { background: url(images/types/application.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_gif { background: url(images/types/picture.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_fla { background: url(images/types/flash.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_h { background: url(images/types/code.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_htm { background: url(images/types/html.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_html { background: url(images/types/html.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_jar { background: url(images/types/java.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_jpg { background: url(images/types/picture.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_jpeg { background: url(images/types/picture.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_js { background: url(images/types/script.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_lasso { background: url(images/types/code.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_log { background: url(images/types/txt.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_m4p { background: url(images/types/music.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_mov { background: url(images/types/film.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_mp3 { background: url(images/types/music.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_mp4 { background: url(images/types/film.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_mpg { background: url(images/types/film.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_mpeg { background: url(images/types/film.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_ogg { background: url(images/types/music.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_pcx { background: url(images/types/picture.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_pdf { background: url(images/types/pdf.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_php { background: url(images/types/php.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_png { background: url(images/types/picture.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_ppt { background: url(images/types/ppt.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_psd { background: url(images/types/psd.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_pl { background: url(images/types/script.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_py { background: url(images/types/script.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_rb { background: url(images/types/ruby.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_rbx { background: url(images/types/ruby.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_rhtml { background: url(images/types/ruby.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_rpm { background: url(images/types/linux.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_ruby { background: url(images/types/ruby.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_sql { background: url(images/types/db.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_swf { background: url(images/types/flash.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_tif { background: url(images/types/picture.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_tiff { background: url(images/types/picture.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_txt { background: url(images/types/txt.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_vb { background: url(images/types/code.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_wav { background: url(images/types/music.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_wmv { background: url(images/types/film.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_xls { background: url(images/types/xls.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_xml { background: url(images/types/code.png) left top no-repeat; }
+#dlg_cdm_file_list td.ext_zip { background: url(images/types/zip.png) left top no-repeat; }

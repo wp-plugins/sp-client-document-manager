@@ -43,7 +43,7 @@ jQuery(document).ready(function() {
 var max = 20;
 var replaceMe = function(){
 	var obj = jQuery(this);
-	if(jQuery("input[type='file']").length > max)
+	if(jQuery("#cdm_upload_fields input[type='file']").length > max)
 	{
 		alert('fail');
 		obj.val("");
@@ -51,8 +51,8 @@ var replaceMe = function(){
 	}
 	jQuery(obj).css({'position':'absolute','left':'-9999px','display':'none'}).parent().prepend('<input type="file" name="'+obj.attr('name')+'"/>')
 	jQuery('#upload_list').append('<div class="sp_upload_div"><span class="sp_upload_name">'+obj.val()+'</span><input type="button" value="cancel"/><div>');
-	jQuery("input[type='file']").change(replaceMe);
-	jQuery("input[type='button']").click(function(){
+	jQuery("#cdm_upload_fields input[type='file']").change(replaceMe);
+	jQuery("#cdm_upload_fields input[type='button']").click(function(){
 		jQuery(this).parent().remove();
 		jQuery(obj).remove();
 		return false;
@@ -60,7 +60,7 @@ var replaceMe = function(){
 		
 	});
 }
-jQuery("input[type='file']").change(replaceMe);
+jQuery("#cdm_upload_fields input[type='file']").change(replaceMe);
 
 
 
@@ -104,4 +104,4 @@ jQuery("input[type='file']").change(replaceMe);
 
 
 
-
+	
