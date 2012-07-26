@@ -1,7 +1,7 @@
 <?php
 
 
-
+if (!function_exists('sp_client_upload_settings')){
 function cdm_thumbPdf($pdf)
 {
     try
@@ -31,7 +31,7 @@ function cdm_thumbPdf($pdf)
 	
 }
 
-if (!function_exists('sp_client_upload_settings')){
+
 
 function sp_client_upload_settings(){
 	
@@ -57,7 +57,7 @@ global $wpdb;
 	if($_POST['sp_cu_user_projects_thumbs'] == "1"){update_option('sp_cu_user_projects_thumbs','1' ); }else{update_option('sp_cu_user_projects_thumbs','0' );	}
 	if($_POST['sp_cu_user_projects_thumbs_pdf'] == "1"){update_option('sp_cu_user_projects_thumbs_pdf','1' ); }else{update_option('sp_cu_user_projects_thumbs_pdf','0' );	}
 	if($_POST['sp_cu_js_redirect'] == "1"){update_option('sp_cu_js_redirect','1' ); }else{update_option('sp_cu_js_redirect','0' );	}		
-			
+	if($_POST['sp_cu_enable_tags'] == "1"){update_option('sp_cu_enable_tags','1' ); }else{update_option('sp_cu_enable_tags','0' );	}				
 	}
 	
 	
@@ -66,6 +66,10 @@ global $wpdb;
 	if(get_option('sp_cu_user_projects_thumbs') == 1){ $sp_cu_user_projects_thumbs = ' checked="checked" ';	}else{ $sp_cu_user_projects_thumbs = '  '; }
 	if(get_option('sp_cu_user_projects_thumbs_pdf') == 1){ $sp_cu_user_projects_thumbs_pdf = ' checked="checked" ';	}else{ $sp_cu_user_projects_thumbs_pdf = '  '; }
 	if(get_option('sp_cu_js_redirect') == 1){ $sp_cu_js_redirect = ' checked="checked" ';	}else{ $sp_cu_js_redirect = '  '; }
+	if(get_option('sp_cu_enable_tags') == 1){ $sp_cu_enable_tags = ' checked="checked" ';	}else{ $sp_cu_enable_tags = '  '; }
+	
+	
+	
 	echo '<h2>Settings</h2>'.sp_client_upload_nav_menu().'';	 
 	
 	
@@ -174,7 +178,10 @@ $content .='<h3>Thanks for upgrading!</h3>
 	
 
 	  $content .='
-   
+     <tr>
+    <td width="300"><strong>Enable File Tags?</strong><br><em>File tags allow you to give your users a unique way to search for files.</em></td>
+    <td><input type="checkbox" name="sp_cu_enable_tags"   value="1" '. $sp_cu_enable_tags.'> </td>
+  </tr>
      <tr>
     <td width="300"><strong>Thumbnail Mode?</strong><br><em>Would you like to display all images as thumbnails?</em></td>
     <td><input type="checkbox" name="sp_cu_user_projects_thumbs"   value="1" '. $sp_cu_user_projects_thumbs.'> </td>
@@ -217,7 +224,7 @@ $content .='<h3>Thanks for upgrading!</h3>
 	echo $content;
 	
 }
-}
+
 if (!function_exists('sp_client_upload_help')){
 function sp_client_upload_help(){
 	
@@ -426,7 +433,7 @@ function sp_client_upload_email_vendor(){
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/classes/thumb.php?src=/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/classes/thumb.php?src='.content_url().'/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
 			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
@@ -466,6 +473,12 @@ function sp_client_upload_email_vendor(){
 	}else{
 		
 		$html .='<br><em>'.__("Notes: ","sp-cdm").' '.$r[$i]['notes'].'</em>';
+	}
+	
+	
+	if($r[$i]['tags'] != ""){
+		
+			$html .='<br><strong>'.__("Tags ","sp-cdm").'</strong><em>: '.$r[$i]['tags'].'</em>';
 	}
 	$html .='
 	
@@ -529,6 +542,6 @@ return $html;
 }
 
 
-
+}
 add_action( 'edit_user_profile', 'sp_client_upload_admin' );
 ?>

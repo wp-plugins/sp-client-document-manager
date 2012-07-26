@@ -19,12 +19,17 @@ function display_sp_thumbnails($r ){
 	<div class=\"sp_cu_filetree\">
 	<script type=\"text/javascript\">
 	
-	jQuery(document).ready( function() {
-    jQuery('#file_manager').fileTree({
+	
+	function cdm_load_simple_file_manager(){
+		
+		var cdm_search = jQuery('#search_files').val();
+		
+		
+	jQuery('#file_manager').fileTree({
         root: '". content_url()."/uploads/sp-client-document-manager/".$user_ID."/',
-        script: '".content_url()."/plugins/sp-client-document-manager/ajax.php?function=file-tree&uid=".$user_ID."',
-        expandSpeed: 1000,
-        collapseSpeed: 1000,
+        script: '".content_url()."/plugins/sp-client-document-manager/ajax.php?function=file-tree&uid=".$user_ID."&search=' + cdm_search,
+        expandSpeed: 100,
+        collapseSpeed: 100,
         multiFolder: false
     }, function(file) {
        // alert(file);
@@ -60,7 +65,14 @@ function display_sp_thumbnails($r ){
 	   
 	   //end functions
 	   
-    });
+    });	
+		
+	}
+	
+	
+	jQuery(document).ready( function() {
+		cdm_load_simple_file_manager();
+    
 });
 	</script>
 	
@@ -77,69 +89,6 @@ function display_sp_thumbnails($r ){
 
 
 
-
-
-
-function display_sp_thumbnails2($r ){
-	global $wpdb,$current_user,$user_ID;
-	
-	
-		for($i=0; $i<count($r); $i++){
-				$ext = substr(strrchr($r[$i]['file'], '.'), 1);	
-					
-					if($r[$i]['pid'] != 0){
-						  $projecter = $wpdb->get_results("SELECT *
-	
-									 FROM ".$wpdb->prefix."sp_cu_project
-									 WHERE id = '".$r[$i]['pid']."'
-									 ", ARRAY_A);
-									 
-									 
-							$project_title ='Project: '.stripslashes($projecter[0]['name']).'';		 	
-					}else{
-						$project_title = 'Project: None';
-					}
-					
-					
-					if($ext== 'png' or $ext == 'jpg' or $ext = 'jpeg' or $ext = 'gif' ){
-					$icon = '<td><img src="'. content_url().'/uploads/sp-client-document-manager/'.$user_ID.'/'.$r[$i]['file'].'" width="90"></td>';	
-					}else{
-					$icon = '';		
-					}
-					
-				$html .= '
-				<div class="sp_cu_item">
-				 
-				
-				  <table width="100%" cellpadding="2" cellspacing="2" style="border:none;padding:0px;margin:0px;">
-
-<tr>
-'.$icon .'
-<td><h3> '.stripslashes($r[$i]['name']).'</h3></td>
-<td style="text-align:right"> <em>'.date('F jS Y h:i A', strtotime($r[$i]['date'])).'</em></td>
-</tr>
-<tr>
-<td style="text-align:left">'.$project_title .'<br>Notes: <em>'.$r[$i]['notes'].'</em></td>
-
-    
-    <td style="text-align:right;width:170px;">
-	
-	
-	<a href="' . plugins_url('download.php?uid='.$user_ID.'&file='.$r[$i]['file'].'', __FILE__). '" title="Download" style="margin-right:15px"  ><img src="' . plugins_url('images/download.png', __FILE__).'"></a> 
-	<a href="javascript:sp_cu_confirm(\'#sp_cu_confirm_delete\',200,\'?dlg-delete-file='.$r[$i]['id'].'#downloads\');" title="Delete" ><img src="' .plugins_url('images/delete.png', __FILE__).'"></a> </td>
-	</tr>
-
-  </tr>
-  </table></div>';	
-					
-			
-}
-
-				
-	
-	return 	$html ;
-	
-}
 
 
 
@@ -237,6 +186,15 @@ jQuery(document).ready(function() {
   </tr>';
   
     if (CU_PREMIUM == 1){ 
+	
+	if( get_option('sp_cu_enable_tags') ==1){
+   $html .= '
+  <tr>
+    <td>'.__("Tags:","sp-cdm").'</td>
+    <td><textarea id="tags" name="tags"  style="width:90%;height:30px"></textarea></td>
+  </tr>';
+  
+	}
   
   $html .=display_sp_cdm_form();
   
@@ -244,7 +202,7 @@ jQuery(document).ready(function() {
 	  
   $html .='<tr>
     <td>'.__("Notes:","sp-cdm").'</td>
-    <td><textarea style="width:90%;height:70px" name="dlg-upload-notes"></textarea></td>
+    <td><textarea style="width:90%;height:50px" name="dlg-upload-notes"></textarea></td>
   </tr>
   ';
   }
@@ -317,6 +275,7 @@ if($_POST['submit'] != ""){
 	$a['name'] = addslashes($data['dlg-upload-name']);
 	$a['pid'] = $data['pid'];
 	$a['cid'] = $data['cid'];
+	$a['tags'] = $data['tags'];
 	$a['notes'] = addslashes($data['dlg-upload-notes']);
 	check_folder_sp_client_upload();
 	
@@ -379,9 +338,40 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = $us
 	
 	<div >
 
-  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/add.png"> '.__("Add File","sp-cdm").'</a>  
+ 
 ';
 
+if(get_option('sp_cu_user_projects_thumbs') == 1){
+
+	
+		$html .='
+	<script type="text/javascript">
+	
+	function cdm_ajax_search(){
+		
+	var cdm_search = jQuery("#search_files").val();
+	jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=thumbnails&uid='.$user_ID.'&search=" + cdm_search);		
+		
+	}
+	</script>
+	
+	';
+	
+}else{
+	$html .='
+	<script type="text/javascript">
+	
+	function cdm_ajax_search(){
+		
+	 cdm_load_simple_file_manager();	
+	}
+	</script>
+	
+	';
+}
+	
+	
+	$html .='Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files">  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/add.png"> '.__("Add File","sp-cdm").'</a>  ';
 
 if(get_option('sp_cu_user_projects_thumbs') == 1){
 		$html .=display_sp_cdm_thumbnails($r );

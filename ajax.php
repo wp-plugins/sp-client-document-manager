@@ -51,7 +51,7 @@ $upload_dir = wp_upload_dir();
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/classes/thumb.php?src=/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'&w=250&h=250">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/classes/thumb.php?src='.content_url().'/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'&w=250&h=250">';
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
 			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
@@ -110,12 +110,19 @@ $upload_dir = wp_upload_dir();
 </td>
 <td>
 <div class="sp_su_project">
-<strong>'.__("Project: ","sp-cdm").' </strong>'.$project_title .'
+<strong>'.__("Project ","sp-cdm").': </strong>'.$project_title .'
 </div>
 <div class="sp_su_project">
-<strong>'.__("File Type: ","sp-cdm").' </strong>'.$ext .'
+<strong>'.__("File Type ","sp-cdm").': </strong>'.$ext .'
 </div>';
-
+if($r[0]['tags'] != ""){
+	
+	$html .='
+<div class="sp_su_notes">
+<strong>'.__("Tags ","sp-cdm").': </strong> '.stripslashes($r[0]['tags']).'
+</div>';	 
+	 
+}
  if (CU_PREMIUM == 1){ 
 
 $html .='
@@ -156,7 +163,12 @@ $html .='
 			 }
 		
 	
+if($_REQUEST['search'] != ""){
 
+
+$search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST['search']."%' ";	
+$search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$_REQUEST['search']."%')  ";		
+}
 		$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,".$wpdb->prefix."sp_cu.id,".$wpdb->prefix."sp_cu.pid  ,".$wpdb->prefix."sp_cu.uid,
 											".$wpdb->prefix."sp_cu_project.name AS project_name
 										FROM ".$wpdb->prefix."sp_cu   
@@ -164,6 +176,7 @@ $html .='
 										WHERE (".$wpdb->prefix."sp_cu.uid = '".$_GET['uid']."'  ".$find_groups .")
 										AND pid != 0
 										AND parent = 0 
+										".$search_project."
 										GROUP BY pid
 										ORDER by date desc", ARRAY_A);
 										
@@ -204,9 +217,9 @@ $html .='
 	
 	
 	if($_GET['pid'] == ""){
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.")  AND pid = 0 	AND parent = 0  order by date desc", ARRAY_A);
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.")  AND pid = 0 	AND parent = 0  ".$search_file." order by date desc", ARRAY_A);
 	}else{
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$_GET['pid']."' AND parent = 0  order by date desc", ARRAY_A);		
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$_GET['pid']."' AND parent = 0   ".$search_file."  order by date desc", ARRAY_A);		
 	}
 	
 	for($i=0; $i<count( $r ); $i++){
@@ -218,7 +231,7 @@ $html .='
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/classes/thumb.php?src=/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
+			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/classes/thumb.php?src='.content_url().'/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
 			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
@@ -279,6 +292,14 @@ $root = ABSPATH;
 			 }
 
 
+
+if($_REQUEST['search'] != ""){
+
+
+$search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST['search']."%' ";	
+$search_file .= " AND ".$wpdb->prefix."sp_cu.name LIKE '%".$_REQUEST['search']."%' ";		
+}
+
 	if (strpos( $_REQUEST['dir'], 'PID') === false){
 	$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,".$wpdb->prefix."sp_cu.id,".$wpdb->prefix."sp_cu.pid  ,".$wpdb->prefix."sp_cu.uid,
 											".$wpdb->prefix."sp_cu_project.name AS project_name
@@ -287,17 +308,18 @@ $root = ABSPATH;
 										WHERE (".$wpdb->prefix."sp_cu.uid = '".$_GET['uid']."'   ".$find_groups." )
 										AND pid != 0
 										AND parent = 0 
+										".$search_project."
 										GROUP BY pid
 										ORDER by date desc", ARRAY_A);
 
 									
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.") AND pid = 0 	AND parent = 0  order by date desc", ARRAY_A);
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.") AND pid = 0 	AND parent = 0  ".$search_file." order by date desc", ARRAY_A);
 	
 	}else{
 		
 		$rel_ex = explode("PID", $_REQUEST['dir']); 
 	
-		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$rel_ex[1]."' AND parent = 0  order by date desc", ARRAY_A);	
+		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$rel_ex[1]."' AND parent = 0   ".$search_file."  order by date desc", ARRAY_A);	
 	
 	}
 	

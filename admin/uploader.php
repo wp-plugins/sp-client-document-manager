@@ -64,6 +64,7 @@ if($_POST['submit-admin-upload'] != ""){
 	$a['name'] = addslashes($data['dlg-upload-name']);
 	$a['pid'] = $data['pid'];
 	$a['cid'] = $data['cid'];
+	$a['tags'] = $data['tags'];
 	$a['notes'] = addslashes($data['dlg-upload-notes']);
 	check_folder_sp_client_upload();
 	
@@ -183,6 +184,14 @@ jQuery(document).ready(function() {
   
  if (CU_PREMIUM == 1){ 
 
+if( get_option('sp_cu_enable_tags') ==1){
+  echo  '
+  <tr>
+    <td>'.__("Tags:","sp-cdm").'</td>
+    <td><textarea id="tags" name="tags"  style="width:90%;height:30px"></textarea></td>
+  </tr>';
+  
+	}
  echo  sp_cdm_display_categories(); 
  }
  
