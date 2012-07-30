@@ -372,7 +372,7 @@ function sp_client_upload_email_vendor(){
     	jQuery.ajax({
 			 
 		  type: "POST",
-		  url:  "'.content_url().'/wp-content/plugins/sp-client-document-manager/ajax.php?function=email-vendor" ,
+		  url:  "'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=email-vendor" ,
 		 
 		 data:  jQuery("#your-profile" ).serialize(),
 		  success: function(msg){

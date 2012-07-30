@@ -66,14 +66,24 @@ if($_POST['submit-admin-upload'] != ""){
 	$a['cid'] = $data['cid'];
 	$a['tags'] = $data['tags'];
 	$a['notes'] = addslashes($data['dlg-upload-notes']);
-	check_folder_sp_client_upload();
+	
+		
+	$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$a['uid'].'/';
+	if(!is_dir($dir)){
+	
+		mkdir($dir, 0777);
+	}
+
 	
 
 	if($files['dlg-upload-file']['name'] != ""){
 	
 	
 	
-	$a['file'] = sp_uploadFile($files);
+	$a['file'] = sp_Admin_uploadFile($files,$a['uid']);
+	
+
+	
     $wpdb->insert(  "".$wpdb->prefix."sp_cu", $a );
 	
 	 if (CU_PREMIUM == 1){ 
@@ -200,7 +210,7 @@ if( get_option('sp_cu_enable_tags') ==1){
   echo  '
   <tr>
     <td>'.__("File:","sp-cdm").'</td>
-    <td>	    <input id="file_upload" name="dlg-upload-file[]" type="file" class="required" multiple>
+    <td>	    <input id="file_upload" name="dlg-upload-file[]" type="file" class="required">
 <div id="upload_list"></div>
 							</td>
   </tr>';

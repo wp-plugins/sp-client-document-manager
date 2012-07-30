@@ -140,5 +140,96 @@ $zip->setZipFile($dir.$return_file);
 	}
 }
 }
+function sp_Admin_uploadFile($files,$user_ID){
+	
+	global $wpdb ;
+
+	
+			$target_path = "uploads/";
+			$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/';
+			$count = sp_array_remove_empty($files['dlg-upload-file']['name']);
+
+
+
+			if($history == 1){
+		$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/';
+	
+	$filename = ''.sp_client_upload_filename($user_ID) .''.$files['dlg-upload-file']['name'][0].'';
+	$filename = strtolower($filename);
+	$filename = str_replace(" ","-", $filename);
+	$target_path = $dir .$filename; 
+	
+	move_uploaded_file($files['dlg-upload-file']['tmp_name'][0], $target_path);
+	
+	$ext = preg_replace('/^.*\./', '', $filename);
+	if($ext == 'pdf' && get_option('sp_cu_user_projects_thumbs_pdf') == 1){
+	cdm_thumbPdf($target_path);
+	}
+	
+	return $filename;
+}else{
+
+	if(count($count)> 1 ){
+	
+	
+	//echo $count;
+	//	echo '<pre>';
+	//print_r($files);exit;
+	//echo '</pre>';
+
+	
+	
+	
+
+		
+		
+			$fileTime = date("D, d M Y H:i:s T");
+
+				$zip = new Zip();
+				
+				
+				
+				for($i=0; $i<count($files['dlg-upload-file']['name']); $i++){
+				
+					if($files['dlg-upload-file']['error'][$i] == 0){
+						
+					
+					
+						$filename = ''.sp_client_upload_filename($user_ID) .''.$files['dlg-upload-file']['name'][$i].'';
+						$filename = strtolower($filename);
+						$filename = str_replace(" ","-", $filename);
+						$target_path = $dir .$filename; 
+						move_uploaded_file($files['dlg-upload-file']['tmp_name'][$i], $target_path);
+				
+					  $zip->addFile(file_get_contents($target_path), $filename , filectime($target_path));
+					}
+				}
+		
+		
+$zip->finalize(); // as we are not using getZipData or getZipFile, we need to call finalize ourselves.
+$return_file = "".rand(100000, 100000000000)."_Archive.zip";
+$zip->setZipFile($dir.$return_file);
+		
+	return $return_file;	
+		
+		
+	}else{
+
+	$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/';
+	
+	$filename = ''.sp_client_upload_filename($user_ID) .''.$files['dlg-upload-file']['name'][0].'';
+	$filename = strtolower($filename);
+	$filename = str_replace(" ","-", $filename);
+	$target_path = $dir .$filename; 
+	
+	move_uploaded_file($files['dlg-upload-file']['tmp_name'][0], $target_path);
+	$ext = preg_replace('/^.*\./', '', $filename);
+	if(($ext == 'pdf' or $ext == 'psd' )&& get_option('sp_cu_user_projects_thumbs_pdf') == 1){
+	cdm_thumbPdf($target_path);
+	}
+	return $filename;
+	}
+}
+}
 
 ?>

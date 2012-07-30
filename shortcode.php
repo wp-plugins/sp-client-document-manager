@@ -17,7 +17,7 @@ function display_sp_thumbnails2($r){
 	
 	
 	function sp_cdm_loading_image(){
-		jQuery("#cmd_file_thumbs").html(\'<div style="padding:100px; text-align:center"><img src="'.$wp_con_folder.'wp-content/plugins/sp-client-document-manager/images/loading.gif"></div>\');		
+		jQuery("#cmd_file_thumbs").html(\'<div style="padding:100px; text-align:center"><img src="'.content_url().'plugins/sp-client-document-manager/images/loading.gif"></div>\');		
 	}
 	function sp_cdm_load_file_manager(){
 		sp_cdm_loading_image();
@@ -263,7 +263,7 @@ jQuery(document).ready(function() {
   $html .= '
   <tr>
     <td>'.__("File:","sp-cdm").'</td>
-    <td>	<div id="cdm_upload_fields">    <input id="file_upload" name="dlg-upload-file[]" type="file" class="required" multiple>
+    <td>	<div id="cdm_upload_fields">    <input id="file_upload" name="dlg-upload-file[]" type="file" class="required">
 <div id="upload_list"></div></div>
 							</td>
   </tr>';
