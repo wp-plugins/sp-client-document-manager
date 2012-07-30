@@ -74,11 +74,11 @@ overflow-y: scroll;}
 #dlg_cdm_file_list table {margin:5px;padding:0px;border:0px; min-height:500px;}
 #dlg_cdm_file_list table tr:hover{background-color: #CEE8F4; cursor:pointer}
 #dlg_cdm_file_list td {margin:1px;padding:0px  !important;border:0px ; text-align:center }
-#dlg_cdm_file_list th {margin:1px;padding:0px  !important;border:0px ; text-align:center; background-color:#E8E8E8;border-bottom:2px solid #CCC;  }
+#dlg_cdm_file_list th {margin:1px;padding:0px  !important;border:0px ; text-align:center; background-color:#E8E8E8;border-bottom:2px solid #CCC; font-weight:bold;  }
 #dlg_cdm_file_list td.cdm_file_icon {width:30px;border-bottom:1px dotted #CCC;background: url(images/types/file.png) left top no-repeat; }
 #dlg_cdm_file_list td.cdm_file_info { border-bottom:1px dotted #CCC; text-align:left}
-#dlg_cdm_file_list td.cdm_file_date { border-bottom:1px dotted #CCC;width:160px;}
-#dlg_cdm_file_list td.cdm_file_type {width:100px;border-bottom:1px dotted #CCC;}
+#dlg_cdm_file_list td.cdm_file_date { border-bottom:1px dotted #CCC;width:180px;}
+#dlg_cdm_file_list td.cdm_file_type {width:120px;border-bottom:1px dotted #CCC;}
 
 
 

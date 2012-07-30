@@ -184,7 +184,7 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 		
 		echo '<tr>
 		<th></th>
-		<th class="cdm_file_info">File Name</th>
+		<th class="cdm_file_info" style="text-align:left">File Name</th>
 		<th class="cdm_file_date">File Date</th>
 		<th class="cdm_file_type">File Type</th>	
 		</tr>	
@@ -198,7 +198,7 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 		
 		echo '<tr onclick="sp_cdm_load_project('.$r_projects[$i]['pid'].')">
 		<td class="cdm_file_icon ext_directory"></td>
-		<td class="cdm_file_info"><a href="javascript:sp_cdm_load_project('.$r_projects[$i]['pid'].')">'.htmlentities(stripslashes($r_projects[$i]['project_name'])).'</a></td>
+		<td class="cdm_file_info">'.htmlentities(stripslashes($r_projects[$i]['project_name'])).'</td>
 		<td class="cdm_file_date">&nbsp;</td>
 		<td class="cdm_file_type">Folder</td>	
 		</tr>	
@@ -209,7 +209,7 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 		
 		echo '<tr onclick="sp_cdm_load_file_manager();" >
 	<td class="cdm_file_icon ext_directory"></td>
-		<td class="cdm_file_info"><a href="javascript:sp_cdm_load_file_manager()">&laquo; Go Back</a></td>
+		<td class="cdm_file_info">&laquo; Go Back</td>
 		<td class="cdm_file_date">&nbsp;</td>
 		<td class="cdm_file_type"></td>
 	</tr>	
@@ -235,7 +235,7 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 		
 		echo '<tr onclick="sp_cdm_showFile('.$r[$i]['id'].')">
 				<td class="cdm_file_icon ext_'.$ext.'"></td>
-		<td class="cdm_file_info"><a href="javascript:sp_cdm_showFile('.$r[$i]['id'].')">'.htmlentities(stripslashes($r[$i]['name'])).'</a></td>
+		<td class="cdm_file_info">'.htmlentities(stripslashes($r[$i]['name'])).'</td>
 		<td class="cdm_file_date">'.date("F Y g:i A",strtotime($r[$i]['date'])).'</td>
 		<td class="cdm_file_type">'.$ext.'</td>	
 		</tr>	
