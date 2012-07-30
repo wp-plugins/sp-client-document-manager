@@ -4,12 +4,12 @@ Plugin Name: SP Client Document & Project Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.2.2
+Version: 1.2.3
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.2.2";
+$sp_client_upload = "1.2.3";
 
 load_plugin_textdomain( 'sp-cdm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -102,6 +102,7 @@ function sp_client_upload_install() {
   `name` varchar(255) NOT NULL,
   `file` varchar(255) NOT NULL,
   `notes` text NOT NULL,
+  `tags` text NOT NULL,
   `uid` int(11) NOT NULL,
   `cid` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
@@ -179,7 +180,7 @@ CREATE TABLE  `'.$wpdb->prefix.'sp_cu_forms` (
   `name` varchar(255) NOT NULL,
   `template` text NOT NULL,
   `type` varchar(255) NOT NULL,
-  `defaults` text NOT NULL,
+  `defaults` text NOT NULL,  
   `sort` int(11) NOT NULL DEFAULT "0",
   `required` varchar(11) NOT NULL DEFAULT "No",
   PRIMARY KEY (`id`)
@@ -227,7 +228,11 @@ $sql4 = 'CREATE TABLE IF NOT EXISTS `'.$wpdb->prefix.'sp_cu_groups_assign` (
  
 		}	
 		
-		
+			if($cur_sp_client_upload < '1.2.3' ){
+			
+	$wpdb->query('ALTER TABLE `'.$wpdb->prefix . 'sp_cu` ADD `tags` text NOT NULL;');
+ 
+		}
 		
 		
 		update_option('sp_client_upload',$sp_client_upload);
