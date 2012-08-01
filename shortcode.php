@@ -325,7 +325,39 @@ function check_folder_sp_client_upload(){
 	}
 	
 }
+function sp_cu_process_email($id,$email){
+	
+global $wpdb;
 
+$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id = '".$id."'  order by date desc", ARRAY_A);	
+	if($r[0]['pid'] != ""){
+	$r_project = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu_project   where id = ".$r[0]['pid']."", ARRAY_A);		
+		
+	}
+	if($r[0]['cid'] != ""){
+	$r_cats = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu_cats   where id = ".$r[0]['cid']."", ARRAY_A);		
+		
+	}	
+			
+	if(CU_PREMIUM == 1){		
+		$notes =sp_cdm_get_form_fields($r[0]['id']);
+	}else{		
+		$notes = $r[$i]['notes'];
+	}
+	
+	 $user_info = get_userdata($r[0]['uid']);
+	 
+	 
+	 $message = nl2br($email);
+	$message = str_replace('[file]','<a href="'.content_url().'/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'">'.content_url().'/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'</a>',$message);
+	$message = str_replace('[notes]',$notes,$message);
+	$message = str_replace('[user]', $user_info->user_nicename, $message);
+	$message = str_replace('[project]', stripslashes($r_project[0]['name']), $message);
+	$message = str_replace('[category]', stripslashes($r_cats[0]['name']), $message);
+	$message = str_replace('[user_profile]', '<a href="'.admin_url( 'user-edit.php?user_id='.$r[0]['uid'].'').'">'.admin_url( 'user-edit.php?user_id='.$r[0]['uid'].'').'</a>', $message);
+	$message = str_replace('[client_documents]', '<a href="'.admin_url( 'admin.php?page=sp-client-document-manager').'">'.admin_url( 'admin.php?page=sp-client-document-manager').'</a>', $message);
+return $message;
+}
 function display_sp_client_upload($atts){
 
 	global $wpdb ;
@@ -369,18 +401,28 @@ if($_POST['submit'] != ""){
 	
 	$a['file'] = sp_uploadFile($files);
     $wpdb->insert(  "".$wpdb->prefix."sp_cu", $a );
-	
+	$file_id = $wpdb->insert_id;
 	 if (CU_PREMIUM == 1){ 
 	  
 	 process_sp_cdm_form_vars($data['custom_forms'],$wpdb->insert_id);
 	 
 	 }
 	$to = get_option('admin_email');
-	$headers .= "".__("From:","sp-cdm")." ".$current_user->user_firstname." ".$current_user->user_lastname." <".$current_user->user_email.">\r\n";
-	$message  = "".__("Client uploaded a new document","sp-cdm")."<br><br> ".__("Click here view the files:","sp-cdm")." " . get_bloginfo('wpurl') . "/wp-admin/user-edit.php?user_id=".$user_ID."#downloads";
-	$subject = __("New file upload from client","sp-cdm");
+	$headers .= "".__("From:","sp-cdm")." ".$current_user->user_firstname." ".$current_user->user_lastname." <".$current_user->user_email.">\r\n";	
+	$message = sp_cu_process_email($file_id,get_option('sp_cu_admin_email'));
+	add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
+	$subject = get_option('sp_cu_admin_email_subject');
 	wp_mail( $to, $subject, $message, $headers, $attachments );
 	
+	
+	
+	
+	if(get_option('sp_cu_user_email') != ""){
+		$subject = get_option('sp_cu_user_email_subject');
+		$message = sp_cu_process_email($file_id,get_option('sp_cu_user_email'));
+		$to = $current_user->user_email;		
+		wp_mail( $to, $subject, $message, $headers, $attachments );
+	}
 		$html .= '<script type="text/javascript">
 
 

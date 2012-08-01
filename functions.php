@@ -171,6 +171,31 @@ $content .='<h3>Thanks for upgrading!</h3>
     <td width="300"><strong>Form Instructions</strong><br><em>Just a short statement that will go above the upload form, you can use html!</em></td>
     <td><textarea  name="sp_cu_form_instructions"  style="width:100%;height:60px" >'. stripslashes(get_option('sp_cu_form_instructions')).'</textarea> </td>
   </tr>
+     <tr>
+    <td width="300"><strong>Admin Email</strong><br><em>This is the email that is dispatched to admin.</em><br><br>Template Tags:<br><br>
+	
+	[file] = Link to File<br>
+	[notes] = Notes or extra fields<br>
+	[user] = users name<br>
+	[project] = project<br>
+	[category] = category<br>
+	[user_profile] = Link to user profile<br>
+	[client_documents] = Link to the client document manager
+	</td>
+    <td>Subject: <input style="width:100%" type="text" name="sp_cu_admin_email_subject" value="'.get_option('sp_cu_admin_email_subject').'"><br>Body:<br><textarea name="sp_cu_admin_email" style="width:100%" rows="15">'.get_option('sp_cu_admin_email').'</textarea> </td>
+  </tr>
+    <tr>
+    <td width="300"><strong>User Email</strong><br><em>This is the email that is dispatched to user.</em><br><br>Template Tags:<br><br>
+	
+	[file] = Link to File<br>
+	[notes] = Notes or extra fields<br>
+	[user] = users name<br>
+	[project] = project<br>
+	[category] = category<br>
+	[user_profile] = Link to user profile<br>
+	[client_documents] = Link to the client document manager</td>
+    <td>Subject: <input style="width:100%" type="text" name="sp_cu_user_email_subject" value="'.get_option('sp_cu_user_email_subject').'"><br>Body:<br><textarea name="sp_cu_user_email"  style="width:100%" rows="15">'.get_option('sp_cu_user_email').'</textarea> </td>
+  </tr>
   ';
   
   if (CU_PREMIUM == 1){
@@ -198,14 +223,7 @@ $content .='<h3>Thanks for upgrading!</h3>
     <td width="300"><strong>File Deletion Period</strong><br><em>How many days should a file exist before its deleted from the system? Leave blank if you do not wish to use this function.</em></td>
     <td><input type="text" name="sp_cu_file_delete"  value="'.get_option('sp_cu_file_delete').'"  size=80"> </td>
   </tr>
-     <tr>
-    <td width="300"><strong>Dropbox App Key</strong><br><em>App key from your <a href="https://www.dropbox.com/developers/apps" target="_blank">Dropbox app page</a>.</em></td>
-    <td><input type="text" name="sp_cu_db_app_key"  value="'.get_option('sp_cu_db_app_key').'"  size=80"> </td>
-  </tr>
-      <tr>
-    <td width="300"><strong>Dropbox App Secret</strong><br><em>App secret from your <a href="https://www.dropbox.com/developers/apps" target="_blank">Dropbox app page</a>.</em></td>
-    <td><input type="text" name="sp_cu_db_secret"  value="'.get_option('sp_cu_db_secret').'"  size=80"> </td>
-  </tr>
+
   ';
   
   }
