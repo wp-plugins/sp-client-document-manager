@@ -6,7 +6,6 @@
 
 
 
-
 function sp_cu_confirm(div,h,url){
 	
 	jQuery(  div ).dialog({

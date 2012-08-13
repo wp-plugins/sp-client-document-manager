@@ -35,7 +35,7 @@ if (CU_PREMIUM == 1){
 	
 	</td>
     <td>
-	<select name="pid">
+	<select name="pid" id="pid_select">
 	<option name="" selected="selected">'.__("No Project","sp-cdm").'</option>';
 
 		for($i=0; $i<count($projects); $i++){

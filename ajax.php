@@ -9,6 +9,40 @@ $upload_dir = wp_upload_dir();
 	
 	
 	switch($function){
+			case "remove-category":
+		
+		
+		$wpdb->query("DELETE FROM ".$wpdb->prefix ."sp_cu_project WHERE id = ".$_REQUEST['id']."	");		
+	$wpdb->query("DELETE FROM ".$wpdb->prefix ."sp_cut WHERE pid = ".$_REQUEST['id']."	");	
+	
+		break;	
+		
+		case "save-category":
+		
+		
+		
+			$insert['name'] = $_POST['name'];
+			
+
+		
+		if($_POST['id'] != ""){
+		$where['id'] =$_POST['id'] ;
+		
+	    $wpdb->update(  "".$wpdb->prefix . "sp_cu_project", $insert , $where );	
+		echo ''.__("Updated Category Name","sp-cdm").': '.$insert['name'].'';
+		exit;
+		}else{
+		$insert['uid'] = $_POST['uid'];
+	
+		$wpdb->insert( "".$wpdb->prefix . "sp_cu_project",$insert );
+		echo $wpdb->insert_id;
+		exit;
+		}
+	echo 'Error!';
+	print_r($_POST);
+		break;
+		
+		
 		
 		case"view-file":
 		if(get_option('sp_cu_wp_folder') == ''){
@@ -167,20 +201,37 @@ if($_REQUEST['search'] != ""){
 $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST['search']."%' ";	
 $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$_REQUEST['search']."%')  ";		
 }
-		$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,".$wpdb->prefix."sp_cu.id,".$wpdb->prefix."sp_cu.pid  ,".$wpdb->prefix."sp_cu.uid,
-											".$wpdb->prefix."sp_cu_project.name AS project_name
+		
+		if($_GET['pid'] == ""){
+		$sub_projects = " 	AND ".$wpdb->prefix."sp_cu_project.parent =  0  "	;
+		}else{
+		$sub_projects = " 	AND  ".$wpdb->prefix."sp_cu_project.parent =  ".$_GET['pid']."  "	;	
+		}
+		
+		$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,
+												 ".$wpdb->prefix."sp_cu.id,
+												 ".$wpdb->prefix."sp_cu.pid ,
+												 ".$wpdb->prefix."sp_cu.uid,
+												 ".$wpdb->prefix."sp_cu.parent,
+												 ".$wpdb->prefix."sp_cu_project.name AS project_name,
+												  ".$wpdb->prefix."sp_cu_project.parent AS project_parent
+												 
 										FROM ".$wpdb->prefix."sp_cu   
 										LEFT JOIN ".$wpdb->prefix."sp_cu_project  ON ".$wpdb->prefix."sp_cu.pid = ".$wpdb->prefix."sp_cu_project.id
 										WHERE (".$wpdb->prefix."sp_cu.uid = '".$_GET['uid']."'  ".$find_groups .")
 										AND pid != 0
-										AND parent = 0 
+										AND  ".$wpdb->prefix."sp_cu.parent = 0 
+										".$sub_projects."
 										".$search_project."
 										GROUP BY pid
 										ORDER by date desc", ARRAY_A);
 										
+									
+										
 										
 		echo '<div id="dlg_cdm_file_list">
-		<table border="0" cellpadding="0" cellspacing="0">';
+		<table border="0" cellpadding="0" cellspacing="0">
+		<thead>';
 		
 		echo '<tr>
 		<th></th>
@@ -188,8 +239,103 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 		<th class="cdm_file_date">File Date</th>
 		<th class="cdm_file_type">File Type</th>	
 		</tr>	
+		
 		';
+		if($_GET['pid'] != "" && get_option('sp_cu_user_projects') == 1 ){	
+			$r_project_info = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."sp_cu_project where id = ".$_GET['pid']."", ARRAY_A);
+	
+		echo '<tr>
+	
+		<th colspan="4" style="text-align:right">
+		<div style="padding-right:10px">
+		<a href="javascript:sp_cu_dialog(\'#edit_category\',550,130)"><img src="'.content_url().'/plugins/sp-client-document-manager/images/application_edit.png"> Edit Project Name</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="'.content_url().'/plugins/sp-client-document-manager/images/delete_small.png"> Remove Project</a>
+		
+		<div style="display:none">	
+		
+		
+		<script type="text/javascript">
+		
+		
+function sp_cu_edit_project(){
+	
+	jQuery.ajax({
+   type: "POST",
+   url: "'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=save-category",
+   data: "name=" + jQuery("#edit_project_name").val() + "&id=" +  jQuery("#edit_project_id").val(),
+   success: function(msg){
+   jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$_GET['uid'].'&pid='.$_GET['pid'].'");
+   jQuery("#edit_category").dialog("close");
+   alert(msg);	
+  
+   }
+ });
+}
+
+function sp_cu_remove_project(){
+	
+	jQuery( "#delete_category" ).dialog({
+			resizable: false,
+			height:240,
+			width:440,
+			modal: true,
+			buttons: {
+				"Delete all items": function() {
+						
+							
+						jQuery.ajax({
+					   type: "POST",
+					   url: "'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=remove-category",
+					   data: "id='.$_GET['pid'].'" ,
+					   success: function(msg){
+					   jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$_GET['uid'].'");
+					 
+					 
+					  
+					   }
+					 });
+					 
+					jQuery( this ).dialog( "close" );	
+						
+				},
+				Cancel: function() {
+					jQuery( this ).dialog( "close" );
+				}
+			}
+		});
+	
+	
+	
+
+	
+}
+
+		</script>	
+		<div id="delete_category" title="'.__("Delete Category?","sp-cdm").'">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'.__("Are you sure you would like to delete this category? Doing so will remove all files related to this category.","sp-cdm").'</p>
+		</div>
+
+		
+		
+				<div id="edit_category">			
 			
+			<input type="hidden"  name="edit_project_id" id="edit_project_id" value="'.$_GET['pid'].'">		
+			'.__("Project Name:","sp-cdm").' <input value="'.stripslashes($r_project_info[0]['name']).'" id="edit_project_name" type="text" name="name"  style="width:200px !important"> 
+			<input type="submit" value="'.__("Save Project","sp-cdm").'" onclick="sp_cu_edit_project()">
+			
+			</div>
+			
+		
+		
+		</div>
+		
+		
+		</th>
+		
+		</tr>	
+		
+		';		
+		}
+		echo'</thead><tbody>';
 		if($_GET['pid'] == ""){
 		
 		
@@ -247,7 +393,7 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 	}
 	
 		
-		$content .='</table><div style="clear:both"></div></div>';
+		$content .='</tbody></table><div style="clear:both"></div></div>';
 		
 		break;
 		
@@ -264,22 +410,130 @@ if($_REQUEST['search'] != ""){
 $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST['search']."%' ";	
 $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$_REQUEST['search']."%')  ";		
 }
-		$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,".$wpdb->prefix."sp_cu.id,".$wpdb->prefix."sp_cu.pid  ,".$wpdb->prefix."sp_cu.uid,
-											".$wpdb->prefix."sp_cu_project.name AS project_name
+
+if($_GET['pid'] == ""){
+		$sub_projects = " 	AND ".$wpdb->prefix."sp_cu_project.parent =  0  "	;
+		}else{
+		$sub_projects = " 	AND  ".$wpdb->prefix."sp_cu_project.parent =  ".$_GET['pid']."  "	;	
+		}
+		$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,
+												 ".$wpdb->prefix."sp_cu.id,
+												 ".$wpdb->prefix."sp_cu.pid ,
+												 ".$wpdb->prefix."sp_cu.uid,
+												 ".$wpdb->prefix."sp_cu.parent,
+												 ".$wpdb->prefix."sp_cu_project.name AS project_name,
+												  ".$wpdb->prefix."sp_cu_project.parent AS project_parent
+												 
 										FROM ".$wpdb->prefix."sp_cu   
 										LEFT JOIN ".$wpdb->prefix."sp_cu_project  ON ".$wpdb->prefix."sp_cu.pid = ".$wpdb->prefix."sp_cu_project.id
 										WHERE (".$wpdb->prefix."sp_cu.uid = '".$_GET['uid']."'  ".$find_groups .")
 										AND pid != 0
-										AND parent = 0 
+										AND  ".$wpdb->prefix."sp_cu.parent = 0 
+										".$sub_projects."
 										".$search_project."
 										GROUP BY pid
 										ORDER by date desc", ARRAY_A);
 										
 										
+										
 		echo '<div id="dlg_cdm_thumbnails">';
 		
+		if($_GET['pid'] != "" && get_option('sp_cu_user_projects') == 1 ){	
+		$r_project_info = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."sp_cu_project where id = ".$_GET['pid']."", ARRAY_A);
+	
+		echo '
+		<div style="padding-right:10px">
+		<a href="javascript:sp_cu_dialog(\'#edit_category\',550,130)"><img src="'.content_url().'/plugins/sp-client-document-manager/images/application_edit.png"> Edit Project Name</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="'.content_url().'/plugins/sp-client-document-manager/images/delete_small.png"> Remove Project</a>
 		
-		if($_GET['pid'] == ""){
+		<div style="display:none">	
+		
+		
+		<script type="text/javascript">
+		
+		
+function sp_cu_edit_project(){
+	
+	jQuery.ajax({
+   type: "POST",
+   url: "'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=save-category",
+   data: "name=" + jQuery("#edit_project_name").val() + "&id=" +  jQuery("#edit_project_id").val(),
+   success: function(msg){
+   jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$_GET['uid'].'&pid='.$_GET['pid'].'");
+   jQuery("#edit_category").dialog("close");
+   alert(msg);	
+  
+   }
+ });
+}
+
+function sp_cu_remove_project(){
+	
+	jQuery( "#delete_category" ).dialog({
+			resizable: false,
+			height:240,
+			width:440,
+			modal: true,
+			buttons: {
+				"Delete all items": function() {
+						
+							
+						jQuery.ajax({
+					   type: "POST",
+					   url: "'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=remove-category",
+					   data: "id='.$_GET['pid'].'" ,
+					   success: function(msg){
+					   jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$_GET['uid'].'");
+					 
+					 
+					  
+					   }
+					 });
+					 
+					jQuery( this ).dialog( "close" );	
+						
+				},
+				Cancel: function() {
+					jQuery( this ).dialog( "close" );
+				}
+			}
+		});
+	
+	
+	
+
+	
+}
+
+		</script>	
+		<div id="delete_category" title="'.__("Delete Category?","sp-cdm").'">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'.__("Are you sure you would like to delete this category? Doing so will remove all files related to this category.","sp-cdm").'</p>
+		</div>
+
+		
+		
+			<div id="edit_category">			
+			
+			<input type="hidden"  name="edit_project_id" id="edit_project_id" value="'.$_GET['pid'].'">		
+			'.__("Project Name:","sp-cdm").' <input value="'.stripslashes($r_project_info[0]['name']).'" id="edit_project_name" type="text" name="name"  style="width:200px !important"> 
+			<input type="submit" value="'.__("Save Project","sp-cdm").'" onclick="sp_cu_edit_project()">
+			
+			</div>
+			
+		
+		
+		</div>
+		
+	
+		
+		</div>	
+		
+		';		
+		}
+		
+		
+		
+		
+		if(count($r_projects) > 0){
 		
 		
 		for($i=0; $i<count($r_projects); $i++){

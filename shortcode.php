@@ -17,7 +17,7 @@ function display_sp_thumbnails2($r){
 	
 	
 	function sp_cdm_loading_image(){
-		jQuery("#cmd_file_thumbs").html(\'<div style="padding:100px; text-align:center"><img src="'.content_url().'plugins/sp-client-document-manager/images/loading.gif"></div>\');		
+		jQuery("#cmd_file_thumbs").html(\'<div style="padding:100px; text-align:center"><img src="'.content_url().'/plugins/sp-client-document-manager/images/loading.gif"></div>\');		
 	}
 	function sp_cdm_load_file_manager(){
 		sp_cdm_loading_image();
@@ -216,12 +216,36 @@ jQuery(document).ready(function() {
 	});
 });
 
+
+function sp_cu_add_project(){
+	
+	jQuery.ajax({
+   type: "POST",
+   url: "'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=save-category",
+   data: "name=" + jQuery("#sub_category_name").val() + "&uid=" +  jQuery("#sub_category_uid").val(),
+   success: function(msg){
+  
+   jQuery("#sp_cu_add_project").dialog("close");
+
+	
+	jQuery("#pid_select").append(jQuery("<option>", { 
+    value: msg, 
+    text : jQuery("#sub_category_name").val(),
+	selected : "selected"
+ 	 }
+	 ));
+  
+   }
+ });
+}
 </script>
 <div style="display:none">
 	<div  id="sp_cu_add_project">
-		<form action="'.$_SERVER['REQUEST_URI'].'" method="post">
-		'.__("Project Name:","sp-cdm").' <input type="text" name="project-name"  style="width:200px !important"> <input type="submit" value="'.__("Add Project","sp-cdm").'" name="add-project">
-	</form>
+		<input type="hidden" id="sub_category_uid" name="uid" value="'.$current_user->ID.'">
+		
+		'.__("Project Name:","sp-cdm").' <input  id="sub_category_name" type="text" name="project-name"  style="width:200px !important"> 
+		<input type="submit" value="'.__("Add Project","sp-cdm").'" name="add-project" onclick="sp_cu_add_project()">
+	
 	</div>
 <div id="sp_cu_confirm_delete">
 <p>'.get_option('sp_cu_delete').'</p>

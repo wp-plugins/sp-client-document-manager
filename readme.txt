@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: client upload,project management, document manager, file uploader, customer file manager, customer files, document version system
 Requires at least: 2.0.2
 Tested up to: 3.4.1
-Stable tag: 1.2.6
+Stable tag: 1.2.7
 
 A WordPress plug-in that allows your business to manage client files and projects to assign to vendors,manufacturers sub-contractors.
 
@@ -88,6 +88,12 @@ This could be one of two reasons, either you did not install theme my login or y
 1. This is the client view
 2. This is the file view which also shows the premium revision system
 3. This is the admin page view
+4. Admin file uploader to upload a file for a user
+5. Settings page
+6. Form builder to add custom forms (premium)
+7. Group manager to allow multiple user manage the same files (premium)
+8. Project editor
+9. Upload a file
 
 == Changelog ==
 
@@ -159,6 +165,16 @@ This could be one of two reasons, either you did not install theme my login or y
 
 = 1.2.6 =
 * Added ability to set admin and user emails with custom template tags! Check out the settings area
+
+= 1.2.7 = 
+* Addded the ability to delete projects
+* Added the ability to edit project names
+* when adding projects it now uses ajax to eliminate page refresh
+* Bug fixed with multi site
+* Bug fixed with admin email
+* Bug fixed with User email
+* increased by eliminating some scripts that are not being used anymore
+
 == Upgrade Notice ==
 
 = 1.0.5 =
