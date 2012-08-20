@@ -20,7 +20,7 @@ http://smartypantsplugins.com/sp-client-document-manager/
 
 Now works with WordPress Multi Site!
 
-**[WordPress](http://smartypantsplugins.com/client-upload-demo/ "Click here to try out a demo")**
+**[Click here to try out a demo](http://smartypantsplugins.com/client-upload-demo/ "Click here to try out a demo")**
 Login with:  user: test   password: test
 
 **Client Side Features**
