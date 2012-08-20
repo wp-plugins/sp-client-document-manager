@@ -10,10 +10,9 @@ A WordPress plug-in that allows your business to manage client files and project
 
 == Description ==
 
-Smarty Pants Document Manager is a WordPress plug-in that allows your business to manage client/customers files and projects easily and securely.  
-Designed for Businesses that require clients to send files and those files need to be managed or assigned to Supplier's, vendors, sub-contractors or internal staff.  
-The Smarty Pants Document manager has user across many industry lines. 
-The Client Document Manager now supports localization so the plugin can be converted to any language you want! Check out our website for a tutorial on how to do this.
+Smarty Pants Document Manager allows your business to manage and control client/customers files and projects easily and securely.  
+Designed for Companies that need to virtually managed and control client files, with the ability to assigned to staff, supplier's, vendors, sub-contractors or partner's.  
+The Client Document Manager now supports localization so the plugin can be converted to any language you want! Check out our website for a tutorial on how to do this
 
 
 We also now offer a premium version; please check out our website for more information: 
@@ -21,7 +20,10 @@ http://smartypantsplugins.com/sp-client-document-manager/
 
 Now works with WordPress Multi Site!
 
-Client Side Features
+**[WordPress](http://smartypantsplugins.com/client-upload-demo/ "Click here to try out a demo")**
+Login with:  user: test   password: test
+
+**Client Side Features**
 
 * Clients upload files on their own personal page
 * Clients can create or add to existing projects
@@ -30,10 +32,12 @@ Client Side Features
 * Automatically zip multiple files
 * User login with help from "Theme my login"
 * Ability to translate plugin to multiple languages using the .po files.
+* Search by file name
+* Ability to allow deleting and renaming of projects
 
+**Administrator Side Features**
 
-Administrator Side Features
-
+* Admin has complete control on who can access specific files
 * Notification via email when a client uploads a file
 * Add files and documents to client page and projects
 * Download file archive of a user
@@ -43,30 +47,38 @@ Administrator Side Features
 * Force downloads of file 
 * Delete confirmation with custom notification
 * Thank you confirmation with custom notification
-* Add vendors so you can distribute the files to other people
+* Add staff, supplier's, vendors, sub-contractors or partner's so you can distribute the files to other people
 * Attach file or send the file as a link
 * Projects allow you or the users to create projects to store files in
 * Allow the user to create projects
 * Admin has the ability to add files to any user
-
-Premium Features
-
 * Admin can download all the files of a project in a single zip file
+
+**Premium Features**
+
+
+* Add custom fields to your client upload form! Sort the fields, view them in the file view page or in admin
+* Search by tags
 * Categories allow an admin to designate categories for the user to select, for example a print company could use categories as statuses (Mockup, Draft and Final)
 * Custom Notifications
 * Full Support through email or Skype
 * Auto deletion of files based on a time you set.
 * Thumbnail view mode for a windows explorer type look and feel.
 * Automaticly create thumbnails of pdfs and psds (must have imagemagick installed on server)
-* New form manager! Now add custom fields to your upload form! Sort the fields, view them in the file view page or in admin!
 * File versioning system, don't lose old versions 
-For more information check out the plugin page http://smartypantsplugins.com/sp-client-document-manager/
+* For more information check out the plugin page http://smartypantsplugins.com/sp-client-document-manager/
 
-Current Languages
+**Current Languages**
 
 * English
 * French
 * German
+* Italian
+
+**Demo**
+
+[youtube http://www.youtube.com/watch?v=m6szdA3r-1Q]
+
 
 == Installation ==
 
