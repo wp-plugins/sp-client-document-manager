@@ -126,8 +126,19 @@ $upload_dir = wp_upload_dir();
 				}else{
 				$target = ' ';	
 				}
-				$html .='<a '.$target.' href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'" title="Download" style="margin-right:15px"  ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/download.png"> '.__("Download File","sp-cdm").'</a> 
-	<a href="javascript:sp_cu_confirm(\'#sp_cu_confirm_delete\',200,\'?dlg-delete-file='.$r[0]['id'].'#downloads\');" title="Delete" ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/delete.png">'.__("Delete File","sp-cdm").'</a>
+				$html .='<a '.$target.' href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'" title="Download" style="margin-right:15px"  ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/download.png"> '.__("Download File","sp-cdm").'</a> ';
+				
+				
+		
+		
+
+			
+			if(($current_user->ID == $r[0]['uid']) or (cdmFindLockedGroup($current_user->ID , $r[0]['uid']) == true)){
+				
+				$html .='
+	<a href="javascript:sp_cu_confirm(\'#sp_cu_confirm_delete\',200,\'?dlg-delete-file='.$r[0]['id'].'#downloads\');" title="Delete" ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/delete.png">'.__("Delete File","sp-cdm").'</a>';
+			}
+	$html .='
 	<br> <em>'.date('F jS Y h:i A', strtotime($r[0]['date'])).'</em>
 				</div>
 				
@@ -438,7 +449,17 @@ if($_GET['pid'] == ""){
 										
 		echo '<div id="dlg_cdm_thumbnails">';
 		
-		if($_GET['pid'] != "" && get_option('sp_cu_user_projects') == 1 ){	
+		
+		if($_GET['pid'] != ""){
+		$r_current_project = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu_project  WHERE id = ".$_GET['pid']."", ARRAY_A);
+		
+		}
+		
+		
+		
+		
+		
+		if((($_GET['pid'] != "" && get_option('sp_cu_user_projects') == 1) && ($_GET['uid'] == $r_current_project[0]['uid'])) or (cdmFindLockedGroup($current_user->ID ,$r_current_project[0]['uid']) == true) ){	
 		$r_project_info = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."sp_cu_project where id = ".$_GET['pid']."", ARRAY_A);
 	
 		echo '
@@ -551,7 +572,7 @@ function sp_cu_remove_project(){
 			
 	}
 		}else{
-		
+		if($_GET['pid'] != ""){
 		echo '<div class="dlg_cdm_thumbnail_folder">
 				<a href="javascript:sp_cdm_load_file_manager()"><img src="'.content_url().'/plugins/sp-client-document-manager/images/my_projects_folder.png">
 				<div class="dlg_cdm_thumb_title">
@@ -561,7 +582,7 @@ function sp_cu_remove_project(){
 				</div>
 		
 		';	
-			
+		}
 		}
 	
 	

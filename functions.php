@@ -2,6 +2,49 @@
 
 
 if (!function_exists('sp_client_upload_settings')){
+
+
+function cdmFindLockedGroup($uid, $creator_id){
+		global $wpdb;
+			
+$r_group_user = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu_groups_assign.gid,
+											  ".$wpdb->prefix."sp_cu_groups_assign.uid,
+											  ".$wpdb->prefix."sp_cu_groups_assign.id AS asign_id,
+											  ".$wpdb->prefix."sp_cu_groups.name,
+											
+											  ".$wpdb->prefix."sp_cu_groups.id AS group_id
+											    FROM ".$wpdb->prefix."sp_cu_groups_assign 
+												LEFT JOIN   ".$wpdb->prefix."sp_cu_groups ON ".$wpdb->prefix."sp_cu_groups_assign.gid = ".$wpdb->prefix."sp_cu_groups.id
+												WHERE uid = '".$uid."' ", ARRAY_A);
+	
+
+	$serve = 0;
+	
+	for($i=0; $i<count($r_group_user ); $i++){
+		if($r_group_user[$i]['gid'] != ""){				
+					$r_group_user_select[$i] = $wpdb->get_results("SELECT * FROM  ".$wpdb->prefix."sp_cu_groups_assign  
+										LEFT JOIN ".$wpdb->prefix."sp_cu_groups ON  ".$wpdb->prefix."sp_cu_groups_assign.gid = ".$wpdb->prefix."sp_cu_groups.id 
+										WHERE ".$wpdb->prefix."sp_cu_groups_assign.uid = ".$creator_id." AND ".$wpdb->prefix."sp_cu_groups_assign.gid = ".$r_group_user[$i]['group_id']." ", ARRAY_A);
+					
+		
+					if($r_group_user_select[$i][0]['id'] != "" && $r_group_user_select[$i][0]['locked'] == 1 ){
+					$serve += 1;	
+					}
+		}
+	}
+	
+		
+
+														
+		if($serve > 0){
+			
+			return true;
+		}else{
+		return false;	
+		}
+	}	
+	
+	
 function cdm_thumbPdf($pdf)
 {
     try
