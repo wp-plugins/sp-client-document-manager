@@ -4,12 +4,12 @@ Plugin Name: SP Client Document & Project Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.2.8
+Version: 1.2.9
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.2.8";
+$sp_client_upload = "1.2.9";
 
 load_plugin_textdomain( 'sp-cdm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -298,16 +298,7 @@ function sp_client_upload_menu() {
 		   add_submenu_page( 'sp_cu', 'Projects', 'Projects', 'manage_options', 'sp-client-document-manager-projects',   array(  $projects ,'view'));
 		    add_submenu_page( 'sp_cu', 'Uploader', 'Uploader', 'manage_options', 'sp-client-document-manager-uploader',   array( $uploader ,'display_sp_upload_form'));
 		   
-		 if (CU_PREMIUM == 1){
-			 	if(class_exists('cdmForms')){
-		$forms = new cdmForms;
-		$groups = new cdmGroups;
-		}
-		  add_submenu_page( 'sp_cu', 'Forms', 'Forms', 'manage_options', 'sp-client-document-manager-forms',   array(  $forms ,'view'));
-		    add_submenu_page( 'sp_cu', 'Groups', 'Groups', 'manage_options', 'sp-client-document-manager-groups',   array(  $groups ,'view'));
-		 add_submenu_page( 'sp_cu', 'Categories', 'Categories', 'manage_options', 'sp-client-document-manager-categories', 'sp_client_upload_cat_view');
-		 }
-		 
+	
 		 
 }
 

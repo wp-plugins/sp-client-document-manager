@@ -14,7 +14,15 @@ function display_sp_thumbnails2($r){
 	
 	<script type="text/javascript">
 	
-	
+	function sp_cdm_sort(sort,pid){
+	if(pid != ""){
+		var pidurl = "&pid=" + pid;
+	}else{
+		var pidurl = "&cid=" + pid;	
+	}
+		jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$user_ID.'&sort=" + sort + "" + pidurl);	
+}
+
 	
 	function sp_cdm_loading_image(){
 		jQuery("#cmd_file_thumbs").html(\'<div style="padding:100px; text-align:center"><img src="'.content_url().'/plugins/sp-client-document-manager/images/loading.gif"></div>\');		
@@ -524,7 +532,7 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 	
 	$html .='Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files">  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/add.png"> '.__("Add File","sp-cdm").'</a>  ';
 
-if(get_option('sp_cu_user_projects_thumbs') == 1){
+if(get_option('sp_cu_user_projects_thumbs') == 1 && CU_PREMIUM == 1){
 		$html .=display_sp_cdm_thumbnails($r );
 }else{
 		$html .=display_sp_thumbnails2($r );

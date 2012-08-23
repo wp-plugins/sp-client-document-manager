@@ -152,15 +152,13 @@ window.location = "admin.php?page=sp-client-document-manager-settings&cdm-upgrad
 if(CU_PREMIUM != 1){
 
 $content .='<h3>Upgrade to premium!</h3>
-<p>If you would like to see the extra features and upgrade to premium please purchase the addon package by <a href="http://smartypantsplugins.com/sp-client-document-manager/" target="_blank">clicking here</a>. Once purchased you will receive a file, upload that file here and the plugin will do the rest!</p>';
+<p>If you would like to see the extra features and upgrade to premium please purchase the addon package by <a href="http://smartypantsplugins.com/sp-client-document-manager/" target="_blank">clicking here</a>. Once purchased you will receive a file, upload that file to your plugins directory or go to plugins > add new > upload and upload the zip file. Once you upload activate the plugin and let the fun begin!</p>';
 }else{
 $content .='<h3>Thanks for upgrading!</h3>
-<p>You can patch the premium version with the upload form below once new versions become available!</p>';
+<p>If you need to update the premium version of this plugin you can either overwrite the contents of the directory with the new version or use the wordpress plugin manager to delete the old version and add the new version.</p>';
 }
 	$content .='
-<form action="" method="post" enctype="multipart/form-data">
-<input type="file" name="premium"> <input type="submit" name="upgrade" value="Install Premium!">
-</form>
+
 
 </div>
 <h2>Settings</h2>
@@ -311,9 +309,10 @@ function sp_client_upload_nav_menu(){
 	}else{
 	$ver = $sp_client_upload;	
 	}
-$content .= '<strong>Version:</strong> '.$cu_ver .' '.$ver.'';
-
-
+$content .= '<strong>Version:</strong> '.get_option('sp_client_upload').'';
+if(CU_PREMIUM == 1){
+$content .= '<br><strong>Premium Version:</strong> '.get_option('sp_client_upload_premium').'';
+}
 
 if($_GET['sphidemessage'] == 1){
 	

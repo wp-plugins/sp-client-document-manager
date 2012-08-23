@@ -243,12 +243,18 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 		echo '<div id="dlg_cdm_file_list">
 		<table border="0" cellpadding="0" cellspacing="0">
 		<thead>';
-		
+		if($_GET['pid'] == ''){
+			
+			$jscriptpid = "''";	
+		}else{
+			$jscriptpid = "'".$_GET['pid']."'";	
+		}
 		echo '<tr>
 		<th></th>
-		<th class="cdm_file_info" style="text-align:left">File Name</th>
-		<th class="cdm_file_date">File Date</th>
-		<th class="cdm_file_type">File Type</th>	
+		<th class="cdm_file_info" style="text-align:left"><a href="javascript:sp_cdm_sort(\'name\','.$jscriptpid.')">Name</a></th>
+		<th class="cdm_file_date"><a href="javascript:sp_cdm_sort(\'date\','.$jscriptpid.')">Date</a></th>
+	
+		<th class="cdm_file_type">Type</th>	
 		</tr>	
 		
 		';
@@ -357,6 +363,7 @@ function sp_cu_remove_project(){
 		<td class="cdm_file_icon ext_directory"></td>
 		<td class="cdm_file_info">'.htmlentities(stripslashes($r_projects[$i]['project_name'])).'</td>
 		<td class="cdm_file_date">&nbsp;</td>
+		
 		<td class="cdm_file_type">Folder</td>	
 		</tr>	
 		';
@@ -368,6 +375,7 @@ function sp_cu_remove_project(){
 	<td class="cdm_file_icon ext_directory"></td>
 		<td class="cdm_file_info">&laquo; Go Back</td>
 		<td class="cdm_file_date">&nbsp;</td>
+		
 		<td class="cdm_file_type"></td>
 	</tr>	
 		';	
@@ -375,10 +383,17 @@ function sp_cu_remove_project(){
 		}
 	
 	
-	if($_GET['pid'] == ""){
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.")  AND pid = 0 	AND parent = 0  ".$search_file." order by date desc", ARRAY_A);
+	
+	if($_GET['sort'] == ''){
+	$sort = 'date';	
 	}else{
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$_GET['pid']."' AND parent = 0   ".$search_file."  order by date desc", ARRAY_A);		
+	$sort = $_GET['sort'];		
+	}
+	
+	if($_GET['pid'] == ""){
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.")  AND pid = 0 	AND parent = 0  ".$search_file." order by ".$sort ." ", ARRAY_A);
+	}else{
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$_GET['pid']."' AND parent = 0   ".$search_file."  order by ".$sort ."  ", ARRAY_A);		
 	}
 	
 	for($i=0; $i<count( $r ); $i++){
@@ -388,12 +403,18 @@ function sp_cu_remove_project(){
 		$ext = preg_replace('/^.*\./', '', $r[$i]['file']);
 		
 
+		$r_cat = $wpdb->get_results("SELECT name  FROM ".$wpdb->prefix."sp_cu_cats   where id = '".$r[$i]['cid']."' ", ARRAY_A);		
 		
-		
+		if($r_cat[0]['name'] == ''){
+			$cat = stripslashes($r_cat[0]['name']);
+		}else{
+			$cat = '';
+		}
 		echo '<tr onclick="sp_cdm_showFile('.$r[$i]['id'].')">
 				<td class="cdm_file_icon ext_'.$ext.'"></td>
 		<td class="cdm_file_info">'.htmlentities(stripslashes($r[$i]['name'])).'</td>
 		<td class="cdm_file_date">'.date("F Y g:i A",strtotime($r[$i]['date'])).'</td>
+
 		<td class="cdm_file_type">'.$ext.'</td>	
 		</tr>	
 		';
