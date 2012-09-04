@@ -287,6 +287,9 @@ $content .='<h3>Thanks for upgrading!</h3>
 if (!function_exists('sp_client_upload_help')){
 function sp_client_upload_help(){
 	
+	
+
+	
 echo '<h2>Smarty Pants Client Document Manager</h2>'.sp_client_upload_nav_menu().'
 	
 <p>Please update the page where your uploader shortcode will be placed</p>
@@ -296,10 +299,11 @@ echo '<h2>Smarty Pants Client Document Manager</h2>'.sp_client_upload_nav_menu()
  
 ';	
 	
+	
 }
 }
 if (!function_exists('sp_client_upload_nav_menu')){
-function sp_client_upload_nav_menu(){
+function sp_client_upload_nav_menu($nav = NULL){
 	global $cu_ver,$sp_client_upload,$sp_cdm_ver ;
 	
 	if(CU_PREMIUM == 1){
@@ -362,13 +366,17 @@ $content .= '<a href="admin.php?page=sp-client-document-manager-uploader" class=
 if (CU_PREMIUM == 1){
 $content .= '<a href="admin.php?page=sp-client-document-manager-groups" class="button" style="margin-right:10px">'.__("Groups","sp-cdm").'</a>';
 $content .= '<a href="admin.php?page=sp-client-document-manager-forms" class="button" style="margin-right:10px">'.__("Forms","sp-cdm").'</a>';
+$content .= '<a href="admin.php?page=sp-client-document-manager-comments" class="button" style="margin-right:10px">'.__("Comments","sp-cdm").'</a>';
 $content .= '<a href="admin.php?page=sp-client-document-manager-categories" class="button" style="margin-right:10px">'.__("Categories","sp-cdm").'</a>';
+
 }
 $content .= '<a href="admin.php?page=sp-client-document-manager-help" class="button" style="margin-right:10px">'.__("Instructions","sp-cdm").'</a>
 <a href="users.php" class="button"  style="margin-right:10px">'.__("View users","sp-cdm").'</a>
 </div>';	
 	return $content;
 }
+
+add_action( 'cdm_nav_menu', 'sp_client_upload_nav_menu' ); 
 
 }
 if (!function_exists('sp_client_upload_admin')){

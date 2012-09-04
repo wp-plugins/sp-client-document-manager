@@ -120,6 +120,11 @@ $upload_dir = wp_upload_dir();
 				$html .= sp_cdm_revision_button();
 				 }
 				
+				if(class_exists('cdmProductivityUser')){
+			  $html .= '<span id="cdm_comment_button_holder">'.$cdm_comments->button().'</span>';
+				 }
+				
+				
 				
 				if(get_option('sp_cu_js_redirect') == 1){
 				$target = 'target="_blank"';	
@@ -189,6 +194,10 @@ $html .='
 $html .='<div class="sp_su_history"><p><strong>'.__("Revision History","sp-cdm").'</strong></p>'.sp_cdm_file_history($r[0]['id']).'</div>';
  }
  }
+ 
+ if(class_exists('cdmProductivityUser')){
+  $html .= '<div id="cdm_comments_container">'.$cdm_comments->view($r[0]['id']).'</div>';
+ }
 $html .='
 
 
@@ -213,19 +222,15 @@ $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST[
 $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$_REQUEST['search']."%')  ";		
 }
 		
-		if($_GET['pid'] == ""){
-		$sub_projects = " 	AND ".$wpdb->prefix."sp_cu_project.parent =  0  "	;
-		}else{
-		$sub_projects = " 	AND  ".$wpdb->prefix."sp_cu_project.parent =  ".$_GET['pid']."  "	;	
-		}
+	
 		
 		$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,
 												 ".$wpdb->prefix."sp_cu.id,
 												 ".$wpdb->prefix."sp_cu.pid ,
 												 ".$wpdb->prefix."sp_cu.uid,
 												 ".$wpdb->prefix."sp_cu.parent,
-												 ".$wpdb->prefix."sp_cu_project.name AS project_name,
-												  ".$wpdb->prefix."sp_cu_project.parent AS project_parent
+												 ".$wpdb->prefix."sp_cu_project.name AS project_name
+												
 												 
 										FROM ".$wpdb->prefix."sp_cu   
 										LEFT JOIN ".$wpdb->prefix."sp_cu_project  ON ".$wpdb->prefix."sp_cu.pid = ".$wpdb->prefix."sp_cu_project.id
@@ -237,8 +242,8 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 										GROUP BY pid
 										ORDER by date desc", ARRAY_A);
 										
-									
-										
+					
+								
 										
 		echo '<div id="dlg_cdm_file_list">
 		<table border="0" cellpadding="0" cellspacing="0">
@@ -443,18 +448,12 @@ $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST[
 $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$_REQUEST['search']."%')  ";		
 }
 
-if($_GET['pid'] == ""){
-		$sub_projects = " 	AND ".$wpdb->prefix."sp_cu_project.parent =  0  "	;
-		}else{
-		$sub_projects = " 	AND  ".$wpdb->prefix."sp_cu_project.parent =  ".$_GET['pid']."  "	;	
-		}
 		$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,
 												 ".$wpdb->prefix."sp_cu.id,
 												 ".$wpdb->prefix."sp_cu.pid ,
 												 ".$wpdb->prefix."sp_cu.uid,
 												 ".$wpdb->prefix."sp_cu.parent,
-												 ".$wpdb->prefix."sp_cu_project.name AS project_name,
-												  ".$wpdb->prefix."sp_cu_project.parent AS project_parent
+												 ".$wpdb->prefix."sp_cu_project.name AS project_name
 												 
 										FROM ".$wpdb->prefix."sp_cu   
 										LEFT JOIN ".$wpdb->prefix."sp_cu_project  ON ".$wpdb->prefix."sp_cu.pid = ".$wpdb->prefix."sp_cu_project.id

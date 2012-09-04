@@ -6,6 +6,7 @@
   font-size: 12px;
 
 }
+#dlg_cdm_file_list table {width:100%}
 #upload_form {font-size:12px;}
 #dlg_cdm_thumbnails .dlg_cdm_thumbnail_folder{ float:left;width:135px;height:150px; text-align:center;padding-top:10px;}
 #dlg_cdm_thumbnails .dlg_cdm_thumbnail_folder a {display:block; text-decoration:none;}
@@ -20,7 +21,7 @@ td{ vertical-align:top}
 #sp_cu_viewfile h2{float:left;width:40%;font-size:1.2em;font-weight:bold; }
 .sp_cu_filetree{border:1px solid #ccc;border-radius:5px;padding:5px;font-size:12px;margin:5px; background-color:#f4f4f4;height:440px; overflow-x: hidden;
 overflow-y: scroll;}
-.sp_cu_manage{ text-align:right;padding:5px;font-size:.9em;}
+.sp_cu_manage{ text-align:right;padding:5px;font-size:12px;}
 .sp_cu_manage em{ font-size:.8em;}
 .sp_cu_item{border-radius:5px;padding:5px;font-size:12px;margin:5px; }
 .sp_cu_item h3{font-size:18px;font-weight:bold;margin:0px  !important;padding:0px !important;}
