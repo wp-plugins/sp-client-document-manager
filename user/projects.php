@@ -35,11 +35,19 @@ if (CU_PREMIUM == 1){
 	
 	</td>
     <td>
-	<select name="pid" id="pid_select">
-	<option name="" selected="selected">'.__("No Project","sp-cdm").'</option>';
-
+	<select name="pid" id="pid_select">';
+	
+	if(get_option('sp_cu_user_projects_required') == 0){	
+	$html .='<option name="" selected="selected">'.__("No Project","sp-cdm").'</option>';	
+	}
 		for($i=0; $i<count($projects); $i++){
-	  $html .= '<option value="'.$projects[$i]['id'].'">'.stripslashes($projects[$i]['name']).'</option>';	
+								
+		if($current_user->last_project == $projects[$i]['id'] ){	
+			$required = ' selected="selected" '	;
+		}else{
+			$required = ''	;
+		}
+	  $html .= '<option value="'.$projects[$i]['id'].'" '.$required.'>'.stripslashes($projects[$i]['name']).'</option>';	
 		}
 	
 	$html .='</select>';

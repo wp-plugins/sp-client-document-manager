@@ -97,6 +97,7 @@ global $wpdb;
 			
 				
 	if($_POST['sp_cu_user_projects'] == "1"){update_option('sp_cu_user_projects','1' ); }else{update_option('sp_cu_user_projects','0' );	}
+	if($_POST['sp_cu_user_projects_required'] == "1"){update_option('sp_cu_user_projects_required','1' ); }else{update_option('sp_cu_user_projects_required','0' );	}
 	if($_POST['sp_cu_user_projects_thumbs'] == "1"){update_option('sp_cu_user_projects_thumbs','1' ); }else{update_option('sp_cu_user_projects_thumbs','0' );	}
 	if($_POST['sp_cu_user_projects_thumbs_pdf'] == "1"){update_option('sp_cu_user_projects_thumbs_pdf','1' ); }else{update_option('sp_cu_user_projects_thumbs_pdf','0' );	}
 	if($_POST['sp_cu_js_redirect'] == "1"){update_option('sp_cu_js_redirect','1' ); }else{update_option('sp_cu_js_redirect','0' );	}		
@@ -105,6 +106,7 @@ global $wpdb;
 	
 	
 	
+	if(get_option('sp_cu_user_projects_required') == 1){ $sp_cu_user_projects_required = ' checked="checked" ';	}else{ $sp_cu_user_projects_required = '  '; }
 	if(get_option('sp_cu_user_projects') == 1){ $sp_cu_user_projects = ' checked="checked" ';	}else{ $sp_cu_user_projects = '  '; }
 	if(get_option('sp_cu_user_projects_thumbs') == 1){ $sp_cu_user_projects_thumbs = ' checked="checked" ';	}else{ $sp_cu_user_projects_thumbs = '  '; }
 	if(get_option('sp_cu_user_projects_thumbs_pdf') == 1){ $sp_cu_user_projects_thumbs_pdf = ' checked="checked" ';	}else{ $sp_cu_user_projects_thumbs_pdf = '  '; }
@@ -207,7 +209,10 @@ $content .='<h3>Thanks for upgrading!</h3>
     <td width="300"><strong>User Projects?</strong><br><em>If you want to allow the user to create projects check this box.</em></td>
     <td><input type="checkbox" name="sp_cu_user_projects"   value="1" '. $sp_cu_user_projects.'> </td>
   </tr>
-  
+    <tr>
+    <td width="300"><strong>Mandatory Projects?</strong><br><em>If you want to require that a user select a project then check this box.</em></td>
+    <td><input type="checkbox" name="sp_cu_user_projects_required"   value="1" '. $sp_cu_user_projects_required.'> </td>
+  </tr>
     <tr>
     <td width="300"><strong>Form Instructions</strong><br><em>Just a short statement that will go above the upload form, you can use html!</em></td>
     <td><textarea  name="sp_cu_form_instructions"  style="width:100%;height:60px" >'. stripslashes(get_option('sp_cu_form_instructions')).'</textarea> </td>

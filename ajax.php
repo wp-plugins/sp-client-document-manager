@@ -574,7 +574,7 @@ function sp_cu_remove_project(){
 		
 		
 		
-		if(count($r_projects) > 0){
+		if(count($r_projects) > 0 && $_GET['pid'] == ""){
 		
 		
 		for($i=0; $i<count($r_projects); $i++){

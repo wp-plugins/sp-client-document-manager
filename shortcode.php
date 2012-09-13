@@ -434,6 +434,8 @@ if($_POST['submit'] != ""){
 	$a['file'] = sp_uploadFile($files);
     $wpdb->insert(  "".$wpdb->prefix."sp_cu", $a );
 	$file_id = $wpdb->insert_id;
+	
+	add_user_meta(  $user_ID, 'last_project', $a['pid']);
 	 if (CU_PREMIUM == 1){ 
 	  
 	 process_sp_cdm_form_vars($data['custom_forms'],$wpdb->insert_id);
