@@ -366,7 +366,7 @@ function sp_cu_remove_project(){
 		
 		echo '<tr onclick="sp_cdm_load_project('.$r_projects[$i]['pid'].')">
 		<td class="cdm_file_icon ext_directory"></td>
-		<td class="cdm_file_info">'.htmlentities(stripslashes($r_projects[$i]['project_name'])).'</td>
+		<td class="cdm_file_info">'.stripslashes($r_projects[$i]['project_name']).'</td>
 		<td class="cdm_file_date">&nbsp;</td>
 		
 		<td class="cdm_file_type">Folder</td>	
@@ -417,7 +417,7 @@ function sp_cu_remove_project(){
 		}
 		echo '<tr onclick="sp_cdm_showFile('.$r[$i]['id'].')">
 				<td class="cdm_file_icon ext_'.$ext.'"></td>
-		<td class="cdm_file_info">'.htmlentities(stripslashes($r[$i]['name'])).'</td>
+		<td class="cdm_file_info">'.stripslashes($r[$i]['name']).'</td>
 		<td class="cdm_file_date">'.date("F Y g:i A",strtotime($r[$i]['date'])).'</td>
 
 		<td class="cdm_file_type">'.$ext.'</td>	
@@ -583,7 +583,7 @@ function sp_cu_remove_project(){
 		echo '<div class="dlg_cdm_thumbnail_folder">
 				<a href="javascript:sp_cdm_load_project('.$r_projects[$i]['pid'].')"><img src="'.content_url().'/plugins/sp-client-document-manager/images/my_projects_folder.png">
 				<div class="dlg_cdm_thumb_title">
-				'.htmlentities(stripslashes($r_projects[$i]['project_name'])).'
+				'.stripslashes($r_projects[$i]['project_name']).'
 				</div>
 				</a>
 				</div>
@@ -650,7 +650,7 @@ function sp_cu_remove_project(){
 			<div class="dlg_cdm_thumbnail_image">
 				<a href="javascript:sp_cdm_showFile('.$r[$i]['id'].')">'.$img .'
 				<div class="dlg_cdm_thumb_title">
-				'. htmlentities(stripslashes($r[$i]['name'])).'
+				'. stripslashes($r[$i]['name']).'
 				</div>
 				</a>
 				</div>
@@ -724,14 +724,14 @@ $search_file .= " AND ".$wpdb->prefix."sp_cu.name LIKE '%".$_REQUEST['search']."
 	for($i=0; $i<count($r_projects); $i++){
 		
 		
-		echo "<li class=\"directory collapsed\"><a href=\"#\" rel=\"PID".$r_projects[$i]['pid']."\">" . htmlentities(stripslashes($r_projects[$i]['project_name'])) . "</a></li>";
+		echo "<li class=\"directory collapsed\"><a href=\"#\" rel=\"PID".$r_projects[$i]['pid']."\">" .stripslashes($r_projects[$i]['project_name']) . "</a></li>";
 			
 	}
 	
 	for($i=0; $i<count( $r ); $i++){
 		
 		$ext = preg_replace('/^.*\./', '', $r[$i]['file']);
-		echo "<li class=\"file ext_$ext\"><a href=\"#\" rel=\"".$r[$i]['id']."\">" . htmlentities(stripslashes($r[$i]['name'])) . "</a></li>";
+		echo "<li class=\"file ext_$ext\"><a href=\"#\" rel=\"".$r[$i]['id']."\">" .stripslashes($r[$i]['name']) . "</a></li>";
 		
 	}
 	echo "</ul>";	
