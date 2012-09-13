@@ -1,0 +1,299 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: sp-cdm\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-05-01 10:15-0500\n"
+"PO-Revision-Date: 2012-06-19 17:12+0100\n"
+"Last-Translator: WP-Junkie <andis@uims.de>\n"
+"Language-Team: Smarty Pants <support@smartypantsplugins.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-Bookmarks: 44,-1,-1,-1,-1,-1,-1,-1,-1,-1\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../ajax.php:35
+msgid "Project: None"
+msgstr "Projekt: keins"
+
+#: ../ajax.php:60
+msgid "Download File"
+msgstr "Datei herunterladen"
+
+#: ../ajax.php:61
+msgid "Delete File"
+msgstr "Datei löschen"
+
+#: ../ajax.php:75
+msgid "Project: "
+msgstr "Projekt:"
+
+#: ../ajax.php:78
+#: ../functions.php:322
+msgid "Notes: "
+msgstr "Bemerkungen:"
+
+#: ../ajax.php:84
+msgid "Revision History"
+msgstr "Versionsgeschichte"
+
+#: ../ajax.php:225
+msgid "Please select at least one file!"
+msgstr "Bitte wähle mindestens eine Datei!"
+
+#: ../ajax.php:269
+msgid "New files from:"
+msgstr "Neue Dateien von:"
+
+#: ../ajax.php:274
+msgid "Files Sent to"
+msgstr "Dateien gesendet an"
+
+#: ../cu.php:182
+msgid "Updated Settings!"
+msgstr "Einstellungen gespeichert!"
+
+#: ../cu.php:184
+msgid "Latest uploads"
+msgstr "Neueste Uploads"
+
+#: ../functions.php:188
+msgid "Home"
+msgstr "Home"
+
+#: ../functions.php:189
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: ../functions.php:190
+#: ../admin/vendors.php:40
+msgid "Vendors"
+msgstr "Anbieter"
+
+#: ../functions.php:193
+#: ../premium/admin/projects.php:37
+#: ../premium/admin/projects.php:124
+msgid "Projects"
+msgstr "Projekte"
+
+#: ../functions.php:194
+#: ../premium/admin/categories.php:26
+#: ../premium/admin/categories.php:93
+msgid "Categories"
+msgstr "Kategorien"
+
+#: ../functions.php:196
+msgid "Instructions"
+msgstr "Anleitungen"
+
+#: ../functions.php:197
+msgid "View users"
+msgstr "Benutzer anzeigen"
+
+#: ../functions.php:233
+msgid "User Uploads"
+msgstr "vom Benutzer hochgeladen"
+
+#: ../functions.php:237
+msgid "Click to download all files"
+msgstr "Klicken, um alle Dateien herunterzuladen"
+
+#: ../functions.php:248
+msgid "No Uploads Exist!"
+msgstr "Keine Uploads vorhanden"
+
+#: ../functions.php:283
+msgid "File Name"
+msgstr "Dateiname"
+
+#: ../functions.php:284
+#: ../premium/admin/projects.php:138
+msgid "User"
+msgstr "Benutzer"
+
+#: ../functions.php:285
+msgid "Date"
+msgstr "Datum"
+
+#: ../functions.php:286
+#: ../functions.php:328
+msgid "Download"
+msgstr "Herunterladen"
+
+#: ../functions.php:287
+#: ../admin/vendors.php:51
+msgid "Email"
+msgstr "Email"
+
+#: ../functions.php:328
+#: ../admin/vendors.php:52
+#: ../admin/vendors.php:62
+#: ../premium/admin/categories.php:120
+#: ../premium/admin/projects.php:153
+msgid "Delete"
+msgstr "Löschen"
+
+#: ../functions.php:340
+msgid "Choose  the files you want to send above, type a message and choose a vendor then click submit:"
+msgstr "Wählen Sie oben die gewünschten Dateien zum senden, geben Sie eine Nachricht ein, wählen Sie einen Anbieter und klicken Sie auf Senden:"
+
+#: ../functions.php:363
+msgid "Message:"
+msgstr "Nachricht:"
+
+#: ../functions.php:363
+msgid "Attach to email:"
+msgstr "an Email anhängen"
+
+#: ../functions.php:363
+msgid "Send links to files"
+msgstr "Sende Links zu den Dateien"
+
+#: ../functions.php:363
+msgid "Attach and link to to files"
+msgstr "Anhängen und Link zu Dateien"
+
+#: ../functions.php:363
+msgid "Email vendor files!"
+msgstr "maile Anbieter-Dateien!"
+
+#: ../shortcode.php:186
+msgid "Project Name:"
+msgstr "Projektname:"
+
+#: ../shortcode.php:186
+#: ../premium/admin/projects.php:131
+#: ../premium/user/shortcode.php:83
+msgid "Add Project"
+msgstr "Projekt hinzufügen"
+
+#: ../shortcode.php:212
+msgid "File Name:"
+msgstr "Dateiname:"
+
+#: ../shortcode.php:229
+msgid "File:"
+msgstr "Datei:"
+
+#: ../shortcode.php:235
+#: ../premium/admin/history.php:94
+msgid "Notes:"
+msgstr "Bemerkungen:"
+
+#: ../shortcode.php:315
+msgid "From:"
+msgstr "Von:"
+
+#: ../shortcode.php:316
+#: ../premium/admin/history.php:33
+msgid "Client uploaded a new document"
+msgstr "Kunde hat ein neues Dokument hochgeladen"
+
+#: ../shortcode.php:316
+#: ../premium/admin/history.php:33
+msgid "Click here view the files:"
+msgstr "hier klicken um die Dateien zu sehen:"
+
+#: ../shortcode.php:317
+#: ../premium/admin/history.php:34
+msgid "New file upload from client"
+msgstr "Neue Datei vom Kunden hochgeladen"
+
+#: ../shortcode.php:329
+#: ../premium/admin/history.php:39
+msgid "Please upload a file!"
+msgstr "Bitte laden Sie eine Datei hoch!"
+
+#: ../shortcode.php:365
+msgid "Add File"
+msgstr "Datei hinzufügen"
+
+#: ../admin/vendors.php:41
+msgid "You can use this section to route downloads to a certain vendor in the users section, when you click on a user there will be checkboxes next to the file. Check the checkboxes you would like to send then scroll down, choose a vencor and click send. This works well for sending files to department members or different vendors"
+msgstr "Sie können diesen Abschnitt nutzen um Downloads zu bestimmten Lieferanten im Abschnitt Benutzer weiterzuleiten, wenn Sie auf einen Benutzer klicken finden Sie ein Kontrollkästchen neben der Datei. Aktivieren Sie die Kontrollkästchen die Sie senden möchten, dann nach unten scrollen, einen Anbieter wählen und auf senden klicken. Dies funktioniert gut zum Senden von Dateien an Abteilungsmitarbeiter oder verschiedene Anbieter"
+
+#: ../admin/vendors.php:45
+#: ../premium/admin/categories.php:30
+#: ../premium/admin/projects.php:41
+msgid "Name:"
+msgstr "Name:"
+
+#: ../admin/vendors.php:45
+msgid "Email:"
+msgstr "Email:"
+
+#: ../admin/vendors.php:50
+#: ../premium/admin/categories.php:108
+#: ../premium/admin/projects.php:137
+msgid "Name"
+msgstr "Name"
+
+#: ../premium/admin/categories.php:36
+#: ../premium/admin/projects.php:50
+msgid "Save"
+msgstr "Speichern"
+
+#: ../premium/admin/categories.php:102
+msgid "Add Category"
+msgstr "Karegorie hinzufügen"
+
+#: ../premium/admin/categories.php:107
+#: ../premium/admin/projects.php:136
+msgid "ID"
+msgstr "ID"
+
+#: ../premium/admin/categories.php:110
+#: ../premium/admin/projects.php:139
+msgid "Action"
+msgstr "Aktion"
+
+#: ../premium/admin/categories.php:121
+#: ../premium/admin/projects.php:154
+msgid "Modify"
+msgstr "Ändern"
+
+#: ../premium/admin/history.php:32
+msgid "From"
+msgstr "Von"
+
+#: ../premium/admin/history.php:36
+msgid "File uploaded!!"
+msgstr "Datei hochgeladen"
+
+#: ../premium/admin/history.php:57
+#: ../premium/admin/history.php:99
+msgid "Add Revision"
+msgstr "Version hinzufügen"
+
+#: ../premium/admin/history.php:90
+msgid "File"
+msgstr "Datei"
+
+#: ../premium/admin/history.php:132
+msgid "No other files in history"
+msgstr "Keine anderen Dateien im Verlauf"
+
+#: ../premium/admin/projects.php:45
+msgid "User:"
+msgstr "Benutzer:"
+
+#: ../premium/admin/projects.php:151
+msgid "Download Archive"
+msgstr "Archiv herunterladen"
+
+#: ../premium/user/shortcode.php:27
+msgid "No Category"
+msgstr "Keine Kategorie"
+
+#: ../premium/user/shortcode.php:65
+msgid "Project:"
+msgstr "Projekt:"
+
+#: ../premium/user/shortcode.php:73
+msgid "No Project"
+msgstr "Kein Projekt"
+
