@@ -4,13 +4,13 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: client upload,project management, document manager, file uploader, customer file manager, customer files, document version system
 Requires at least: 2.0.2
 Tested up to: 3.4.1
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 
-A WordPress plug-in that allows your business to manage client files and projects to assign to vendors,manufacturers sub-contractors.
+A scalable client document and project management program that gives your company the ability to securely share clients files virtually
 
 == Description ==
 
-Smarty Pants Document Manager allows your business to manage and control client/customers files and projects easily and securely.  
+SP Document Manager allows your business to manage and control client/customers files and projects easily and securely.  
 Designed for Companies that need to virtually managed and control client files, with the ability to assigned to staff, supplier's, vendors, sub-contractors or partner's.  
 The Client Document Manager now supports localization so the plugin can be converted to any language you want! Check out our website for a tutorial on how to do this
 
@@ -38,7 +38,7 @@ Login with:  user: test   password: test
 
 **Administrator Side Features**
 
-* Admin has complete control on who can access specific files
+* Complete control on who can access specific files
 * Notification via email when a client uploads a file
 * Add files and documents to client page and projects
 * Download file archive of a user
@@ -52,8 +52,8 @@ Login with:  user: test   password: test
 * Attach file or send the file as a link
 * Projects allow you or the users to create projects to store files in
 * Allow the user to create projects
-* Admin has the ability to add files to any user
-* Admin can download all the files of a project in a single zip file
+* Ability to add files to any user
+* Download all the files of a project in a single zip file
 
 **Premium Features**
 
@@ -61,12 +61,13 @@ Login with:  user: test   password: test
 * Add custom fields to your client upload form! Sort the fields, view them in the file view page or in admin
 * Search by tags
 * Categories allow an admin to designate categories for the user to select, for example a print company could use categories as statuses (Mockup, Draft and Final)
-* Custom Notifications
+* Custom Email Notifications
 * Full Support through email or Skype
 * Auto deletion of files based on a time you set.
 * Thumbnail view mode for a windows explorer type look and feel.
 * Automaticly create thumbnails of pdfs and psds (must have imagemagick installed on server)
 * File versioning system, don't lose old versions 
+* Addon packs available for more features!
 * For more information check out the plugin page http://smartypantsplugins.com/sp-client-document-manager/
 
 **Current Languages**
@@ -96,6 +97,9 @@ Login with:  user: test   password: test
 
 This could be one of two reasons, either you did not install theme my login or you're running wordpress in a directory in which you can go to settings and set the directory for wordpress.
 
+= Why am I just getting a spinning circle and no content on my uploader? = 
+
+This is usually because you are using a theme that converts new lines into paragraphs. To fix this wrap the short code in raw tags. Example: [raw][sp-client-document-manager] [/raw]
 == Screenshots ==
 
 1. This is the client view
@@ -222,6 +226,7 @@ Bug fixes, added thumbnail mode for premium users.
 
 = 1.1.1 =
 Projects now come with free version! Create projects and folders for your files
+
 
 = 1.2.5 = 
 Major updates, new uploader and fixes to admin upload functions

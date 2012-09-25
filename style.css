@@ -16,9 +16,9 @@
 
 #sp_cu_viewfile{ }
 td{ vertical-align:top}
-.sp_su_project, .sp_su_notes,.sp_su_history{ background-color:#F0F0F0;padding:5px;margin:5px;}
+.sp_su_project, .sp_su_notes,.sp_su_history{ background-color:#F0F0F0;padding:5px;margin:5px;font-size:12px;}
 .sp_su_history{height:120px;overflow:auto;}
-#sp_cu_viewfile h2{float:left;width:40%;font-size:1.2em;font-weight:bold; }
+.view-file-info h2{font-size:1.1em;font-weight:bold; margin:0px !important;padding:0px !important;}
 .sp_cu_filetree{border:1px solid #ccc;border-radius:5px;padding:5px;font-size:12px;margin:5px; background-color:#f4f4f4;height:440px; overflow-x: hidden;
 overflow-y: scroll;}
 .sp_cu_manage{ text-align:right;padding:5px;font-size:12px;}

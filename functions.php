@@ -273,6 +273,14 @@ $content .='<h3>Thanks for upgrading!</h3>
   ';
   
   }
+  
+  if(class_exists('cdmProductivityGoogle')){
+	  
+	$content .='   <tr>
+    <td width="300"><strong>Google API Key</strong><br><em>This is your google API if you are using the google shortlink addon in the productivity suite, this also may be used for future google services integration.</em></td>
+    <td><input type="text" name="sp_cu_google_api_key"  value="'.get_option('sp_cu_google_api_key').'"  size=80"> </td>
+  </tr>';  
+  }
   $content .='
     <tr>
     <td>&nbsp;</td>
@@ -371,7 +379,7 @@ $content .= '<a href="admin.php?page=sp-client-document-manager-uploader" class=
 if (CU_PREMIUM == 1){
 $content .= '<a href="admin.php?page=sp-client-document-manager-groups" class="button" style="margin-right:10px">'.__("Groups","sp-cdm").'</a>';
 $content .= '<a href="admin.php?page=sp-client-document-manager-forms" class="button" style="margin-right:10px">'.__("Forms","sp-cdm").'</a>';
-$content .= '<a href="admin.php?page=sp-client-document-manager-comments" class="button" style="margin-right:10px">'.__("Comments","sp-cdm").'</a>';
+
 $content .= '<a href="admin.php?page=sp-client-document-manager-categories" class="button" style="margin-right:10px">'.__("Categories","sp-cdm").'</a>';
 
 }

@@ -79,6 +79,13 @@ if(!function_exists('mime_content_type')) {
         }
     }
 }
+
+
+if(class_exists('cdmProductivityLog')){
+$cdm_log = new cdmProductivityLog;	
+$cdm_log->add($_GET['fid'],$current_user->ID);	
+}
+
 	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$_GET['fid']."'  order by date desc", ARRAY_A);
 $r_rev_check = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where parent= '".$r[0]['id']."'  order by date desc", ARRAY_A);
 if(count($r_rev_check) > 0 && $_GET['original'] == ''){

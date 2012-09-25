@@ -2,9 +2,6 @@
 
 
 
-
-
-
 function sp_cu_confirm(div,h,url){
 	
 	jQuery(  div ).dialog({
@@ -33,7 +30,6 @@ function sp_cu_dialog(div,w,h){
 
 
 jQuery(document).ready(function() {
-
 
 
 

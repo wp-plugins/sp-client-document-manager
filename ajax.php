@@ -9,6 +9,17 @@ $upload_dir = wp_upload_dir();
 	
 	
 	switch($function){
+		
+		case "get-file-info":
+		header('Cache-Control: no-cache, must-revalidate');
+	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+
+	header('Content-type: application/json');
+$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id = '".$_GET['id']."'", ARRAY_A);
+
+
+echo str_replace(array('[', ']'), '', htmlspecialchars(json_encode($r[0]), ENT_NOQUOTES));
+		break;
 			case "remove-category":
 		
 		
@@ -45,6 +56,83 @@ $upload_dir = wp_upload_dir();
 		
 		
 		case"view-file":
+		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id = '".$_GET['id']."'  order by date desc", ARRAY_A);	
+		
+		
+		$html .='<div id="view_file_refresh">
+		
+		<script>
+	jQuery(function() {
+		jQuery( ".file-info-tabs" ).tabs();
+	});
+	</script>
+	<div class="view-file-info"><h2>'.stripslashes($r[0]['name']).'</h2></div>';
+	
+	$html.='<div class="sp_cu_manage">';
+				 if (CU_PREMIUM == 1){  
+				$html .= sp_cdm_revision_button();
+				 }
+				
+				if(class_exists('cdmProductivityUser')){
+			  $html .= '<span id="cdm_comment_button_holder">'.$cdm_comments->button().'</span>';
+				 }
+				if(class_exists('cdmProductivityGoogle')){
+			  $html .= '<span id="cdm_shortlink_button_holder">'.$cdm_google->short_link_button( $r[0]['id'],'' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'').'</span>';
+				 }
+				
+				
+				if(get_option('sp_cu_js_redirect') == 1){
+				$target = 'target="_blank"';	
+				}else{
+				$target = ' ';	
+				}
+				$html .='<a '.$target.' href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'" title="Download" style="margin-right:15px"  ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/download.png"> '.__("Download File","sp-cdm").'</a> ';
+				
+				
+		
+		
+
+			
+			if(($current_user->ID == $r[0]['uid']) or (cdmFindLockedGroup($current_user->ID , $r[0]['uid']) == true)){
+				
+				$html .='
+	<a href="javascript:sp_cu_confirm(\'#sp_cu_confirm_delete\',200,\'?dlg-delete-file='.$r[0]['id'].'#downloads\');" title="Delete" ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/delete.png">'.__("Delete File","sp-cdm").'</a>';
+			}
+	$html .='
+	<br> <em>'.date('F jS Y h:i A', strtotime($r[0]['date'])).'</em>
+				</div>';
+	
+	$html.='
+		<div class="file-info-tabs">
+	<ul>
+		<li><a href="#cdm-file-main">File Info</a></li>';
+		 if(function_exists('sp_cdm_revision_add')){
+		 $html .='<li><a href="#cdm-file-revisions">Revisions</a></li>';
+		 }
+		  if(class_exists('cdmProductivityUser')){
+		$html .='<li><a href="#cdm-file-comments">Comments</a></li>';
+		  }
+		  if(class_exists('cdmProductivityLog')){
+		$html.='<li><a href="#cdm-file-log">Download Log</a></li>';
+		  }
+	$html .='</ul>
+	';
+	
+	 if(function_exists('sp_cdm_revision_add')){
+$html .='<div id="cdm-file-revisions"><div id="cdm_comments"><h4>'.__("Revision History","sp-cdm").'</h4>
+'.sp_cdm_file_history($r[0]['id']).'</div></div>';
+	 }
+ 
+ 
+ if(class_exists('cdmProductivityUser')){
+  $html .= '<div id="cdm-file-comments"><div id="cdm_comments_container">'.$cdm_comments->view($r[0]['id']).'</div></div>';
+ }
+  if(class_exists('cdmProductivityLog')){
+  $html .= '<div id="cdm-file-log">'.$cdm_log->view($r[0]['id']).'</div>';	  
+  }
+ $html .='<div id="cdm-file-main">';
+
+		
 		if(get_option('sp_cu_wp_folder') == ''){
 	$wp_con_folder = '/';	
 	}else{
@@ -54,7 +142,7 @@ $upload_dir = wp_upload_dir();
 		
 
 		
-		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id = '".$_GET['id']."'  order by date desc", ARRAY_A);
+	
 		//print_r($r);
 		
 		$ext = substr(strrchr($r[0]['file'], '.'), 1);	
@@ -112,40 +200,10 @@ $upload_dir = wp_upload_dir();
 					
 					
 				$html .= '
-				<div id="view_file_refresh">
+				
 				<div id="sp_cu_viewfile">
-				 <h2> '.stripslashes($r[0]['name']).'</h2>
-				<div class="sp_cu_manage">';
-				 if (CU_PREMIUM == 1){  
-				$html .= sp_cdm_revision_button();
-				 }
-				
-				if(class_exists('cdmProductivityUser')){
-			  $html .= '<span id="cdm_comment_button_holder">'.$cdm_comments->button().'</span>';
-				 }
 				
 				
-				
-				if(get_option('sp_cu_js_redirect') == 1){
-				$target = 'target="_blank"';	
-				}else{
-				$target = ' ';	
-				}
-				$html .='<a '.$target.' href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'" title="Download" style="margin-right:15px"  ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/download.png"> '.__("Download File","sp-cdm").'</a> ';
-				
-				
-		
-		
-
-			
-			if(($current_user->ID == $r[0]['uid']) or (cdmFindLockedGroup($current_user->ID , $r[0]['uid']) == true)){
-				
-				$html .='
-	<a href="javascript:sp_cu_confirm(\'#sp_cu_confirm_delete\',200,\'?dlg-delete-file='.$r[0]['id'].'#downloads\');" title="Delete" ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/delete.png">'.__("Delete File","sp-cdm").'</a>';
-			}
-	$html .='
-	<br> <em>'.date('F jS Y h:i A', strtotime($r[0]['date'])).'</em>
-				</div>
 				
 				<div class="sp_cu_item">
 				
@@ -188,23 +246,23 @@ $html .='
 </div>';
 }
  }
- if (CU_PREMIUM == 1){ 
+
  
- if(sp_cdm_file_history_exists($r[0]['id']) == true){
-$html .='<div class="sp_su_history"><p><strong>'.__("Revision History","sp-cdm").'</strong></p>'.sp_cdm_file_history($r[0]['id']).'</div>';
- }
- }
- 
- if(class_exists('cdmProductivityUser')){
-  $html .= '<div id="cdm_comments_container">'.$cdm_comments->view($r[0]['id']).'</div>';
- }
 $html .='
 
 
 </td>
 </tr>
 
-  </table></div></div></div>';
+  </table></div></div></div>
+  
+ 
+  </div>
+  
+  
+  
+  </div>
+  ';
   echo $html;		
 		break;
 		
@@ -270,20 +328,26 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 	
 		<th colspan="4" style="text-align:right">
 		<div style="padding-right:10px">
-		<a href="javascript:sp_cu_dialog(\'#edit_category\',550,130)"><img src="'.content_url().'/plugins/sp-client-document-manager/images/application_edit.png"> Edit Project Name</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="'.content_url().'/plugins/sp-client-document-manager/images/delete_small.png"> Remove Project</a>
+		<a href="javascript:sp_cu_dialog(\'#edit_category_'.$_GET['pid'].'\',550,130)"><img src="'.content_url().'/plugins/sp-client-document-manager/images/application_edit.png"> Edit Project Name</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="'.content_url().'/plugins/sp-client-document-manager/images/delete_small.png"> Remove Project</a>
 		
 		<div style="display:none">	
 		
 		
 		<script type="text/javascript">
 		
-		
+			
 function sp_cu_edit_project(){
 	
+	
+	
+	if(jQuery("#edit_project_name_'.$_GET['pid'].'").val() == ""){
+		
+		alert("Please enter a project name");
+	}else{
 	jQuery.ajax({
    type: "POST",
    url: "'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=save-category",
-   data: "name=" + jQuery("#edit_project_name").val() + "&id=" +  jQuery("#edit_project_id").val(),
+   data: "name=" + jQuery("#edit_project_name_'.$_GET['pid'].'").val() + "&id=" +  jQuery("#edit_project_id_'.$_GET['pid'].'").val(),
    success: function(msg){
    jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$_GET['uid'].'&pid='.$_GET['pid'].'");
    jQuery("#edit_category").dialog("close");
@@ -291,11 +355,12 @@ function sp_cu_edit_project(){
   
    }
  });
+	}
 }
 
 function sp_cu_remove_project(){
 	
-	jQuery( "#delete_category" ).dialog({
+	jQuery( "#delete_category_'.$_GET['pid'].'" ).dialog({
 			resizable: false,
 			height:240,
 			width:440,
@@ -332,16 +397,16 @@ function sp_cu_remove_project(){
 }
 
 		</script>	
-		<div id="delete_category" title="'.__("Delete Category?","sp-cdm").'">
+		<div id="delete_category_'.$_GET['pid'].'" title="'.__("Delete Category?","sp-cdm").'">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'.__("Are you sure you would like to delete this category? Doing so will remove all files related to this category.","sp-cdm").'</p>
 		</div>
 
 		
 		
-				<div id="edit_category">			
+				<div id="edit_category_'.$_GET['pid'].'">			
 			
-			<input type="hidden"  name="edit_project_id" id="edit_project_id" value="'.$_GET['pid'].'">		
-			'.__("Project Name:","sp-cdm").' <input value="'.stripslashes($r_project_info[0]['name']).'" id="edit_project_name" type="text" name="name"  style="width:200px !important"> 
+			<input type="hidden"  name="edit_project_id" id="edit_project_id_'.$_GET['pid'].'" value="'.$_GET['pid'].'">		
+			'.__("Project Name:","sp-cdm").' <input value="'.stripslashes($r_project_info[0]['name']).'" id="edit_project_name_'.$_GET['pid'].'" type="text" name="name"  style="width:200px !important"> 
 			<input type="submit" value="'.__("Save Project","sp-cdm").'" onclick="sp_cu_edit_project()">
 			
 			</div>
@@ -363,7 +428,7 @@ function sp_cu_remove_project(){
 		
 		for($i=0; $i<count($r_projects); $i++){
 		
-		
+		if($r_projects[$i]['project_name'] != ""){
 		echo '<tr onclick="sp_cdm_load_project('.$r_projects[$i]['pid'].')">
 		<td class="cdm_file_icon ext_directory"></td>
 		<td class="cdm_file_info">'.stripslashes($r_projects[$i]['project_name']).'</td>
@@ -372,7 +437,7 @@ function sp_cu_remove_project(){
 		<td class="cdm_file_type">Folder</td>	
 		</tr>	
 		';
-			
+		}
 	}
 		}else{
 		
@@ -483,21 +548,27 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 		$r_project_info = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."sp_cu_project where id = ".$_GET['pid']."", ARRAY_A);
 	
 		echo '
-		<div style="padding-right:10px">
-		<a href="javascript:sp_cu_dialog(\'#edit_category\',550,130)"><img src="'.content_url().'/plugins/sp-client-document-manager/images/application_edit.png"> Edit Project Name</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="'.content_url().'/plugins/sp-client-document-manager/images/delete_small.png"> Remove Project</a>
+			<div style="padding-right:10px">
+		<a href="javascript:sp_cu_dialog(\'#edit_category_'.$_GET['pid'].'\',550,130)"><img src="'.content_url().'/plugins/sp-client-document-manager/images/application_edit.png"> Edit Project Name</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="'.content_url().'/plugins/sp-client-document-manager/images/delete_small.png"> Remove Project</a>
 		
 		<div style="display:none">	
 		
 		
-		<script type="text/javascript">
+	<script type="text/javascript">
 		
 		
 function sp_cu_edit_project(){
 	
+	
+	
+	if(jQuery("#edit_project_name_'.$_GET['pid'].'").val() == ""){
+		
+		alert("Please enter a project name");
+	}else{
 	jQuery.ajax({
    type: "POST",
    url: "'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=save-category",
-   data: "name=" + jQuery("#edit_project_name").val() + "&id=" +  jQuery("#edit_project_id").val(),
+   data: "name=" + jQuery("#edit_project_name_'.$_GET['pid'].'").val() + "&id=" +  jQuery("#edit_project_id_'.$_GET['pid'].'").val(),
    success: function(msg){
    jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$_GET['uid'].'&pid='.$_GET['pid'].'");
    jQuery("#edit_category").dialog("close");
@@ -505,11 +576,12 @@ function sp_cu_edit_project(){
   
    }
  });
+	}
 }
 
 function sp_cu_remove_project(){
 	
-	jQuery( "#delete_category" ).dialog({
+	jQuery( "#delete_category_'.$_GET['pid'].'" ).dialog({
 			resizable: false,
 			height:240,
 			width:440,
@@ -546,16 +618,16 @@ function sp_cu_remove_project(){
 }
 
 		</script>	
-		<div id="delete_category" title="'.__("Delete Category?","sp-cdm").'">
+		<div id="delete_category_'.$_GET['pid'].'" title="'.__("Delete Category?","sp-cdm").'">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'.__("Are you sure you would like to delete this category? Doing so will remove all files related to this category.","sp-cdm").'</p>
 		</div>
 
 		
 		
-			<div id="edit_category">			
+				<div id="edit_category_'.$_GET['pid'].'">			
 			
-			<input type="hidden"  name="edit_project_id" id="edit_project_id" value="'.$_GET['pid'].'">		
-			'.__("Project Name:","sp-cdm").' <input value="'.stripslashes($r_project_info[0]['name']).'" id="edit_project_name" type="text" name="name"  style="width:200px !important"> 
+			<input type="hidden"  name="edit_project_id" id="edit_project_id_'.$_GET['pid'].'" value="'.$_GET['pid'].'">		
+			'.__("Project Name:","sp-cdm").' <input value="'.stripslashes($r_project_info[0]['name']).'" id="edit_project_name_'.$_GET['pid'].'" type="text" name="name"  style="width:200px !important"> 
 			<input type="submit" value="'.__("Save Project","sp-cdm").'" onclick="sp_cu_edit_project()">
 			
 			</div>
@@ -579,7 +651,7 @@ function sp_cu_remove_project(){
 		
 		for($i=0; $i<count($r_projects); $i++){
 		
-		
+			if($r_projects[$i]['project_name'] != ""){
 		echo '<div class="dlg_cdm_thumbnail_folder">
 				<a href="javascript:sp_cdm_load_project('.$r_projects[$i]['pid'].')"><img src="'.content_url().'/plugins/sp-client-document-manager/images/my_projects_folder.png">
 				<div class="dlg_cdm_thumb_title">
@@ -589,6 +661,7 @@ function sp_cu_remove_project(){
 				</div>
 		
 		';
+			}
 			
 	}
 		}else{
@@ -723,9 +796,9 @@ $search_file .= " AND ".$wpdb->prefix."sp_cu.name LIKE '%".$_REQUEST['search']."
 	
 	for($i=0; $i<count($r_projects); $i++){
 		
-		
+			if($r_projects[$i]['project_name'] != ""){
 		echo "<li class=\"directory collapsed\"><a href=\"#\" rel=\"PID".$r_projects[$i]['pid']."\">" .stripslashes($r_projects[$i]['project_name']) . "</a></li>";
-			
+			}
 	}
 	
 	for($i=0; $i<count( $r ); $i++){

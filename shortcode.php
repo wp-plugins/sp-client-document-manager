@@ -58,15 +58,32 @@ function display_sp_thumbnails2($r){
             // show a spinner or something via css
             var dialog = jQuery(\'<div style="display:none" class="loading"></div>\').appendTo(\'body\');
           
-            dialog.dialog({
+		  
+
+     var fileArray = new Array();      
+	 var obj_file_info =   jQuery.getJSON("'. content_url().'/plugins/sp-client-document-manager/ajax.php?function=get-file-info&type=name&id=" + file, function(data) {
+   
+
+	
+		
+  	fileArray[name] =data.name;
+	var final_title = fileArray[name];
+       });
+		 
+
+		 
+		 var final_title = fileArray[name];
+		
+		      dialog.dialog({
                
                 close: function(event, ui) {
                     // remove div with all data and events
                     dialog.remove();
                 },
                 modal: true,
-				height:450,
-				width:850
+				height:550,
+				width:850,
+				title: final_title 
             });
 			
 			 // load remote content
@@ -78,6 +95,10 @@ function display_sp_thumbnails2($r){
                     dialog.removeClass(\'loading\');
                 }
             );
+			
+			
+		
+
 		}
 	</script>
 	
