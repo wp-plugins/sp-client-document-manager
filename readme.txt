@@ -3,8 +3,8 @@ Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
 Tags: client upload,project management, document manager, file uploader, customer file manager, customer files, document version system
 Requires at least: 2.0.2
-Tested up to: 3.4.1
-Stable tag: 1.3.3
+Tested up to: 3.4.2
+Stable tag: 1.3.4
 
 A scalable client document and project management program that gives your company the ability to securely share clients files virtually
 

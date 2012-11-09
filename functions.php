@@ -248,7 +248,7 @@ $content .='<h3>Thanks for upgrading!</h3>
 	  
 	
 
-	  $content .='
+	  $content .=''.sp_cdm_premium_settings().'
      <tr>
     <td width="300"><strong>Enable File Tags?</strong><br><em>File tags allow you to give your users a unique way to search for files.</em></td>
     <td><input type="checkbox" name="sp_cu_enable_tags"   value="1" '. $sp_cu_enable_tags.'> </td>
@@ -466,7 +466,56 @@ function sp_client_upload_email_vendor(){
 	return false;
 }
 
+function sp_cdm_showFile(file){
+			
+		  var url = "'. content_url().'/plugins/sp-client-document-manager/ajax.php?function=view-file&id=" + file;
+		  
+		 
+            // show a spinner or something via css
+            var dialog = jQuery(\'<div style="display:none" class="loading"></div>\').appendTo(\'body\');
+          
+		  
 
+     var fileArray = new Array();      
+	 var obj_file_info =   jQuery.getJSON("'. content_url().'/plugins/sp-client-document-manager/ajax.php?function=get-file-info&type=name&id=" + file, function(data) {
+   
+
+	
+		
+  	fileArray[name] =data.name;
+	var final_title = fileArray[name];
+       });
+		 
+
+		 
+		 var final_title = fileArray[name];
+		
+		      dialog.dialog({
+               
+                close: function(event, ui) {
+                    // remove div with all data and events
+                    dialog.remove();
+                },
+                modal: true,
+				height:550,
+				width:850,
+				title: final_title 
+            });
+			
+			 // load remote content
+            dialog.load(
+                url, 
+                {}, // omit this param object to issue a GET request instead a POST request, otherwise you may provide post parameters within the object
+                function (responseText, textStatus, XMLHttpRequest) {
+                    // remove the loading class
+                    dialog.removeClass(\'loading\');
+                }
+            );
+			
+			
+		
+
+		}
 </script>
 '.	$download_user.'
   <table class="wp-list-table widefat fixed posts" cellspacing="0">
@@ -568,7 +617,7 @@ function sp_client_upload_email_vendor(){
 	<td><a href="user-edit.php?user_id='.$r[$i]['uid'].'">'.$r_user[0]['display_name'].'</a></td>
 	 <td >'.date('F jS Y h:i A', strtotime($r[$i]['date'])).'</td>
    
-    <td><a style="margin-right:15px" href="' .content_url() . '/plugins/sp-client-document-manager/download.php?fid='.$r[$i]['id'].'" >'.__("Download","sp-cdm").'</a> <a href="'.$delete_page .'&dlg-delete-file='.$r[$i]['id'].'&user_id='.$r[$i]['uid'].'#downloads">'.__("Delete","sp-cdm").'</a> </td>
+    <td><a style="margin-right:15px" href="javascript:sp_cdm_showFile('.$r[$i]['id'].')" >'.__("View","sp-cdm").'</a> <a href="'.$delete_page .'&dlg-delete-file='.$r[$i]['id'].'&user_id='.$r[$i]['uid'].'#downloads">'.__("Delete","sp-cdm").'</a> </td>
 <td><input type="checkbox" name="vendor_email[]" value="'.$r[$i]['id'].'"></td>	</tr>
 
 
