@@ -13,7 +13,7 @@ echo '
 <form action="admin.php?page=sp-client-document-manager-projects" method="post">';
 
 if($_GET['id'] != ""){
-	echo 1;
+
 $r = $wpdb->get_results("SELECT  * FROM ".$wpdb->prefix."sp_cu_project where id = '".$_GET['id']."'  ", ARRAY_A);	
 
 echo '<input type="hidden" name="id" value="'.$r[0]['id'].'">';
@@ -72,7 +72,17 @@ if($_POST['save-project'] != ""){
 		if($_POST['id'] != ""){
 		$where['id'] =$_POST['id'] ;
 		
+		
+	
+		
+		
 	    $wpdb->update(  "".$wpdb->prefix . "sp_cu_project", $insert , $where );	
+		
+		$update['uid'] = $_POST['uid'];
+		$where_project['pid'] = $_POST['id'];
+		$wpdb->update(  "".$wpdb->prefix . "sp_cu", $update , $where_project );	
+		
+		
 		}else{
 			
 			

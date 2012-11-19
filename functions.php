@@ -102,6 +102,7 @@ global $wpdb;
 	if($_POST['sp_cu_user_projects_thumbs_pdf'] == "1"){update_option('sp_cu_user_projects_thumbs_pdf','1' ); }else{update_option('sp_cu_user_projects_thumbs_pdf','0' );	}
 	if($_POST['sp_cu_js_redirect'] == "1"){update_option('sp_cu_js_redirect','1' ); }else{update_option('sp_cu_js_redirect','0' );	}		
 	if($_POST['sp_cu_enable_tags'] == "1"){update_option('sp_cu_enable_tags','1' ); }else{update_option('sp_cu_enable_tags','0' );	}				
+	if($_POST['sp_cu_user_uploads_disable'] == "1"){update_option('sp_cu_user_uploads_disable','1' ); }else{update_option('sp_cu_user_uploads_disable','0' );	}		
 	}
 	
 	
@@ -112,6 +113,8 @@ global $wpdb;
 	if(get_option('sp_cu_user_projects_thumbs_pdf') == 1){ $sp_cu_user_projects_thumbs_pdf = ' checked="checked" ';	}else{ $sp_cu_user_projects_thumbs_pdf = '  '; }
 	if(get_option('sp_cu_js_redirect') == 1){ $sp_cu_js_redirect = ' checked="checked" ';	}else{ $sp_cu_js_redirect = '  '; }
 	if(get_option('sp_cu_enable_tags') == 1){ $sp_cu_enable_tags = ' checked="checked" ';	}else{ $sp_cu_enable_tags = '  '; }
+	if(get_option('sp_cu_user_uploads_disable') == 1){ $sp_cu_user_uploads_disable = ' checked="checked" ';	}else{ $sp_cu_user_uploads_disable = '  '; }
+	
 	
 	
 	
@@ -200,7 +203,10 @@ $content .='<h3>Thanks for upgrading!</h3>
     <td width="300"><strong>WP Folder</strong><br><em>Use this option only if your wp installation is in a sub folder of your url. For instance if your site is www.example.com/blog/ then put /blog/ in the field. This helps find the uploads directory.</em></td>
     <td><input type="text" name="sp_cu_wp_folder"  value="'.get_option('sp_cu_wp_folder').'"  size=80"> </td>
   </tr>
-  
+      <tr>
+    <td width="300"><strong>Disable User Uploads?</strong><br><em>Check this box to disable user uploads.</em></td>
+    <td><input type="checkbox" name="sp_cu_user_uploads_disable"   value="1" '. $sp_cu_user_uploads_disable.'> </td>
+  </tr>
      <tr>
     <td width="300"><strong>Javascript Redirect?</strong><br><em>If your on a windows system you need to use javascript redirection as FastCGI does not allow force download files.</em></td>
     <td><input type="checkbox" name="sp_cu_js_redirect"   value="1" '. $sp_cu_js_redirect.'> </td>

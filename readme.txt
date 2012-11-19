@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: client upload,project management, document manager, file uploader, customer file manager, customer files, document version system
 Requires at least: 2.0.2
 Tested up to: 3.4.2
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 
 A scalable client document and project management program that gives your company the ability to securely share clients files virtually
 
@@ -210,6 +210,10 @@ This is usually because you are using a theme that converts new lines into parag
 *Added ability to make projects mandatory so users.
 *The form now remembers what the user chose last for a project and keeps that project selected.
 
+= 1.3.5 =
+* You can now turn off the ability for users to upload files
+* Fixed an issue with projects that was not moving client files when changing ownership of a project
+
 == Upgrade Notice ==
 
 = 1.0.5 =
@@ -236,3 +240,7 @@ Major updates, new uploader and fixes to admin upload functions
 
 = 1.2.9 = 
 * There is a new procedure for premium, premium users please check email. You must update free plugin, download the new premium plugin and add it through the wordpress plugin manager. This will reduce errors when upgrading in the future.
+
+= 1.3.5 =
+* You can now turn off the ability for users to upload files
+* Fixed an issue with projects that was not moving client files when changing ownership of a project

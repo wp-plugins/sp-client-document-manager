@@ -553,8 +553,11 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 }
 	
 	
-	$html .='Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files">  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/add.png"> '.__("Add File","sp-cdm").'</a>  ';
-
+	$html .='Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files">';
+	
+	if(get_option('sp_cu_user_uploads_disable') != 1){
+	$html .='  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/add.png"> '.__("Add File","sp-cdm").'</a>  ';
+	}
 if(get_option('sp_cu_user_projects_thumbs') == 1 && CU_PREMIUM == 1){
 		$html .=display_sp_cdm_thumbnails($r );
 }else{

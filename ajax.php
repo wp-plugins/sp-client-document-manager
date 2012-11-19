@@ -1,7 +1,9 @@
 <?php
+
+
 require( '../../../wp-load.php' );
 	
-	global $wpdb;
+	
 $upload_dir = wp_upload_dir();	
 	
 	
