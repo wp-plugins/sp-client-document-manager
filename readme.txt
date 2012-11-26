@@ -1,18 +1,17 @@
 === Plugin Name ===
 Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
-Tags: client upload,project management, document manager, file uploader, customer file manager, customer files, document version system
+Tags: distribution of documents,project management, document manager,document organization, file uploader, customer file manager, customer files,
 Requires at least: 2.0.2
 Tested up to: 3.4.2
-Stable tag: 1.3.5
+Stable tag: 1.3.6
 
-A scalable client document and project management program that gives your company the ability to securely share clients files virtually
+SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click technology.
 
 == Description ==
 
-SP Document Manager allows your business to manage and control client/customers files and projects easily and securely.  
-Designed for Companies that need to virtually managed and control client files, with the ability to assigned to staff, supplier's, vendors, sub-contractors or partner's.  
-The Client Document Manager now supports localization so the plugin can be converted to any language you want! Check out our website for a tutorial on how to do this
+A sophisticated document manager the plug-in provides assurances that the user has complete control over the flow of information. Businesses utilizing the SP CDM are able to maintain document organization, manage client documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage process. 
+This new SP plug-in also demonstrates how quickly a business can take hold of their interactions with clients, vendors, and all in between.  With a straight-forward layout, access to template modifications and easy to manage features; clients can add and modify projects.
 
 
 We also now offer a premium version; please check out our website for more information: 
@@ -244,3 +243,6 @@ Major updates, new uploader and fixes to admin upload functions
 = 1.3.5 =
 * You can now turn off the ability for users to upload files
 * Fixed an issue with projects that was not moving client files when changing ownership of a project
+
+= 1.3.6 =
+* Fixed download.php header problem

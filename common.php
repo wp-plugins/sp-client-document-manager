@@ -1,7 +1,10 @@
 <?php
 
 
-
+function sp_do_function_header($file){
+	
+	
+}
 
 function sp_client_upload_filename($user_id){
 	global $wpdb;
@@ -20,6 +23,7 @@ function sp_client_upload_filename($user_id){
 	$extra = str_replace('%d',date('d'), $extra);
 	$extra = str_replace('%t',time(), $extra );
 	$extra = str_replace('%uid',$user_id, $extra );
+	
 	$extra = str_replace('%u',$r[0]['display_name'], $extra );	
 	$extra = str_replace('%r',rand(100000, 100000000000), $extra );
 	return $extra;

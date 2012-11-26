@@ -4,6 +4,7 @@ require( '../../../../wp-load.php' );
 function thumbPdf($pdf, $w,$h)
 {
     try
+	
     {
         $tmp = '../../../uploads/wp-client-document-manager';
         $format = "png";

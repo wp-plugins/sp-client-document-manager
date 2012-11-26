@@ -1,5 +1,5 @@
-<?php
-require( ''.ABSPATH.'wp-load.php' );
+<?php 
+require( ''.$_SERVER["DOCUMENT_ROOT"].'/wp-load.php' );
 	
 	global $wpdb;
 	
@@ -70,6 +70,9 @@ if(!function_exists('mime_content_type')) {
             // open office
             'odt' => 'application/vnd.oasis.opendocument.text',
             'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
+			
+			
+			
         );
 
         $ext = strtolower(array_pop(explode('.',$filename)));
@@ -81,6 +84,7 @@ if(!function_exists('mime_content_type')) {
             $mimetype = finfo_file($finfo, $filename);
             finfo_close($finfo);
             return $mimetype;
+			
         }
         else {
             return 'application/octet-stream';
@@ -103,7 +107,7 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$r
 }
 
 
-$file = '../../uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'';
+$file = ''.$_SERVER["DOCUMENT_ROOT"].'/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'';
 
 if(get_option('sp_cu_js_redirect') == 1){
 	echo '<script type="text/javascript">
@@ -134,20 +138,20 @@ if(is_file($file_name))
   // required for IE
   if(ini_get('zlib.output_compression')) { ini_set('zlib.output_compression', 'Off');  }
 
-  // get the file mime type using the file extension
-  switch(strtolower(substr(strrchr($file_name,'.'),1)))
-  {
-    case 'pdf': $mime = 'application/pdf'; break;
-    case 'zip': $mime = 'application/zip'; break;
-    case 'jpeg':
-    case 'jpg': $mime = 'image/jpg'; break;
-    default: $mime = 'application/force-download';
-  }
+ $mime = mime_content_type($file_name);
+ 
+
   header('Pragma: public');   // required
   header('Expires: 0');    // no cache
+ 
   header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
   header('Last-Modified: '.gmdate ('D, d M Y H:i:s', filemtime ($file_name)).' GMT');
   header('Cache-Control: private',false);
+
+
+
+
+
   header('Content-Type: '.$mime);
   header('Content-Disposition: attachment; filename="'.basename($file_name).'"');
   header('Content-Transfer-Encoding: binary');
