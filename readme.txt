@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: distribution of documents,project management, document manager,document organization, file uploader, customer file manager, customer files,
 Requires at least: 2.0.2
 Tested up to: 3.4.2
-Stable tag: 1.3.6
+Stable tag: 1.3.7
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click technology.
 
@@ -99,6 +99,15 @@ This could be one of two reasons, either you did not install theme my login or y
 = Why am I just getting a spinning circle and no content on my uploader? = 
 
 This is usually because you are using a theme that converts new lines into paragraphs. To fix this wrap the short code in raw tags. Example: [raw][sp-client-document-manager] [/raw]
+
+= Is there a conflict with another plugin? =
+
+Sometimes plugins have conflicts, if you are experiencing any abnormal problems there could be a javascript error. Please download and install firebug to find the issue.
+
+= I get an imagemagick error when creating thumbnails of pdf and psd's = 
+
+Imagemagick is a 3rd party plugin you are responsible for, it needs to be downloaded and installed on your server but more importantly, it needs to be compiled into php. Your server admin should be able to handle that, we do not support imagemagick installations.
+
 == Screenshots ==
 
 1. This is the client view
