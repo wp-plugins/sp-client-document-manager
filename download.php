@@ -153,7 +153,7 @@ if(is_file($file_name))
 
 
   header('Content-Type: '.$mime);
-  header('Content-Disposition: attachment; filename="'.basename($file_name).'"');
+  header('Content-Disposition: attachment; filename="'.$file_name.'"');
   header('Content-Transfer-Encoding: binary');
   header('Content-Length: '.filesize($file_name));  // provide file size
   header('Connection: close');

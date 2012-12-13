@@ -87,7 +87,7 @@ function sp_client_upload_load_css(){
 add_action('wp_head', 'sp_client_upload_load_css');	
 add_action('init', 'sp_client_upload_init');
 add_action('admin_head', 'sp_client_upload_load_css');
-add_action('plugins_loaded', 'sp_client_upload_install');
+//add_action('plugins_loaded', 'sp_client_upload_install');
 
 
 
