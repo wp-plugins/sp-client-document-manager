@@ -107,16 +107,18 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$r
 }
 
 
-$file = ''.$_SERVER["DOCUMENT_ROOT"].'/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'';
 
 if(get_option('sp_cu_js_redirect') == 1){
+$file = '' . get_bloginfo('wpurl') . '/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'';	
 	echo '<script type="text/javascript">
 <!--
 window.location = "'.$file.'"
 //-->
 </script>';
+exit;
 }else{
 
+$file = ''.$_SERVER["DOCUMENT_ROOT"].'/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'';
 
 
 
@@ -153,7 +155,7 @@ if(is_file($file_name))
 
 
   header('Content-Type: '.$mime);
-  header('Content-Disposition: attachment; filename="'.$file_name.'"');
+  header('Content-Disposition: attachment; filename="'.basename($file_name).'"');
   header('Content-Transfer-Encoding: binary');
   header('Content-Length: '.filesize($file_name));  // provide file size
   header('Connection: close');
