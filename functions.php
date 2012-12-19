@@ -102,7 +102,8 @@ global $wpdb;
 	if($_POST['sp_cu_user_projects_thumbs_pdf'] == "1"){update_option('sp_cu_user_projects_thumbs_pdf','1' ); }else{update_option('sp_cu_user_projects_thumbs_pdf','0' );	}
 	if($_POST['sp_cu_js_redirect'] == "1"){update_option('sp_cu_js_redirect','1' ); }else{update_option('sp_cu_js_redirect','0' );	}		
 	if($_POST['sp_cu_enable_tags'] == "1"){update_option('sp_cu_enable_tags','1' ); }else{update_option('sp_cu_enable_tags','0' );	}				
-	if($_POST['sp_cu_user_uploads_disable'] == "1"){update_option('sp_cu_user_uploads_disable','1' ); }else{update_option('sp_cu_user_uploads_disable','0' );	}		
+	if($_POST['sp_cu_user_uploads_disable'] == "1"){update_option('sp_cu_user_uploads_disable','1' ); }else{update_option('sp_cu_user_uploads_disable','0' );	}	
+	if($_POST['sp_cu_user_delete_disable'] == "1"){update_option('sp_cu_user_delete_disable','1' ); }else{update_option('sp_cu_user_delete_disable','0' );	}		
 	}
 	
 	
@@ -114,6 +115,7 @@ global $wpdb;
 	if(get_option('sp_cu_js_redirect') == 1){ $sp_cu_js_redirect = ' checked="checked" ';	}else{ $sp_cu_js_redirect = '  '; }
 	if(get_option('sp_cu_enable_tags') == 1){ $sp_cu_enable_tags = ' checked="checked" ';	}else{ $sp_cu_enable_tags = '  '; }
 	if(get_option('sp_cu_user_uploads_disable') == 1){ $sp_cu_user_uploads_disable = ' checked="checked" ';	}else{ $sp_cu_user_uploads_disable = '  '; }
+	if(get_option('sp_cu_user_delete_disable') == 1){ $sp_cu_user_delete_disable = ' checked="checked" ';	}else{ $sp_cu_user_delete_disable = '  '; }
 	
 	
 	
@@ -208,6 +210,11 @@ $content .='<h3>Thanks for upgrading!</h3>
     <td><input type="checkbox" name="sp_cu_user_uploads_disable"   value="1" '. $sp_cu_user_uploads_disable.'> </td>
   </tr>
      <tr>
+	   <tr>
+    <td width="300"><strong>Disable User Deleting?</strong><br><em>Check this box to not allow user to delete file.</em></td>
+    <td><input type="checkbox" name="sp_cu_user_delete_disable"   value="1" '. $sp_cu_user_delete_disable.'> </td>
+  </tr>
+     <tr>
     <td width="300"><strong>Javascript Redirect?</strong><br><em>If your on a windows system you need to use javascript redirection as FastCGI does not allow force download files.</em></td>
     <td><input type="checkbox" name="sp_cu_js_redirect"   value="1" '. $sp_cu_js_redirect.'> </td>
   </tr>
@@ -255,6 +262,8 @@ $content .='<h3>Thanks for upgrading!</h3>
 	
 
 	  $content .=''.sp_cdm_premium_settings().'
+	 
+	  
      <tr>
     <td width="300"><strong>Enable File Tags?</strong><br><em>File tags allow you to give your users a unique way to search for files.</em></td>
     <td><input type="checkbox" name="sp_cu_enable_tags"   value="1" '. $sp_cu_enable_tags.'> </td>
@@ -372,7 +381,11 @@ if(CU_PREMIUM != 1 && get_option("sp_cdm_ignore") != 1){
 
 }
 
-	
+		if(!function_exists('theme_my_login')){
+	$content .= '<div class="sp_cdm_error">This plugin requires "Theme My Login" plugin which allows for a seamless login experience. <a href="plugin-install.php?tab=search&s=theme+my+login&plugin-search-input=Search+Plugins">Please install this plugin using the plugin manager.</a></div>';	
+	}
+			
+		
 	
 $content .='
 <div style="padding:10px;font-weight:bold">

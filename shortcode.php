@@ -462,14 +462,16 @@ if($_POST['submit'] != ""){
 	 process_sp_cdm_form_vars($data['custom_forms'],$wpdb->insert_id);
 	 
 	 }
+	 
 	$to = get_option('admin_email');
+	if(get_option('sp_cu_admin_email') != ""){
 	$headers .= "".__("From:","sp-cdm")." ".$current_user->user_firstname." ".$current_user->user_lastname." <".$current_user->user_email.">\r\n";	
 	$message = sp_cu_process_email($file_id,get_option('sp_cu_admin_email'));
 	add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
 	$subject = get_option('sp_cu_admin_email_subject');
 	wp_mail( $to, $subject, $message, $headers, $attachments );
 	
-	
+	}
 	
 	
 	if(get_option('sp_cu_user_email') != ""){

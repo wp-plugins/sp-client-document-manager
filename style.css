@@ -6,6 +6,9 @@
   font-size: 12px;
 
 }
+
+
+.sp_cdm_error{padding:5px;margin:3px;border:1px dashed red; background-color:#ffd5d5;color:#000;}
 #dlg_cdm_file_list table {width:100%}
 #upload_form {font-size:12px;}
 #dlg_cdm_thumbnails .dlg_cdm_thumbnail_folder{ float:left;width:135px;height:150px; text-align:center;padding-top:10px;}

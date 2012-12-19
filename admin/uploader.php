@@ -93,6 +93,27 @@ if($_POST['submit-admin-upload'] != ""){
 	 }
 	
 	
+	$user_info = get_userdata($a['uid']);
+	if(get_option('sp_cu_admin_email') != ""){
+	$to = get_option('admin_email');
+	$headers .= "".__("From:","sp-cdm")." ".$user_info->user_firstname." ".$user_info->user_lastname." <".$user_info->user_email.">\r\n";	
+	$message = sp_cu_process_email($file_id,get_option('sp_cu_admin_email'));
+	add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
+	$subject = get_option('sp_cu_admin_email_subject');
+	wp_mail( $to, $subject, $message, $headers, $attachments );
+	}
+	
+	
+	
+	if(get_option('sp_cu_user_email') != ""){
+		$subject = get_option('sp_cu_user_email_subject');
+		$message = sp_cu_process_email($file_id,get_option('sp_cu_user_email'));
+		$to = $user_info->user_email;		
+		wp_mail( $to, $subject, $message, $headers, $attachments );
+	}
+	
+	
+	
 		echo  '<script type="text/javascript">
 
 

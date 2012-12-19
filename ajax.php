@@ -71,7 +71,7 @@ echo str_replace(array('[', ']'), '', htmlspecialchars(json_encode($r[0]), ENT_N
 	<div class="view-file-info"><h2>'.stripslashes($r[0]['name']).'</h2></div>';
 	
 	$html.='<div class="sp_cu_manage">';
-				 if (CU_PREMIUM == 1){  
+				 if (CU_PREMIUM == 1 && get_option('sp_cu_user_uploads_disable') != 1){  
 				$html .= sp_cdm_revision_button();
 				 }
 				
@@ -95,7 +95,11 @@ echo str_replace(array('[', ']'), '', htmlspecialchars(json_encode($r[0]), ENT_N
 		
 
 			
-			if(($current_user->ID == $r[0]['uid']) or (cdmFindLockedGroup($current_user->ID , $r[0]['uid']) == true)){
+	if(
+	(($current_user->ID == $r[0]['uid'] or cdmFindLockedGroup($current_user->ID , $r[0]['uid']) == true) && get_option('sp_cu_user_delete_disable') != 1) 
+		or current_user_can( 'manage_options' ) 
+	
+	 ){
 				
 				$html .='
 	<a href="javascript:sp_cu_confirm(\'#sp_cu_confirm_delete\',200,\'?dlg-delete-file='.$r[0]['id'].'#downloads\');" title="Delete" ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/delete.png">'.__("Delete File","sp-cdm").'</a>';
