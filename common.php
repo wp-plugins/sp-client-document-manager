@@ -173,6 +173,9 @@ function sp_Admin_uploadFile($files,$user_ID){
 	return $filename;
 }else{
 
+
+
+
 	if(count($count)> 1 ){
 	
 	
@@ -221,12 +224,12 @@ $zip->setZipFile($dir.$return_file);
 
 	$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/';
 	
-	$filename = ''.sp_client_upload_filename($user_ID) .''.$files['dlg-upload-file']['name'][0].'';
+	$filename = ''.sp_client_upload_filename($user_ID) .''.$files['dlg-upload-file']['name'][1].'';
 	$filename = strtolower($filename);
 	$filename = str_replace(" ","-", $filename);
 	$target_path = $dir .$filename; 
 	
-	move_uploaded_file($files['dlg-upload-file']['tmp_name'][0], $target_path);
+	move_uploaded_file($files['dlg-upload-file']['tmp_name'][1], $target_path);
 	$ext = preg_replace('/^.*\./', '', $filename);
 	if(($ext == 'pdf' or $ext == 'psd' )&& get_option('sp_cu_user_projects_thumbs_pdf') == 1){
 	cdm_thumbPdf($target_path);

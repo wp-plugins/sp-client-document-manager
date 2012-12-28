@@ -394,7 +394,7 @@ $content .='
 <a href="admin.php?page=sp-client-document-manager-settings" class="button" style="margin-right:10px">'.__("Settings","sp-cdm").'</a>
 <a href="admin.php?page=sp-client-document-manager-vendors" class="button" style="margin-right:10px">'.__("Vendors","sp-cdm").'</a>';
 $content .= '<a href="admin.php?page=sp-client-document-manager-projects" class="button" style="margin-right:10px">'.__("Projects","sp-cdm").'</a>';
-$content .= '<a href="admin.php?page=sp-client-document-manager-uploader" class="button" style="margin-right:10px">'.__("Uploader","sp-cdm").'</a>';
+
 if (CU_PREMIUM == 1){
 $content .= '<a href="admin.php?page=sp-client-document-manager-groups" class="button" style="margin-right:10px">'.__("Groups","sp-cdm").'</a>';
 $content .= '<a href="admin.php?page=sp-client-document-manager-forms" class="button" style="margin-right:10px">'.__("Forms","sp-cdm").'</a>';
@@ -403,7 +403,7 @@ $content .= '<a href="admin.php?page=sp-client-document-manager-categories" clas
 
 }
 $content .= '<a href="admin.php?page=sp-client-document-manager-help" class="button" style="margin-right:10px">'.__("Instructions","sp-cdm").'</a>
-<a href="users.php" class="button"  style="margin-right:10px">'.__("View users","sp-cdm").'</a>
+<a href="admin.php?page=sp-client-document-manager-fileview" class="button"  style="margin-right:10px">'.__("User Files / Uploader","sp-cdm").'</a>
 </div>';	
 	return $content;
 }
