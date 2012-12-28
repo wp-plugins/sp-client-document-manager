@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: distribution of documents,project management, document manager,document organization, file uploader, customer file manager, customer files,
 Requires at least: 2.0.2
 Tested up to: 3.5
-Stable tag: 1.3.9
+Stable tag: 1.4.0
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click technology.
 
@@ -34,12 +34,6 @@ Login with:  user: test   password: test
 * Ability to translate plugin to multiple languages using the .po files.
 * Search by file name
 * Ability to allow deleting and renaming of projects
-
-
-
-
-
-
 
 **Administrator Side Features**
 
@@ -237,6 +231,8 @@ Imagemagick is a 3rd party plugin you are responsible for, it needs to be downlo
 * Admin has the ability to delete or upload even if settings disable them.
 * Added a check to see if theme my login is installed.
 
+= 1.4.0 = 
+* Removed the regular uploaded and added a file view that shows you each users files as they see it, this view also includes an uploadeder as the client would see it. This fixes any bugs that would not place the correct file when adding a file to a user project.
 == Upgrade Notice ==
 
 = 1.0.5 =
@@ -279,3 +275,6 @@ Major updates, new uploader and fixes to admin upload functions
 * Emails will only send if there is email content under settings
 * Admin has the ability to delete or upload even if settings disable them.
 * Added a check to see if theme my login is installed.
+
+= 1.4.0 = 
+* Removed the regular uploaded and added a file view that shows you each users files as they see it, this view also includes an uploadeder as the client would see it. This fixes any bugs that would not place the correct file when adding a file to a user project.
