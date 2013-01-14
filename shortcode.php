@@ -346,7 +346,7 @@ function sp_cu_add_project(){
   <tr>
     <td>&nbsp;</td>
     <td>
-						<div class="sp_change_indicator_button"><input id="dlg-upload" onclick="sp_change_indicator()" type="submit" name="submit" value="Upload" ></div>
+						<div class="sp_change_indicator_button"><input id="dlg-upload" onclick="sp_cdm_change_indicator()" type="submit" name="submit" value="Upload" ></div>
 						<div class="sp_change_indicator" ></div>	
 							</td>
   </tr>';

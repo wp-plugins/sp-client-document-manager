@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: distribution of documents,project management, document manager,document organization, file uploader, customer file manager, customer files,
 Requires at least: 2.0.2
 Tested up to: 3.5
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click technology.
 
@@ -278,3 +278,6 @@ Major updates, new uploader and fixes to admin upload functions
 
 = 1.4.0 = 
 * Removed the regular uploaded and added a file view that shows you each users files as they see it, this view also includes an uploadeder as the client would see it. This fixes any bugs that would not place the correct file when adding a file to a user project.
+
+= 1.4.1 = 
+* Fix to the progress meter
