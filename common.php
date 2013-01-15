@@ -1,6 +1,26 @@
 <?php
 
+function sp_cdm_find_users_by_role($role) {
+	global $wpdb;
 
+ $wp_user_search = new WP_User_Query(array("role"=> $role));
+ $role_data = $wp_user_search->get_results();
+    foreach($role_data  as $item){
+ $role_data_ids[] = $item->ID;
+ }
+
+ $ids = implode(',', $role_data_ids);
+ $r = $wpdb->get_results("SELECT *   from ".$wpdb->prefix . "users where id IN(".$ids .")", ARRAY_A);
+
+
+
+ for($i=0; $i<count($r); $i++){
+$emails[$i] = $r[$i]['user_email'];
+ }
+
+
+ return $emails;
+}
 function sp_do_function_header($file){
 	
 	

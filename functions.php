@@ -230,6 +230,12 @@ $content .='<h3>Thanks for upgrading!</h3>
     <td width="300"><strong>Form Instructions</strong><br><em>Just a short statement that will go above the upload form, you can use html!</em></td>
     <td><textarea  name="sp_cu_form_instructions"  style="width:100%;height:60px" >'. stripslashes(get_option('sp_cu_form_instructions')).'</textarea> </td>
   </tr>
+  
+
+     <tr>
+    <td width="300"><strong>Additional Admin Emails</strong><br><em>If you have additional people that need to get a copy of the admin when a user uploads a file then list them here seperated by a comma. You can also specify a wordpress role that would receive the email, so for instance if you have a custom role called "Customer Service" the email would be sent to everyone in the "Customer Service" Role. Roles should be lower case.</em></td>
+    <td><input style="width:100%" type="text" name="sp_cu_additional_user_emails" value="'. stripslashes(get_option('sp_cu_additional_user_emails')).'" ></td>
+  </tr>
      <tr>
     <td width="300"><strong>Admin Email</strong><br><em>This is the email that is dispatched to admin.</em><br><br>Template Tags:<br><br>
 	
@@ -242,6 +248,10 @@ $content .='<h3>Thanks for upgrading!</h3>
 	[client_documents] = Link to the client document manager
 	</td>
     <td>Subject: <input style="width:100%" type="text" name="sp_cu_admin_email_subject" value="'.get_option('sp_cu_admin_email_subject').'"><br>Body:<br><textarea name="sp_cu_admin_email" style="width:100%" rows="15">'.get_option('sp_cu_admin_email').'</textarea> </td>
+  </tr>
+      <tr>
+    <td width="300"><strong>Additional User Emails</strong><br><em>If you have additional people that need to get a copy of the email when a user uploads a file then list them here seperated by a comma.  You can also specify a wordpress role that would receive the email, so for instance if you have a custom role called "Customer Service" the email would be sent to everyone in the "Customer Service" Role. Roles should be lower case.</em></td>
+    <td><input style="width:100%" type="text" name="sp_cu_additional_admin_emails" value="'. stripslashes(get_option('sp_cu_additional_admin_emails')).'" ></td>
   </tr>
     <tr>
     <td width="300"><strong>User Email</strong><br><em>This is the email that is dispatched to user.</em><br><br>Template Tags:<br><br>

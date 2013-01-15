@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: distribution of documents,project management, document manager,document organization, file uploader, customer file manager, customer files,
 Requires at least: 2.0.2
 Tested up to: 3.5
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click technology.
 
@@ -281,3 +281,9 @@ Major updates, new uploader and fixes to admin upload functions
 
 = 1.4.1 = 
 * Fix to the progress meter
+
+= 1.4.2 =
+* Added new feature, you can now set additional emails ot receive both the admin and the user email. In the settings section there is a new spot to add additional emails, comma seperate the emails for multiple emails.
+* You can also add roles to the comma seperated values, if you add a role then it will email all the users of the specified role. Works with custom roles as well!
+* Example to email a few different emails and custom role "customer_service":    test@test.com,test2@test.com,customer_service,test3@test.com
+* This feature was requested by marisqa

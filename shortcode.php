@@ -465,12 +465,37 @@ if($_POST['submit'] != ""){
 	 
 	$to = get_option('admin_email');
 	if(get_option('sp_cu_admin_email') != ""){
-	$headers .= "".__("From:","sp-cdm")." ".$current_user->user_firstname." ".$current_user->user_lastname." <".$current_user->user_email.">\r\n";	
+	$headers[] = "".__("From:","sp-cdm")." ".$current_user->user_firstname." ".$current_user->user_lastname." <".$current_user->user_email.">\r\n";	
+	
+	if(get_option('sp_cu_additional_admin_emails') != ""){
+			
+			$cc_admin = explode(",",get_option('sp_cu_additional_admin_emails'));
+			foreach( $cc_admin as $key => $email){	
+			if($email != ""){
+			$pos = strpos($email, '@');
+				if ($pos === false) {
+					$role_emails = sp_cdm_find_users_by_role($email);
+						
+						foreach( $role_emails as $keys => $role_email){	
+						$headers[] = 'Cc: '.$role_email.'';
+						}
+					
+					
+				}else{
+					$headers[] = 'Cc: '.$email.'';
+				}
+			
+					
+			}
+			}	
+	}
+
 	$message = sp_cu_process_email($file_id,get_option('sp_cu_admin_email'));
 	add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
 	$subject = get_option('sp_cu_admin_email_subject');
 	wp_mail( $to, $subject, $message, $headers, $attachments );
-	
+	unset($headers);
+	unset($pos);
 	}
 	
 	
@@ -478,7 +503,33 @@ if($_POST['submit'] != ""){
 		$subject = get_option('sp_cu_user_email_subject');
 		$message = sp_cu_process_email($file_id,get_option('sp_cu_user_email'));
 		$to = $current_user->user_email;		
-		wp_mail( $to, $subject, $message, $headers, $attachments );
+		
+		if(get_option('sp_cu_additional_user_emails') != ""){
+			
+			$cc_user = explode(",",get_option('sp_cu_additional_user_emails'));
+			
+		
+			foreach( $cc_user as $key => $user_email){	
+		if($user_email != ""){
+				$pos = strpos($user_email, '@');
+				if ($pos === false) {
+					$role_user_emails = sp_cdm_find_users_by_role($user_email);
+						
+						foreach( $role_user_emails as $keys => $role_user_email){	
+						$user_headers[] = 'Cc: '.$role_user_email.'';
+						}
+					
+					
+				}else{
+					$user_headers[] = 'Cc: '. $user_email.'';
+				}
+		
+		
+		}
+			}	
+		}
+			
+		wp_mail( $to, $subject, $message, $user_headers, $attachments );
 	}
 		$html .= '<script type="text/javascript">
 
