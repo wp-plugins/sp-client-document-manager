@@ -175,9 +175,36 @@ $content .='<h3>Thanks for upgrading!</h3>
     <tr>
     <td width="300"><strong>Company Name</strong><br><em>This could be your name or your company name which will go in the "from" area in the vendor email.</em></td>
     <td><input type="text" name="sp_cu_company_name"  value="'.get_option('sp_cu_company_name').'"  size=80"> </td>
-  </tr>
+  </tr>';
+        
+
    
-         <tr>
+     
+    $timeZones = DateTimeZone::listIdentifiers();
+$time_select .= '<select name="sp_cu_time_zone">';
+
+foreach ( $timeZones as $timeZone ) {
+	
+	if($timeZone == get_option('sp_cu_time_zone')){
+		
+		$selected = 'selected="selected"';
+	}else{
+		$selected = '';
+	}
+	$time_select .= '<option value="'.$timeZone.'" '.$selected.'>'.$timeZone.'</option>';
+
+}
+$time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y, g:i a").'</em>';
+   
+   
+         $content .='
+		  <tr>
+    <td width="300"><strong>Time Zone</strong><br><em>Set your timezone for the below settings.</em></td>
+    <td>'.$time_select.' </td>
+  </tr>
+		 
+		 
+		 <tr>
     <td width="300"><strong>Filename Format</strong><br><em>Use the below codes to determine the file format, whatever you put in the box will show up before the actual file name.If you keep this blank then you leave the risk to existing files. Please see the example to the right.</em><br><br>
 	%y =  Year: yyyy<br> 
 	%d =  Day:  dd<br>

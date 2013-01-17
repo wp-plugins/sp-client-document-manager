@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: distribution of documents,project management, document manager,document organization, file uploader, customer file manager, customer files,
 Requires at least: 2.0.2
 Tested up to: 3.5
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click technology.
 
@@ -287,3 +287,7 @@ Major updates, new uploader and fixes to admin upload functions
 * You can also add roles to the comma seperated values, if you add a role then it will email all the users of the specified role. Works with custom roles as well!
 * Example to email a few different emails and custom role "customer_service":    test@test.com,test2@test.com,customer_service,test3@test.com
 * This feature was requested by marisqa
+
+= 1.4.3 =
+* Added time zone support, choose your timezone in settings to set the correct time. 
+* This effects file names when using the %y %m or d% also effects time files were posted.
