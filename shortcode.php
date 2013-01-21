@@ -395,7 +395,7 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id = '".$
 	if(CU_PREMIUM == 1){		
 		$notes =sp_cdm_get_form_fields($r[0]['id']);
 	}else{		
-		$notes = $r[$i]['notes'];
+		$notes = $r[0]['notes'];
 	}
 	
 	 $user_info = get_userdata($r[0]['uid']);

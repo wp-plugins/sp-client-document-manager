@@ -45,7 +45,7 @@ function view(){
 		
 		
 	
-if( $_POST['submit'] == 'Upload'){
+if( $_POST['submit-admin'] == 'Upload'){
 
 
 
@@ -77,7 +77,7 @@ if( $_POST['submit'] == 'Upload'){
 
 
     $wpdb->insert(  "".$wpdb->prefix."sp_cu", $a );
-	
+	$file_id = $wpdb->insert_id;
 	 if (CU_PREMIUM == 1){ 
 	  
 	process_sp_cdm_form_vars($data['custom_forms'],$wpdb->insert_id);
@@ -433,7 +433,7 @@ function sp_cu_add_project(){
   <tr>
     <td>&nbsp;</td>
     <td>
-						<div class="sp_change_indicator_button"><input id="dlg-upload" onclick="sp_change_indicator()" type="submit" name="submit" value="Upload" ></div>
+						<div class="sp_change_indicator_button"><input id="dlg-upload" onclick="sp_change_indicator()" type="submit" name="submit-admin" value="Upload" ></div>
 						<div class="sp_change_indicator" ></div>	
 							</td>
   </tr>';
@@ -477,7 +477,7 @@ if($_GET['dlg-delete-file'] != ""){
 		 
 }
 
-if($_POST['submit'] != ""){
+if($_POST['submit-admin'] != ""){
 
 
 
@@ -495,7 +495,7 @@ if($_POST['submit'] != ""){
 
 	if($files['dlg-upload-file']['name'] != ""){
 	
-	
+	print_r($a);exit;
 	
 	$a['file'] = sp_uploadFile($files);
     $wpdb->insert(  "".$wpdb->prefix."sp_cu", $a );

@@ -1,23 +1,23 @@
 === Plugin Name ===
 Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
-Tags: distribution of documents,project management, document manager,document organization, file uploader, customer file manager, customer files,
+Tags:project management, online document manager,website based document organization, share documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 
-SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click technology.
+SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click.
 
 == Description ==
 
-A sophisticated document manager the plug-in provides assurances that the user has complete control over the flow of information. Businesses utilizing the SP CDM are able to maintain document organization, manage client documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage process. 
+A sophisticated document manager the plug-in provides assurances that the user has complete control over the flow of information. Businesses utilizing the SP CDM are able to maintain document organization, manage client documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
 This new SP plug-in also demonstrates how quickly a business can take hold of their interactions with clients, vendors, and all in between.  With a straight-forward layout, access to template modifications and easy to manage features; clients can add and modify projects.
 
 
 We also now offer a premium version; please check out our website for more information: 
 http://smartypantsplugins.com/sp-client-document-manager/
 
-Now works with WordPress Multi Site!
+Now gworks with WordPress Multi Site!
 
 **[Click here to try out a demo](http://smartypantsplugins.com/client-upload-demo/ "Click here to try out a demo")**
 
@@ -25,7 +25,7 @@ Login with:  user: test   password: test
 
 **Client Side Features**
 
-* Clients upload files on their own personal page
+* Clients upload files and Documents on their own personal page
 * Clients can create or add to existing projects
 * Ability to choose multiple files
 * Delete uploaded documents
@@ -34,10 +34,13 @@ Login with:  user: test   password: test
 * Ability to translate plugin to multiple languages using the .po files.
 * Search by file name
 * Ability to allow deleting and renaming of projects
+* Disable user uploads
+* Disable user deleting of files
 
 **Administrator Side Features**
 
 * Complete control on who can access specific files
+* Turn off ability for Clients to upload documents instantly.
 * Notification via email when a client uploads a file
 * Add files and documents to client page and projects
 * Download file archive of a user
@@ -53,6 +56,8 @@ Login with:  user: test   password: test
 * Allow the user to create projects
 * Ability to add files to any user
 * Download all the files of a project in a single zip file
+* Add multiple admin emails to receieve files
+* Advanced admin file manager
 
 **Premium Features**
 
@@ -291,3 +296,8 @@ Major updates, new uploader and fixes to admin upload functions
 = 1.4.3 =
 * Added time zone support, choose your timezone in settings to set the correct time. 
 * This effects file names when using the %y %m or d% also effects time files were posted.
+
+= 1.4.4 =
+* Fixed problem with wp multisite links in the admin email
+* Fixed a problem with notes not being added to admin email
+* Added custom forms to email if a premium user.
