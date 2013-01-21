@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags:project management, online document manager,website based document organization, share documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click.
 
