@@ -631,6 +631,8 @@ window.location = "'. get_bloginfo('url').'/login/?redirect_to='.urlencode($_SER
 //-->
 </script>';
 	 
+	 
+	 
   }
   
 return $html;

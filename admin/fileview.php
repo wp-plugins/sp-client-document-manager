@@ -490,6 +490,8 @@ if($_POST['submit-admin'] != ""){
 	$a['cid'] = $data['cid'];
 	$a['tags'] = $data['tags'];
 	$a['notes'] = addslashes($data['dlg-upload-notes']);
+	
+	
 	check_folder_sp_client_upload();
 	
 
