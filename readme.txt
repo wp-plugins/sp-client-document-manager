@@ -257,6 +257,34 @@ Imagemagick is a 3rd party plugin you are responsible for, it needs to be downlo
 
 = 1.4.0 = 
 * Removed the regular uploaded and added a file view that shows you each users files as they see it, this view also includes an uploadeder as the client would see it. This fixes any bugs that would not place the correct file when adding a file to a user project.
+
+= 1.4.1 = 
+* Fix to the progress meter
+
+= 1.4.2 =
+* Added new feature, you can now set additional emails ot receive both the admin and the user email. In the settings section there is a new spot to add additional emails, comma seperate the emails for multiple emails.
+* You can also add roles to the comma seperated values, if you add a role then it will email all the users of the specified role. Works with custom roles as well!
+* Example to email a few different emails and custom role "customer_service":    test@test.com,test2@test.com,customer_service,test3@test.com
+* This feature was requested by marisqa
+
+= 1.4.3 =
+* Added time zone support, choose your timezone in settings to set the correct time. 
+* This effects file names when using the %y %m or d% also effects time files were posted.
+
+= 1.4.4 =
+* Fixed problem with wp multisite links in the admin email
+* Fixed a problem with notes not being added to admin email
+* Added custom forms to email if a premium user.
+
+= 1.4.7 =
+* Add capabilities so you can use "User role editor" to assign different roles with the new capabilities.
+* List of new capabilities:
+* sp_cdm = You need this role to view the plugin, this is a very minimal role. You can view files, edit and delete.
+* sp_cdm_settings = edit settings as well as enable any premium plugin features (in the future we will break premium features into their own roles, just getting started here)
+* sp_cdm_vendors = Show vendors tab
+* sp_cdm_projects = Show projects tab
+* sp_cdm_uploader = Use the uploader (add files)
+* Also added an update to the premium version to see who uploaded a version.
 == Upgrade Notice ==
 
 = 1.0.5 =
