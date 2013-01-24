@@ -4,12 +4,12 @@ Plugin Name: SP Client Document & Project Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.4.6
+Version: 1.4.7
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.4.6";
+$sp_client_upload = "1.4.7";
 
 load_plugin_textdomain( 'sp-cdm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -27,6 +27,7 @@ add_action('admin_menu', 'sp_client_upload_menu');
 
 
 add_filter('wp_head','sp_cdm_tinymce_editor');
+
 
 
 
@@ -65,6 +66,20 @@ include ''.dirname(__FILE__).'/shortcode.php';
 
 include ''.dirname(__FILE__).'/admin/fileview.php';
 
+sp_cdm_check_admin_caps();
+function sp_cdm_check_admin_caps(){
+	@require_once(ABSPATH . 'wp-includes/pluggable.php');
+if (  is_admin() && !current_user_can('sp_cdm') ) {
+		$role = get_role( 'administrator' );
+		$role->add_cap( 'sp_cdm' );	
+		$role->add_cap( 'sp_cdm_vendors' );	
+		$role->add_cap( 'sp_cdm_settings' );	
+		$role->add_cap( 'sp_cdm_projects' );	
+		$role->add_cap( 'sp_cdm_uploader' );
+		
+}
+	
+}
 
 function sp_client_upload_init() {
 	
@@ -309,18 +324,18 @@ function sp_client_upload_menu() {
 		$uploader = new sp_cdm_admin_uploader;
 		$sp_cdm_fileview = new sp_cdm_fileview;
 	
-		  add_menu_page( 'sp_cu', 'Client Documents',  'manage_options', 'sp-client-document-manager', 'sp_client_upload_options');
+		  add_menu_page( 'sp_cu', 'Client Documents',  'sp_cdm', 'sp-client-document-manager', 'sp_client_upload_options');
 		  
-		  add_submenu_page( 'sp_cu', 'Vendors', 'Vendors', 'manage_options', 'sp-client-document-manager-vendors', 'sp_client_upload_options_vendors');
+		  add_submenu_page( 'sp_cu', 'Vendors', 'Vendors', 'sp_cdm_vendors', 'sp-client-document-manager-vendors', 'sp_client_upload_options_vendors');
 		  
-	      add_submenu_page( 'sp_cu', 'Help', 'Help', 'manage_options', 'sp-client-document-manager-help', 'sp_client_upload_help');
+	      add_submenu_page( 'sp_cu', 'Help', 'Help', 'sp_cdm', 'sp-client-document-manager-help', 'sp_client_upload_help');
 		  
-	   	  add_submenu_page( 'sp_cu', 'Settings', 'Settings', 'manage_options', 'sp-client-document-manager-settings', 'sp_client_upload_settings');
+	   	  add_submenu_page( 'sp_cu', 'Settings', 'Settings', 'sp_cdm_settings', 'sp-client-document-manager-settings', 'sp_client_upload_settings');
 		  
-		   add_submenu_page( 'sp_cu', 'Projects', 'Projects', 'manage_options', 'sp-client-document-manager-projects',   array(  $projects ,'view'));
-		  add_submenu_page( 'sp_cu', 'Uploader', 'Uploader', 'manage_options', 'sp-client-document-manager-uploader',   array( $uploader ,'display_sp_upload_form'));
+		   add_submenu_page( 'sp_cu', 'Projects', 'Projects', 'sp_cdm_projects', 'sp-client-document-manager-projects',   array(  $projects ,'view'));
+		  add_submenu_page( 'sp_cu', 'Uploader', 'Uploader', 'sp_cdm_uploader', 'sp-client-document-manager-uploader',   array( $uploader ,'display_sp_upload_form'));
 		   
-	  add_submenu_page( 'sp_cu', 'User Files', 'User Files', 'manage_options', 'sp-client-document-manager-fileview',   array( $sp_cdm_fileview ,'view'));
+	  add_submenu_page( 'sp_cu', 'User Files', 'User Files', 'sp_cdm_uploader', 'sp-client-document-manager-fileview',   array( $sp_cdm_fileview ,'view'));
 		 
 }
 

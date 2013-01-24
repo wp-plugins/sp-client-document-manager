@@ -427,12 +427,24 @@ if(CU_PREMIUM != 1 && get_option("sp_cdm_ignore") != 1){
 $content .='
 <div style="padding:10px;font-weight:bold">
 
-<a href="admin.php?page=sp-client-document-manager" class="button" style="margin-right:10px">'.__("Home","sp-cdm").'</a>
-<a href="admin.php?page=sp-client-document-manager-settings" class="button" style="margin-right:10px">'.__("Settings","sp-cdm").'</a>
-<a href="admin.php?page=sp-client-document-manager-vendors" class="button" style="margin-right:10px">'.__("Vendors","sp-cdm").'</a>';
+';
+
+if(current_user_can('sp_cdm') ){
+$content .='<a href="admin.php?page=sp-client-document-manager" class="button" style="margin-right:10px">'.__("Home","sp-cdm").'</a>';
+}
+if(current_user_can('sp_cdm_settings') ){
+$content .='<a href="admin.php?page=sp-client-document-manager-settings" class="button" style="margin-right:10px">'.__("Settings","sp-cdm").'</a>';
+}
+if(current_user_can('sp_cdm_vendors') ){
+$content .='<a href="admin.php?page=sp-client-document-manager-vendors" class="button" style="margin-right:10px">'.__("Vendors","sp-cdm").'</a>';	
+}
+if(current_user_can('sp_cdm_projects') ){
 $content .= '<a href="admin.php?page=sp-client-document-manager-projects" class="button" style="margin-right:10px">'.__("Projects","sp-cdm").'</a>';
+}
+
 
 if (CU_PREMIUM == 1){
+	if(current_user_can('sp_cdm_settings') ){
 $content .= '<a href="admin.php?page=sp-client-document-manager-groups" class="button" style="margin-right:10px">'.__("Groups","sp-cdm").'</a>';
 $content .= '<a href="admin.php?page=sp-client-document-manager-forms" class="button" style="margin-right:10px">'.__("Forms","sp-cdm").'</a>';
 
@@ -440,8 +452,12 @@ $content .= '<a href="admin.php?page=sp-client-document-manager-categories" clas
 
 }
 $content .= '<a href="admin.php?page=sp-client-document-manager-help" class="button" style="margin-right:10px">'.__("Instructions","sp-cdm").'</a>
-<a href="admin.php?page=sp-client-document-manager-fileview" class="button"  style="margin-right:10px">'.__("User Files / Uploader","sp-cdm").'</a>
-</div>';	
+';
+}
+if(current_user_can('sp_cdm_uploader') ){
+$content .= '<a href="admin.php?page=sp-client-document-manager-fileview" class="button"  style="margin-right:10px">'.__("User Files / Uploader","sp-cdm").'</a>';
+}
+$content .='</div>';	
 	return $content;
 }
 

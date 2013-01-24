@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags:project management, online document manager,website based document organization, share documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5
-Stable tag: 1.4.6
+Stable tag: 1.4.7
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click.
 
@@ -37,6 +37,7 @@ Login with:  user: test   password: test
 * Disable user uploads
 * Disable user deleting of files
 
+
 **Administrator Side Features**
 
 * Complete control on who can access specific files
@@ -58,6 +59,7 @@ Login with:  user: test   password: test
 * Download all the files of a project in a single zip file
 * Add multiple admin emails to receieve files
 * Advanced admin file manager
+* Assign custom capabilities to user roles
 
 **Premium Features**
 
@@ -95,6 +97,15 @@ Login with:  user: test   password: test
 * Go to the plugin admin page and click settings to configure the plugin  (VERY IMPORTANT!)  
 * If you're using the premium version please upload the zip archive in the settings area. 
 
+= User Role Capabilities = 
+If you use "User Role Editor" plugin and want to assign CDM capabilities to another role then please use the following custom captabilities. All are automatically set for administrator
+
+* sp_cdm = You need this role to view the plugin, this is a very minimal role. You can view files, edit and delete.
+* sp_cdm_settings = edit settings as well as enable any premium plugin features (in the future we will break premium features into their own roles, just getting started here)
+* sp_cdm_vendors = Show vendors tab
+* sp_cdm_projects = Show projects tab
+* sp_cdm_uploader = Use the uploader (add files)
+
 == Frequently Asked Questions ==
 
 = How come I'm getting a 404 error? =
@@ -112,6 +123,14 @@ Sometimes plugins have conflicts, if you are experiencing any abnormal problems 
 = I get an imagemagick error when creating thumbnails of pdf and psd's = 
 
 Imagemagick is a 3rd party plugin you are responsible for, it needs to be downloaded and installed on your server but more importantly, it needs to be compiled into php. Your server admin should be able to handle that, we do not support imagemagick installations.
+
+= Do you offer capabilities for user roles? = 
+
+* sp_cdm = You need this role to view the plugin, this is a very minimal role. You can view files, edit and delete.
+* sp_cdm_settings = edit settings as well as enable any premium plugin features (in the future we will break premium features into their own roles, just getting started here)
+* sp_cdm_vendors = Show vendors tab
+* sp_cdm_projects = Show projects tab
+* sp_cdm_uploader = Use the uploader (add files)
 
 == Screenshots ==
 
@@ -301,3 +320,13 @@ Major updates, new uploader and fixes to admin upload functions
 * Fixed problem with wp multisite links in the admin email
 * Fixed a problem with notes not being added to admin email
 * Added custom forms to email if a premium user.
+
+= 1.4.7 =
+* Add capabilities so you can use "User role editor" to assign different roles with the new capabilities.
+* List of new capabilities:
+* sp_cdm = You need this role to view the plugin, this is a very minimal role. You can view files, edit and delete.
+* sp_cdm_settings = edit settings as well as enable any premium plugin features (in the future we will break premium features into their own roles, just getting started here)
+* sp_cdm_vendors = Show vendors tab
+* sp_cdm_projects = Show projects tab
+* sp_cdm_uploader = Use the uploader (add files)
+* Also added an update to the premium version to see who uploaded a version.

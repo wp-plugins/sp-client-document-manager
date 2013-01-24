@@ -1,4 +1,14 @@
 <?php
+function sp_cdm_get_current_user_role() {
+global $current_user;
+
+	$user_roles = $current_user->roles;
+	print_r($user_roles);
+	$user_role = array_shift($user_roles);
+
+	return $user_role;
+}
+
 
 function sp_cdm_find_users_by_role($role) {
 	global $wpdb;
