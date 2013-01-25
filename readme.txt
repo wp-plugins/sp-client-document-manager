@@ -101,34 +101,37 @@ Login with:  user: test   password: test
 x = configurable area
 
 **[sp-client-document-manager]** 
+
 This shortcode displays the uploader
  
 **[cdm-link file="x" date="1" real="1"]**
-This links to a specific file
+* This links to a specific file
 
-file = required, this is the file id. You can find the file id in admin under files or by clicking on a file. The ID is listed next to the date.
-date = (set to 1) optional, show the date of a file
-real = (set to 1) optional, generate the real url for the file, the link tags are not generated and only the url is returned. This is good for custom links and image url's
+* file = required, this is the file id. You can find the file id in admin under files or by clicking on a file. The ID is listed next to the date.
+* date = (set to 1) optional, show the date of a file
+* real = (set to 1) optional, generate the real url for the file, the link tags are not generated and only the url is returned. This is good for custom links and image url's
 
 examples:
-[cdm-link file="53" date="1"]
-Will generate a link with the file name and date
+* [cdm-link file="53" date="1"]
+* Will generate a link with the file name and date
 
-<img src="[cdm-link file="53" real="1"]" width="100">
+'< img src="[cdm-link file="53" real="1"]" width="100">'
+
 Will generate a full url for use in an image
 
 **[cdm-project project="x" date="1" order="x" direction="x" limit="x" ]**
+
 This shortlink will display a unordered list of files, it is a basic html ul so you can use css to display it however you want.
 
-project = required, this is the project id which you can get in admin under the projects tab.
-date = optional, put's the date of the file next to the file name
-order = (name,date,id,file) optional, use one of the fields to order the list by
-direction  = (asc,desc) optional, Only to be used with order, use asc for ascending order or desc for decending order
-limit = optional, use to limit the amount of results shown.
+* project = required, this is the project id which you can get in admin under the projects tab.
+* date = optional, put's the date of the file next to the file name
+* order = (name,date,id,file) optional, use one of the fields to order the list by
+* direction  = (asc,desc) optional, Only to be used with order, use asc for ascending order or desc for decending order
+* limit = optional, use to limit the amount of results shown.
 
 examples:
-[cdm-project project="1" date="1" ]
-[cdm-project project="1" date="1" order="name" direction="asc" limit="10" ]
+* [cdm-project project="1" date="1" ]
+* [cdm-project project="1" date="1" order="name" direction="asc" limit="10" ]
 
 = User Role Capabilities = 
 If you use "User Role Editor" plugin and want to assign CDM capabilities to another role then please use the following custom captabilities. All are automatically set for administrator
