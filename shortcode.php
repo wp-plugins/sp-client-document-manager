@@ -1,5 +1,74 @@
 <?php
+function sp_cdm_display_project_shortcode($atts){
+	
+		global $wpdb,$current_user,$user_ID;
+		
+		$pid = $atts['project'];
+		$date = $atts['date'];
+		$order = $atts['order'];
+		$direction = $atts['direction'];
+		$limit = $atts['limit'];
+			if ($order == ""){
+			$order = 'name';	
+			}else{
+			$order = $order;	
+			}
+			if($limit != ""){
+			$limit = ' LIMIT '.$limit.'';	
+			}else{
+			$limit = '';	
+			}
+		
+		if($pid == ''){
+			$content .='<p style="color:red">No project selected</p>';
+		}else{
+		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$pid ."'  order by ".$order." ".$direction ." ".$limit."", ARRAY_A);
+		
+		$content .='<ul>';
+		for($i=0; $i<count( $r ); $i++){
+			
+			
+			if($date == 1){
+				$inc_date = '<em style="font-size:10px"> - '.date("F Y g:i A",strtotime($r[$i]['date'])).'</em>';
+			}else{
+				$inc_date = '';	
+			}
+			$content .='<li><a href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[$i]['id'].'">'.stripslashes($r[$i]['name']).'</a> '.$inc_date.' </li>';
+		}
+	$content .='</ul>';
+		}
+	return $content ;
+}
+add_shortcode( 'cdm-project', 'sp_cdm_display_project_shortcode' );	
 
+function sp_cdm_file_link_shortcode($atts){
+		global $wpdb,$current_user,$user_ID;
+		
+		$fid = $atts['file'];
+		$date = $atts['date'];
+		$real = $atts['real'];
+		if($fid == ''){
+		$content ='<a href="#" style="color:red">No file  selected</a>';
+		}else{
+		
+		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id = '".$fid ."'  order by date desc", ARRAY_A);
+		if($real == 1){
+		return '' . get_bloginfo('wpurl') . '/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'';	
+		}else{
+		
+		
+		if($date == 1){
+				$inc_date = '<em  style="font-size:10px"> - '.date("F Y g:i A",strtotime($r[0]['date'])).'</em>';
+			}else{
+				$inc_date = '';	
+			}
+		$content ='<a href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'" >'.stripslashes($r[0]['name']).'</a> '.$inc_date.' </a>';
+		}
+		
+		return $content;
+		}
+}
+add_shortcode( 'cdm-link', 'sp_cdm_file_link_shortcode' );	
 function display_sp_thumbnails2($r){
 	
 	global $wpdb,$current_user,$user_ID;
@@ -451,11 +520,11 @@ if($_POST['submit'] != ""){
 	if($files['dlg-upload-file']['name'] != ""){
 	
 	
-	
+
 	$a['file'] = sp_uploadFile($files);
     $wpdb->insert(  "".$wpdb->prefix."sp_cu", $a );
 	$file_id = $wpdb->insert_id;
-	
+
 	add_user_meta(  $user_ID, 'last_project', $a['pid']);
 	 if (CU_PREMIUM == 1){ 
 	  

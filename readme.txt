@@ -3,8 +3,8 @@ Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
 Tags:project management, online document manager,website based document organization, share documents securely, customer file manager, client files,
 Requires at least: 2.0.2
-Tested up to: 3.5
-Stable tag: 1.4.7
+Tested up to: 3.5.1
+Stable tag: 1.4.8
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click.
 
@@ -96,6 +96,39 @@ Login with:  user: test   password: test
 * Create a new page and enter the shortcode [sp-client-document-manager]  
 * Go to the plugin admin page and click settings to configure the plugin  (VERY IMPORTANT!)  
 * If you're using the premium version please upload the zip archive in the settings area. 
+ 
+= Short Codes = 
+x = configurable area
+
+**[sp-client-document-manager]** 
+This shortcode displays the uploader
+ 
+**[cdm-link file="x" date="1" real="1"]**
+This links to a specific file
+
+file = required, this is the file id. You can find the file id in admin under files or by clicking on a file. The ID is listed next to the date.
+date = (set to 1) optional, show the date of a file
+real = (set to 1) optional, generate the real url for the file, the link tags are not generated and only the url is returned. This is good for custom links and image url's
+
+examples:
+[cdm-link file="53" date="1"]
+Will generate a link with the file name and date
+
+<img src="[cdm-link file="53" real="1"]" width="100">
+Will generate a full url for use in an image
+
+**[cdm-project project="x" date="1" order="x" direction="x" limit="x" ]**
+This shortlink will display a unordered list of files, it is a basic html ul so you can use css to display it however you want.
+
+project = required, this is the project id which you can get in admin under the projects tab.
+date = optional, put's the date of the file next to the file name
+order = (name,date,id,file) optional, use one of the fields to order the list by
+direction  = (asc,desc) optional, Only to be used with order, use asc for ascending order or desc for decending order
+limit = optional, use to limit the amount of results shown.
+
+examples:
+[cdm-project project="1" date="1" ]
+[cdm-project project="1" date="1" order="name" direction="asc" limit="10" ]
 
 = User Role Capabilities = 
 If you use "User Role Editor" plugin and want to assign CDM capabilities to another role then please use the following custom captabilities. All are automatically set for administrator
@@ -285,6 +318,12 @@ Imagemagick is a 3rd party plugin you are responsible for, it needs to be downlo
 * sp_cdm_projects = Show projects tab
 * sp_cdm_uploader = Use the uploader (add files)
 * Also added an update to the premium version to see who uploaded a version.
+
+= 1.4.8 =
+* New shortcodes to show a list of project files or link directly to a file (check installation instructions on usage)
+* Fixed email content not saving
+* Fixed a conflict with jetpack that was running the shortcode twice making double files.
+* Removed admin/uploader.php no longer needed with the new file viewer/uploader
 == Upgrade Notice ==
 
 = 1.0.5 =
@@ -358,3 +397,9 @@ Major updates, new uploader and fixes to admin upload functions
 * sp_cdm_projects = Show projects tab
 * sp_cdm_uploader = Use the uploader (add files)
 * Also added an update to the premium version to see who uploaded a version.
+
+= 1.4.8 =
+* New shortcodes to show a list of project files or link directly to a file (check installation instructions on usage)
+* Fixed email content not saving
+* Fixed a conflict with jetpack that was running the shortcode twice making double files.
+* Removed admin/uploader.php no longer needed with the new file viewer/uploader

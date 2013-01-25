@@ -593,6 +593,7 @@ function sp_cdm_showFile(file){
   <table class="wp-list-table widefat fixed posts" cellspacing="0">
 	<thead>
 	<tr>
+	<th style="width:30px">'.__("ID","sp-cdm").'</th>	
 <th style="width:80px">'.__("Thumbnail","sp-cdm").'</th>	
 <th>'.__("File Name","sp-cdm").'</th>
 <th>'.__("User","sp-cdm").'</th>
@@ -665,6 +666,7 @@ function sp_cdm_showFile(file){
 				$html .= '
 	
  <tr>
+ <td>'.$r[$i]['id'].'</td>
  <td>'.$img.'</td>
     <td ><strong>'.stripslashes($name).'</strong>';
 	
