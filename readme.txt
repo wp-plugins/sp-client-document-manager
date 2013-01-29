@@ -144,6 +144,10 @@ If you use "User Role Editor" plugin and want to assign CDM capabilities to anot
 * sp_cdm_projects = Show projects tab
 * sp_cdm_uploader = Use the uploader (add files)
 
+= Premium Users = 
+
+*Premium users must have free + premium version installed. The premium extends the free version.
+
 == Frequently Asked Questions ==
 
 = How come I'm getting a 404 error? =
@@ -162,6 +166,9 @@ Sometimes plugins have conflicts, if you are experiencing any abnormal problems 
 
 Imagemagick is a 3rd party plugin you are responsible for, it needs to be downloaded and installed on your server but more importantly, it needs to be compiled into php. Your server admin should be able to handle that, we do not support imagemagick installations.
 
+= I'm using the premium version but not seeing the client document uploader tab in wordpress =
+
+Premium users must have free + premium version installed. The premium extends the free version. Once you install the free version you will see the tab, from there put in your serial code.
 = Do you offer capabilities for user roles? = 
 
 * sp_cdm = You need this role to view the plugin, this is a very minimal role. You can view files, edit and delete.
