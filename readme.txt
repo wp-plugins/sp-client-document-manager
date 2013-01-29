@@ -1,16 +1,16 @@
 === Plugin Name ===
 Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
-Tags:project management, online document manager,website based document organization, share documents securely, customer file manager, client files,
+Tags:project management, web based document manager,website based document organization, share online documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.4.8
+Stable tag: 1.4.9
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click.
 
 == Description ==
 
-A sophisticated document manager the plug-in provides assurances that the user has complete control over the flow of information. Businesses utilizing the SP CDM are able to maintain document organization, manage client documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
+A sophisticated online document manager, the plug-in provides assurances that the user has complete control over the flow of information. Businesses utilizing the SP CDM are able to maintain web based document organization, manage client documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
 This new SP plug-in also demonstrates how quickly a business can take hold of their interactions with clients, vendors, and all in between.  With a straight-forward layout, access to template modifications and easy to manage features; clients can add and modify projects.
 
 
@@ -25,7 +25,7 @@ Login with:  user: test   password: test
 
 **Client Side Features**
 
-* Clients upload files and Documents on their own personal page
+* Clients upload files and Documents online to their own personal page
 * Clients can create or add to existing projects
 * Ability to choose multiple files
 * Delete uploaded documents
@@ -112,6 +112,7 @@ This shortcode displays the uploader
 * real = (set to 1) optional, generate the real url for the file, the link tags are not generated and only the url is returned. This is good for custom links and image url's
 
 examples:
+
 * [cdm-link file="53" date="1"]
 * Will generate a link with the file name and date
 
@@ -130,6 +131,7 @@ This shortlink will display a unordered list of files, it is a basic html ul so 
 * limit = optional, use to limit the amount of results shown.
 
 examples:
+
 * [cdm-project project="1" date="1" ]
 * [cdm-project project="1" date="1" order="name" direction="asc" limit="10" ]
 
@@ -327,6 +329,9 @@ Imagemagick is a 3rd party plugin you are responsible for, it needs to be downlo
 * Fixed email content not saving
 * Fixed a conflict with jetpack that was running the shortcode twice making double files.
 * Removed admin/uploader.php no longer needed with the new file viewer/uploader
+
+= 1.4.9
+* Fixed issue with slashes, this will fix newer files. Older files will have to be edited. There was a random code to addslashes in there (something wordpress db class does as well) so it was adding slashes twice.
 == Upgrade Notice ==
 
 = 1.0.5 =
@@ -406,3 +411,6 @@ Major updates, new uploader and fixes to admin upload functions
 * Fixed email content not saving
 * Fixed a conflict with jetpack that was running the shortcode twice making double files.
 * Removed admin/uploader.php no longer needed with the new file viewer/uploader
+
+= 1.4.9
+* Fixed issue with slashes, this will fix newer files. Older files will have to be edited. There was a random code to addslashes in there (something wordpress db class does as well) so it was adding slashes twice.

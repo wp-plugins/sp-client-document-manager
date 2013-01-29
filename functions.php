@@ -676,7 +676,7 @@ function sp_cdm_showFile(file){
 		$html .=sp_cdm_get_form_fields($r[$i]['id']);
 	}else{
 		
-		$html .='<br><em>'.__("Notes: ","sp-cdm").' '.$r[$i]['notes'].'</em>';
+		$html .='<br><em>'.__("Notes: ","sp-cdm").' '.stripslashes($r[$i]['notes']).'</em>';
 	}
 	
 	

@@ -248,7 +248,7 @@ $html .='
 	 if($r[0]['notes'] != ""){
 $html .='
 <div class="sp_su_notes">
-<strong>'.__("Notes: ","sp-cdm").':</strong> <em>'.$r[0]['notes'].'</em>
+<strong>'.__("Notes: ","sp-cdm").':</strong> <em>'.stripslashes($r[0]['notes']).'</em>
 </div>';
 }
  }
@@ -910,7 +910,7 @@ $zip->setZipFile($dir.$return_file);
 					}
 		
 		
-	$attachment_links .= '<a href="' . get_bloginfo('wpurl') . '/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'">'.$name.'</a><br>';
+	$attachment_links .= '<a href="' . get_bloginfo('wpurl') . '/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'">'.stripslashes($name).'</a><br>';
 	$attachment_array[$i] = ''.WP_CONTENT_DIR .'/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'';	
 	}
 	

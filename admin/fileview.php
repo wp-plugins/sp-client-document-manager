@@ -53,11 +53,11 @@ if( $_POST['submit-admin'] == 'Upload'){
 	$data = $_POST;
 	$files = $_FILES;
 	$a['uid'] = $_GET['id'];
-	$a['name'] = addslashes($data['dlg-upload-name']);
+	$a['name'] = $data['dlg-upload-name'];
 	$a['pid'] = $data['pid'];
 	$a['cid'] = $data['cid'];
 	$a['tags'] = $data['tags'];
-	$a['notes'] = addslashes($data['dlg-upload-notes']);
+	$a['notes'] = $data['dlg-upload-notes'];
 	
 		
 	$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$a['uid'].'/';
@@ -486,11 +486,11 @@ if($_POST['submit-admin'] != ""){
 	$data = $_POST;
 	$files = $_FILES;
 	$a['uid'] = $user_ID;
-	$a['name'] = addslashes($data['dlg-upload-name']);
+	$a['name'] =$data['dlg-upload-name'];
 	$a['pid'] = $data['pid'];
 	$a['cid'] = $data['cid'];
 	$a['tags'] = $data['tags'];
-	$a['notes'] = addslashes($data['dlg-upload-notes']);
+	$a['notes'] = $data['dlg-upload-notes'];
 	
 	
 	check_folder_sp_client_upload();
