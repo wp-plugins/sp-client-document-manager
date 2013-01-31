@@ -283,7 +283,7 @@ if($_REQUEST['search'] != ""){
 
 
 $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST['search']."%' ";	
-$search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$_REQUEST['search']."%')  ";		
+
 }
 		
 	
@@ -467,9 +467,23 @@ function sp_cu_remove_project(){
 	}
 	
 	if($_GET['pid'] == ""){
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.")  AND pid = 0 	AND parent = 0  ".$search_file." order by ".$sort ." ", ARRAY_A);
+		if($_REQUEST['search'] != ""){
+		$search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$_REQUEST['search']."%')  ";	
+				
+		}else{
+		$search_file .= " AND pid = 0  AND parent = 0  ";				
+	
+		}
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.")  	 ".$search_file." order by ".$sort ." ", ARRAY_A);
 	}else{
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$_GET['pid']."' AND parent = 0   ".$search_file."  order by ".$sort ."  ", ARRAY_A);		
+		
+			if($_REQUEST['search'] != ""){
+		$search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$_REQUEST['search']."%')  ";				
+		}else{
+		$search_file .= "  AND parent = 0   ";				
+	
+		}
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (pid = '".$_GET['pid']."') ".$search_file."  order by ".$sort ."  ", ARRAY_A);		
 	}
 	
 	for($i=0; $i<count( $r ); $i++){
@@ -486,9 +500,16 @@ function sp_cu_remove_project(){
 		}else{
 			$cat = '';
 		}
+		
+		
+		if($_REQUEST['search'] != ""  && sp_cdm_get_project_name($r[$i]['pid'])	!= false){
+			$project_name = ' <em>(Project: '.sp_cdm_get_project_name($r[$i]['pid']).')</em> ';
+		}else{
+			$project_name  = '';	
+		}
 		echo '<tr onclick="sp_cdm_showFile('.$r[$i]['id'].')">
 				<td class="cdm_file_icon ext_'.$ext.'"></td>
-		<td class="cdm_file_info">'.stripslashes($r[$i]['name']).'</td>
+		<td class="cdm_file_info">'.stripslashes($r[$i]['name']).' '.$project_name.'</td>
 		<td class="cdm_file_date">'.date("F Y g:i A",strtotime($r[$i]['date'])).'</td>
 
 		<td class="cdm_file_type">'.$ext.'</td>	
@@ -516,7 +537,7 @@ if($_REQUEST['search'] != ""){
 
 
 $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST['search']."%' ";	
-$search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$_REQUEST['search']."%')  ";		
+	
 }
 
 		$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,
@@ -685,12 +706,30 @@ function sp_cu_remove_project(){
 		}
 	
 	
-	if($_GET['pid'] == ""){
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.")  AND pid = 0 	AND parent = 0  ".$search_file." order by date desc", ARRAY_A);
+	if($_GET['sort'] == ''){
+	$sort = 'date';	
 	}else{
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$_GET['pid']."' AND parent = 0   ".$search_file."  order by date desc", ARRAY_A);		
+	$sort = $_GET['sort'];		
 	}
 	
+	if($_GET['pid'] == ""){
+		if($_REQUEST['search'] != ""){
+		$search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$_REQUEST['search']."%')  ";				
+		}else{
+		$search_file .= " AND pid = 0  AND parent = 0  ";				
+	
+		}
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.")  	 ".$search_file." order by ".$sort ." ", ARRAY_A);
+	}else{
+		
+			if($_REQUEST['search'] != ""){
+		$search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$_REQUEST['search']."%')  ";				
+		}else{
+		$search_file .= "  AND parent = 0   ";				
+	
+		}
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (pid = '".$_GET['pid']."') ".$search_file."  order by ".$sort ."  ", ARRAY_A);		
+	}
 	for($i=0; $i<count( $r ); $i++){
 		
 		
@@ -725,11 +764,16 @@ function sp_cu_remove_project(){
 			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/package_labled.png">';
 		}
 		
+	if($_REQUEST['search'] != ""  && sp_cdm_get_project_name($r[$i]['pid'])	!= false){
+			$project_name = ' <br><em>(Project: '.sp_cdm_get_project_name($r[$i]['pid']).')</em> ';
+		}else{
+			$project_name  = '';	
+		}
 		echo '<div class="dlg_cdm_thumbnail_folder">
 			<div class="dlg_cdm_thumbnail_image">
 				<a href="javascript:sp_cdm_showFile('.$r[$i]['id'].')">'.$img .'
 				<div class="dlg_cdm_thumb_title">
-				'. stripslashes($r[$i]['name']).'
+				'. stripslashes($r[$i]['name']).''.$project_name .'
 				</div>
 				</a>
 				</div>

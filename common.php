@@ -1,4 +1,21 @@
 <?php
+
+
+function sp_cdm_get_project_name($id){
+	
+		global $wpdb;
+		
+			$r = $wpdb->get_results("SELECT *
+	
+									 FROM ".$wpdb->prefix."sp_cu_project
+									 WHERE id = '".$id."'", ARRAY_A);	
+									 
+				if($r[0]['name'] != ""){
+					return stripslashes($r[0]['name']);
+				}else{
+				return false;
+}
+}
 function sp_cdm_get_current_user_role() {
 global $current_user;
 

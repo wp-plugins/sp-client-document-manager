@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags:project management, web based document manager,website based document organization, share online documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.4.9
+Stable tag: 1.5.0
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click.
 
@@ -337,8 +337,14 @@ Premium users must have free + premium version installed. The premium extends th
 * Fixed a conflict with jetpack that was running the shortcode twice making double files.
 * Removed admin/uploader.php no longer needed with the new file viewer/uploader
 
-= 1.4.9
+= 1.4.9 =
 * Fixed issue with slashes, this will fix newer files. Older files will have to be edited. There was a random code to addslashes in there (something wordpress db class does as well) so it was adding slashes twice.
+
+= 1.5.0 =
+* Fixed an issue where uploads were happening twice on some installations, now using wordpress actions and hooks for processing data in shortcodes
+* The search function now searches within projects for the file your searching for, if the file is inside a project it displays the project name.
+* Fixed an issue with validation being broken
+* Fixed another stripslashes problem in the admin email
 == Upgrade Notice ==
 
 = 1.0.5 =
@@ -419,5 +425,11 @@ Major updates, new uploader and fixes to admin upload functions
 * Fixed a conflict with jetpack that was running the shortcode twice making double files.
 * Removed admin/uploader.php no longer needed with the new file viewer/uploader
 
-= 1.4.9
+= 1.4.9 =
 * Fixed issue with slashes, this will fix newer files. Older files will have to be edited. There was a random code to addslashes in there (something wordpress db class does as well) so it was adding slashes twice.
+
+= 1.5.0 =
+* Fixed an issue where uploads were happening twice on some installations, now using wordpress actions and hooks for processing data in shortcodes
+* The search function now searches within projects for the file your searching for, if the file is inside a project it displays the project name.
+* Fixed an issue with validation being broken
+* Fixed another stripslashes problem in the admin email

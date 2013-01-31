@@ -308,7 +308,7 @@ jQuery(document).ready(function() {
 	  ajaxRequest: false,
 	  errorText: "'.__("Required","sp-cdm").'",
 	   completeCallback: function() {
-      
+   
 	  sp_cdm_change_indicator();
 	  }
 	});
@@ -415,7 +415,7 @@ function sp_cu_add_project(){
   <tr>
     <td>&nbsp;</td>
     <td>
-						<div class="sp_change_indicator_button"><input id="dlg-upload" onclick="sp_cdm_change_indicator()" type="submit" name="submit" value="Upload" ></div>
+						<div class="sp_change_indicator_button"><input id="dlg-upload"  type="submit" name="submit" value="Upload" ></div>
 						<div class="sp_change_indicator" ></div>	
 							</td>
   </tr>';
@@ -462,9 +462,9 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id = '".$
 	}	
 			
 	if(CU_PREMIUM == 1){		
-		$notes =sp_cdm_get_form_fields($r[0]['id']);
+		$notes =stripslashes(sp_cdm_get_form_fields($r[0]['id']));
 	}else{		
-		$notes = $r[0]['notes'];
+		$notes = stripslashes($r[0]['notes']);
 	}
 	
 	 $user_info = get_userdata($r[0]['uid']);
@@ -480,16 +480,12 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id = '".$
 	$message = str_replace('[client_documents]', '<a href="'.admin_url( 'admin.php?page=sp-client-document-manager').'">'.admin_url( 'admin.php?page=sp-client-document-manager').'</a>', $message);
 return $message;
 }
-function display_sp_client_upload($atts){
 
+function display_sp_client_upload_process(){
+	
 	global $wpdb ;
 	global $user_ID;
 	global $current_user;
-     get_currentuserinfo();
- if ( is_user_logged_in() ) { 
-
-
-
 if($_GET['dlg-delete-file'] != ""){
 	
 	
@@ -613,6 +609,19 @@ jQuery(document).ready(function() {
 	
 }
 }
+echo $html;
+}
+
+
+function display_sp_client_upload($atts){
+
+	global $wpdb ;
+	global $user_ID;
+	global $current_user;
+     get_currentuserinfo();
+ if ( is_user_logged_in() ) { 
+
+
 
 
 
@@ -710,4 +719,6 @@ return $html;
 }
 	add_shortcode( 'sp-client-media-manager', 'display_sp_client_upload' );	
 	add_shortcode( 'sp-client-document-manager', 'display_sp_client_upload' );	
+	add_action('wp_footer','display_sp_client_upload_process');
+	
 ?>
