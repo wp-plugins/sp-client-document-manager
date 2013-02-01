@@ -522,9 +522,8 @@ if($_POST['submit'] != ""){
 	$file_id = $wpdb->insert_id;
 
 	add_user_meta(  $user_ID, 'last_project', $a['pid']);
-	 if (CU_PREMIUM == 1){ 
-	  
-	 process_sp_cdm_form_vars($data['custom_forms'],$wpdb->insert_id);
+	 if (CU_PREMIUM == 1){ 	  
+	 process_sp_cdm_form_vars($data['custom_forms'],$file_id );
 	 
 	 }
 	 
@@ -659,7 +658,7 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 	<script type="text/javascript">
 	
 	function cdm_ajax_search(){
-		
+		sp_cdm_loading_image();
 	var cdm_search = jQuery("#search_files").val();
 	jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=thumbnails&uid='.$user_ID.'&search=" + cdm_search);		
 		
@@ -673,7 +672,7 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 	<script type="text/javascript">
 	
 	function cdm_ajax_search(){
-		
+		sp_cdm_loading_image();
 	var cdm_search = jQuery("#search_files").val();
 	jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$user_ID.'&search=" + cdm_search);		
 		
@@ -687,7 +686,7 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 	$html .='Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files">';
 	
 	if(get_option('sp_cu_user_uploads_disable') != 1){
-	$html .='  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/add.png"> '.__("Add File","sp-cdm").'</a>  ';
+	$html .='  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/add.png" style="border:none"> '.__("Add File","sp-cdm").'</a>    <a href="javascript:cdm_ajax_search()"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/refresh.png" style="border:none"> '.__("Refresh","sp-cdm").'</a> ';
 	}
 if(get_option('sp_cu_user_projects_thumbs') == 1 && CU_PREMIUM == 1){
 		$html .=display_sp_cdm_thumbnails($r );

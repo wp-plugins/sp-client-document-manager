@@ -81,7 +81,7 @@ if( $_POST['submit-admin'] == 'Upload'){
 
 	 if (CU_PREMIUM == 1){ 
 	  
-	process_sp_cdm_form_vars($data['custom_forms'],$wpdb->insert_id);
+	process_sp_cdm_form_vars($data['custom_forms'],$file_id );
 	 
 	 }
 	

@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags:project management, web based document manager,website based document organization, share online documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click.
 
@@ -345,6 +345,11 @@ Premium users must have free + premium version installed. The premium extends th
 * The search function now searches within projects for the file your searching for, if the file is inside a project it displays the project name.
 * Fixed an issue with validation being broken
 * Fixed another stripslashes problem in the admin email
+
+= 1.5.1 =
+* Fixed a stripslashes for revision notes
+* Fixed an issue with premium notes not being logged.
+* Added a  ajax refresh button
 == Upgrade Notice ==
 
 = 1.0.5 =
@@ -433,3 +438,8 @@ Major updates, new uploader and fixes to admin upload functions
 * The search function now searches within projects for the file your searching for, if the file is inside a project it displays the project name.
 * Fixed an issue with validation being broken
 * Fixed another stripslashes problem in the admin email
+
+= 1.5.1 =
+* Fixed a stripslashes for revision notes
+* Fixed an issue with premium notes not being logged.
+* Added a  ajax refresh button
