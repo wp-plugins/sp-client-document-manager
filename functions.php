@@ -395,9 +395,13 @@ if(CU_PREMIUM != 1 && get_option("sp_cdm_ignore") != 1){
 	</div>';
 
 }
-
-		if(!function_exists('theme_my_login')){
-	$content .= '<div class="sp_cdm_error">This plugin requires "Theme My Login" plugin which allows for a seamless login experience. <a href="plugin-install.php?tab=search&s=theme+my+login&plugin-search-input=Search+Plugins">Please install this plugin using the plugin manager.</a></div>';	
+		
+		if($_GET['ignore'] == 'tml'){
+		add_option('cdm_ignore_tml',1);	
+		}
+		
+		if(!function_exists('theme_my_login') && get_option('cdm_ignore_tml') != 1){
+	$content .= '<div class="sp_cdm_error">This plugin works great with the "Theme My Login" plugin which allows you to use your own template for login and registration. <strong>Please remember to turn on registration in your wordpress settings if you need to have users registering</strong>.<div style="padding:10px"> <a href="plugin-install.php?tab=search&s=theme+my+login&plugin-search-input=Search+Plugins" class="button">Click here to get theme my login.</a> or <a href="admin.php?page=sp-client-document-manager-settings&ignore=tml" class="button">click here to ignore this message</a>.</div></div>';	
 	}
 			
 		
