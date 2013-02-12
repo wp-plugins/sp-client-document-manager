@@ -28,14 +28,14 @@ if (CU_PREMIUM == 1){
 
   if(count($projects) > 0 or get_option('sp_cu_user_projects') == 1){
 	  $html .= ' <tr>
-    <td>'.__("Project:","sp-cdm").'
+    <td><strong>'.__("Project:","sp-cdm").'</strong>
 	
 
 	
 	
 	</td>
     <td>
-	<select name="pid" id="pid_select">';
+	<select name="pid" class="pid_select">';
 	
 	if(get_option('sp_cu_user_projects_required') == 0){	
 	$html .='<option name="" selected="selected">'.__("No Project","sp-cdm").'</option>';	

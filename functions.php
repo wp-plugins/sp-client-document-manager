@@ -98,25 +98,24 @@ global $wpdb;
 				
 	if($_POST['sp_cu_user_projects'] == "1"){update_option('sp_cu_user_projects','1' ); }else{update_option('sp_cu_user_projects','0' );	}
 	if($_POST['sp_cu_user_projects_required'] == "1"){update_option('sp_cu_user_projects_required','1' ); }else{update_option('sp_cu_user_projects_required','0' );	}
-	if($_POST['sp_cu_user_projects_thumbs'] == "1"){update_option('sp_cu_user_projects_thumbs','1' ); }else{update_option('sp_cu_user_projects_thumbs','0' );	}
-	if($_POST['sp_cu_user_projects_thumbs_pdf'] == "1"){update_option('sp_cu_user_projects_thumbs_pdf','1' ); }else{update_option('sp_cu_user_projects_thumbs_pdf','0' );	}
+	
 	if($_POST['sp_cu_js_redirect'] == "1"){update_option('sp_cu_js_redirect','1' ); }else{update_option('sp_cu_js_redirect','0' );	}		
-	if($_POST['sp_cu_enable_tags'] == "1"){update_option('sp_cu_enable_tags','1' ); }else{update_option('sp_cu_enable_tags','0' );	}				
+			
 	if($_POST['sp_cu_user_uploads_disable'] == "1"){update_option('sp_cu_user_uploads_disable','1' ); }else{update_option('sp_cu_user_uploads_disable','0' );	}	
-	if($_POST['sp_cu_user_delete_disable'] == "1"){update_option('sp_cu_user_delete_disable','1' ); }else{update_option('sp_cu_user_delete_disable','0' );	}		
+	if($_POST['sp_cu_user_delete_disable'] == "1"){update_option('sp_cu_user_delete_disable','1' ); }else{update_option('sp_cu_user_delete_disable','0' );	}
+	if($_POST['sp_cu_hide_project'] == "1"){update_option('sp_cu_hide_project','1' ); }else{update_option('sp_cu_hide_project','0' );	}				
 	}
 	
 	
 	
 	if(get_option('sp_cu_user_projects_required') == 1){ $sp_cu_user_projects_required = ' checked="checked" ';	}else{ $sp_cu_user_projects_required = '  '; }
 	if(get_option('sp_cu_user_projects') == 1){ $sp_cu_user_projects = ' checked="checked" ';	}else{ $sp_cu_user_projects = '  '; }
-	if(get_option('sp_cu_user_projects_thumbs') == 1){ $sp_cu_user_projects_thumbs = ' checked="checked" ';	}else{ $sp_cu_user_projects_thumbs = '  '; }
-	if(get_option('sp_cu_user_projects_thumbs_pdf') == 1){ $sp_cu_user_projects_thumbs_pdf = ' checked="checked" ';	}else{ $sp_cu_user_projects_thumbs_pdf = '  '; }
+	
 	if(get_option('sp_cu_js_redirect') == 1){ $sp_cu_js_redirect = ' checked="checked" ';	}else{ $sp_cu_js_redirect = '  '; }
-	if(get_option('sp_cu_enable_tags') == 1){ $sp_cu_enable_tags = ' checked="checked" ';	}else{ $sp_cu_enable_tags = '  '; }
+	
 	if(get_option('sp_cu_user_uploads_disable') == 1){ $sp_cu_user_uploads_disable = ' checked="checked" ';	}else{ $sp_cu_user_uploads_disable = '  '; }
 	if(get_option('sp_cu_user_delete_disable') == 1){ $sp_cu_user_delete_disable = ' checked="checked" ';	}else{ $sp_cu_user_delete_disable = '  '; }
-	
+	if(get_option('sp_cu_hide_project') == 1){ $sp_cu_hide_project = ' checked="checked" ';	}else{ $sp_cu_hide_project = '  '; }
 	
 	
 	
@@ -153,18 +152,18 @@ window.location = "admin.php?page=sp-client-document-manager-settings&cdm-upgrad
 	
 	}
 	
-	$content .='
+	echo '
 <div style="border:1px solid #CCC;padding:5px;margin:5px;background-color:#e3f1d4;">';
 
 if(CU_PREMIUM != 1){
 
-$content .='<h3>Upgrade to premium!</h3>
+echo '<h3>Upgrade to premium!</h3>
 <p>If you would like to see the extra features and upgrade to premium please purchase the addon package by <a href="http://smartypantsplugins.com/sp-client-document-manager/" target="_blank">clicking here</a>. Once purchased you will receive a file, upload that file to your plugins directory or go to plugins > add new > upload and upload the zip file. Once you upload activate the plugin and let the fun begin!</p>';
 }else{
-$content .='<h3>Thanks for upgrading!</h3>
+echo '<h3>Thanks for upgrading!</h3>
 <p>If you need to update the premium version of this plugin you can either overwrite the contents of the directory with the new version or use the wordpress plugin manager to delete the old version and add the new version.</p>';
 }
-	$content .='
+	echo '
 
 
 </div>
@@ -197,7 +196,7 @@ foreach ( $timeZones as $timeZone ) {
 $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y, g:i a").'</em>';
    
    
-         $content .='
+       echo '
 		  <tr>
     <td width="300"><strong>Time Zone</strong><br><em>Set your timezone for the below settings.</em></td>
     <td>'.$time_select.' </td>
@@ -244,6 +243,10 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
      <tr>
     <td width="300"><strong>Javascript Redirect?</strong><br><em>If your on a windows system you need to use javascript redirection as FastCGI does not allow force download files.</em></td>
     <td><input type="checkbox" name="sp_cu_js_redirect"   value="1" '. $sp_cu_js_redirect.'> </td>
+  </tr>
+    <tr>
+    <td width="300"><strong>Hide project if empty?</strong><br><em>Hide a project if there are no files on it.</em></td>
+    <td><input type="checkbox" name="sp_cu_hide_project"   value="1" '. $sp_cu_hide_project.'> </td>
   </tr>
     <tr>
     <td width="300"><strong>User Projects?</strong><br><em>If you want to allow the user to create projects check this box.</em></td>
@@ -294,51 +297,26 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
   </tr>
   ';
   
-  if (CU_PREMIUM == 1){
-	  
-	
-
-	  $content .=''.sp_cdm_premium_settings().'
-	 
-	  
-     <tr>
-    <td width="300"><strong>Enable File Tags?</strong><br><em>File tags allow you to give your users a unique way to search for files.</em></td>
-    <td><input type="checkbox" name="sp_cu_enable_tags"   value="1" '. $sp_cu_enable_tags.'> </td>
-  </tr>
-     <tr>
-    <td width="300"><strong>Thumbnail Mode?</strong><br><em>Would you like to display all images as thumbnails?</em></td>
-    <td><input type="checkbox" name="sp_cu_user_projects_thumbs"   value="1" '. $sp_cu_user_projects_thumbs.'> </td>
-  </tr>
-    <tr>
-    <td width="300"><strong>Create thumbnails for pdfs and psds?</strong><br><em>You must have Image Magick Installed on your server. '. $imagemagick.' </em></td>
-    <td><input type="checkbox" name="sp_cu_user_projects_thumbs_pdf"   value="1" '. $sp_cu_user_projects_thumbs_pdf.'> </td>
-  </tr>
-  <tr>
-    <td width="300"><strong>Categories Text</strong><br><em>This is the text you want to call categories, for example you may want to use it as a status.</em></td>
-    <td><input type="text" name="sp_cu_cat_text"  value="'.get_option('sp_cu_cat_text').'"  size=80"> </td>
-  </tr>
-   <tr>
-    <td width="300"><strong>File Deletion Period</strong><br><em>How many days should a file exist before its deleted from the system? Leave blank if you do not wish to use this function.</em></td>
-    <td><input type="text" name="sp_cu_file_delete"  value="'.get_option('sp_cu_file_delete').'"  size=80"> </td>
-  </tr>
-
-  ';
-  
-  }
+ 
   
   if(class_exists('cdmProductivityGoogle')){
 	  
-	$content .='   <tr>
+	echo '   <tr>
     <td width="300"><strong>Google API Key</strong><br><em>This is your google API if you are using the google shortlink addon in the productivity suite, this also may be used for future google services integration.</em></td>
     <td><input type="text" name="sp_cu_google_api_key"  value="'.get_option('sp_cu_google_api_key').'"  size=80"> </td>
   </tr>';  
   }
-  $content .='
+  echo '
     <tr>
     <td>&nbsp;</td>
     <td><input type="submit" name="save_options" value="Save Options"></td>
   </tr>
-</table>
+</table>';
+
+do_action('cdm_premium_settings');
+echo '
+
+
 </form>
 	
 	';
@@ -747,5 +725,7 @@ return $html;
 
 
 }
+
+
 add_action( 'edit_user_profile', 'sp_client_upload_admin' );
 ?>

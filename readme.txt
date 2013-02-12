@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags:project management, web based document manager,website based document organization, share online documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.5.1
+Stable tag: 1.5.2
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click.
 
@@ -75,6 +75,9 @@ Login with:  user: test   password: test
 * File versioning system, don't lose old versions 
 * Addon packs available for more features!
 * For more information check out the plugin page http://smartypantsplugins.com/sp-client-document-manager/
+* Upload multiple files
+* File progress bar
+
 
 **Current Languages**
 
@@ -188,6 +191,7 @@ Premium users must have free + premium version installed. The premium extends th
 7. Group manager to allow multiple user manage the same files (premium)
 8. Project editor
 9. Upload a file
+
 
 == Changelog ==
 
@@ -350,6 +354,21 @@ Premium users must have free + premium version installed. The premium extends th
 * Fixed a stripslashes for revision notes
 * Fixed an issue with premium notes not being logged.
 * Added a  ajax refresh button
+
+= 1.5.2 =
+* New uploader for premium users, the uploader allows multiple file uploads and shows file progress. 
+* New uploader allows you to choose if you want zip files or leave them seperate
+* Ability to set the file name to the same filename as the original
+* Shows actual file progress now!
+* Allow premium users to use the old uploader
+* Fixed IE issues
+* New setting to turn off file revisions
+* Premium Admin emails recieves a list of all uploaded files since we can do multiple files now. One email for all files uploaded
+* Fixed premium tables not installing correctly
+* Created some hooks so we can have seperate settings from the free version  add_action('cdm_premium_settings','your_function')  to build on settings
+* Fixed load issue in IE (spining circle)
+* Dropped the idea of drag and drop due to browser compatibility issues.
+* User groups fixed for projects
 == Upgrade Notice ==
 
 = 1.0.5 =
@@ -443,3 +462,18 @@ Major updates, new uploader and fixes to admin upload functions
 * Fixed a stripslashes for revision notes
 * Fixed an issue with premium notes not being logged.
 * Added a  ajax refresh button
+
+= 1.5.2 =
+* New uploader for premium users, the uploader allows multiple file uploads and shows file progress. 
+* New uploader allows you to choose if you want zip files or leave them seperate
+* Ability to set the file name to the same filename as the original
+* Shows actual file progress now!
+* Allow premium users to use the old uploader
+* Fixed IE issues
+* New setting to turn off file revisions
+* Premium Admin emails recieves a list of all uploaded files since we can do multiple files now. One email for all files uploaded
+* Fixed premium tables not installing correctly
+* Created some hooks so we can have seperate settings from the free version  add_action('cdm_premium_settings','your_function')  to build on settings
+* Fixed load issue in IE (spining circle)
+* Dropped the idea of drag and drop due to browser compatibility issues.
+* User groups fixed for projects

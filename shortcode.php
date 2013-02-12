@@ -326,7 +326,7 @@ function sp_cu_add_project(){
    jQuery("#sp_cu_add_project").dialog("close");
 
 	
-	jQuery("#pid_select").append(jQuery("<option>", { 
+	jQuery(".pid_select").append(jQuery("<option>", { 
     value: msg, 
     text : jQuery("#sub_category_name").val(),
 	selected : "selected"
@@ -682,11 +682,23 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 	';
 }
 	
-	
+// do_action('cdm_add_hidden_html');
 	$html .='Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files">';
 	
+
 	if(get_option('sp_cu_user_uploads_disable') != 1){
-	$html .='  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/add.png" style="border:none"> '.__("Add File","sp-cdm").'</a>    <a href="javascript:cdm_ajax_search()"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/refresh.png" style="border:none"> '.__("Refresh","sp-cdm").'</a> ';
+	
+	if(class_exists('cdmPremiumUploader') && get_option('sp_cu_free_uploader') != 1){
+		global $premium_add_file_link;
+		$link = $premium_add_file_link;
+			global $cdmPremiumUploader;
+	$html .=$cdmPremiumUploader->construct();
+		
+	}else{
+		$link = 'javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)';
+			}
+		
+			$html .='  <a href="'.$link .'"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/add.png" style="border:none"> '.__("Add File","sp-cdm").'</a>    <a href="javascript:cdm_ajax_search()"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/refresh.png" style="border:none"> '.__("Refresh","sp-cdm").'</a> ';
 	}
 if(get_option('sp_cu_user_projects_thumbs') == 1 && CU_PREMIUM == 1){
 		$html .=display_sp_cdm_thumbnails($r );
@@ -716,6 +728,13 @@ return $html;
   
 }
 }
+
+function sp_cu_add_file_link_free(){
+
+$add_file_link = 'javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)';	
+	
+}
+	add_action('sp_cu_add_file_link','sp_cu_add_file_link_free',5,$add_file_link);
 	add_shortcode( 'sp-client-media-manager', 'display_sp_client_upload' );	
 	add_shortcode( 'sp-client-document-manager', 'display_sp_client_upload' );	
 	add_action('wp_footer','display_sp_client_upload_process');

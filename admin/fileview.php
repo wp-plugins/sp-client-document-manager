@@ -156,7 +156,18 @@ jQuery(document).ready(function() {
 		echo 'Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files">';
 	
 
-echo'  <a href="javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/add.png"> '.__("Add File","sp-cdm").'</a>  ';
+	
+	if(class_exists('cdmPremiumUploader') && get_option('sp_cu_free_uploader') != 1){
+		global $premium_add_file_link;
+		$link = $premium_add_file_link;
+			global $cdmPremiumUploader;
+	echo $cdmPremiumUploader->construct($_GET['id']);
+		
+	}else{
+		$link = 'javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)';
+			}
+
+echo '  <a href="'.$link .'"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/add.png" style="border:none"> '.__("Add File","sp-cdm").'</a>    <a href="javascript:cdm_ajax_search()"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/refresh.png" style="border:none"> '.__("Refresh","sp-cdm").'</a> ';
 
 
 

@@ -77,8 +77,8 @@ overflow-y: scroll;}
 
 #dlg_cdm_file_list table {margin:5px;padding:0px;border:0px; min-height:500px;}
 #dlg_cdm_file_list table tbody tr:hover{background-color: #CEE8F4; cursor:pointer}
-#dlg_cdm_file_list td {margin:1px;padding:0px  !important;border:0px ; text-align:center }
-#dlg_cdm_file_list th {margin:1px;padding:0px  !important;border:0px ; text-align:center; background-color:#E8E8E8;border-bottom:2px solid #CCC; font-weight:bold;  }
+#dlg_cdm_file_list td {margin:1px  !important; ;padding:0px  !important;border:0px ; text-align:center }
+#dlg_cdm_file_list th {margin:1px  !important;;padding:0px  !important;border:0px ; text-align:center; background-color:#E8E8E8;border-bottom:2px solid #CCC; font-weight:bold;  }
 #dlg_cdm_file_list td.cdm_file_icon {width:30px;border-bottom:1px dotted #CCC;background: url(images/types/file.png) left top no-repeat; }
 #dlg_cdm_file_list td.cdm_file_info { border-bottom:1px dotted #CCC; text-align:left}
 #dlg_cdm_file_list td.cdm_file_date { border-bottom:1px dotted #CCC;width:180px;}
@@ -151,3 +151,10 @@ overflow-y: scroll;}
 #dlg_cdm_file_list td.ext_xls { background: url(images/types/xls.png) left top no-repeat; }
 #dlg_cdm_file_list td.ext_xml { background: url(images/types/code.png) left top no-repeat; }
 #dlg_cdm_file_list td.ext_zip { background: url(images/types/zip.png) left top no-repeat; }
+
+
+.uploadArea{ min-height:300px; height:auto; border:1px dotted #ccc; padding:10px; cursor:move; margin-bottom:10px; position:relative;}
+.uploadArea h1{ color:#ccc; width:100%; z-index:0; text-align:center; vertical-align:middle; position:absolute; top:25px;}
+.dfiles{ clear:both; border:1px solid #ccc; background-color:#E4E4E4; padding:3px;  position:relative; height:25px; margin:3px; z-index:1; width:97%; opacity:0.6; cursor:default;}
+.buttonUpload { display:inline-block; padding: 4px 10px 4px; text-align: center; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); background-color: #0074cc; -webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px; border-color: #e6e6e6 #e6e6e6 #bfbfbf; border: 1px solid #cccccc; color:#fff; }
+.progress img{ margin-top:7px; margin-left:24px; }

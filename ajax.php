@@ -71,7 +71,7 @@ echo str_replace(array('[', ']'), '', htmlspecialchars(json_encode($r[0]), ENT_N
 	<div class="view-file-info"><h2>'.stripslashes($r[0]['name']).'</h2></div>';
 	
 	$html.='<div class="sp_cu_manage">';
-				 if (CU_PREMIUM == 1 && get_option('sp_cu_user_uploads_disable') != 1){  
+				 if (CU_PREMIUM == 1 && get_option('sp_cu_user_uploads_disable') != 1 && get_option('sp_cu_user_disable_revisions') != 1){  
 				$html .= sp_cdm_revision_button();
 				 }
 				
@@ -112,7 +112,7 @@ echo str_replace(array('[', ']'), '', htmlspecialchars(json_encode($r[0]), ENT_N
 		<div class="file-info-tabs">
 	<ul>
 		<li><a href="#cdm-file-main">File Info</a></li>';
-		 if(function_exists('sp_cdm_revision_add')){
+		 if(function_exists('sp_cdm_revision_add') && get_option('sp_cu_user_disable_revisions') != 1){
 		 $html .='<li><a href="#cdm-file-revisions">Revisions</a></li>';
 		 }
 		  if(class_exists('cdmProductivityUser')){
@@ -124,7 +124,7 @@ echo str_replace(array('[', ']'), '', htmlspecialchars(json_encode($r[0]), ENT_N
 	$html .='</ul>
 	';
 	
-	 if(function_exists('sp_cdm_revision_add')){
+	 if(function_exists('sp_cdm_revision_add') && get_option('sp_cu_user_disable_revisions') != 1){
 $html .='<div id="cdm-file-revisions"><div id="cdm_comments"><h4>'.__("Revision History","sp-cdm").'</h4>
 '.sp_cdm_file_history($r[0]['id']).'</div></div>';
 	 }
@@ -274,9 +274,9 @@ $html .='
 		
 		case "file-list":
 		
-			 if (CU_PREMIUM == 1){  	
+			 
 		$find_groups = cdmFindGroups($_GET['uid']);
-			 }
+			
 		
 	
 if($_REQUEST['search'] != ""){
@@ -287,7 +287,8 @@ $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST[
 }
 		
 	
-		
+		if(get_option('sp_cu_hide_project') == 1){		
+			
 		$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,
 												 ".$wpdb->prefix."sp_cu.id,
 												 ".$wpdb->prefix."sp_cu.pid ,
@@ -307,8 +308,25 @@ $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST[
 										ORDER by date desc", ARRAY_A);
 										
 					
-								
+		}else{
+			
+		$r_projects = $wpdb->get_results("SELECT 
+												".$wpdb->prefix."sp_cu_project.id,
+												".$wpdb->prefix."sp_cu_project.id AS pid,
+												".$wpdb->prefix."sp_cu_project.uid,
+												 ".$wpdb->prefix."sp_cu_project.name AS project_name
+												 
+										FROM ".$wpdb->prefix."sp_cu_project
+										WHERE (".$wpdb->prefix."sp_cu_project.uid = '".$_GET['uid']."'  ". cdmFindGroups($_GET['uid'],1) .")										
 										
+										".$search_project."
+										
+										ORDER by name", ARRAY_A);
+										
+									
+			
+		}
+								
 		echo '<div id="dlg_cdm_file_list">
 		<table border="0" cellpadding="0" cellspacing="0">
 		<thead>';
@@ -528,24 +546,28 @@ function sp_cu_remove_project(){
 		
 		case "thumbnails":
 		
-			 if (CU_PREMIUM == 1){  	
+					 
 		$find_groups = cdmFindGroups($_GET['uid']);
-			 }
+			
 		
 	
 if($_REQUEST['search'] != ""){
 
 
 $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST['search']."%' ";	
-	
-}
 
+}
+		
+	
+		if(get_option('sp_cu_hide_project') == 1){		
+			
 		$r_projects = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu.name,
 												 ".$wpdb->prefix."sp_cu.id,
 												 ".$wpdb->prefix."sp_cu.pid ,
 												 ".$wpdb->prefix."sp_cu.uid,
 												 ".$wpdb->prefix."sp_cu.parent,
 												 ".$wpdb->prefix."sp_cu_project.name AS project_name
+												
 												 
 										FROM ".$wpdb->prefix."sp_cu   
 										LEFT JOIN ".$wpdb->prefix."sp_cu_project  ON ".$wpdb->prefix."sp_cu.pid = ".$wpdb->prefix."sp_cu_project.id
@@ -556,6 +578,26 @@ $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST[
 										".$search_project."
 										GROUP BY pid
 										ORDER by date desc", ARRAY_A);
+										
+					
+		}else{
+			
+		$r_projects = $wpdb->get_results("SELECT 
+												".$wpdb->prefix."sp_cu_project.id,
+												".$wpdb->prefix."sp_cu_project.id AS pid,
+												".$wpdb->prefix."sp_cu_project.uid,
+												 ".$wpdb->prefix."sp_cu_project.name AS project_name
+												 
+										FROM ".$wpdb->prefix."sp_cu_project
+										WHERE (".$wpdb->prefix."sp_cu_project.uid = '".$_GET['uid']."'  ". cdmFindGroups($_GET['uid'],1) .")										
+										
+										".$search_project."
+										
+										ORDER by name", ARRAY_A);
+										
+									
+			
+		}
 										
 										
 										
