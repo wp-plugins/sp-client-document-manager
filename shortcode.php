@@ -1,4 +1,4 @@
-<?php
+<?php 
 function sp_cdm_display_project_shortcode($atts){
 	
 		global $wpdb,$current_user,$user_ID;
@@ -150,7 +150,7 @@ function display_sp_thumbnails2($r){
                     dialog.remove();
                 },
                 modal: true,
-				height:550,
+				height:"auto",
 				width:850,
 				title: final_title 
             });
@@ -228,7 +228,7 @@ function display_sp_thumbnails($r ){
                     dialog.remove();
                 },
                 modal: true,
-				height:450,
+				height:'auto',
 				width:850
             });
             // load remote content
@@ -713,14 +713,12 @@ if(get_option('sp_cu_user_projects_thumbs') == 1 && CU_PREMIUM == 1){
 
  
   } else{
-	  
 	  return '<script type="text/javascript">
 <!--
-window.location = "'. get_bloginfo('url').'/login/?redirect_to='.urlencode($_SERVER['REQUEST_URI']).'"
+window.location = "'.wp_login_url( $_SERVER['REQUEST_URI'] ).'"
 //-->
 </script>';
-	 
-	 
+	
 	 
   }
   
@@ -729,11 +727,14 @@ return $html;
 }
 }
 
+
 function sp_cu_add_file_link_free(){
 
 $add_file_link = 'javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)';	
 	
-}
+}	
+ 
+	
 	add_action('sp_cu_add_file_link','sp_cu_add_file_link_free',5,$add_file_link);
 	add_shortcode( 'sp-client-media-manager', 'display_sp_client_upload' );	
 	add_shortcode( 'sp-client-document-manager', 'display_sp_client_upload' );	

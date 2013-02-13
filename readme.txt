@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags:project management, web based document manager,website based document organization, share online documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.5.3
+Stable tag: 1.5.4
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click.
 
@@ -480,3 +480,8 @@ Major updates, new uploader and fixes to admin upload functions
 
 = 1.5.3 =
 * Removed the requirement for theme my login
+
+= 1.5.4 =
+* Fixed ie issue of huge padding no the file list table
+* Fixed a group sql error
+* Fixed a redirect issue with theme my login. 

@@ -274,8 +274,9 @@ $html .='
 		
 		case "file-list":
 		
-			 
-		$find_groups = cdmFindGroups($_GET['uid']);
+			 if(function_exists('cdmFindGroups')){
+		$find_groups = cdmFindGroups($_GET['uid'],1);
+			 }
 			
 		
 	
@@ -317,7 +318,7 @@ $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST[
 												 ".$wpdb->prefix."sp_cu_project.name AS project_name
 												 
 										FROM ".$wpdb->prefix."sp_cu_project
-										WHERE (".$wpdb->prefix."sp_cu_project.uid = '".$_GET['uid']."'  ". cdmFindGroups($_GET['uid'],1) .")										
+										WHERE (".$wpdb->prefix."sp_cu_project.uid = '".$_GET['uid']."'  ".	$find_groups.")										
 										
 										".$search_project."
 										

@@ -6,7 +6,7 @@ function sp_cu_confirm(div,h,url){
 	
 	jQuery(  div ).dialog({
 			resizable: false,
-			height:h,
+			height:'auto',
 			modal: true,
 			buttons: {
 				"Yes": function() {
@@ -23,7 +23,7 @@ function sp_cu_confirm(div,h,url){
 function sp_cu_dialog(div,w,h){
 	
 	jQuery(div ).dialog({
-			height:h,
+			height:'auto',
 			width:w
 	});
 }
@@ -75,7 +75,7 @@ jQuery("#cdm_upload_fields input[type='file']").change(replaceMe);
                 },
                 modal: true,
 				title: jQuery(this).attr('title'),
-				height:400,
+				height:'auto',
 				width:700
             });
             // load remote content

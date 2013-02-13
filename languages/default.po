@@ -2,297 +2,305 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sp-cdm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-01 10:15-0500\n"
-"PO-Revision-Date: 2012-05-01 10:16-0500\n"
+"POT-Creation-Date: 2013-02-12 16:16-0500\n"
+"PO-Revision-Date: 2013-02-12 16:16-0500\n"
 "Last-Translator: Anthony <anthony@dlgresults.com>\n"
 "Language-Team: Smarty Pants <support@smartypantsplugins.com>\n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-Language: English\n"
-"X-Poedit-Country: UNITED STATES\n"
+"X-Generator: Poedit 1.5.5\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../ajax.php:35
-msgid "Project: None"
+#: ../ajax.php:45 ../admin/ajax.php:45
+msgid "Updated Category Name"
 msgstr ""
 
-#: ../ajax.php:60
+#: ../ajax.php:91 ../admin/ajax.php:91
 msgid "Download File"
 msgstr ""
 
-#: ../ajax.php:61
+#: ../ajax.php:105 ../admin/ajax.php:105
 msgid "Delete File"
 msgstr ""
 
-#: ../ajax.php:75
-msgid "Project: "
-msgstr ""
-
-#: ../ajax.php:78
-#: ../functions.php:322
-msgid "Notes: "
-msgstr ""
-
-#: ../ajax.php:84
+#: ../ajax.php:128 ../admin/ajax.php:128
 msgid "Revision History"
 msgstr ""
 
-#: ../ajax.php:225
-msgid "Please select at least one file!"
+#: ../ajax.php:166 ../admin/ajax.php:166
+msgid "Project: None"
 msgstr ""
 
-#: ../ajax.php:269
-msgid "New files from:"
+#: ../ajax.php:227 ../admin/ajax.php:227
+msgid "Project "
 msgstr ""
 
-#: ../ajax.php:274
-msgid "Files Sent to"
+#: ../ajax.php:230 ../admin/ajax.php:230
+msgid "File Type "
 msgstr ""
 
-#: ../cu.php:182
-msgid "Updated Settings!"
+#: ../ajax.php:236 ../functions.php:667 ../admin/ajax.php:236
+msgid "Tags "
 msgstr ""
 
-#: ../cu.php:184
-msgid "Latest uploads"
+#: ../ajax.php:251 ../functions.php:661 ../admin/ajax.php:251
+msgid "Notes: "
 msgstr ""
 
-#: ../functions.php:188
-msgid "Home"
+#: ../ajax.php:424 ../ajax.php:690 ../admin/ajax.php:406 ../admin/ajax.php:627
+msgid "Delete Category?"
 msgstr ""
 
-#: ../functions.php:189
-msgid "Settings"
+#: ../ajax.php:425 ../ajax.php:691 ../admin/ajax.php:407 ../admin/ajax.php:628
+msgid ""
+"Are you sure you would like to delete this category? Doing so will remove "
+"all files related to this category."
 msgstr ""
 
-#: ../functions.php:190
-#: ../admin/vendors.php:40
-msgid "Vendors"
-msgstr ""
-
-#: ../functions.php:193
-#: ../premium/admin/projects.php:37
-#: ../premium/admin/projects.php:124
-msgid "Projects"
-msgstr ""
-
-#: ../functions.php:194
-#: ../premium/admin/categories.php:26
-#: ../premium/admin/categories.php:93
-msgid "Categories"
-msgstr ""
-
-#: ../functions.php:196
-msgid "Instructions"
-msgstr ""
-
-#: ../functions.php:197
-msgid "View users"
-msgstr ""
-
-#: ../functions.php:233
-msgid "User Uploads"
-msgstr ""
-
-#: ../functions.php:237
-msgid "Click to download all files"
-msgstr ""
-
-#: ../functions.php:248
-msgid "No Uploads Exist!"
-msgstr ""
-
-#: ../functions.php:283
-msgid "File Name"
-msgstr ""
-
-#: ../functions.php:284
-#: ../premium/admin/projects.php:138
-msgid "User"
-msgstr ""
-
-#: ../functions.php:285
-msgid "Date"
-msgstr ""
-
-#: ../functions.php:286
-#: ../functions.php:328
-msgid "Download"
-msgstr ""
-
-#: ../functions.php:287
-#: ../admin/vendors.php:51
-msgid "Email"
-msgstr ""
-
-#: ../functions.php:328
-#: ../admin/vendors.php:52
-#: ../admin/vendors.php:62
-#: ../premium/admin/categories.php:120
-#: ../premium/admin/projects.php:153
-msgid "Delete"
-msgstr ""
-
-#: ../functions.php:340
-msgid "Choose  the files you want to send above, type a message and choose a vendor then click submit:"
-msgstr ""
-
-#: ../functions.php:363
-msgid "Message:"
-msgstr ""
-
-#: ../functions.php:363
-msgid "Attach to email:"
-msgstr ""
-
-#: ../functions.php:363
-msgid "Send links to files"
-msgstr ""
-
-#: ../functions.php:363
-msgid "Attach and link to to files"
-msgstr ""
-
-#: ../functions.php:363
-msgid "Email vendor files!"
-msgstr ""
-
-#: ../shortcode.php:186
+#: ../ajax.php:433 ../ajax.php:699 ../shortcode.php:344 ../admin/ajax.php:415
+#: ../admin/ajax.php:636 ../admin/fileview.php:374
 msgid "Project Name:"
 msgstr ""
 
-#: ../shortcode.php:186
-#: ../premium/admin/projects.php:131
-#: ../premium/user/shortcode.php:83
+#: ../ajax.php:434 ../ajax.php:700 ../admin/ajax.php:416 ../admin/ajax.php:637
+msgid "Save Project"
+msgstr ""
+
+#: ../ajax.php:979 ../admin/ajax.php:893
+msgid "Please select at least one file!"
+msgstr ""
+
+#: ../ajax.php:1023 ../admin/ajax.php:937
+msgid "New files from:"
+msgstr ""
+
+#: ../ajax.php:1028 ../admin/ajax.php:942
+msgid "Files Sent to"
+msgstr ""
+
+#: ../cu.php:325
+msgid "Updated Settings!"
+msgstr ""
+
+#: ../cu.php:327
+msgid "Latest uploads"
+msgstr ""
+
+#: ../functions.php:415
+msgid "Home"
+msgstr ""
+
+#: ../functions.php:418
+msgid "Settings"
+msgstr ""
+
+#: ../functions.php:421 ../admin/vendors.php:40
+msgid "Vendors"
+msgstr ""
+
+#: ../functions.php:424 ../admin/projects.php:31 ../admin/projects.php:128
+#: ../admin/_notes/projects.php:39 ../admin/_notes/projects.php:126
+msgid "Projects"
+msgstr ""
+
+#: ../functions.php:430
+msgid "Groups"
+msgstr ""
+
+#: ../functions.php:431
+msgid "Forms"
+msgstr ""
+
+#: ../functions.php:433
+msgid "Categories"
+msgstr ""
+
+#: ../functions.php:436
+msgid "Instructions"
+msgstr ""
+
+#: ../functions.php:440
+msgid "User Files / Uploader"
+msgstr ""
+
+#: ../functions.php:479
+msgid "User Uploads"
+msgstr ""
+
+#: ../functions.php:483
+msgid "Click to download all files"
+msgstr ""
+
+#: ../functions.php:494
+msgid "No Uploads Exist!"
+msgstr ""
+
+#: ../functions.php:578 ../admin/projects.php:140
+#: ../admin/_notes/projects.php:138
+msgid "ID"
+msgstr ""
+
+#: ../functions.php:579
+msgid "Thumbnail"
+msgstr ""
+
+#: ../functions.php:580
+msgid "File Name"
+msgstr ""
+
+#: ../functions.php:581 ../admin/projects.php:142
+#: ../admin/_notes/projects.php:140
+msgid "User"
+msgstr ""
+
+#: ../functions.php:582
+msgid "Date"
+msgstr ""
+
+#: ../functions.php:583
+msgid "Download"
+msgstr ""
+
+#: ../functions.php:584 ../admin/vendors.php:51
+msgid "Email"
+msgstr ""
+
+#: ../functions.php:676
+msgid "View"
+msgstr ""
+
+#: ../functions.php:676 ../admin/projects.php:157 ../admin/vendors.php:52
+#: ../admin/vendors.php:62 ../admin/_notes/projects.php:155
+msgid "Delete"
+msgstr ""
+
+#: ../functions.php:688
+msgid ""
+"Choose  the files you want to send above, type a message and choose a vendor "
+"then click submit:"
+msgstr ""
+
+#: ../functions.php:711
+msgid "Message:"
+msgstr ""
+
+#: ../functions.php:711
+msgid "Attach to email:"
+msgstr ""
+
+#: ../functions.php:711
+msgid "Send links to files"
+msgstr ""
+
+#: ../functions.php:711
+msgid "Attach and link to to files"
+msgstr ""
+
+#: ../functions.php:711
+msgid "Email vendor files!"
+msgstr ""
+
+#: ../shortcode.php:309 ../admin/fileview.php:339
+msgid "Required"
+msgstr ""
+
+#: ../shortcode.php:345 ../admin/fileview.php:375 ../admin/fileview.php:699
+#: ../admin/projects.php:135 ../admin/_notes/projects.php:133
+#: ../user/projects.php:57
 msgid "Add Project"
 msgstr ""
 
-#: ../shortcode.php:212
+#: ../shortcode.php:370 ../admin/fileview.php:400
 msgid "File Name:"
 msgstr ""
 
-#: ../shortcode.php:229
+#: ../shortcode.php:387 ../admin/fileview.php:417
 msgid "File:"
 msgstr ""
 
-#: ../shortcode.php:235
-#: ../premium/admin/history.php:94
+#: ../shortcode.php:398 ../admin/fileview.php:428
+msgid "Tags:"
+msgstr ""
+
+#: ../shortcode.php:409 ../admin/fileview.php:439
 msgid "Notes:"
 msgstr ""
 
-#: ../shortcode.php:315
+#: ../shortcode.php:532 ../admin/fileview.php:92 ../admin/fileview.php:527
 msgid "From:"
 msgstr ""
 
-#: ../shortcode.php:316
-#: ../premium/admin/history.php:33
-msgid "Client uploaded a new document"
-msgstr ""
-
-#: ../shortcode.php:316
-#: ../premium/admin/history.php:33
-msgid "Click here view the files:"
-msgstr ""
-
-#: ../shortcode.php:317
-#: ../premium/admin/history.php:34
-msgid "New file upload from client"
-msgstr ""
-
-#: ../shortcode.php:329
-#: ../premium/admin/history.php:39
+#: ../shortcode.php:607 ../admin/fileview.php:119 ../admin/fileview.php:551
 msgid "Please upload a file!"
 msgstr ""
 
-#: ../shortcode.php:365
+#: ../shortcode.php:701 ../admin/fileview.php:170 ../admin/fileview.php:620
 msgid "Add File"
 msgstr ""
 
-#: ../admin/vendors.php:41
-msgid "You can use this section to route downloads to a certain vendor in the users section, when you click on a user there will be checkboxes next to the file. Check the checkboxes you would like to send then scroll down, choose a vencor and click send. This works well for sending files to department members or different vendors"
+#: ../shortcode.php:701 ../admin/fileview.php:170
+msgid "Refresh"
 msgstr ""
 
-#: ../admin/vendors.php:45
-#: ../premium/admin/categories.php:30
-#: ../premium/admin/projects.php:41
+#: ../admin/fileview.php:12
+msgid "User Files"
+msgstr ""
+
+#: ../admin/fileview.php:12
+msgid "Choose a user below to view their files"
+msgstr ""
+
+#: ../admin/fileview.php:673 ../user/projects.php:31
+msgid "Project:"
+msgstr ""
+
+#: ../admin/fileview.php:683 ../user/projects.php:41
+msgid "No Project"
+msgstr ""
+
+#: ../admin/projects.php:35 ../admin/vendors.php:45
+#: ../admin/_notes/projects.php:43
 msgid "Name:"
+msgstr ""
+
+#: ../admin/projects.php:39 ../admin/_notes/projects.php:47
+msgid "User:"
+msgstr ""
+
+#: ../admin/projects.php:47 ../admin/_notes/projects.php:52
+msgid "Save"
+msgstr ""
+
+#: ../admin/projects.php:141 ../admin/vendors.php:50
+#: ../admin/_notes/projects.php:139
+msgid "Name"
+msgstr ""
+
+#: ../admin/projects.php:143 ../admin/_notes/projects.php:141
+msgid "Action"
+msgstr ""
+
+#: ../admin/projects.php:155 ../admin/_notes/projects.php:153
+msgid "Download Archive"
+msgstr ""
+
+#: ../admin/projects.php:158 ../admin/_notes/projects.php:156
+msgid "Modify"
+msgstr ""
+
+#: ../admin/vendors.php:41
+msgid ""
+"You can use this section to route downloads to a certain vendor in the users "
+"section, when you click on a user there will be checkboxes next to the file. "
+"Check the checkboxes you would like to send then scroll down, choose a "
+"vencor and click send. This works well for sending files to department "
+"members or different vendors"
 msgstr ""
 
 #: ../admin/vendors.php:45
 msgid "Email:"
 msgstr ""
-
-#: ../admin/vendors.php:50
-#: ../premium/admin/categories.php:108
-#: ../premium/admin/projects.php:137
-msgid "Name"
-msgstr ""
-
-#: ../premium/admin/categories.php:36
-#: ../premium/admin/projects.php:50
-msgid "Save"
-msgstr ""
-
-#: ../premium/admin/categories.php:102
-msgid "Add Category"
-msgstr ""
-
-#: ../premium/admin/categories.php:107
-#: ../premium/admin/projects.php:136
-msgid "ID"
-msgstr ""
-
-#: ../premium/admin/categories.php:110
-#: ../premium/admin/projects.php:139
-msgid "Action"
-msgstr ""
-
-#: ../premium/admin/categories.php:121
-#: ../premium/admin/projects.php:154
-msgid "Modify"
-msgstr ""
-
-#: ../premium/admin/history.php:32
-msgid "From"
-msgstr ""
-
-#: ../premium/admin/history.php:36
-msgid "File uploaded!!"
-msgstr ""
-
-#: ../premium/admin/history.php:57
-#: ../premium/admin/history.php:99
-msgid "Add Revision"
-msgstr ""
-
-#: ../premium/admin/history.php:90
-msgid "File"
-msgstr ""
-
-#: ../premium/admin/history.php:132
-msgid "No other files in history"
-msgstr ""
-
-#: ../premium/admin/projects.php:45
-msgid "User:"
-msgstr ""
-
-#: ../premium/admin/projects.php:151
-msgid "Download Archive"
-msgstr ""
-
-#: ../premium/user/shortcode.php:27
-msgid "No Category"
-msgstr ""
-
-#: ../premium/user/shortcode.php:65
-msgid "Project:"
-msgstr ""
-
-#: ../premium/user/shortcode.php:73
-msgid "No Project"
-msgstr ""
-
