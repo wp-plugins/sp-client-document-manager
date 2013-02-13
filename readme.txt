@@ -180,6 +180,10 @@ Premium users must have free + premium version installed. The premium extends th
 * sp_cdm_projects = Show projects tab
 * sp_cdm_uploader = Use the uploader (add files)
 
+= Why am I getting a permission denied error when activating the premium or trial version? = 
+
+The premium version relies on common functions to operate, please activate the FREE version to fix this error. You must have both FREE and Premium plugins installed and activated.
+
 == Screenshots ==
 
 1. This is the client view
