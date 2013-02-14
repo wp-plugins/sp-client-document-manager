@@ -4,12 +4,12 @@ Plugin Name: SP Client Document & Project Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.5.4
+Version: 1.5.5
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.5.4";
+$sp_client_upload = "1.5.5";
 
 load_plugin_textdomain( 'sp-cdm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
@@ -19,6 +19,19 @@ ini_set('post_max_size', '1000M');
 ini_set('max_input_time', 300);  
 ini_set('max_execution_time', 300); 
 
+$cdm_upload_dir = wp_upload_dir();
+
+define('SP_CDM_PLUGIN_DIR',plugin_dir_path(__FILE__));
+define('SP_CDM_PLUGIN_URL',plugins_url().'/sp-client-document-manager/');
+
+if(get_option('sp_cu_overide_upload_path') != ""){
+define('SP_CDM_UPLOADS_DIR',get_option('sp_cu_overide_upload_path'));
+define('SP_CDM_UPLOADS_DIR_URL',get_option('sp_cu_overide_upload_url'));	
+}else{
+
+define('SP_CDM_UPLOADS_DIR',$cdm_upload_dir['basedir'].'/sp-client-document-manager/');
+define('SP_CDM_UPLOADS_DIR_URL',$cdm_upload_dir['baseurl'].'/sp-client-document-manager/');
+}
 
 if(get_option('sp_cu_time_zone') != ""){
 date_default_timezone_set(get_option('sp_cu_time_zone'));
@@ -47,12 +60,6 @@ add_filter('wp_head','sp_cdm_tinymce_editor');
 
 
 include ''.dirname(__FILE__).'/common.php';
-if(file_exists(ABSPATH.'wp-content/plugins/sp-client-document-manager/premium/index.php')){
-  include(ABSPATH.'wp-content/plugins/sp-client-document-manager/premium/index.php');
-  $cu_ver =  'Premium version';
-}else{
-	 $cu_ver = 'Free version';
-}
 
 
 include ''.dirname(__FILE__).'/zip.class.php';
@@ -168,11 +175,11 @@ $sql3 = 'CREATE TABLE IF NOT EXISTS `'.$project_cat_name.'` (
   dbDelta($sql2); 
   dbDelta($sql3);   
   
-   	$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/';
+   	$dir = SP_CDM_UPLOADS_DIR;
 	
-	if(!is_dir(''.ABSPATH.'wp-content/uploads/')){
+	if(!is_dir($cdm_upload_dir['basedir'])){
 	
-		@mkdir(''.ABSPATH.'wp-content/uploads/', 0777);
+		@mkdir($cdm_upload_dir['basedir'], 0777);
 	}
 	
 	if(!is_dir($dir)){

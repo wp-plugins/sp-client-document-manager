@@ -152,7 +152,7 @@ echo '<h2>'.__("Projects","sp-cdm").'</h2>'.sp_client_upload_nav_menu().'';
 <td>'.stripslashes($r[$i]['projectName']).'</td>
 <td>'.$r[$i]['user_nicename'].'</td>
 <td>
-<a href="../wp-content/plugins/sp-client-document-manager/ajax.php?function=download-project&id='.$r[$i]['projectID'].'" style="margin-right:15px" >'.__("Download Archive","sp-cdm").'</a>  
+<a href="'.SP_CDM_PLUGIN_URL.'ajax.php?function=download-project&id='.$r[$i]['projectID'].'" style="margin-right:15px" >'.__("Download Archive","sp-cdm").'</a>  
 
  <a href="admin.php?page=sp-client-document-manager-projects&function=delete&id='.$r[$i]['projectID'].'" style="margin-right:15px" >'.__("Delete","sp-cdm").'</a> 
 <a href="admin.php?page=sp-client-document-manager-projects&function=edit&id='.$r[$i]['projectID'].'" >'.__("Modify","sp-cdm").'</a></td>

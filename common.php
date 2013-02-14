@@ -105,14 +105,14 @@ function sp_uploadFile($files, $history = NULL){
 	global $user_ID;
 	global $current_user;
 	
-			$target_path = "uploads/";
-			$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/';
+			
+			$dir = ''.SP_CDM_UPLOADS_DIR.''.$user_ID.'/';
 			$count = sp_array_remove_empty($files['dlg-upload-file']['name']);
 
 
 
 			if($history == 1){
-		$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$current_user->ID.'/';
+		$dir = ''.SP_CDM_UPLOADS_DIR.''.$current_user->ID.'/';
 	
 	$filename = ''.sp_client_upload_filename($current_user->ID) .''.$files['dlg-upload-file']['name'][0].'';
 	$filename = strtolower($filename);
@@ -175,7 +175,7 @@ $zip->setZipFile($dir.$return_file);
 		
 	}else{
 
-	$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$current_user->ID.'/';
+	$dir = ''.SP_CDM_UPLOADS_DIR.''.$current_user->ID.'/';
 	
 	$filename = ''.sp_client_upload_filename($current_user->ID) .''.$files['dlg-upload-file']['name'][1].'';
 	$filename = strtolower($filename);
@@ -196,14 +196,14 @@ function sp_Admin_uploadFile($files,$user_ID){
 	global $wpdb ;
 
 	
-			$target_path = "uploads/";
-			$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/';
+			
+			$dir = ''.SP_CDM_UPLOADS_DIR.''.$user_ID.'/';
 			$count = sp_array_remove_empty($files['dlg-upload-file']['name']);
 
 
 
 			if($history == 1){
-		$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/';
+		$dir = ''.SP_CDM_UPLOADS_DIR.''.$user_ID.'/';
 	
 	$filename = ''.sp_client_upload_filename($user_ID) .''.$files['dlg-upload-file']['name'][0].'';
 	$filename = strtolower($filename);
@@ -269,7 +269,7 @@ $zip->setZipFile($dir.$return_file);
 		
 	}else{
 
-	$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/';
+	$dir = ''.SP_CDM_UPLOADS_DIR.''.$user_ID.'/';
 	
 	$filename = ''.sp_client_upload_filename($user_ID) .''.$files['dlg-upload-file']['name'][1].'';
 	$filename = strtolower($filename);

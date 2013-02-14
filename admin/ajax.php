@@ -79,7 +79,7 @@ echo str_replace(array('[', ']'), '', htmlspecialchars(json_encode($r[0]), ENT_N
 			  $html .= '<span id="cdm_comment_button_holder">'.$cdm_comments->button().'</span>';
 				 }
 				if(class_exists('cdmProductivityGoogle')){
-			  $html .= '<span id="cdm_shortlink_button_holder">'.$cdm_google->short_link_button( $r[0]['id'],'' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'').'</span>';
+			  $html .= '<span id="cdm_shortlink_button_holder">'.$cdm_google->short_link_button( $r[0]['id'],''.SP_CDM_PLUGIN_URL.'download.php?fid='.$r[0]['id'].'').'</span>';
 				 }
 				
 				
@@ -88,7 +88,7 @@ echo str_replace(array('[', ']'), '', htmlspecialchars(json_encode($r[0]), ENT_N
 				}else{
 				$target = ' ';	
 				}
-				$html .='<a '.$target.' href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'" title="Download" style="margin-right:15px"  ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/download.png"> '.__("Download File","sp-cdm").'</a> ';
+				$html .='<a '.$target.' href="'.SP_CDM_PLUGIN_URL.'download.php?fid='.$r[0]['id'].'" title="Download" style="margin-right:15px"  ><img src="'.SP_CDM_PLUGIN_URL.'images/download.png"> '.__("Download File","sp-cdm").'</a> ';
 				
 				
 		
@@ -102,7 +102,7 @@ echo str_replace(array('[', ']'), '', htmlspecialchars(json_encode($r[0]), ENT_N
 	 ){
 				
 				$html .='
-	<a href="javascript:sp_cu_confirm(\'#sp_cu_confirm_delete\',200,\'?page=sp-client-document-manager-fileview&id='.$r[0]['uid'].'&dlg-delete-file='.$r[0]['id'].'#downloads\');" title="Delete" ><img src="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/images/delete.png">'.__("Delete File","sp-cdm").'</a>';
+	<a href="javascript:sp_cu_confirm(\'#sp_cu_confirm_delete\',200,\'?page=sp-client-document-manager-fileview&id='.$r[0]['uid'].'&dlg-delete-file='.$r[0]['id'].'#downloads\');" title="Delete" ><img src="'.SP_CDM_PLUGIN_URL.'images/delete.png">'.__("Delete File","sp-cdm").'</a>';
 			}
 	$html .='
 	<br> <em>'.date('F jS Y h:i A', strtotime($r[0]['date'])).'</em>
@@ -168,7 +168,7 @@ $html .='<div id="cdm-file-revisions"><div id="cdm_comments"><h4>'.__("Revision 
 					
 					
 					if($ext== 'png' or $ext == 'jpg' or $ext = 'jpeg' or $ext = 'gif' ){
-					$icon = '<td width="160"><img src="'.content_url().'/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'" width="150"></td>';	
+					$icon = '<td width="160"><img src="'.SP_CDM_UPLOADS_DIR_URL.''.$r[0]['uid'].'/'.$r[0]['file'].'" width="150"></td>';	
 					}else{
 					$icon = '';		
 					}
@@ -179,29 +179,29 @@ $html .='<div id="cdm-file-revisions"><div id="cdm_comments"><h4>'.__("Revision 
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/classes/thumb.php?src='.content_url().'/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'&w=250&h=250">';
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'classes/thumb.php?src='.SP_CDM_UPLOADS_DIR_URL.''.$r[0]['uid'].'/'.$r[0]['file'].'&w=250&h=250">';
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_excel.png">';
 		}elseif($ext == 'doc' or $ext == 'docx'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_word.png">';	
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_word.png">';	
 		}elseif($ext == 'pub' or $ext == 'pubx'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_publisher.png">';		
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_publisher.png">';		
 		}elseif($ext == 'ppt' or $ext == 'pptx'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_powerpoint.png">';
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_powerpoint.png">';
 		}elseif($ext == 'adb' or $ext == 'accdb'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_access.png">';	
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_access.png">';	
 		}elseif(($ext == 'pdf' or $ext == 'psd' or $ext == 'html' or $ext == 'eps') && get_option('sp_cu_user_projects_thumbs_pdf') == 1){
-			if(file_exists(''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'_big.png')){
-			$img = '<img src="'.content_url().'/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'_big.png" width="250">';		
+			if(file_exists(''.SP_CDM_UPLOADS_DIR.''.$r[0]['uid'].'/'.$r[0]['file'].'_big.png')){
+			$img = '<img src="'.SP_CDM_UPLOADS_DIR_URL.''.$r[0]['uid'].'/'.$r[0]['file'].'_big.png" width="250">';		
 			}else{
-				$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/adobe.png">';	
+				$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/adobe.png">';	
 			}
 		}elseif($ext == 'pdf' ){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/adobe.png">';	
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/adobe.png">';	
 			
 		}else{
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/package_labled.png">';
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/package_labled.png">';
 		}
 					
 					
@@ -218,7 +218,7 @@ $html .='<div id="cdm-file-revisions"><div id="cdm_comments"><h4>'.__("Revision 
 
 <tr>
 <td width="200" >
-<a '.$target.' href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'" title="Download" style="margin-right:15px"  >
+<a '.$target.' href="'.SP_CDM_PLUGIN_URL.'download.php?fid='.$r[0]['id'].'" title="Download" style="margin-right:15px"  >
 '.$img  .'
 </a>
 </td>
@@ -334,7 +334,7 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 	
 		<th colspan="4" style="text-align:right">
 		<div style="padding-right:10px">
-		<a href="javascript:sp_cu_dialog(\'#edit_category_'.$_GET['pid'].'\',550,130)"><img src="'.content_url().'/plugins/sp-client-document-manager/images/application_edit.png"> Edit Project Name</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="'.content_url().'/plugins/sp-client-document-manager/images/delete_small.png"> Remove Project</a>
+		<a href="javascript:sp_cu_dialog(\'#edit_category_'.$_GET['pid'].'\',550,130)"><img src="'.SP_CDM_PLUGIN_URL.'images/application_edit.png"> Edit Project Name</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="'.SP_CDM_PLUGIN_URL.'images/delete_small.png"> Remove Project</a>
 		
 		<div style="display:none">	
 		
@@ -352,10 +352,10 @@ function sp_cu_edit_project(){
 	}else{
 	jQuery.ajax({
    type: "POST",
-   url: "'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=save-category",
+   url: "'.SP_CDM_PLUGIN_URL.'ajax.php?function=save-category",
    data: "name=" + jQuery("#edit_project_name_'.$_GET['pid'].'").val() + "&id=" +  jQuery("#edit_project_id_'.$_GET['pid'].'").val(),
    success: function(msg){
-   jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$_GET['uid'].'&pid='.$_GET['pid'].'");
+   jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'ajax.php?function=file-list&uid='.$_GET['uid'].'&pid='.$_GET['pid'].'");
    jQuery("#edit_category").dialog("close");
    alert(msg);	
   
@@ -377,10 +377,10 @@ function sp_cu_remove_project(){
 							
 						jQuery.ajax({
 					   type: "POST",
-					   url: "'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=remove-category",
+					   url: "'.SP_CDM_PLUGIN_URL.'ajax.php?function=remove-category",
 					   data: "id='.$_GET['pid'].'" ,
 					   success: function(msg){
-					   jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$_GET['uid'].'");
+					   jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'ajax.php?function=file-list&uid='.$_GET['uid'].'");
 					 
 					 
 					  
@@ -555,7 +555,7 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 	
 		echo '
 			<div style="padding-right:10px">
-		<a href="javascript:sp_cu_dialog(\'#edit_category_'.$_GET['pid'].'\',550,130)"><img src="'.content_url().'/plugins/sp-client-document-manager/images/application_edit.png"> Edit Project Name</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="'.content_url().'/plugins/sp-client-document-manager/images/delete_small.png"> Remove Project</a>
+		<a href="javascript:sp_cu_dialog(\'#edit_category_'.$_GET['pid'].'\',550,130)"><img src="'.SP_CDM_PLUGIN_URL.'images/application_edit.png"> Edit Project Name</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="'.SP_CDM_PLUGIN_URL.'images/delete_small.png"> Remove Project</a>
 		
 		<div style="display:none">	
 		
@@ -573,10 +573,10 @@ function sp_cu_edit_project(){
 	}else{
 	jQuery.ajax({
    type: "POST",
-   url: "'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=save-category",
+   url: "'.SP_CDM_PLUGIN_URL.'ajax.php?function=save-category",
    data: "name=" + jQuery("#edit_project_name_'.$_GET['pid'].'").val() + "&id=" +  jQuery("#edit_project_id_'.$_GET['pid'].'").val(),
    success: function(msg){
-   jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$_GET['uid'].'&pid='.$_GET['pid'].'");
+   jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'ajax.php?function=file-list&uid='.$_GET['uid'].'&pid='.$_GET['pid'].'");
    jQuery("#edit_category").dialog("close");
    alert(msg);	
   
@@ -598,10 +598,10 @@ function sp_cu_remove_project(){
 							
 						jQuery.ajax({
 					   type: "POST",
-					   url: "'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=remove-category",
+					   url: "'.SP_CDM_PLUGIN_URL.'ajax.php?function=remove-category",
 					   data: "id='.$_GET['pid'].'" ,
 					   success: function(msg){
-					   jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$_GET['uid'].'");
+					   jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'ajax.php?function=file-list&uid='.$_GET['uid'].'");
 					 
 					 
 					  
@@ -659,7 +659,7 @@ function sp_cu_remove_project(){
 		
 			if($r_projects[$i]['project_name'] != ""){
 		echo '<div class="dlg_cdm_thumbnail_folder">
-				<a href="javascript:sp_cdm_load_project('.$r_projects[$i]['pid'].')"><img src="'.content_url().'/plugins/sp-client-document-manager/images/my_projects_folder.png">
+				<a href="javascript:sp_cdm_load_project('.$r_projects[$i]['pid'].')"><img src="'.SP_CDM_PLUGIN_URL.'images/my_projects_folder.png">
 				<div class="dlg_cdm_thumb_title">
 				'.stripslashes($r_projects[$i]['project_name']).'
 				</div>
@@ -673,7 +673,7 @@ function sp_cu_remove_project(){
 		}else{
 		if($_GET['pid'] != ""){
 		echo '<div class="dlg_cdm_thumbnail_folder">
-				<a href="javascript:sp_cdm_load_file_manager()"><img src="'.content_url().'/plugins/sp-client-document-manager/images/my_projects_folder.png">
+				<a href="javascript:sp_cdm_load_file_manager()"><img src="'.SP_CDM_PLUGIN_URL.'images/my_projects_folder.png">
 				<div class="dlg_cdm_thumb_title">
 			<< Go Back
 				</div>
@@ -700,29 +700,29 @@ function sp_cu_remove_project(){
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/classes/thumb.php?src='.content_url().'/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'classes/thumb.php?src='.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_excel.png">';
 		}elseif($ext == 'doc' or $ext == 'docx'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_word.png">';	
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_word.png">';	
 		}elseif($ext == 'pub' or $ext == 'pubx'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_publisher.png">';		
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_publisher.png">';		
 		}elseif($ext == 'ppt' or $ext == 'pptx'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_powerpoint.png">';
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_powerpoint.png">';
 		}elseif($ext == 'adb' or $ext == 'accdb'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_access.png">';	
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_access.png">';	
 			}elseif(($ext == 'pdf' or $ext == 'psd' or $ext == 'html' or $ext == 'eps') && get_option('sp_cu_user_projects_thumbs_pdf') == 1){
-			if(file_exists(''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png')){			
-			$img = '<img src="'.content_url().'/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png">';	
+			if(file_exists(''.SP_CDM_UPLOADS_DIR.''.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png')){			
+			$img = '<img src="'.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png">';	
 			}else{
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/adobe.png">';		
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/adobe.png">';		
 			}
 		}elseif($ext == 'pdf' ){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/adobe.png">';	
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/adobe.png">';	
 		
 		}else{
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/package_labled.png">';
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/package_labled.png">';
 		}
 		
 		echo '<div class="dlg_cdm_thumbnail_folder">
@@ -832,8 +832,8 @@ $search_file .= " AND ".$wpdb->prefix."sp_cu.name LIKE '%".$_REQUEST['search']."
 			$zip = new Zip();
 			
 			
-				$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$r_project[0]['uid'].'/';	
-			$path = '../../../wp-content/uploads/sp-client-document-manager/'.$r_project[0]['uid'].'/';	
+				$dir = ''.SP_CDM_UPLOADS_DIR.''.$r_project[0]['uid'].'/';	
+			$path = ''.SP_CDM_UPLOADS_DIR_URL.''.$r_project[0]['uid'].'/';	
 			//@unlink($dir.$return_file);
 				
 				for($i=0; $i<count($r); $i++){
@@ -857,8 +857,8 @@ $zip->setZipFile($dir.$return_file);
 		
 		
 		$user_ID = $_GET['id'];
-			$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/';	
-			$path = '../../../wp-content/uploads/sp-client-document-manager/'.$user_ID.'/';			
+			$dir = ''.SP_CDM_UPLOADS_DIR.''.$user_ID.'/';	
+			$path = ''.SP_CDM_UPLOADS_DIR_URL.''.$user_ID.'/';			
 			$return_file = "Account.zip";
 				$zip = new Zip();
 				
@@ -910,8 +910,8 @@ $zip->setZipFile($dir.$return_file);
 					}
 		
 		
-	$attachment_links .= '<a href="' . get_bloginfo('wpurl') . '/wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'">'.stripslashes($name).'</a><br>';
-	$attachment_array[$i] = ''.WP_CONTENT_DIR .'/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'';	
+	$attachment_links .= '<a href="'.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'">'.stripslashes($name).'</a><br>';
+	$attachment_array[$i] = ''.SP_CDM_UPLOADS_DIR.''.$r[$i]['uid'].'/'.$r[$i]['file'].'';	
 	}
 	
 	$to = $_POST['vendor'];

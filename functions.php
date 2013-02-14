@@ -49,7 +49,7 @@ function cdm_thumbPdf($pdf)
 {
     try
     {
-        $tmp = '../../../uploads/wp-client-document-manager';
+        $tmp = SP_CDM_UPLOADS_DIR;
         $format = "png";
         $source = $pdf;
 		
@@ -122,36 +122,7 @@ global $wpdb;
 	echo '<h2>Settings</h2>'.sp_client_upload_nav_menu().'';	 
 	
 	
-	if($_POST['upgrade'] != ""){
-	
-	
-	$mydir = ''.ABSPATH.'wp-content/plugins/sp-client-document-manager/premium/'; 
-	if (is_dir($mydir)){
-	$d = dir($mydir); 
-	while($entry = $d->read()) { 
-	 if ($entry!= "." && $entry!= "..") { 
-	 @unlink($entry); 
-	 } 
-	} 
-	$d->close(); 
-	@rmdir($mydir); 
-	}
-	function _return_direct() { return 'direct'; }
-add_filter('filesystem_method', '_return_direct');
-WP_Filesystem();
-remove_filter('filesystem_method', '_return_direct');
-	
-	global $wp_filesystem;	
-	echo  unzip_file( $_FILES['premium']['tmp_name'],''.ABSPATH.'wp-content/plugins/sp-client-document-manager/' );	
-	echo '<script type="text/javascript">
-<!--
-window.location = "admin.php?page=sp-client-document-manager-settings&cdm-upgrade=1"
-//-->
-</script>';
-	
-	
-	}
-	
+
 	echo '
 <div style="border:1px solid #CCC;padding:5px;margin:5px;background-color:#e3f1d4;">';
 
@@ -201,8 +172,8 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
     <td width="300"><strong>Time Zone</strong><br><em>Set your timezone for the below settings.</em></td>
     <td>'.$time_select.' </td>
   </tr>
-		 
-		 
+	
+  
 		 <tr>
     <td width="300"><strong>Filename Format</strong><br><em>Use the below codes to determine the file format, whatever you put in the box will show up before the actual file name.If you keep this blank then you leave the risk to existing files. Please see the example to the right.</em><br><br>
 	%y =  Year: yyyy<br> 
@@ -227,10 +198,7 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
     <td width="300"><strong>Delete Message</strong><br><em>The confirmation screen asking the user if they want to delete the file.</em></td>
     <td><input type="text" name="sp_cu_delete"  value="'.get_option('sp_cu_delete').'"  size=80"> </td>
   </tr>
-  <tr>
-    <td width="300"><strong>WP Folder</strong><br><em>Use this option only if your wp installation is in a sub folder of your url. For instance if your site is www.example.com/blog/ then put /blog/ in the field. This helps find the uploads directory.</em></td>
-    <td><input type="text" name="sp_cu_wp_folder"  value="'.get_option('sp_cu_wp_folder').'"  size=80"> </td>
-  </tr>
+
       <tr>
     <td width="300"><strong>Disable User Uploads?</strong><br><em>Check this box to disable user uploads.</em></td>
     <td><input type="checkbox" name="sp_cu_user_uploads_disable"   value="1" '. $sp_cu_user_uploads_disable.'> </td>
@@ -240,10 +208,7 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
     <td width="300"><strong>Disable User Deleting?</strong><br><em>Check this box to not allow user to delete file.</em></td>
     <td><input type="checkbox" name="sp_cu_user_delete_disable"   value="1" '. $sp_cu_user_delete_disable.'> </td>
   </tr>
-     <tr>
-    <td width="300"><strong>Javascript Redirect?</strong><br><em>If your on a windows system you need to use javascript redirection as FastCGI does not allow force download files.</em></td>
-    <td><input type="checkbox" name="sp_cu_js_redirect"   value="1" '. $sp_cu_js_redirect.'> </td>
-  </tr>
+    
     <tr>
     <td width="300"><strong>Hide project if empty?</strong><br><em>Hide a project if there are no files on it.</em></td>
     <td><input type="checkbox" name="sp_cu_hide_project"   value="1" '. $sp_cu_hide_project.'> </td>
@@ -252,17 +217,38 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
     <td width="300"><strong>User Projects?</strong><br><em>If you want to allow the user to create projects check this box.</em></td>
     <td><input type="checkbox" name="sp_cu_user_projects"   value="1" '. $sp_cu_user_projects.'> </td>
   </tr>
-    <tr>
-    <td width="300"><strong>Mandatory Projects?</strong><br><em>If you want to require that a user select a project then check this box.</em></td>
-    <td><input type="checkbox" name="sp_cu_user_projects_required"   value="1" '. $sp_cu_user_projects_required.'> </td>
-  </tr>
+
     <tr>
     <td width="300"><strong>Form Instructions</strong><br><em>Just a short statement that will go above the upload form, you can use html!</em></td>
     <td><textarea  name="sp_cu_form_instructions"  style="width:100%;height:60px" >'. stripslashes(get_option('sp_cu_form_instructions')).'</textarea> </td>
   </tr>
   
 
-     <tr>
+   
+  
+  
+  ';
+  
+ 
+  
+  if(class_exists('cdmProductivityGoogle')){
+	  
+	echo '   <tr>
+    <td width="300"><strong>Google API Key</strong><br><em>This is your google API if you are using the google shortlink addon in the productivity suite, this also may be used for future google services integration.</em></td>
+    <td><input type="text" name="sp_cu_google_api_key"  value="'.get_option('sp_cu_google_api_key').'"  size=80"> </td>
+  </tr>';  
+  }
+  echo '
+    <tr>
+    <td>&nbsp;</td>
+    <td><input type="submit" name="save_options" value="Save Options"></td>
+  </tr>
+</table>
+<h2>Email Settings</h2>
+
+ <table class="wp-list-table widefat fixed posts" cellspacing="0">
+ 
+   <tr>
     <td width="300"><strong>Additional Admin Emails</strong><br><em>If you have additional people that need to get a copy of the admin when a user uploads a file then list them here seperated by a comma. You can also specify a wordpress role that would receive the email, so for instance if you have a custom role called "Customer Service" the email would be sent to everyone in the "Customer Service" Role. Roles should be lower case.</em></td>
     <td><input style="width:100%" type="text" name="sp_cu_additional_user_emails" value="'. stripslashes(get_option('sp_cu_additional_user_emails')).'" ></td>
   </tr>
@@ -295,23 +281,42 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 	[client_documents] = Link to the client document manager</td>
     <td>Subject: <input style="width:100%" type="text" name="sp_cu_user_email_subject" value="'.get_option('sp_cu_user_email_subject').'"><br>Body:<br><textarea name="sp_cu_user_email"  style="width:100%" rows="15">'.get_option('sp_cu_user_email').'</textarea> </td>
   </tr>
-  ';
-  
- 
-  
-  if(class_exists('cdmProductivityGoogle')){
-	  
-	echo '   <tr>
-    <td width="300"><strong>Google API Key</strong><br><em>This is your google API if you are using the google shortlink addon in the productivity suite, this also may be used for future google services integration.</em></td>
-    <td><input type="text" name="sp_cu_google_api_key"  value="'.get_option('sp_cu_google_api_key').'"  size=80"> </td>
-  </tr>';  
-  }
-  echo '
-    <tr>
+  <tr>
     <td>&nbsp;</td>
     <td><input type="submit" name="save_options" value="Save Options"></td>
   </tr>
-</table>';
+ </table>
+
+
+
+<h2>Advanced Settings</h2>
+
+ <table class="wp-list-table widefat fixed posts" cellspacing="0">
+ <tr>
+    <td width="300"><strong>Alternate Uploads Folder</strong><br><em>If you would to store your uploads in another folder please enter the full path to the uploads with a trailing slash!. Please update the URL as well. Could be absolute or relative, if you fail to update the URL then your files will not be accessible.<br><br>
+	This feature will not move your uploads folder, If you need to change your uploads folder and you already have existing files you must move the folder from its default path in /wp-content/uploads/.
+	
+	</td>
+    <td><span style="width:120px">System Path:</span> <input type="text" name="sp_cu_overide_upload_path"  value="'.get_option('sp_cu_overide_upload_path').'"  size=80"><br>
+	<em><strong>Example: </strong><br>linux: /home/mysite/public_html/uploads/ <br>windows: C:\websites\mysite\uploads\</em><br><br><br>
+	   <span style="width:120px"> Direct URL:</span> <input type="text" name="sp_cu_overide_upload_url"  value="'.get_option('sp_cu_overide_upload_url').'"  size=80"><br>
+	   	<em><strong>Example:</strong><br> http://mywebsites/uploads/</em>
+	   
+	    </td>
+  </tr> <tr>
+    <td width="300"><strong>Javascript Redirect?</strong><br><em>If your on a windows system you need to use javascript redirection as FastCGI does not allow force download files.</em></td>
+    <td><input type="checkbox" name="sp_cu_js_redirect"   value="1" '. $sp_cu_js_redirect.'> </td>
+  </tr>
+      <tr>
+    <td width="300"><strong>Mandatory Projects?</strong><br><em>If you want to require that a user select a project then check this box.</em></td>
+    <td><input type="checkbox" name="sp_cu_user_projects_required"   value="1" '. $sp_cu_user_projects_required.'> </td>
+  </tr>   <tr>
+    <td width="300"><strong>WP Folder</strong><br><em>Use this option only if your wp installation is in a sub folder of your url. For instance if your site is www.example.com/blog/ then put /blog/ in the field. This helps find the uploads directory.</em></td>
+    <td><input type="text" name="sp_cu_wp_folder"  value="'.get_option('sp_cu_wp_folder').'"  size=80"> </td>
+  </tr>  <tr>
+    <td>&nbsp;</td>
+    <td><input type="submit" name="save_options" value="Save Options"></td>
+  </tr></table>';
 
 do_action('cdm_premium_settings');
 echo '
@@ -460,7 +465,7 @@ if($_GET['dlg-delete-file'] != ""){
 		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where  id = ".$_GET['dlg-delete-file']."", ARRAY_A);
 		
 		
-		unlink('../wp-content/uploads/sp-client-document-manager/'.$user_id.'/'.$r[0]['file'].'');
+		unlink(''.SP_CDM_UPLOADS_DIR.''.$user_id.'/'.$r[0]['file'].'');
 	
 		$wpdb->query("
 	DELETE FROM ".$wpdb->prefix."sp_cu WHERE id = ".$_GET['dlg-delete-file']."
@@ -480,7 +485,7 @@ if($_GET['dlg-delete-file'] != ""){
 	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = $user_id  and parent = 0 order by date desc", ARRAY_A);
 	$delete_page = 'user-edit.php?user_id='.$user_id.'';
 	
-	$download_user = '<a href="../wp-content/plugins/sp-client-document-manager/ajax.php?function=download-archive&id='.$user_id.'" class="button">'.__("Click to download all files","sp-cdm").'</a>';
+	$download_user = '<a href="'.SP_CDM_PLUGIN_URL.'ajax.php?function=download-archive&id='.$user_id.'" class="button">'.__("Click to download all files","sp-cdm").'</a>';
 	}else{
 	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where  parent = 0 order by id desc LIMIT 150", ARRAY_A);	
 	$html .='<form id="your-profile">';	
@@ -507,7 +512,7 @@ function sp_client_upload_email_vendor(){
     	jQuery.ajax({
 			 
 		  type: "POST",
-		  url:  "'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=email-vendor" ,
+		  url:  "'.SP_CDM_PLUGIN_URL.'ajax.php?function=email-vendor" ,
 		 
 		 data:  jQuery("#your-profile" ).serialize(),
 		  success: function(msg){
@@ -522,16 +527,16 @@ function sp_client_upload_email_vendor(){
 
 function sp_cdm_showFile(file){
 			
-		  var url = "'. content_url().'/plugins/sp-client-document-manager/ajax.php?function=view-file&id=" + file;
+		  var url = "'.SP_CDM_PLUGIN_URL.'ajax.php?function=view-file&id=" + file;
 		  
 		 
             // show a spinner or something via css
-            var dialog = jQuery(\'<div style="display:none" class="loading"></div>\').appendTo(\'body\');
+            var dialog = jQuery(\'<div style="display:none" class="loading viewFileDialog"></div>\').appendTo(\'body\');
           
 		  
 
      var fileArray = new Array();      
-	 var obj_file_info =   jQuery.getJSON("'. content_url().'/plugins/sp-client-document-manager/ajax.php?function=get-file-info&type=name&id=" + file, function(data) {
+	 var obj_file_info =   jQuery.getJSON("'.SP_CDM_PLUGIN_URL.'ajax.php?function=get-file-info&type=name&id=" + file, function(data) {
    
 
 	
@@ -551,7 +556,7 @@ function sp_cdm_showFile(file){
                     dialog.remove();
                 },
                 modal: true,
-				height:550,
+				height:"auto",
 				width:850,
 				title: final_title 
             });
@@ -618,29 +623,29 @@ function sp_cdm_showFile(file){
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/classes/thumb.php?src='.content_url().'/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'classes/thumb.php?src='.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_excel.png">';
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_excel.png">';
 		}elseif($ext == 'doc' or $ext == 'docx'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_word.png">';	
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_word.png">';	
 		}elseif($ext == 'pub' or $ext == 'pubx'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_publisher.png">';		
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_publisher.png">';		
 		}elseif($ext == 'ppt' or $ext == 'pptx'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_powerpoint.png">';
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_powerpoint.png">';
 		}elseif($ext == 'adb' or $ext == 'accdb'){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/microsoft_office_access.png">';	
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_access.png">';	
 			}elseif(($ext == 'pdf' or $ext == 'psd' or $ext == 'html' or $ext == 'eps') && get_option('sp_cu_user_projects_thumbs_pdf') == 1){
-			if(file_exists(''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png')){			
-			$img = '<img src="'.content_url().'/uploads/sp-client-document-manager/'.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png">';	
+			if(file_exists(''.SP_CDM_UPLOADS_DIR.''.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png')){			
+			$img = '<img src="'.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png">';	
 			}else{
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/adobe.png">';		
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/adobe.png">';		
 			}
 		}elseif($ext == 'pdf' ){
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/adobe.png">';	
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/adobe.png">';	
 		
 		}else{
-			$img = '<img src="'.content_url().'/plugins/sp-client-document-manager/images/package_labled.png">';
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/package_labled.png">';
 		}		
 					
 					

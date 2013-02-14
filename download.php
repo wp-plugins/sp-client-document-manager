@@ -109,7 +109,7 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$r
 
 
 if(get_option('sp_cu_js_redirect') == 1){
-$file = '' . get_bloginfo('wpurl') . '/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'';	
+$file = ''.SP_CDM_UPLOADS_DIR_URL.''.$r[0]['uid'].'/'.$r[0]['file'].'';	
 	echo '<script type="text/javascript">
 <!--
 window.location = "'.$file.'"
@@ -118,7 +118,7 @@ window.location = "'.$file.'"
 exit;
 }else{
 
-$file = ''.$_SERVER["DOCUMENT_ROOT"].'/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'';
+$file = ''.SP_CDM_UPLOADS_DIR.''.$r[0]['uid'].'/'.$r[0]['file'].'';
 
 
 

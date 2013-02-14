@@ -33,7 +33,7 @@ function sp_cdm_display_project_shortcode($atts){
 			}else{
 				$inc_date = '';	
 			}
-			$content .='<li><a href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[$i]['id'].'">'.stripslashes($r[$i]['name']).'</a> '.$inc_date.' </li>';
+			$content .='<li><a href="'.SP_CDM_PLUGIN_URL.'download.php?fid='.$r[$i]['id'].'">'.stripslashes($r[$i]['name']).'</a> '.$inc_date.' </li>';
 		}
 	$content .='</ul>';
 		}
@@ -53,7 +53,7 @@ function sp_cdm_file_link_shortcode($atts){
 		
 		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id = '".$fid ."'  order by date desc", ARRAY_A);
 		if($real == 1){
-		return '' . get_bloginfo('wpurl') . '/wp-content/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'';	
+		return ''.SP_CDM_UPLOADS_DIR_URL.''.$r[0]['uid'].'/'.$r[0]['file'].'';	
 		}else{
 		
 		
@@ -62,7 +62,7 @@ function sp_cdm_file_link_shortcode($atts){
 			}else{
 				$inc_date = '';	
 			}
-		$content ='<a href="' . get_bloginfo('wpurl') . '/wp-content/plugins/sp-client-document-manager/download.php?fid='.$r[0]['id'].'" >'.stripslashes($r[0]['name']).'</a> '.$inc_date.' </a>';
+		$content ='<a href="'.SP_CDM_PLUGIN_URL.'download.php?fid='.$r[0]['id'].'" >'.stripslashes($r[0]['name']).'</a> '.$inc_date.' </a>';
 		}
 		
 		return $content;
@@ -89,16 +89,16 @@ function display_sp_thumbnails2($r){
 	}else{
 		var pidurl = "&cid=" + pid;	
 	}
-		jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$user_ID.'&sort=" + sort + "" + pidurl);	
+		jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'ajax.php?function=file-list&uid='.$user_ID.'&sort=" + sort + "" + pidurl);	
 }
 
 	
 	function sp_cdm_loading_image(){
-		jQuery("#cmd_file_thumbs").html(\'<div style="padding:100px; text-align:center"><img src="'.content_url().'/plugins/sp-client-document-manager/images/loading.gif"></div>\');		
+		jQuery("#cmd_file_thumbs").html(\'<div style="padding:100px; text-align:center"><img src="'.SP_CDM_PLUGIN_URL.'images/loading.gif"></div>\');		
 	}
 	function sp_cdm_load_file_manager(){
 		sp_cdm_loading_image();
-	jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$user_ID.'");	
+	jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'ajax.php?function=file-list&uid='.$user_ID.'");	
 	cdm_ajax_search();
 	}
 	
@@ -114,23 +114,23 @@ function display_sp_thumbnails2($r){
 		
 		function sp_cdm_load_project(pid){
 			sp_cdm_loading_image();
-		jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$user_ID.'&pid=" + pid);	
+		jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'ajax.php?function=file-list&uid='.$user_ID.'&pid=" + pid);	
 			
 		}
 		
 		
 		function sp_cdm_showFile(file){
 			
-		  var url = "'. content_url().'/plugins/sp-client-document-manager/ajax.php?function=view-file&id=" + file;
+		  var url = "'.SP_CDM_PLUGIN_URL.'ajax.php?function=view-file&id=" + file;
 		  
 		 
             // show a spinner or something via css
-            var dialog = jQuery(\'<div style="display:none" class="loading"></div>\').appendTo(\'body\');
+            var dialog = jQuery(\'<div style="display:none" class="loading viewFileDialog"></div>\').appendTo(\'body\');
           
 		  
 
      var fileArray = new Array();      
-	 var obj_file_info =   jQuery.getJSON("'. content_url().'/plugins/sp-client-document-manager/ajax.php?function=get-file-info&type=name&id=" + file, function(data) {
+	 var obj_file_info =   jQuery.getJSON("'.SP_CDM_PLUGIN_URL.'ajax.php?function=get-file-info&type=name&id=" + file, function(data) {
    
 
 	
@@ -173,7 +173,7 @@ function display_sp_thumbnails2($r){
 	
 	<div id="cdm_wrapper">
 	<div id="cmd_file_thumbs">
-	<div style="padding:100px; text-align:center"><img src="'.content_url().'/plugins/sp-client-document-manager/images/loading.gif"></div>	
+	<div style="padding:100px; text-align:center"><img src="'.SP_CDM_PLUGIN_URL.'images/loading.gif"></div>	
 	
 	</div>
 	<div style="clear:both"></div>
@@ -207,8 +207,8 @@ function display_sp_thumbnails($r ){
 		
 		
 	jQuery('#file_manager').fileTree({
-        root: '". content_url()."/uploads/sp-client-document-manager/".$user_ID."/',
-        script: '".content_url()."/plugins/sp-client-document-manager/ajax.php?function=file-tree&uid=".$user_ID."&search=' + cdm_search,
+        root: '".SP_CDM_UPLOADS_DIR_URL."".$user_ID."/',
+        script: '".SP_CDM_PLUGIN_URL."ajax.php?function=file-tree&uid=".$user_ID."&search=' + cdm_search,
         expandSpeed: 100,
         collapseSpeed: 100,
         multiFolder: false
@@ -216,10 +216,10 @@ function display_sp_thumbnails($r ){
        // alert(file);
 	   
 	   
-	   	  var url = '".content_url()."/plugins/sp-client-document-manager/ajax.php?function=view-file&id=' + file;
+	   	  var url = '".SP_CDM_PLUGIN_URL."ajax.php?function=view-file&id=' + file;
 		 //alert( url);
             // show a spinner or something via css
-            var dialog = jQuery('<div style=\"display:none\" class=\"loading\"></div>').appendTo('body');
+            var dialog = jQuery('<div style=\"display:none\" class=\"loading viewFileDialog\"></div>').appendTo('body');
             // open the dialog
             dialog.dialog({
                 // add a close listener to prevent adding multiple divs to the document
@@ -295,7 +295,7 @@ jQuery(".sp_change_indicator").slideDown();
 
 
 
-jQuery(\'.sp_change_indicator\').html(\'<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"  width="204" height="16"  id="mymoviename"><param name="movie" value="'. content_url(). '/plugins/sp-client-document-manager/image_138464.swf" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="'.content_url(). '/plugins/sp-client-document-manager/image_138464.swf" quality="high" bgcolor="#ffffff" width="204" height="16" name="mymoviename" align="" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object><br><em>Please wait, your file is currently uploading! </em>\');
+jQuery(\'.sp_change_indicator\').html(\'<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"  width="204" height="16"  id="mymoviename"><param name="movie" value="'.SP_CDM_PLUGIN_URL.'image_138464.swf" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="'.SP_CDM_PLUGIN_URL.'image_138464.swf" quality="high" bgcolor="#ffffff" width="204" height="16" name="mymoviename" align="" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object><br><em>Please wait, your file is currently uploading! </em>\');
 document.forms["sp_upload_form"].submit();
 return true;
 
@@ -319,7 +319,7 @@ function sp_cu_add_project(){
 	
 	jQuery.ajax({
    type: "POST",
-   url: "'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=save-category",
+   url: "'.SP_CDM_PLUGIN_URL.'ajax.php?function=save-category",
    data: "name=" + jQuery("#sub_category_name").val() + "&uid=" +  jQuery("#sub_category_uid").val(),
    success: function(msg){
   
@@ -440,7 +440,7 @@ $html .='
 function check_folder_sp_client_upload(){
 	global $user_ID;
 	
-	$dir = ''.ABSPATH.'wp-content/uploads/sp-client-document-manager/'.$user_ID.'/';
+	$dir = ''.SP_CDM_UPLOADS_DIR.''.$user_ID.'/';
 	if(!is_dir($dir)){
 	
 		mkdir($dir, 0777);
@@ -471,7 +471,7 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id = '".$
 	 
 	 
 	 $message = nl2br($email);
-	$message = str_replace('[file]','<a href="'.content_url().'/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'">'.content_url().'/uploads/sp-client-document-manager/'.$r[0]['uid'].'/'.$r[0]['file'].'</a>',$message);
+	$message = str_replace('[file]','<a href="'.SP_CDM_UPLOADS_DIR_URL.''.$r[0]['uid'].'/'.$r[0]['file'].'">'.SP_CDM_UPLOADS_DIR_URL.''.$r[0]['uid'].'/'.$r[0]['file'].'</a>',$message);
 	$message = str_replace('[notes]',$notes,$message);
 	$message = str_replace('[user]', $user_info->user_nicename, $message);
 	$message = str_replace('[project]', stripslashes($r_project[0]['name']), $message);
@@ -660,7 +660,7 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 	function cdm_ajax_search(){
 		sp_cdm_loading_image();
 	var cdm_search = jQuery("#search_files").val();
-	jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=thumbnails&uid='.$user_ID.'&search=" + cdm_search);		
+	jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'ajax.php?function=thumbnails&uid='.$user_ID.'&search=" + cdm_search);		
 		
 	}
 	</script>
@@ -674,7 +674,7 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 	function cdm_ajax_search(){
 		sp_cdm_loading_image();
 	var cdm_search = jQuery("#search_files").val();
-	jQuery("#cmd_file_thumbs").load("'.content_url().'/plugins/sp-client-document-manager/ajax.php?function=file-list&uid='.$user_ID.'&search=" + cdm_search);		
+	jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'ajax.php?function=file-list&uid='.$user_ID.'&search=" + cdm_search);		
 		
 	}
 	</script>
@@ -698,7 +698,7 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 		$link = 'javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)';
 			}
 		
-			$html .='  <a href="'.$link .'"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/add.png" style="border:none"> '.__("Add File","sp-cdm").'</a>    <a href="javascript:cdm_ajax_search()"><img src="' . content_url() . '/plugins/sp-client-document-manager/images/refresh.png" style="border:none"> '.__("Refresh","sp-cdm").'</a> ';
+			$html .='  <a href="'.$link .'"><img src="'.SP_CDM_PLUGIN_URL.'images/add.png" style="border:none"> '.__("Add File","sp-cdm").'</a>    <a href="javascript:cdm_ajax_search()"><img src="'.SP_CDM_PLUGIN_URL.'images/refresh.png" style="border:none"> '.__("Refresh","sp-cdm").'</a> ';
 	}
 if(get_option('sp_cu_user_projects_thumbs') == 1 && CU_PREMIUM == 1){
 		$html .=display_sp_cdm_thumbnails($r );

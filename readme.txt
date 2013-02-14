@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags:project management, web based document manager,website based document organization, share online documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.5.4
+Stable tag: 1.5.5
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click.
 
@@ -373,6 +373,12 @@ The premium version relies on common functions to operate, please activate the F
 * Fixed load issue in IE (spining circle)
 * Dropped the idea of drag and drop due to browser compatibility issues.
 * User groups fixed for projects
+
+= 1.5.5 =
+* Removed all references to hardcoded uploads and hardcoded plugin directory, it now uses your wordpress settings (major update)
+* You can now overide the location of your uploads folder in advanced settings, remember to set your permissions to 777 on the folder you create.
+* Deletes are now powered by ajax so theres no page reload
+* When installing the premium and free doesn't exist the plugin prompts you to install the free version.
 == Upgrade Notice ==
 
 = 1.0.5 =
@@ -488,4 +494,11 @@ Major updates, new uploader and fixes to admin upload functions
 = 1.5.4 =
 * Fixed ie issue of huge padding no the file list table
 * Fixed a group sql error
-* Fixed a redirect issue with theme my login. 
+* Fixed a redirect issue with theme my login.
+
+= 1.5.5 =
+* Removed all references to hardcoded uploads and hardcoded plugin directory, it now uses your wordpress settings (major update)
+* You can now overide the location of your uploads folder in advanced settings, remember to set your permissions to 777 on the folder you create.
+* Deletes are now powered by ajax so theres no page reload
+* When installing the premium and free doesn't exist the plugin prompts you to install the free version.
+

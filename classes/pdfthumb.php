@@ -6,7 +6,7 @@ function thumbPdf($pdf, $w,$h)
     try
 	
     {
-        $tmp = '../../../uploads/wp-client-document-manager';
+        $tmp = SP_CDM_UPLOADS_DIR;
         $format = "png";
         $source = ABSPATH.$pdf;
 		

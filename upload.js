@@ -2,6 +2,41 @@
 
 
 
+function sp_cu_confirm_delete(div,h,url){
+	
+	var NewDialog = jQuery('<div id="sp_cu_confirm_delete"> ' + div + '</div>');
+	
+	jQuery(  NewDialog ).dialog({
+			resizable: false,
+			height:'auto',
+			modal: true,
+			buttons: {
+				"Yes": function() {
+				
+				jQuery.ajax({
+			   type: "POST",
+			   url: url,			  
+			   success: function(msg){
+				jQuery( NewDialog ).remove();
+				jQuery( '.viewFileDialog' ).remove();
+				 cdm_ajax_search();
+				 
+				 
+			   }
+			 });
+				
+				
+				},
+				Cancel: function() {
+					jQuery( NewDialog ).remove();
+				}
+			}
+		});
+	
+}
+
+
+
 function sp_cu_confirm(div,h,url){
 	
 	jQuery(  div ).dialog({
