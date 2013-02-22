@@ -197,7 +197,7 @@ $html .='<div id="cdm-file-revisions"><div id="cdm_comments"><h4>'.__("Revision 
 			if(get_option('sp_cu_overide_upload_path')  != '' && get_option('sp_cu_overide_upload_url') == ''){
 			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/package_labled.png">';	
 			}else{
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'classes/thumb.php?src='.SP_CDM_PLUGIN_URL.'download.php?fid='.$r[0]['id'].'&w=250&h=250">';	
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'classes/thumb.php?src='.SP_CDM_UPLOADS_DIR_URL.''.$r[0]['uid'].'/'.$r[0]['file'].'&w=250&h=250">';	
 			}
 			
 		
