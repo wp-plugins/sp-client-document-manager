@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags:project management, web based document manager,website based document organization, share online documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.5.5
+Stable tag: 1.5.6
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click.
 
@@ -379,6 +379,18 @@ The premium version relies on common functions to operate, please activate the F
 * You can now overide the location of your uploads folder in advanced settings, remember to set your permissions to 777 on the folder you create.
 * Deletes are now powered by ajax so theres no page reload
 * When installing the premium and free doesn't exist the plugin prompts you to install the free version.
+
+= 1.5.6 =
+* Added ability to set maximum file size for premium users only
+* Added ability to limit file types for premium users only
+* Added the ability to move the uploads directory to a non web accessible location for extra security.
+* Added the ability to force login when downloading files for extra security
+* Fixed a bug where a file was not being removed from the server
+* Updated timthumb manager
+* Fixed a admin upload bug when using premium
+* Started working on folder syncing for a version 2.0 release
+
+
 == Upgrade Notice ==
 
 = 1.0.5 =
@@ -501,4 +513,14 @@ Major updates, new uploader and fixes to admin upload functions
 * You can now overide the location of your uploads folder in advanced settings, remember to set your permissions to 777 on the folder you create.
 * Deletes are now powered by ajax so theres no page reload
 * When installing the premium and free doesn't exist the plugin prompts you to install the free version.
+
+= 1.5.6 =
+* Added ability to set maximum file size for premium users only
+* Added ability to limit file types for premium users only
+* Added the ability to move the uploads directory to a non web accessible location for extra security.
+* Added the ability to force login when downloading files for extra security
+* Fixed a bug where a file was not being removed from the server
+* Updated timthumb manager
+* Fixed a admin upload bug when using premium
+* Started working on folder syncing for a version 2.0 release
 

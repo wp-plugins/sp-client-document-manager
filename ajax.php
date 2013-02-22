@@ -23,7 +23,7 @@ $upload_dir = wp_upload_dir();
 	$wpdb->query("
 	DELETE FROM ".$wpdb->prefix."sp_cu WHERE id = ".$_GET['dlg-delete-file']."
 	");
-	
+		unlink(''.SP_CDM_UPLOADS_DIR.''.$r[0]['uid'].'/'.$r[0]['file'].'');
 	 }
 		break;
 		case "get-file-info":
@@ -193,7 +193,13 @@ $html .='<div id="cdm-file-revisions"><div id="cdm_comments"><h4>'.__("Revision 
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'classes/thumb.php?src='.SP_CDM_UPLOADS_DIR_URL.''.$r[0]['uid'].'/'.$r[0]['file'].'&w=250&h=250">';
+			
+			if(get_option('sp_cu_overide_upload_path')  != '' && get_option('sp_cu_overide_upload_url') == ''){
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/package_labled.png">';	
+			}else{
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'classes/thumb.php?src='.SP_CDM_PLUGIN_URL.'download.php?fid='.$r[0]['id'].'&w=250&h=250">';	
+			}
+			
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
 			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_excel.png">';
@@ -796,7 +802,15 @@ function sp_cu_remove_project(){
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'classes/thumb.php?src='.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
+			
+				if(get_option('sp_cu_overide_upload_path')  != '' && get_option('sp_cu_overide_upload_url') == ''){
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/package_labled.png">';	
+			}else{
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'classes/thumb.php?src='.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=250&h=250">';	
+			}
+			
+			
+		
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
 			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_excel.png">';
@@ -1011,7 +1025,7 @@ $zip->setZipFile($dir.$return_file);
 					}
 		
 		
-	$attachment_links .= '<a href="'.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'">'.stripslashes($name).'</a><br>';
+	$attachment_links .= '<a href="'.SP_CDM_PLUGIN_URL.'download.php?fid='.$r[0]['id'].'">'.stripslashes($name).'</a><br>';
 	$attachment_array[$i] = ''.SP_CDM_UPLOADS_DIR .''.$r[$i]['uid'].'/'.$r[$i]['file'].'';	
 	}
 	

@@ -103,7 +103,9 @@ global $wpdb;
 			
 	if($_POST['sp_cu_user_uploads_disable'] == "1"){update_option('sp_cu_user_uploads_disable','1' ); }else{update_option('sp_cu_user_uploads_disable','0' );	}	
 	if($_POST['sp_cu_user_delete_disable'] == "1"){update_option('sp_cu_user_delete_disable','1' ); }else{update_option('sp_cu_user_delete_disable','0' );	}
-	if($_POST['sp_cu_hide_project'] == "1"){update_option('sp_cu_hide_project','1' ); }else{update_option('sp_cu_hide_project','0' );	}				
+	if($_POST['sp_cu_hide_project'] == "1"){update_option('sp_cu_hide_project','1' ); }else{update_option('sp_cu_hide_project','0' );	}	
+	
+	if($_POST['sp_cu_user_require_login_download'] == "1"){update_option('sp_cu_user_require_login_download','1' ); }else{update_option('sp_cu_user_require_login_download','0' );	}						
 	}
 	
 	
@@ -116,7 +118,7 @@ global $wpdb;
 	if(get_option('sp_cu_user_uploads_disable') == 1){ $sp_cu_user_uploads_disable = ' checked="checked" ';	}else{ $sp_cu_user_uploads_disable = '  '; }
 	if(get_option('sp_cu_user_delete_disable') == 1){ $sp_cu_user_delete_disable = ' checked="checked" ';	}else{ $sp_cu_user_delete_disable = '  '; }
 	if(get_option('sp_cu_hide_project') == 1){ $sp_cu_hide_project = ' checked="checked" ';	}else{ $sp_cu_hide_project = '  '; }
-	
+	if(get_option('sp_cu_user_require_login_download') == 1){ $sp_cu_user_require_login_download = ' checked="checked" ';	}else{ $sp_cu_user_require_login_download = '  '; }
 	
 	
 	echo '<h2>Settings</h2>'.sp_client_upload_nav_menu().'';	 
@@ -293,17 +295,29 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 
  <table class="wp-list-table widefat fixed posts" cellspacing="0">
  <tr>
-    <td width="300"><strong>Alternate Uploads Folder</strong><br><em>If you would to store your uploads in another folder please enter the full path to the uploads with a trailing slash!. Please update the URL as well. Could be absolute or relative, if you fail to update the URL then your files will not be accessible.<br><br>
+    <td width="300"><strong>Alternate Uploads Folder</strong><br><em>If you would to store your uploads in another folder please enter the full path to the uploads with a trailing slash!. Please update the URL as well. Could be absolute or relative, if you fail to update the URL then your files will not be accessible. If you are using a path that is not web accessible then do not bother putting in the path URL. The script will strictly use fread() to serve the file and will not offer up the full URL. This is a complete secure solution so nobody can access your files. Also be sure to enable "Require login to download" if you want to stop remote linking to your files. Also remember thumbnails will not work when using this method.<br><br> 
 	This feature will not move your uploads folder, If you need to change your uploads folder and you already have existing files you must move the folder from its default path in /wp-content/uploads/.
 	
-	</td>
+	</td>';
+	if(get_option('sp_cu_overide_upload_path') != "" && !is_dir(get_option('sp_cu_overide_upload_path')) ){
+	$does_not_exist = '<span style="color:red">Uploads Directory does not exist, please remove the custom upload path or create the folder!';	
+	}
+	echo '
     <td><span style="width:120px">System Path:</span> <input type="text" name="sp_cu_overide_upload_path"  value="'.get_option('sp_cu_overide_upload_path').'"  size=80"><br>
 	<em><strong>Example: </strong><br>linux: /home/mysite/public_html/uploads/ <br>windows: C:\websites\mysite\uploads\</em><br><br><br>
 	   <span style="width:120px"> Direct URL:</span> <input type="text" name="sp_cu_overide_upload_url"  value="'.get_option('sp_cu_overide_upload_url').'"  size=80"><br>
 	   	<em><strong>Example:</strong><br> http://mywebsites/uploads/</em>
 	   
 	    </td>
-  </tr> <tr>
+  </tr> 
+  
+  
+    <tr>
+    <td width="300"><strong>Require Login to Download?</strong><br><em>Check this option to require the user to login to download a file, this can only be used securely if you are not using the javascript downloads</em></td>
+    <td><input type="checkbox" name="sp_cu_user_require_login_download"   value="1" '. $sp_cu_user_require_login_download.'> </td>
+  </tr>
+  <tr>
+  
     <td width="300"><strong>Javascript Redirect?</strong><br><em>If your on a windows system you need to use javascript redirection as FastCGI does not allow force download files.</em></td>
     <td><input type="checkbox" name="sp_cu_js_redirect"   value="1" '. $sp_cu_js_redirect.'> </td>
   </tr>
@@ -314,6 +328,18 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
     <td width="300"><strong>WP Folder</strong><br><em>Use this option only if your wp installation is in a sub folder of your url. For instance if your site is www.example.com/blog/ then put /blog/ in the field. This helps find the uploads directory.</em></td>
     <td><input type="text" name="sp_cu_wp_folder"  value="'.get_option('sp_cu_wp_folder').'"  size=80"> </td>
   </tr>  <tr>
+  
+   <tr>
+    <td width="300"><strong>Limit File Types</strong><br><em>Limit to specific file types below, comma seperate each file type.</em></td>
+    <td><input type="text" name="sp_cu_limit_file_types"  value="'.get_option('sp_cu_limit_file_types').'"  size=80"> </td>
+  </tr>
+  
+    
+   <tr>
+    <td width="300"><strong>Upload File Size Limit</strong><br><em>If you want to limit the file size limit please fill in that info here. Example: 100   (this would be 100 Megabytes) .</em></td>
+    <td><input type="text" name="sp_cu_limit_file_size"  value="'.get_option('sp_cu_limit_file_size').'"  style="width:60px">MB </td>
+  </tr>
+    <tr>
     <td>&nbsp;</td>
     <td><input type="submit" name="save_options" value="Save Options"></td>
   </tr></table>';
@@ -408,7 +434,7 @@ if(CU_PREMIUM != 1 && get_option("sp_cdm_ignore") != 1){
 		if(!function_exists('theme_my_login') && get_option('cdm_ignore_tml') != 1){
 	$content .= '<div class="sp_cdm_error">This plugin works great with the "Theme My Login" plugin which allows you to use your own template for login and registration. <strong>Please remember to turn on registration in your wordpress settings if you need to have users registering</strong>.<div style="padding:10px"> <a href="plugin-install.php?tab=search&s=theme+my+login&plugin-search-input=Search+Plugins" class="button">Click here to get theme my login.</a> or <a href="admin.php?page=sp-client-document-manager-settings&ignore=tml" class="button">click here to ignore this message</a>.</div></div>';	
 	}
-			
+	do_action('sp_cdm_errors');		
 		
 	
 $content .='
@@ -623,7 +649,18 @@ function sp_cdm_showFile(file){
 		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
 		
 		if(in_array(strtolower($ext), $images_arr)){
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'classes/thumb.php?src='.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';
+		
+		
+		
+		if(get_option('sp_cu_overide_upload_path')  != '' && get_option('sp_cu_overide_upload_url') == ''){
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/package_labled.png">';	
+			}else{
+			$img = '<img src="'.SP_CDM_PLUGIN_URL.'classes/thumb.php?src='.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=250&h=250">';	
+			}
+			
+		
+		
+		
 		
 		}elseif($ext == 'xls' or $ext == 'xlsx'){
 			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_excel.png">';

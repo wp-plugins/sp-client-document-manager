@@ -3,7 +3,7 @@ require( '../../../wp-load.php' );
 	
 	global $wpdb;
 	
-
+if ( (is_user_logged_in() && get_option('sp_cu_user_require_login_download') == 1 ) or (get_option('sp_cu_user_require_login_download') == '' or get_option('sp_cu_user_require_login_download') == 0 )){
 if(!function_exists('mime_content_type')) {
 
     function mime_content_type($filename) {
@@ -142,6 +142,13 @@ if(is_file($file_name))
 
  $mime = mime_content_type($file_name);
  
+ 
+ if($_GET['thumb'] == 1){
+	 header('Content-Type: '.$mime); 
+  readfile($file_name,filesize($filename));    // push it out
+  exit(); 
+ }else{
+	 
 
   header('Pragma: public');   // required
   header('Expires: 0');    // no cache
@@ -159,12 +166,17 @@ if(is_file($file_name))
   header('Content-Transfer-Encoding: binary');
   header('Content-Length: '.filesize($file_name));  // provide file size
   header('Connection: close');
-  readfile($file_name);    // push it out
+  readfile($file_name,filesize($filename));    // push it out
   exit();
-
+ }
 }
 
 
 
+
+}
+}else{
+	auth_redirect();	
+	
 }
 ?>

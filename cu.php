@@ -4,20 +4,36 @@ Plugin Name: SP Client Document & Project Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.5.5
+Version: 1.5.6
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.5.5";
-
-load_plugin_textdomain( 'sp-cdm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+$sp_client_upload = "1.5.6";
 
 
-ini_set('upload_max_filesize', '1000M');  
-ini_set('post_max_size', '1000M');  
+
+
+function sp_cdm_language_init() {
+    load_plugin_textdomain( 'sp-cdm', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+}
+add_action('init', 'sp_cdm_language_init');
+
+
+if(get_option('sp_cu_limit_file_size') == ""){
+ini_set('upload_max_filesize', '2000M');  
+ini_set('post_max_size', '2000M');  
 ini_set('max_input_time', 300);  
 ini_set('max_execution_time', 300); 
+}else{
+	
+ini_set('upload_max_filesize', ''.get_option('sp_cu_limit_file_size').'M');  
+ini_set('post_max_size', ''.get_option('sp_cu_limit_file_size').'M');  
+ini_set('max_input_time', 300);  
+ini_set('max_execution_time', 300); 
+	
+	
+}
 
 $cdm_upload_dir = wp_upload_dir();
 

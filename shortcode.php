@@ -471,7 +471,7 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id = '".$
 	 
 	 
 	 $message = nl2br($email);
-	$message = str_replace('[file]','<a href="'.SP_CDM_UPLOADS_DIR_URL.''.$r[0]['uid'].'/'.$r[0]['file'].'">'.SP_CDM_UPLOADS_DIR_URL.''.$r[0]['uid'].'/'.$r[0]['file'].'</a>',$message);
+	$message = str_replace('[file]','<a href="'.SP_CDM_PLUGIN_URL.'download.php?fid='.$r[$i]['id'].'">'.SP_CDM_UPLOADS_DIR_URL.''.$r[0]['uid'].'/'.$r[0]['file'].'</a>',$message);
 	$message = str_replace('[notes]',$notes,$message);
 	$message = str_replace('[user]', $user_info->user_nicename, $message);
 	$message = str_replace('[project]', stripslashes($r_project[0]['name']), $message);
@@ -489,7 +489,9 @@ function display_sp_client_upload_process(){
 if($_GET['dlg-delete-file'] != ""){
 	
 	
-	
+		
+		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where  id = ".$_GET['dlg-delete-file']."", ARRAY_A);
+				unlink(''.SP_CDM_UPLOADS_DIR.''.$r[0]['uid'].'/'.$r[0]['file'].'');
 		$wpdb->query("
 	DELETE FROM ".$wpdb->prefix."sp_cu WHERE id = ".$_GET['dlg-delete-file']."
 	");
