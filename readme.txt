@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags:project management, web based document manager,website based document organization, share online documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.5.7
+Stable tag: 1.5.8
 
 SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click.
 
@@ -390,6 +390,12 @@ The premium version relies on common functions to operate, please activate the F
 * Fixed a admin upload bug when using premium
 * Started working on folder syncing for a version 2.0 release
 
+= 1.5.8 =
+* Fixed some bugs
+* Patched a security whole when accessing a file directly through download.php
+* Added a new shortcode for premium users
+* Added a notice for premium users when free version is out of date
+* Added a notice when a new version of premium is released.
 
 == Upgrade Notice ==
 
@@ -523,4 +529,11 @@ Major updates, new uploader and fixes to admin upload functions
 * Updated timthumb manager
 * Fixed a admin upload bug when using premium
 * Started working on folder syncing for a version 2.0 release
+
+= 1.5.8 =
+* Fixed some bugs
+* Patched a security whole when accessing a file directly through download.php
+* Added a new shortcode for premium users
+* Added a notice for premium users when free version is out of date
+* Added a notice when a new version of premium is released.
 

@@ -329,16 +329,7 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
     <td><input type="text" name="sp_cu_wp_folder"  value="'.get_option('sp_cu_wp_folder').'"  size=80"> </td>
   </tr>  <tr>
   
-   <tr>
-    <td width="300"><strong>Limit File Types</strong><br><em>Limit to specific file types below, comma seperate each file type.</em></td>
-    <td><input type="text" name="sp_cu_limit_file_types"  value="'.get_option('sp_cu_limit_file_types').'"  size=80"> </td>
-  </tr>
-  
-    
-   <tr>
-    <td width="300"><strong>Upload File Size Limit</strong><br><em>If you want to limit the file size limit please fill in that info here. Example: 100   (this would be 100 Megabytes) .</em></td>
-    <td><input type="text" name="sp_cu_limit_file_size"  value="'.get_option('sp_cu_limit_file_size').'"  style="width:60px">MB </td>
-  </tr>
+ 
     <tr>
     <td>&nbsp;</td>
     <td><input type="submit" name="save_options" value="Save Options"></td>
