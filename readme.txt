@@ -103,6 +103,7 @@ Login with:  user: test   password: test
 = Short Codes = 
 x = configurable area
 
+
 **[sp-client-document-manager]** 
 
 This shortcode displays the uploader
@@ -146,6 +147,10 @@ If you use "User Role Editor" plugin and want to assign CDM capabilities to anot
 * sp_cdm_vendors = Show vendors tab
 * sp_cdm_projects = Show projects tab
 * sp_cdm_uploader = Use the uploader (add files)
+
+**[cdm_public_view]**
+
+This is a shortcode for premium members only, it displays the file list to the public. This shortcode lists all the files from all users.
 
 = Premium Users = 
 
