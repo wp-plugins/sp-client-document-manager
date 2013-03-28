@@ -320,7 +320,7 @@ function sp_cu_add_project(){
 	jQuery.ajax({
    type: "POST",
    url: "'.SP_CDM_PLUGIN_URL.'ajax.php?function=save-category",
-   data: "name=" + jQuery("#sub_category_name").val() + "&uid=" +  jQuery("#sub_category_uid").val(),
+   data: "name=" + jQuery("#sub_category_name").val() + "&uid=" +  jQuery("#sub_category_uid").val()+ "&parent=" +  jQuery("#sub_category_parent").val(),
    success: function(msg){
   
    jQuery("#sp_cu_add_project").dialog("close");
@@ -337,14 +337,25 @@ function sp_cu_add_project(){
  });
 }
 </script>
-<div style="display:none">
-	<div  id="sp_cu_add_project">
+<div style="display:none">';
+
+
+
+
+$add_project = '<div  id="sp_cu_add_project">
 		<input type="hidden" id="sub_category_uid" name="uid" value="'.$current_user->ID.'">
 		
 		'.__("Project Name:","sp-cdm").' <input  id="sub_category_name" type="text" name="project-name"  style="width:200px !important"> 
 		<input type="submit" value="'.__("Add Project","sp-cdm").'" name="add-project" onclick="sp_cu_add_project()">
 	
-	</div>
+	</div>';
+
+$add_project = apply_filters('sp_cdm_add_project_form',$add_project);	
+	
+
+
+$html .=''.$add_project .'
+	
 <div id="sp_cu_confirm_delete">
 <p>'.get_option('sp_cu_delete').'</p>
 </div>
@@ -685,7 +696,7 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 }
 	
 // do_action('cdm_add_hidden_html');
-	$html .='Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files">';
+	$html .='<div id="cdm_nav_buttons">Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files">';
 	
 
 	if(get_option('sp_cu_user_uploads_disable') != 1){
@@ -700,14 +711,21 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 		$link = 'javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)';
 			}
 		
-			$html .='  <a href="'.$link .'"><img src="'.SP_CDM_PLUGIN_URL.'images/add.png" style="border:none"> '.__("Add File","sp-cdm").'</a>    <a href="javascript:cdm_ajax_search()"><img src="'.SP_CDM_PLUGIN_URL.'images/refresh.png" style="border:none"> '.__("Refresh","sp-cdm").'</a> ';
+			$html .='  <a href="'.$link .'"><img src="'.SP_CDM_PLUGIN_URL.'images/add.png" style="border:none"> '.__("Add File","sp-cdm").'</a> ';
+			
+			$morebuttons .= '';
+			
+			$morebuttons .= apply_filters('sp_cdm_more_buttons',$morebuttons);
+			
+			$html .= $morebuttons;
+			$html .='   <a href="javascript:cdm_ajax_search()"><img src="'.SP_CDM_PLUGIN_URL.'images/refresh.png" style="border:none"> '.__("Refresh","sp-cdm").'</a> ';
 	}
 if(get_option('sp_cu_user_projects_thumbs') == 1 && CU_PREMIUM == 1){
 		$html .=display_sp_cdm_thumbnails($r );
 }else{
 		$html .=display_sp_thumbnails2($r );
 }
-		$html .='</div>';
+		$html .='</div></div>';
 
 
 

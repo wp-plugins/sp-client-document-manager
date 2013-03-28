@@ -34,11 +34,13 @@ if (CU_PREMIUM == 1){
 	
 	
 	</td>
-    <td>
+    <td>';
+	
+	$select_dropdown .='
 	<select name="pid" class="pid_select">';
 	
 	if(get_option('sp_cu_user_projects_required') == 0){	
-	$html .='<option name="" selected="selected">'.__("No Project","sp-cdm").'</option>';	
+	$select_dropdown .='<option name="" selected="selected">'.__("No Project","sp-cdm").'</option>';	
 	}
 		for($i=0; $i<count($projects); $i++){
 								
@@ -47,10 +49,13 @@ if (CU_PREMIUM == 1){
 		}else{
 			$required = ''	;
 		}
-	  $html .= '<option value="'.$projects[$i]['id'].'" '.$required.'>'.stripslashes($projects[$i]['name']).'</option>';	
+	 $select_dropdown .='<option value="'.$projects[$i]['id'].'" '.$required.'>'.stripslashes($projects[$i]['name']).'</option>';	
 		}
 	
-	$html .='</select>';
+	$select_dropdown .='</select>';
+	
+	$select_dropdown =  apply_filters('wpfh_sub_projects', $select_dropdown ); 	
+	$html  .= $select_dropdown;
 	
 	if(get_option('sp_cu_user_projects') == 1){
 		

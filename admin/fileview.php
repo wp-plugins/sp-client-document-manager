@@ -367,7 +367,23 @@ function sp_cu_add_project(){
  });
 }
 </script>
-<div style="display:none">
+<div style="display:none">';
+
+
+
+$add_project = '<div  id="sp_cu_add_project">
+		<input type="hidden" id="sub_category_uid" name="uid" value="'.$current_user->ID.'">
+		
+		'.__("Project Name:","sp-cdm").' <input  id="sub_category_name" type="text" name="project-name"  style="width:200px !important"> 
+		<input type="submit" value="'.__("Add Project","sp-cdm").'" name="add-project" onclick="sp_cu_add_project()">
+	
+	</div>';
+
+$add_project = apply_filters('sp_cdm_add_project_form',$add_project);	
+	
+
+
+$html .=''.$add_project .'
 	<div  id="sp_cu_add_project">
 		<input type="hidden" id="sub_category_uid" name="uid" value="'.$_GET['id'].'">
 		
