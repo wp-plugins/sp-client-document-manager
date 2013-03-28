@@ -1,12 +1,12 @@
 === Plugin Name ===
 Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
-Tags:project management, web based document manager,website based document organization, share online documents securely, customer file manager, client files,
+Tags: Project Management, web based document manager,online website document organization, share online documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
 Stable tag: 1.5.9
 
-SP CLIENT DOCUMENT MANAGER ALLOWS FOR SIMPLIFIED CUSTOMIZATION. Customize, import, organize, and share one or multiple documents all with one-click.
+SP Client Document Manager allows you to manage your documents and files online. This multi-functional document and file manager gives your company the power to have your clients, employees, sub-contractors, vendors and your company – upload, group, distribute and organize all company documents and files.
 
 == Description ==
 
@@ -17,29 +17,29 @@ This new SP plug-in also demonstrates how quickly a business can take hold of th
 We also now offer a premium version; please check out our website for more information: 
 http://smartypantsplugins.com/sp-client-document-manager/
 
-Now gworks with WordPress Multi Site!
+Works with WordPress Multi Site!
 
 **[Click here to try out a demo](http://smartypantsplugins.com/client-upload-demo/ "Click here to try out a demo")**
 
 Login with:  user: test   password: test
 
-**Client Side Features**
-
-* Clients upload files and Documents online to their own personal page
-* Clients can create or add to existing projects
+**Overall Features**
 * Ability to choose multiple files
 * Delete uploaded documents
 * Automatically zip multiple files
-* User login with help from "Theme my login"
-* Ability to translate plugin to multiple languages using the .po files.
+* Custom Forms
 * Search by file name
-* Ability to allow deleting and renaming of projects
+* Ability to allow deleting documents and files 
+* Renaming of projects
 * Disable user uploads
 * Disable user deleting of files
+* Ability to translate plugin to multiple languages using the .po files.
 
+**Client / Customers**
+* Clients upload files and Documents online to their own personal page
+* Clients can create or add to existing projects
 
 **Administrator Side Features**
-
 * Complete control on who can access specific files
 * Turn off ability for Clients to upload documents instantly.
 * Notification via email when a client uploads a file
@@ -57,26 +57,52 @@ Login with:  user: test   password: test
 * Allow the user to create projects
 * Ability to add files to any user
 * Download all the files of a project in a single zip file
-* Add multiple admin emails to receieve files
+* Add multiple admin emails to receive files
 * Advanced admin file manager
 * Assign custom capabilities to user roles
+
 
 **Premium Features**
 
 
-* Add custom fields to your client upload form! Sort the fields, view them in the file view page or in admin
+**Overall Premium Features**
+* Add custom fields to your client upload form, Sort the fields, view them in the file view page or in admin
 * Search by tags
-* Categories allow an admin to designate categories for the user to select, for example a print company could use categories as statuses (Mockup, Draft and Final)
+* Change text for category (ex: Status)
 * Custom Email Notifications
-* Full Support through email or Skype
 * Auto deletion of files based on a time you set.
 * Thumbnail view mode for a windows explorer type look and feel.
-* Automaticly create thumbnails of pdfs and psds (must have imagemagick installed on server)
+* Automatically create thumbnails of pdfs and psds (must have imagemagick installed on server)
 * File versioning system, don't lose old versions 
-* Addon packs available for more features!
-* For more information check out the plugin page http://smartypantsplugins.com/sp-client-document-manager/
 * Upload multiple files
 * File progress bar
+* Allow users to collaborate on files by creating groups
+* Switch between list view and thumbnail view
+* Assign a file or files to a category
+
+
+**Premium Addon Features**
+
+
+* Dropbox integration to allow your users to import files directly from their dropbox
+* Add unlimited sub folders for better organizing
+
+**Categories**
+* Add Categories
+* Manage Categories allow an admin to designate categories for the user to select, for example a print company could use categories as statuses (Mockup, Draft and Final)
+
+**Projects**
+* Allow a user to create projects
+* Collaborate with other users with groups
+* Assign a file or files to a project
+* Manage Projects
+	
+**Clients**
+* Client can view all categories set by admin
+
+Full Support Available through email or Skype. 
+Coming Soon Add-on packs available for more features!
+
 
 
 **Current Languages**
@@ -542,17 +568,11 @@ Major updates, new uploader and fixes to admin upload functions
 * Added a notice for premium users when free version is out of date
 * Added a notice when a new version of premium is released.
 
-= 1.5.8 =
-* Fixed some bugs
-* Patched a security whole when accessing a file directly through download.php
-* Added a new shortcode for premium users
-* Added a notice for premium users when free version is out of date
-* Added a notice when a new version of premium is released.
-
-
 = 1.5.9 =
 * Fixed some bugs
 * Added hooks to build addons
 * Released two premium addons, dropbox integration and sub projects.
 * Fixed a flash upload bug
 * Total rewrite of the ajax core
+
+
