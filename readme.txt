@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: Project Management, web based document manager,online website document organization, share online documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.5.9
+Stable tag: 1.6.0
 
 SP Client Document Manager allows you to manage your documents and files online. This multi-functional document and file manager gives your company the power to have your clients, employees, sub-contractors, vendors and your company – upload, group, distribute and organize all company documents and files.
 
@@ -428,6 +428,10 @@ The premium version relies on common functions to operate, please activate the F
 * Added a notice for premium users when free version is out of date
 * Added a notice when a new version of premium is released.
 
+
+= 1.6.0 = 
+
+* Fixed a quick shortcode bug.
 == Upgrade Notice ==
 
 = 1.0.5 =
@@ -575,4 +579,8 @@ Major updates, new uploader and fixes to admin upload functions
 * Fixed a flash upload bug
 * Total rewrite of the ajax core
 
+
+= 1.6.0 = 
+
+* Fixed a quick shortcode bug.
 

@@ -4,12 +4,12 @@ Plugin Name: SP Client Document & Project Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.5.9
+Version: 1.6.0
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.5.9";
+$sp_client_upload = "1.6.0";
 
 
 
@@ -74,20 +74,20 @@ add_filter('wp_head','sp_cdm_tinymce_editor');
  }
 
 
-include ''.dirname(__FILE__).'/classes/ajax.php';
-include ''.dirname(__FILE__).'/common.php';
+include_once ''.dirname(__FILE__).'/classes/ajax.php';
+include_once ''.dirname(__FILE__).'/common.php';
 
 
-include ''.dirname(__FILE__).'/zip.class.php';
+include_once ''.dirname(__FILE__).'/zip.class.php';
 
-include ''.dirname(__FILE__).'/admin/vendors.php';
-include ''.dirname(__FILE__).'/admin/projects.php';
+include_once ''.dirname(__FILE__).'/admin/vendors.php';
+include_once ''.dirname(__FILE__).'/admin/projects.php';
 
-include ''.dirname(__FILE__).'/user/projects.php';
-include ''.dirname(__FILE__).'/functions.php';
-include ''.dirname(__FILE__).'/shortcode.php';
+include_once ''.dirname(__FILE__).'/user/projects.php';
+include_once ''.dirname(__FILE__).'/functions.php';
+include_once ''.dirname(__FILE__).'/shortcode.php';
 
-include ''.dirname(__FILE__).'/admin/fileview.php';
+include_once ''.dirname(__FILE__).'/admin/fileview.php';
 
 sp_cdm_check_admin_caps();
 function sp_cdm_check_admin_caps(){

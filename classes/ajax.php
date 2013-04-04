@@ -5,7 +5,7 @@ class spdm_ajax{
 	
 	function view_file(){
 		
-		global $wpdb,$current_user;
+		global $wpdb,$current_user,$cdm_comments,$cdm_google,$cdm_log;
 		
 		
 		
