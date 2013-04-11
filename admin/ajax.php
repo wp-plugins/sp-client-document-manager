@@ -274,8 +274,8 @@ $html .='
 		
 		case "file-list":
 		
-			 if (CU_PREMIUM == 1){  	
-		$find_groups = cdmFindGroups($_GET['uid']);
+			 if (function_exists('cdmFindGroups')){  	
+		$find_groups = cdmFindGroups($_GET['uid'],1);
 			 }
 		
 	
@@ -309,8 +309,7 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 										ORDER by name", ARRAY_A);
 										
 					
-								
-										
+						
 		echo '<div id="dlg_cdm_file_list">
 		<table border="0" cellpadding="0" cellspacing="0">
 		<thead>';

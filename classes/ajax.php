@@ -362,7 +362,7 @@ $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST[
 									
 			
 		}
-					
+				
 		echo '<div id="dlg_cdm_file_list">
 		<table border="0" cellpadding="0" cellspacing="0">
 		<thead>';
