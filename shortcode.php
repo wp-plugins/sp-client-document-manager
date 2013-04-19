@@ -696,7 +696,7 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 }
 	
 // do_action('cdm_add_hidden_html');
-	$html .='<div id="cdm_nav_buttons">Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files">';
+	$html .='<div id="cdm_nav_buttons"><div style="padding:10px">Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files"></div>';
 	
 
 	if(get_option('sp_cu_user_uploads_disable') != 1){
