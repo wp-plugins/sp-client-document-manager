@@ -4,12 +4,12 @@ Plugin Name: SP Client Document & Project Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.6.2
+Version: 1.6.3
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.6.2";
+$sp_client_upload = "1.6.3";
 
 
 
@@ -134,10 +134,23 @@ function sp_client_upload_load_css(){
 	//echo '<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" >';
 	
 }
+function sp_client_upload_load_admin_css(){
+	
+	wp_register_style( 'cdm-potatoe-menu',plugins_url('css/menu.css', __FILE__) );
+	  wp_enqueue_style( 'cdm-potatoe-menu' );
+      
 
+	//echo '<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" >';
+	
+}
+function sp_client_upload_admin_init() {
+	 wp_enqueue_script('cdm-potatoe-menu-js', plugins_url('js/menu.js', __FILE__));
+}
 add_action('wp_head', 'sp_client_upload_load_css');	
 add_action('init', 'sp_client_upload_init');
 add_action('admin_menu', 'sp_client_upload_load_css');
+add_action('admin_menu', 'sp_client_upload_load_admin_css');
+add_action('admin_init', 'sp_client_upload_admin_init');
 //add_action('plugins_loaded', 'sp_client_upload_install');
 
 
@@ -334,6 +347,8 @@ function sp_client_upload_menu() {
 		 
 		   
 	  add_submenu_page( 'sp_cu', 'User Files', 'User Files', 'sp_cdm_uploader', 'sp-client-document-manager-fileview',   array( $sp_cdm_fileview ,'view'));
+	  
+	  
 		 
 }
 

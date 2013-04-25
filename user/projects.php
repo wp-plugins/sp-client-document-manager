@@ -7,22 +7,30 @@ function sp_cdm_display_projects(){
 	
 	global $wpdb,$current_user;
 
+
+
+if($_GET['id'] != '' && user_can($current_user->ID,'manage_options')){
+	$uid = $_GET['id'];	
+}else{
+	$uid = $current_user->ID;
+}
+
 if($_POST['add-project'] != ""){
 	
 			$insert['name'] = $_POST['project-name'];
-			$insert['uid'] = $current_user->ID;
+			$insert['uid'] = $uid;
 	$wpdb->insert( "".$wpdb->prefix . "sp_cu_project",$insert );
 }
 
 
 if (CU_PREMIUM == 1){  	
-		$find_groups = cdmFindGroups($current_user->ID,'_project');
+		$find_groups = cdmFindGroups($uid,'_project');
 			 }
 
   $projects = $wpdb->get_results("SELECT *
 	
 									 FROM ".$wpdb->prefix."sp_cu_project
-									WHERE  ( uid = '".$current_user->ID."' ".$find_groups.") 
+									WHERE  ( uid = '".$uid ."' ".$find_groups.") 
 									 ", ARRAY_A);	
 
 
@@ -49,7 +57,10 @@ if (CU_PREMIUM == 1){
 		}else{
 			$required = ''	;
 		}
+		
+		if($projects[$i]['name'] != ''){
 	 $select_dropdown .='<option value="'.$projects[$i]['id'].'" '.$required.'>'.stripslashes($projects[$i]['name']).'</option>';	
+		}
 		}
 	
 	$select_dropdown .='</select>';

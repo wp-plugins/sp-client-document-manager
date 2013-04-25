@@ -484,7 +484,7 @@ function sp_cu_remove_project(){
 	$sort = $_GET['sort'];		
 	}
 	
-	if($_GET['pid'] == ""){
+	if($_GET['pid'] == "" or $_GET['pid'] == "0"){
 	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.")  AND pid = 0 	AND parent = 0  ".$search_file." order by ".$sort ." ", ARRAY_A);
 	}else{
 	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$_GET['pid']."' AND parent = 0   ".$search_file."  order by ".$sort ."  ", ARRAY_A);		
@@ -703,7 +703,7 @@ function sp_cu_remove_project(){
 		}
 	
 	
-	if($_GET['pid'] == ""){
+	if($_GET['pid'] == "" or $_GET['pid'] == ""){
 	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (uid = '".$_GET['uid']."' ".$find_groups.")  AND pid = 0 	AND parent = 0  ".$search_file." order by date desc", ARRAY_A);
 	}else{
 	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where pid = '".$_GET['pid']."' AND parent = 0   ".$search_file."  order by date desc", ARRAY_A);		

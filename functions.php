@@ -336,6 +336,7 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
   </tr></table>';
 
 do_action('cdm_premium_settings');
+
 echo '
 
 
@@ -368,20 +369,77 @@ echo '<h2>Smarty Pants Client Document Manager</h2>'.sp_client_upload_nav_menu()
 }
 }
 if (!function_exists('sp_client_upload_nav_menu')){
-function sp_client_upload_nav_menu($nav = NULL){
-	global $cu_ver,$sp_client_upload,$sp_cdm_ver ;
 	
-	if(CU_PREMIUM == 1){
+	function sp_client_upload_nav_menu($nav = NULL){
+		global $cu_ver,$sp_client_upload,$sp_cdm_ver ;
+
+
+$content .= '
+	<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery("#menu1").ptMenu();
+    });
+</script>
+	
+	<ul id="menu1" style="margin-top:20px;margin-bottom:10px;">';
+	
+	if(current_user_can('sp_cdm') ){
+	$content .='<li><a href="admin.php?page=sp-client-document-manager" >Home</a></li>';
+	}
+	if(current_user_can('sp_cdm_settings') ){
+	$content .='<li><a href="admin.php?page=sp-client-document-manager-settings" >'.__("Settings","sp-cdm").'</a><ul>';
+	
+	if(current_user_can('sp_cdm_vendors') ){
+	$content .='<li><a href="admin.php?page=sp-client-document-manager-vendors" >'.__("Vendors","sp-cdm").'</a></li>';	
+	}
+	if(current_user_can('sp_cdm_projects') ){
+$content .= '<li><a href="admin.php?page=sp-client-document-manager-projects" >'.__("Projects","sp-cdm").'</a></li>';
+}
+			
+			if (CU_PREMIUM == 1){
+			if(current_user_can('sp_cdm_settings') ){
+		$content .= '<li><a href="admin.php?page=sp-client-document-manager-groups" >'.__("Groups","sp-cdm").'</a></li>';
+		$content .= '<li><a href="admin.php?page=sp-client-document-manager-forms">'.__("Forms","sp-cdm").'</a></li>';
+		
+		$content .= '<li><a href="admin.php?page=sp-client-document-manager-categories" >'.__("Categories","sp-cdm").'</a></li>';
+		
+		}
+		
+		}
+
+
+	
+	$extra_menus .= '';
+	$extra_menus .= apply_filters('sp_client_upload_nav_menu', $extra_menus);
+	
+	$content .=''.$extra_menus.'</ul></li>';
+	}	
+
+if(current_user_can('sp_cdm_uploader') ){
+$content .= '<li><a href="admin.php?page=sp-client-document-manager-fileview" >'.__("User Files / Uploader","sp-cdm").'</a></li>
+			';
+}
+	
+$content .= '	
+
+	<li><a href="admin.php?page=sp-client-document-manager-help" >'.__("Instructions","sp-cdm").'</a></li>
+	</ul>';
+
+		if(CU_PREMIUM == 1){
 		
 		$ver = $sp_cdm_ver;
 		
 	}else{
 	$ver = $sp_client_upload;	
 	}
-$content .= '<strong>Version:</strong> '.get_option('sp_client_upload').'';
+	
+$content .= '<div style="text-align:right"><strong style="margin-right:10px">Version:</strong> '.get_option('sp_client_upload').'';
 if(CU_PREMIUM == 1){
-$content .= '<br><strong>Premium Version:</strong> '.get_option('sp_client_upload_premium').'';
+$content .= ' <strong style="margin-left:50px;margin-right:10px;">Premium Version:</strong> '.get_option('sp_client_upload_premium').'';
 }
+$content .='</div>';
+
+
 
 if($_GET['sphidemessage'] == 1){
 	
@@ -425,46 +483,12 @@ if(CU_PREMIUM != 1 && get_option("sp_cdm_ignore") != 1){
 		if(!function_exists('theme_my_login') && get_option('cdm_ignore_tml') != 1){
 	$content .= '<div class="sp_cdm_error">This plugin works great with the "Theme My Login" plugin which allows you to use your own template for login and registration. <strong>Please remember to turn on registration in your wordpress settings if you need to have users registering</strong>.<div style="padding:10px"> <a href="plugin-install.php?tab=search&s=theme+my+login&plugin-search-input=Search+Plugins" class="button">Click here to get theme my login.</a> or <a href="admin.php?page=sp-client-document-manager-settings&ignore=tml" class="button">click here to ignore this message</a>.</div></div>';	
 	}
-	do_action('sp_cdm_errors');		
-		
 	
-$content .='
-<div style="padding:10px;font-weight:bold">
 
-';
-
-if(current_user_can('sp_cdm') ){
-$content .='<a href="admin.php?page=sp-client-document-manager" class="button" style="margin-right:10px">'.__("Home","sp-cdm").'</a>';
-}
-if(current_user_can('sp_cdm_settings') ){
-$content .='<a href="admin.php?page=sp-client-document-manager-settings" class="button" style="margin-right:10px">'.__("Settings","sp-cdm").'</a>';
-}
-if(current_user_can('sp_cdm_vendors') ){
-$content .='<a href="admin.php?page=sp-client-document-manager-vendors" class="button" style="margin-right:10px">'.__("Vendors","sp-cdm").'</a>';	
-}
-if(current_user_can('sp_cdm_projects') ){
-$content .= '<a href="admin.php?page=sp-client-document-manager-projects" class="button" style="margin-right:10px">'.__("Projects","sp-cdm").'</a>';
-}
-
-
-if (CU_PREMIUM == 1){
-	if(current_user_can('sp_cdm_settings') ){
-$content .= '<a href="admin.php?page=sp-client-document-manager-groups" class="button" style="margin-right:10px">'.__("Groups","sp-cdm").'</a>';
-$content .= '<a href="admin.php?page=sp-client-document-manager-forms" class="button" style="margin-right:10px">'.__("Forms","sp-cdm").'</a>';
-
-$content .= '<a href="admin.php?page=sp-client-document-manager-categories" class="button" style="margin-right:10px">'.__("Categories","sp-cdm").'</a>';
-
-}
-$content .= '<a href="admin.php?page=sp-client-document-manager-help" class="button" style="margin-right:10px">'.__("Instructions","sp-cdm").'</a>
-';
-}
-if(current_user_can('sp_cdm_uploader') ){
-$content .= '<a href="admin.php?page=sp-client-document-manager-fileview" class="button"  style="margin-right:10px">'.__("User Files / Uploader","sp-cdm").'</a>';
-}
-$content .='</div>';	
-	return $content;
-}
-
+echo $content;
+do_action('sp_cdm_errors');	
+	}
+	
 add_action( 'cdm_nav_menu', 'sp_client_upload_nav_menu' ); 
 
 }

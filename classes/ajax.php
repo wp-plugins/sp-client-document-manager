@@ -381,7 +381,7 @@ $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST[
 		</tr>	
 		
 		';
-		if($_GET['pid'] != "" && get_option('sp_cu_user_projects') == 1 ){	
+		if($_GET['pid'] != ""  && $_GET['pid'] != "0" && get_option('sp_cu_user_projects') == 1 ){	
 			$r_project_info = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."sp_cu_project where id = ".$_GET['pid']."", ARRAY_A);
 	
 		echo '<tr>
@@ -536,7 +536,7 @@ function sp_cu_remove_project(){
 	$sort = $_GET['sort'];		
 	}
 	
-	if($_GET['pid'] == ""){
+	if($_GET['pid'] == "" or $_GET['pid'] == "0"){
 		if($_REQUEST['search'] != ""){
 		$search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$_REQUEST['search']."%')  ";	
 				
@@ -553,7 +553,8 @@ function sp_cu_remove_project(){
 		$search_file .= "  AND parent = 0   ";				
 	
 		}
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (pid = '".$_GET['pid']."') ".$search_file."  order by ".$sort ."  ", ARRAY_A);		
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (pid = '".$_GET['pid']."') ".$search_file."  order by ".$sort ."  ", ARRAY_A);	
+	echo "SELECT *  FROM ".$wpdb->prefix."sp_cu   where (pid = '".$_GET['pid']."') ".$search_file."  order by ".$sort ."  ";	
 	}
 	
 	for($i=0; $i<count( $r ); $i++){
@@ -840,7 +841,7 @@ function sp_cu_remove_project(){
 	$sort = $_GET['sort'];		
 	}
 	
-	if($_GET['pid'] == ""){
+	if($_GET['pid'] == "" or $_GET['pid'] == "0"){
 		if($_REQUEST['search'] != ""){
 		$search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$_REQUEST['search']."%')  ";				
 		}else{
