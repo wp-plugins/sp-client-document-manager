@@ -554,7 +554,7 @@ function sp_cu_remove_project(){
 	
 		}
 	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where (pid = '".$_GET['pid']."') ".$search_file."  order by ".$sort ."  ", ARRAY_A);	
-	echo "SELECT *  FROM ".$wpdb->prefix."sp_cu   where (pid = '".$_GET['pid']."') ".$search_file."  order by ".$sort ."  ";	
+	//echo "SELECT *  FROM ".$wpdb->prefix."sp_cu   where (pid = '".$_GET['pid']."') ".$search_file."  order by ".$sort ."  ";	
 	}
 	
 	for($i=0; $i<count( $r ); $i++){

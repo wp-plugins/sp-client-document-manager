@@ -483,8 +483,9 @@ if(CU_PREMIUM != 1 && get_option("sp_cdm_ignore") != 1){
 		if(!function_exists('theme_my_login') && get_option('cdm_ignore_tml') != 1){
 	$content .= '<div class="sp_cdm_error">This plugin works great with the "Theme My Login" plugin which allows you to use your own template for login and registration. <strong>Please remember to turn on registration in your wordpress settings if you need to have users registering</strong>.<div style="padding:10px"> <a href="plugin-install.php?tab=search&s=theme+my+login&plugin-search-input=Search+Plugins" class="button">Click here to get theme my login.</a> or <a href="admin.php?page=sp-client-document-manager-settings&ignore=tml" class="button">click here to ignore this message</a>.</div></div>';	
 	}
-	
-
+	$after_menu .= '';
+	$after_menu .= apply_filters('sp_cdm_aftermenu',$after_menu);
+	$content .= $after_menu;
 echo $content;
 do_action('sp_cdm_errors');	
 	}
