@@ -56,6 +56,9 @@ WP_Filesystem();
 remove_filter('filesystem_method', '_return_direct');
 	
 	global $wp_filesystem;	
+	
+	
+	
 	echo  unzip_file( $_FILES['premium']['tmp_name'],''.ABSPATH.'wp-content/plugins/sp-client-document-manager/' );	
 	echo '<script type="text/javascript">
 <!--
