@@ -132,7 +132,7 @@ if(! isset($ALLOWED_SITES)){
 // -------------------------------------------------------------
 
 // MULTISITE FIX by LukeAmerica 2011-08-22 (part 1 of 2) (2 at line #805)
-require( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
+require( '../../../../wp-load.php' );
 
 
 
