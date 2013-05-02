@@ -596,7 +596,7 @@ Major updates, new uploader and fixes to admin upload functions
 
 * Fixed an error when viewing admin uploader and users are part of a group
 
-= 1.6.3  = 
+= 1.6.3 = 
 
 * Fixed a security hole when backing out of a project displaying files from other useres.
 * Fixed a bug that was not allowing the adding of projects in the admin file uploader.
