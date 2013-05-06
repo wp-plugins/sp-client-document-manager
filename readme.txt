@@ -1,16 +1,16 @@
 === Plugin Name ===
 Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
-Tags: Project Management, web based document manager,online website document organization, share online documents securely, customer file manager, client files,
+Tags: Project Management, web based document manager,online website documents organization, share documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.6.5
+Stable tag: 1.6.6
 
-SP Client Document Manager allows you to manage your documents and files online. This multi-functional document and file manager gives your company the power to have your clients, employees, sub-contractors, vendors and your company – upload, group, distribute and organize all company documents and files.
+SP Online Client Document & Project Manager. Multi-functional - upload, group, distribute and organize all documents & files.
 
 == Description ==
 
-A sophisticated online document manager, the plug-in provides assurances that the user has complete control over the flow of information. Businesses utilizing the SP CDM are able to maintain web based document organization, manage client documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
+Online document & project manager, the plug-in provides assurances that the user has complete control over the flow of information. Businesses utilizing the SP CDM are able to maintain web based document organization, manage client documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
 This new SP plug-in also demonstrates how quickly a business can take hold of their interactions with clients, vendors, and all in between.  With a straight-forward layout, access to template modifications and easy to manage features; clients can add and modify projects.
 
 
@@ -86,18 +86,23 @@ Login with:  user: test   password: test
 
 * Dropbox integration to allow your users to import files directly from their dropbox
 * Add unlimited sub folders for better organizing
+* File importer, upload and multiple files with a zip file.
 
 **Categories**
+
 * Add Categories
 * Manage Categories allow an admin to designate categories for the user to select, for example a print company could use categories as statuses (Mockup, Draft and Final)
 
+
 **Projects**
+
 * Allow a user to create projects
 * Collaborate with other users with groups
 * Assign a file or files to a project
 * Manage Projects
 	
 **Clients**
+
 * Client can view all categories set by admin
 
 Full Support Available through email or Skype. 
@@ -121,7 +126,6 @@ Coming Soon Add-on packs available for more features!
 
 * Upload the plugin to your plugins folder
 * Activate the plugin
-* Install "Theme my login" plugin for seamless user experience
 * Create a new page and enter the shortcode [sp-client-document-manager]  
 * Go to the plugin admin page and click settings to configure the plugin  (VERY IMPORTANT!)  
 * If you're using the premium version please upload the zip archive in the settings area. 
@@ -610,3 +614,10 @@ Major updates, new uploader and fixes to admin upload functions
 = 1.6.5 = 
 
 *Update to timthumb
+
+= 1.6.6 =
+
+* Fixed an issue with imageMagick
+* New field for ImageMagick that lets you specify a custom location of your imageMagick convert app
+* Sanitize file names to remove special characters and invalid characters from the URL
+* Few minor bug fixes.
