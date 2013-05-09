@@ -1032,7 +1032,7 @@ if($_GET['dlg-delete-file'] != ""){
 
 		
 
-		unlink(''.SP_CDM_UPLOADS_DIR.''.$user_id.'/'.$r[0]['file'].'');
+		@unlink(''.SP_CDM_UPLOADS_DIR.''.$user_id.'/'.$r[0]['file'].'');
 
 	
 
@@ -1360,7 +1360,10 @@ function sp_cdm_showFile(file){
 
 			}else{
 
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'classes/thumb.php?src='.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';	
+	
+
+				
+			$img = '<img src="'.sp_cdm_thumbnail(''.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'',80,80).'">';	
 
 			}
 
@@ -1480,7 +1483,7 @@ function sp_cdm_showFile(file){
 
    
 
-    <td><a style="margin-right:15px" href="javascript:sp_cdm_showFile('.$r[$i]['id'].')" >'.__("View","sp-cdm").'</a> <a href="'.$delete_page .'&dlg-delete-file='.$r[$i]['id'].'&user_id='.$r[$i]['uid'].'#downloads">'.__("Delete","sp-cdm").'</a> </td>
+    <td><a style="margin-right:15px" href="javascript:sp_cdm_showFile('.$r[$i]['id'].')" >'.__("View","sp-cdm").'</a> <a href="'.$delete_page .'&dlg-delete-file='.$r[$i]['id'].'#downloads">'.__("Delete","sp-cdm").'</a> </td>
 
 <td><input type="checkbox" name="vendor_email[]" value="'.$r[$i]['id'].'"></td>	</tr>
 

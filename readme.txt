@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: Project Management, web based document manager,online website documents organization, share documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.6.7
+Stable tag: 1.6.8
 
 SP Online Client Document & Project Manager. Multi-functional - upload, group, distribute and organize all documents & files.
 
@@ -621,3 +621,9 @@ Major updates, new uploader and fixes to admin upload functions
 * New field for ImageMagick that lets you specify a custom location of your imageMagick convert app
 * Sanitize file names to remove special characters and invalid characters from the URL
 * Few minor bug fixes.
+
+= 1.6.8 =
+
+* No more dependency on timthumb, using a wordpress native thumbnail resizer.
+* Fixed issue with downloads link in email
+* Fixed deleting of files in admin redirecting to wrong page

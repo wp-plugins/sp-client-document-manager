@@ -270,7 +270,7 @@ $html .='<div id="cdm-file-revisions"><div id="cdm_comments"><h4>'.__("Revision 
 
 			}else{
 
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'classes/thumb.php?src='.SP_CDM_UPLOADS_DIR_URL.''.$r[0]['uid'].'/'.$r[0]['file'].'&w=250&h=250">';	
+			$img = '<img src="'.sp_cdm_thumbnail(''.SP_CDM_UPLOADS_DIR_URL.''.$r[0]['uid'].'/'.$r[0]['file'].'',250,250).'">';	
 
 			}
 
@@ -1746,7 +1746,7 @@ function sp_cu_remove_project(){
 
 			}else{
 
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'classes/thumb.php?src='.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'&w=80&h=80">';	
+			$img = '<img src="'.sp_cdm_thumbnail(''.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'',80,80).'">';	
 
 			}
 

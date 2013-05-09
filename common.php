@@ -1,7 +1,11 @@
 <?php
 
 
-
+function sp_cdm_thumbnail($url,$w,$h){
+	global $wpdb;
+	$params = array('width' => 400, 'height' => $h,'width' => $w, 'crop' => true);
+			return bfi_thumb($url, $params);
+}
 
 
 function sp_cdm_get_project_name($id){
