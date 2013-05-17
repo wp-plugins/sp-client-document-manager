@@ -764,7 +764,7 @@ $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST[
 
 		';
 
-		if($_GET['pid'] != ""  && $_GET['pid'] != "0" && get_option('sp_cu_user_projects') == 1 ){	
+		if(($_GET['pid'] != "0" && $_GET['pid'] != '') && (get_option('sp_cu_user_projects') == 1  or current_user_can( 'manage_options' ))  ){	
 
 			$r_project_info = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."sp_cu_project where id = ".$_GET['pid']."", ARRAY_A);
 

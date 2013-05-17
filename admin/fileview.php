@@ -707,7 +707,7 @@ if (CU_PREMIUM == 1){
 	
 	$html .='</select>';
 	
-	if(get_option('sp_cu_user_projects') == 1){
+	if(get_option('sp_cu_user_projects') == 1  or current_user_can( 'manage_options' )){
 		
 		$html .= '<a href="javascript:sp_cu_dialog(\'#sp_cu_add_project\',550,130)" class="button" style="margin-left:15px">'.__("Add Project","sp-cdm").'</a>
 		

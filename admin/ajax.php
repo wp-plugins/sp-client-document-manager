@@ -658,7 +658,7 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 
 		';
 
-		if($_GET['pid'] != "" && get_option('sp_cu_user_projects') == 1 ){	
+		if(($_GET['pid'] != "0" && $_GET['pid'] != '') && (get_option('sp_cu_user_projects') == 1  or current_user_can( 'manage_options' ))   ){	
 
 			$r_project_info = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."sp_cu_project where id = ".$_GET['pid']."", ARRAY_A);
 
@@ -1138,7 +1138,7 @@ $search_file .= " AND (name LIKE '%".$_REQUEST['search']."%' or  tags LIKE '%".$
 
 		
 
-		if((($_GET['pid'] != "" && get_option('sp_cu_user_projects') == 1) && ($_GET['uid'] == $r_current_project[0]['uid'])) or (cdmFindLockedGroup($current_user->ID ,$r_current_project[0]['uid']) == true) ){	
+		if((($_GET['pid'] != "0" && $_GET['pid'] != '') && (get_option('sp_cu_user_projects') == 1  or current_user_can( 'manage_options' ))   && ($_GET['uid'] == $r_current_project[0]['uid'])) or (cdmFindLockedGroup($current_user->ID ,$r_current_project[0]['uid']) == true) ){	
 
 		$r_project_info = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."sp_cu_project where id = ".$_GET['pid']."", ARRAY_A);
 
