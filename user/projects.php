@@ -16,13 +16,13 @@ function sp_cdm_display_projects(){
 
 
 
+$html = '';
 
 
 
+if(@$_GET['id'] != '' && user_can($current_user->ID,'manage_options')){
 
-if($_GET['id'] != '' && user_can($current_user->ID,'manage_options')){
-
-	$uid = $_GET['id'];	
+	$uid = @$_GET['id'];	
 
 }else{
 
@@ -32,7 +32,7 @@ if($_GET['id'] != '' && user_can($current_user->ID,'manage_options')){
 
 
 
-if($_POST['add-project'] != ""){
+if(@$_POST['add-project'] != ""){
 
 	
 
@@ -48,10 +48,12 @@ if($_POST['add-project'] != ""){
 
 
 
-if (CU_PREMIUM == 1){  	
+if (@CU_PREMIUM == 1){  	
 
 		$find_groups = cdmFindGroups($uid,'_project');
 
+			 }else{
+				$find_groups = ''; 
 			 }
 
 

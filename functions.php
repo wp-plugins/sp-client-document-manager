@@ -1,298 +1,185 @@
 <?php
+if (!function_exists('sp_client_upload_settings')) {
+    function cdmFindLockedGroup($uid, $creator_id)
+    {
+        global $wpdb;
+        $r_group_user = $wpdb->get_results("SELECT " . $wpdb->prefix . "sp_cu_groups_assign.gid,
 
+											  " . $wpdb->prefix . "sp_cu_groups_assign.uid,
 
+											  " . $wpdb->prefix . "sp_cu_groups_assign.id AS asign_id,
 
-
-
-if (!function_exists('sp_client_upload_settings')){
-
-
-
-
-
-function cdmFindLockedGroup($uid, $creator_id){
-
-		global $wpdb;
-
-			
-
-$r_group_user = $wpdb->get_results("SELECT ".$wpdb->prefix."sp_cu_groups_assign.gid,
-
-											  ".$wpdb->prefix."sp_cu_groups_assign.uid,
-
-											  ".$wpdb->prefix."sp_cu_groups_assign.id AS asign_id,
-
-											  ".$wpdb->prefix."sp_cu_groups.name,
+											  " . $wpdb->prefix . "sp_cu_groups.name,
 
 											
 
-											  ".$wpdb->prefix."sp_cu_groups.id AS group_id
+											  " . $wpdb->prefix . "sp_cu_groups.id AS group_id
 
-											    FROM ".$wpdb->prefix."sp_cu_groups_assign 
+											    FROM " . $wpdb->prefix . "sp_cu_groups_assign 
 
-												LEFT JOIN   ".$wpdb->prefix."sp_cu_groups ON ".$wpdb->prefix."sp_cu_groups_assign.gid = ".$wpdb->prefix."sp_cu_groups.id
+												LEFT JOIN   " . $wpdb->prefix . "sp_cu_groups ON " . $wpdb->prefix . "sp_cu_groups_assign.gid = " . $wpdb->prefix . "sp_cu_groups.id
 
-												WHERE uid = '".$uid."' ", ARRAY_A);
+												WHERE uid = '" . $uid . "' ", ARRAY_A);
+        $serve        = 0;
+        for ($i = 0; $i < count($r_group_user); $i++) {
+            if ($r_group_user[$i]['gid'] != "") {
+                $r_group_user_select[$i] = $wpdb->get_results("SELECT * FROM  " . $wpdb->prefix . "sp_cu_groups_assign  
 
-	
+										LEFT JOIN " . $wpdb->prefix . "sp_cu_groups ON  " . $wpdb->prefix . "sp_cu_groups_assign.gid = " . $wpdb->prefix . "sp_cu_groups.id 
 
-
-
-	$serve = 0;
-
-	
-
-	for($i=0; $i<count($r_group_user ); $i++){
-
-		if($r_group_user[$i]['gid'] != ""){				
-
-					$r_group_user_select[$i] = $wpdb->get_results("SELECT * FROM  ".$wpdb->prefix."sp_cu_groups_assign  
-
-										LEFT JOIN ".$wpdb->prefix."sp_cu_groups ON  ".$wpdb->prefix."sp_cu_groups_assign.gid = ".$wpdb->prefix."sp_cu_groups.id 
-
-										WHERE ".$wpdb->prefix."sp_cu_groups_assign.uid = ".$creator_id." AND ".$wpdb->prefix."sp_cu_groups_assign.gid = ".$r_group_user[$i]['group_id']." ", ARRAY_A);
-
-					
-
-		
-
-					if($r_group_user_select[$i][0]['id'] != "" && $r_group_user_select[$i][0]['locked'] == 1 ){
-
-					$serve += 1;	
-
-					}
-
-		}
-
-	}
-
-	
-
-		
-
-
-
-														
-
-		if($serve > 0){
-
-			
-
-			return true;
-
-		}else{
-
-		return false;	
-
-		}
-
-	}	
-
-	
-
-	
-
-function cdm_thumbPdf($pdf)
-
-{
-
-    try
-
-    {
-
-        $tmp = SP_CDM_UPLOADS_DIR;
-
-        $format = "png";
-
-        $source = $pdf;
-
-		
-
-        $dest =  "".$pdf."_small.$format";
-
- 		$dest2 = "".$pdf."_big.$format";
-
-      
-if(get_option('sp_cu_image_magick_path') != ''){
-$imageMagick_path = get_option('sp_cu_image_magick_path');	
-}else{
-$imageMagick_path = '/usr/local/bin/convert';		
-}
-	  
-			
-       $exec = "".$imageMagick_path." -scale 80x80 ".$source."[0] $dest";
-
-			$debug.= $exec.'<br>' ;
-
-          exec($exec,$output,$result);
-		if ($result != true ){
-		 
-		}else{
-		$debug.='<br>Converted: '.$result.'<br>';	
-		}
-
-
-			 $exec2 = "".$imageMagick_path." -scale 250x250 ".$source."[0] $dest2";			
-	$debug.= $exec2.'<br>' ;
-            
-  exec($exec2,$output,$result);
-		if ($result != true ){
-		 
-		}else{
-		$debug.='<br>Converted: '.$result.'<br>';		
-		}
-		
-
- 
-
-        $im = new Imagick($dest);
-
-   
-
+										WHERE " . $wpdb->prefix . "sp_cu_groups_assign.uid = " . $creator_id . " AND " . $wpdb->prefix . "sp_cu_groups_assign.gid = " . $r_group_user[$i]['group_id'] . " ", ARRAY_A);
+                if ($r_group_user_select[$i][0]['id'] != "" && $r_group_user_select[$i][0]['locked'] == 1) {
+                    $serve += 1;
+                }
+            }
+        }
+        if ($serve > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
-
-    catch(Exception $e)
-
+    function cdm_thumbPdf($pdf)
     {
-
-    // echo $e->getMessage();
-	$debug.= $e->getMessage().'<br>' ;
+        try {
+            $tmp    = SP_CDM_UPLOADS_DIR;
+            $format = "png";
+            $source = $pdf;
+            $dest   = "" . $pdf . "_small.$format";
+            $dest2  = "" . $pdf . "_big.$format";
+            if (get_option('sp_cu_image_magick_path') != '') {
+                $imageMagick_path = get_option('sp_cu_image_magick_path');
+            } else {
+                $imageMagick_path = '/usr/local/bin/convert';
+            }
+            $exec = "" . $imageMagick_path . " -scale 80x80 " . $source . "[0] $dest";
+            $debug .= $exec . '<br>';
+            exec($exec, $output, $result);
+            if ($result != true) {
+            } else {
+                $debug .= '<br>Converted: ' . $result . '<br>';
+            }
+            $exec2 = "" . $imageMagick_path . " -scale 250x250 " . $source . "[0] $dest2";
+            $debug .= $exec2 . '<br>';
+            exec($exec2, $output, $result);
+            if ($result != true) {
+            } else {
+                $debug .= '<br>Converted: ' . $result . '<br>';
+            }
+            $im = new Imagick($dest);
+        }
+        catch (Exception $e) {
+            // echo $e->getMessage();
+            $debug .= $e->getMessage() . '<br>';
+        }
     }
-
-		
-
-		
-	
-
-}
-
-
-
-
-
-
-
-function sp_client_upload_settings(){
-
-	
-
-global $wpdb;
-
-	
-
-	
-
-	if($_GET['save_options'] == 1){
-
-		
-
-
-
-		
-
-			foreach( $_POST as $key => $value){
-
-				
-
+    function sp_client_upload_settings()
+    {
+        global $wpdb;
+        if (@$_GET['save_options'] == 1) {
+            foreach ($_POST as $key => $value) {
+                update_option($key, $value);
+            }
+            if ($_POST['sp_cu_user_projects'] == "1") {
+                update_option('sp_cu_user_projects', '1');
+            } else {
+                update_option('sp_cu_user_projects', '0');
+            }
+            if ($_POST['sp_cu_user_projects_required'] == "1") {
+                update_option('sp_cu_user_projects_required', '1');
+            } else {
+                update_option('sp_cu_user_projects_required', '0');
+            }
+            if ($_POST['sp_cu_js_redirect'] == "1") {
+                update_option('sp_cu_js_redirect', '1');
+            } else {
+                update_option('sp_cu_js_redirect', '0');
+            }
+            if ($_POST['sp_cu_user_uploads_disable'] == "1") {
+                update_option('sp_cu_user_uploads_disable', '1');
+            } else {
+                update_option('sp_cu_user_uploads_disable', '0');
+            }
+            if ($_POST['sp_cu_user_delete_disable'] == "1") {
+                update_option('sp_cu_user_delete_disable', '1');
+            } else {
+                update_option('sp_cu_user_delete_disable', '0');
+            }
+            if ($_POST['sp_cu_hide_project'] == "1") {
+                update_option('sp_cu_hide_project', '1');
+            } else {
+                update_option('sp_cu_hide_project', '0');
+            }
+            if ($_POST['sp_cu_user_require_login_download'] == "1") {
+                update_option('sp_cu_user_require_login_download', '1');
+            } else {
+                update_option('sp_cu_user_require_login_download', '0');
+            }
+			 if ($_POST['sp_cu_user_projects_modify'] == "1") {
+                update_option('sp_cu_user_projects_modify', '1');
+            } else {
+                update_option('sp_cu_user_projects_modify', '0');
+            }
 			
-
-	
-
-				
-
-				update_option( $key,$value ); 
-
-	
-
-			}
-
 			
-
-			
-
-				
-
-	if($_POST['sp_cu_user_projects'] == "1"){update_option('sp_cu_user_projects','1' ); }else{update_option('sp_cu_user_projects','0' );	}
-
-	if($_POST['sp_cu_user_projects_required'] == "1"){update_option('sp_cu_user_projects_required','1' ); }else{update_option('sp_cu_user_projects_required','0' );	}
-
+        }
+        if (get_option('sp_cu_user_projects_required') == 1) {
+            $sp_cu_user_projects_required = ' checked="checked" ';
+        } else {
+            $sp_cu_user_projects_required = '  ';
+        }
+        if (get_option('sp_cu_user_projects') == 1) {
+            $sp_cu_user_projects = ' checked="checked" ';
+        } else {
+            $sp_cu_user_projects = '  ';
+        }
+        if (get_option('sp_cu_js_redirect') == 1) {
+            $sp_cu_js_redirect = ' checked="checked" ';
+        } else {
+            $sp_cu_js_redirect = '  ';
+        }
+        if (get_option('sp_cu_user_uploads_disable') == 1) {
+            $sp_cu_user_uploads_disable = ' checked="checked" ';
+        } else {
+            $sp_cu_user_uploads_disable = '  ';
+        }
+        if (get_option('sp_cu_user_delete_disable') == 1) {
+            $sp_cu_user_delete_disable = ' checked="checked" ';
+        } else {
+            $sp_cu_user_delete_disable = '  ';
+        }
+        if (get_option('sp_cu_hide_project') == 1) {
+            $sp_cu_hide_project = ' checked="checked" ';
+        } else {
+            $sp_cu_hide_project = '  ';
+        }
+        if (get_option('sp_cu_user_require_login_download') == 1) {
+            $sp_cu_user_require_login_download = ' checked="checked" ';
+        } else {
+            $sp_cu_user_require_login_download = '  ';
+        }
+		
+		 if (get_option('sp_cu_user_projects_modify') == 1) {
+            $sp_cu_user_projects_modify = ' checked="checked" ';
+        } else {
+            $sp_cu_user_projects_modify = '  ';
+        }
+		
 	
-
-	if($_POST['sp_cu_js_redirect'] == "1"){update_option('sp_cu_js_redirect','1' ); }else{update_option('sp_cu_js_redirect','0' );	}		
-
-			
-
-	if($_POST['sp_cu_user_uploads_disable'] == "1"){update_option('sp_cu_user_uploads_disable','1' ); }else{update_option('sp_cu_user_uploads_disable','0' );	}	
-
-	if($_POST['sp_cu_user_delete_disable'] == "1"){update_option('sp_cu_user_delete_disable','1' ); }else{update_option('sp_cu_user_delete_disable','0' );	}
-
-	if($_POST['sp_cu_hide_project'] == "1"){update_option('sp_cu_hide_project','1' ); }else{update_option('sp_cu_hide_project','0' );	}	
-
-	
-
-	if($_POST['sp_cu_user_require_login_download'] == "1"){update_option('sp_cu_user_require_login_download','1' ); }else{update_option('sp_cu_user_require_login_download','0' );	}						
-
-	}
-
-	
-
-	
-
-	
-
-	if(get_option('sp_cu_user_projects_required') == 1){ $sp_cu_user_projects_required = ' checked="checked" ';	}else{ $sp_cu_user_projects_required = '  '; }
-
-	if(get_option('sp_cu_user_projects') == 1){ $sp_cu_user_projects = ' checked="checked" ';	}else{ $sp_cu_user_projects = '  '; }
-
-	
-
-	if(get_option('sp_cu_js_redirect') == 1){ $sp_cu_js_redirect = ' checked="checked" ';	}else{ $sp_cu_js_redirect = '  '; }
-
-	
-
-	if(get_option('sp_cu_user_uploads_disable') == 1){ $sp_cu_user_uploads_disable = ' checked="checked" ';	}else{ $sp_cu_user_uploads_disable = '  '; }
-
-	if(get_option('sp_cu_user_delete_disable') == 1){ $sp_cu_user_delete_disable = ' checked="checked" ';	}else{ $sp_cu_user_delete_disable = '  '; }
-
-	if(get_option('sp_cu_hide_project') == 1){ $sp_cu_hide_project = ' checked="checked" ';	}else{ $sp_cu_hide_project = '  '; }
-
-	if(get_option('sp_cu_user_require_login_download') == 1){ $sp_cu_user_require_login_download = ' checked="checked" ';	}else{ $sp_cu_user_require_login_download = '  '; }
-
-	
-
-	
-
-	echo '<h2>Settings</h2>'.sp_client_upload_nav_menu().'';	 
-
-	
-
-	
-
-
-
-	echo '
+        echo '<h2>Settings</h2>' . sp_client_upload_nav_menu() . '';
+        echo '
 
 <div style="border:1px solid #CCC;padding:5px;margin:5px;background-color:#e3f1d4;">';
-
-
-
-if(CU_PREMIUM != 1){
-
-
-
-echo '<h3>Upgrade to premium!</h3>
+        if (@CU_PREMIUM != 1) {
+            echo '<h3>Upgrade to premium!</h3>
 
 <p>If you would like to see the extra features and upgrade to premium please purchase the addon package by <a href="http://smartypantsplugins.com/sp-client-document-manager/" target="_blank">clicking here</a>. Once purchased you will receive a file, upload that file to your plugins directory or go to plugins > add new > upload and upload the zip file. Once you upload activate the plugin and let the fun begin!</p>';
-
-}else{
-
-echo '<h3>Thanks for upgrading!</h3>
+        } else {
+            echo '<h3>Thanks for upgrading!</h3>
 
 <p>If you need to update the premium version of this plugin you can either overwrite the contents of the directory with the new version or use the wordpress plugin manager to delete the old version and add the new version.</p>';
-
-}
-
-	echo '
+        }
+        echo '
 
 
 
@@ -312,59 +199,27 @@ echo '<h3>Thanks for upgrading!</h3>
 
     <td width="300"><strong>Company Name</strong><br><em>This could be your name or your company name which will go in the "from" area in the vendor email.</em></td>
 
-    <td><input type="text" name="sp_cu_company_name"  value="'.get_option('sp_cu_company_name').'"  size=80"> </td>
+    <td><input type="text" name="sp_cu_company_name"  value="' . get_option('sp_cu_company_name') . '"  size=80"> </td>
 
   </tr>';
-
-        
-
-
-
-   
-
-     
-
-    $timeZones = DateTimeZone::listIdentifiers();
-
-$time_select .= '<select name="sp_cu_time_zone">';
-
-
-
-foreach ( $timeZones as $timeZone ) {
-
-	
-
-	if($timeZone == get_option('sp_cu_time_zone')){
-
-		
-
-		$selected = 'selected="selected"';
-
-	}else{
-
-		$selected = '';
-
-	}
-
-	$time_select .= '<option value="'.$timeZone.'" '.$selected.'>'.$timeZone.'</option>';
-
-
-
-}
-
-$time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y, g:i a").'</em>';
-
-   
-
-   
-
-       echo '
+        $timeZones = DateTimeZone::listIdentifiers();
+        $time_select .= '<select name="sp_cu_time_zone">';
+        foreach ($timeZones as $timeZone) {
+            if ($timeZone == get_option('sp_cu_time_zone')) {
+                $selected = 'selected="selected"';
+            } else {
+                $selected = '';
+            }
+            $time_select .= '<option value="' . $timeZone . '" ' . $selected . '>' . $timeZone . '</option>';
+        }
+        $time_select .= '</select><br><em>Based on your setttings it is: ' . date("F j, Y, g:i a") . '</em>';
+        echo '
 
 		  <tr>
 
     <td width="300"><strong>Time Zone</strong><br><em>Set your timezone for the below settings.</em></td>
 
-    <td>'.$time_select.' </td>
+    <td>' . $time_select . ' </td>
 
   </tr>
 
@@ -398,9 +253,9 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 
 	</td>
 
-    <td><input type="text" name="sp_cu_filename_format"  value="'.get_option('sp_cu_filename_format').'"  size=80"><br><div style="margin:5px;padding:5px;"> Example:<br><br>
+    <td><input type="text" name="sp_cu_filename_format"  value="' . get_option('sp_cu_filename_format') . '"  size=80"><br><div style="margin:5px;padding:5px;"> Example:<br><br>
 
-	If the user uploads a file called example.pdf and you put<strong>  %y-%m-%d-</strong> the final file name  will be: <strong>'.date("Y").'-'.date("m").'-'.date("d").'-example.pdf</strong></div></td>
+	If the user uploads a file called example.pdf and you put<strong>  %y-%m-%d-</strong> the final file name  will be: <strong>' . date("Y") . '-' . date("m") . '-' . date("d") . '-example.pdf</strong></div></td>
 
   </tr>
 
@@ -408,7 +263,7 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 
     <td width="300"><strong>Thank you message</strong><br><em>This is the thank you text the user sees after they upload.</em></td>
 
-    <td><input type="text" name="sp_cu_thankyou"  value="'.get_option('sp_cu_thankyou').'"  size=80"> </td>
+    <td><input type="text" name="sp_cu_thankyou"  value="' . get_option('sp_cu_thankyou') . '"  size=80"> </td>
 
   </tr>
 
@@ -416,7 +271,7 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 
     <td width="300"><strong>Delete Message</strong><br><em>The confirmation screen asking the user if they want to delete the file.</em></td>
 
-    <td><input type="text" name="sp_cu_delete"  value="'.get_option('sp_cu_delete').'"  size=80"> </td>
+    <td><input type="text" name="sp_cu_delete"  value="' . get_option('sp_cu_delete') . '"  size=80"> </td>
 
   </tr>
 
@@ -426,7 +281,7 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 
     <td width="300"><strong>Disable User Uploads?</strong><br><em>Check this box to disable user uploads.</em></td>
 
-    <td><input type="checkbox" name="sp_cu_user_uploads_disable"   value="1" '. $sp_cu_user_uploads_disable.'> </td>
+    <td><input type="checkbox" name="sp_cu_user_uploads_disable"   value="1" ' . $sp_cu_user_uploads_disable . '> </td>
 
   </tr>
 
@@ -436,7 +291,7 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 
     <td width="300"><strong>Disable User Deleting?</strong><br><em>Check this box to not allow user to delete file.</em></td>
 
-    <td><input type="checkbox" name="sp_cu_user_delete_disable"   value="1" '. $sp_cu_user_delete_disable.'> </td>
+    <td><input type="checkbox" name="sp_cu_user_delete_disable"   value="1" ' . $sp_cu_user_delete_disable . '> </td>
 
   </tr>
 
@@ -446,25 +301,31 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 
     <td width="300"><strong>Hide project if empty?</strong><br><em>Hide a project if there are no files on it.</em></td>
 
-    <td><input type="checkbox" name="sp_cu_hide_project"   value="1" '. $sp_cu_hide_project.'> </td>
+    <td><input type="checkbox" name="sp_cu_hide_project"   value="1" ' . $sp_cu_hide_project . '> </td>
 
   </tr>
 
     <tr>
 
-    <td width="300"><strong>User Projects?</strong><br><em>If you want to allow the user to create projects check this box.</em></td>
+    <td width="300"><strong>Allow users to create projects?</strong><br><em>If you want to allow the user to create projects check this box.</em></td>
 
-    <td><input type="checkbox" name="sp_cu_user_projects"   value="1" '. $sp_cu_user_projects.'> </td>
+    <td><input type="checkbox" name="sp_cu_user_projects"   value="1" ' . $sp_cu_user_projects . '> </td>
 
   </tr>
+    <tr>
 
+    <td width="300"><strong>Do not allow user to delete or edit projects</strong><br><em>Check this box if you do not want the users to edit or delete projects.</em></td>
+
+    <td><input type="checkbox" name="sp_cu_user_projects_modify"   value="1" ' . $sp_cu_user_projects_modify . '> </td>
+
+  </tr>
 
 
     <tr>
 
     <td width="300"><strong>Form Instructions</strong><br><em>Just a short statement that will go above the upload form, you can use html!</em></td>
 
-    <td><textarea  name="sp_cu_form_instructions"  style="width:100%;height:60px" >'. stripslashes(get_option('sp_cu_form_instructions')).'</textarea> </td>
+    <td><textarea  name="sp_cu_form_instructions"  style="width:100%;height:60px" >' . stripslashes(get_option('sp_cu_form_instructions')) . '</textarea> </td>
 
   </tr>
 
@@ -479,28 +340,16 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
   
 
   ';
-
-  
-
- 
-
-  
-
-  if(class_exists('cdmProductivityGoogle')){
-
-	  
-
-	echo '   <tr>
+        if (class_exists('cdmProductivityGoogle')) {
+            echo '   <tr>
 
     <td width="300"><strong>Google API Key</strong><br><em>This is your google API if you are using the google shortlink addon in the productivity suite, this also may be used for future google services integration.</em></td>
 
-    <td><input type="text" name="sp_cu_google_api_key"  value="'.get_option('sp_cu_google_api_key').'"  size=80"> </td>
+    <td><input type="text" name="sp_cu_google_api_key"  value="' . get_option('sp_cu_google_api_key') . '"  size=80"> </td>
 
-  </tr>';  
-
-  }
-
-  echo '
+  </tr>';
+        }
+        echo '
 
     <tr>
 
@@ -524,7 +373,7 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 
     <td width="300"><strong>Additional Admin Emails</strong><br><em>If you have additional people that need to get a copy of the admin when a user uploads a file then list them here seperated by a comma. You can also specify a wordpress role that would receive the email, so for instance if you have a custom role called "Customer Service" the email would be sent to everyone in the "Customer Service" Role. Roles should be lower case.</em></td>
 
-    <td><input style="width:100%" type="text" name="sp_cu_additional_user_emails" value="'. stripslashes(get_option('sp_cu_additional_user_emails')).'" ></td>
+    <td><input style="width:100%" type="text" name="sp_cu_additional_user_emails" value="' . stripslashes(get_option('sp_cu_additional_user_emails')) . '" ></td>
 
   </tr>
 
@@ -550,7 +399,7 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 
 	</td>
 
-    <td>Subject: <input style="width:100%" type="text" name="sp_cu_admin_email_subject" value="'.get_option('sp_cu_admin_email_subject').'"><br>Body:<br><textarea name="sp_cu_admin_email" style="width:100%" rows="15">'.get_option('sp_cu_admin_email').'</textarea> </td>
+    <td>Subject: <input style="width:100%" type="text" name="sp_cu_admin_email_subject" value="' . get_option('sp_cu_admin_email_subject') . '"><br>Body:<br><textarea name="sp_cu_admin_email" style="width:100%" rows="15">' . get_option('sp_cu_admin_email') . '</textarea> </td>
 
   </tr>
 
@@ -558,7 +407,7 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 
     <td width="300"><strong>Additional User Emails</strong><br><em>If you have additional people that need to get a copy of the email when a user uploads a file then list them here seperated by a comma.  You can also specify a wordpress role that would receive the email, so for instance if you have a custom role called "Customer Service" the email would be sent to everyone in the "Customer Service" Role. Roles should be lower case.</em></td>
 
-    <td><input style="width:100%" type="text" name="sp_cu_additional_admin_emails" value="'. stripslashes(get_option('sp_cu_additional_admin_emails')).'" ></td>
+    <td><input style="width:100%" type="text" name="sp_cu_additional_admin_emails" value="' . stripslashes(get_option('sp_cu_additional_admin_emails')) . '" ></td>
 
   </tr>
 
@@ -582,7 +431,7 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 
 	[client_documents] = Link to the client document manager</td>
 
-    <td>Subject: <input style="width:100%" type="text" name="sp_cu_user_email_subject" value="'.get_option('sp_cu_user_email_subject').'"><br>Body:<br><textarea name="sp_cu_user_email"  style="width:100%" rows="15">'.get_option('sp_cu_user_email').'</textarea> </td>
+    <td>Subject: <input style="width:100%" type="text" name="sp_cu_user_email_subject" value="' . get_option('sp_cu_user_email_subject') . '"><br>Body:<br><textarea name="sp_cu_user_email"  style="width:100%" rows="15">' . get_option('sp_cu_user_email') . '</textarea> </td>
 
   </tr>
 
@@ -617,20 +466,16 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 	
 
 	</td>';
+        if (get_option('sp_cu_overide_upload_path') != "" && !is_dir(get_option('sp_cu_overide_upload_path'))) {
+            $does_not_exist = '<span style="color:red">Uploads Directory does not exist, please remove the custom upload path or create the folder!';
+        }
+        echo '
 
-	if(get_option('sp_cu_overide_upload_path') != "" && !is_dir(get_option('sp_cu_overide_upload_path')) ){
-
-	$does_not_exist = '<span style="color:red">Uploads Directory does not exist, please remove the custom upload path or create the folder!';	
-
-	}
-
-	echo '
-
-    <td><span style="width:120px">System Path:</span> <input type="text" name="sp_cu_overide_upload_path"  value="'.get_option('sp_cu_overide_upload_path').'"  size=80"><br>
+    <td><span style="width:120px">System Path:</span> <input type="text" name="sp_cu_overide_upload_path"  value="' . get_option('sp_cu_overide_upload_path') . '"  size=80"><br>
 
 	<em><strong>Example: </strong><br>linux: /home/mysite/public_html/uploads/ <br>windows: C:\websites\mysite\uploads\</em><br><br><br>
 
-	   <span style="width:120px"> Direct URL:</span> <input type="text" name="sp_cu_overide_upload_url"  value="'.get_option('sp_cu_overide_upload_url').'"  size=80"><br>
+	   <span style="width:120px"> Direct URL:</span> <input type="text" name="sp_cu_overide_upload_url"  value="' . get_option('sp_cu_overide_upload_url') . '"  size=80"><br>
 
 	   	<em><strong>Example:</strong><br> http://mywebsites/uploads/</em>
 
@@ -648,7 +493,7 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 
     <td width="300"><strong>Require Login to Download?</strong><br><em>Check this option to require the user to login to download a file, this can only be used securely if you are not using the javascript downloads</em></td>
 
-    <td><input type="checkbox" name="sp_cu_user_require_login_download"   value="1" '. $sp_cu_user_require_login_download.'> </td>
+    <td><input type="checkbox" name="sp_cu_user_require_login_download"   value="1" ' . $sp_cu_user_require_login_download . '> </td>
 
   </tr>
 
@@ -658,7 +503,7 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 
     <td width="300"><strong>Javascript Redirect?</strong><br><em>If your on a windows system you need to use javascript redirection as FastCGI does not allow force download files.</em></td>
 
-    <td><input type="checkbox" name="sp_cu_js_redirect"   value="1" '. $sp_cu_js_redirect.'> </td>
+    <td><input type="checkbox" name="sp_cu_js_redirect"   value="1" ' . $sp_cu_js_redirect . '> </td>
 
   </tr>
 
@@ -666,13 +511,13 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
 
     <td width="300"><strong>Mandatory Projects?</strong><br><em>If you want to require that a user select a project then check this box.</em></td>
 
-    <td><input type="checkbox" name="sp_cu_user_projects_required"   value="1" '. $sp_cu_user_projects_required.'> </td>
+    <td><input type="checkbox" name="sp_cu_user_projects_required"   value="1" ' . $sp_cu_user_projects_required . '> </td>
 
   </tr>   <tr>
 
     <td width="300"><strong>WP Folder</strong><br><em>Use this option only if your wp installation is in a sub folder of your url. For instance if your site is www.example.com/blog/ then put /blog/ in the field. This helps find the uploads directory.</em></td>
 
-    <td><input type="text" name="sp_cu_wp_folder"  value="'.get_option('sp_cu_wp_folder').'"  size=80"> </td>
+    <td><input type="text" name="sp_cu_wp_folder"  value="' . get_option('sp_cu_wp_folder') . '"  size=80"> </td>
 
   </tr>  <tr>
 
@@ -687,14 +532,8 @@ $time_select .= '</select><br><em>Based on your setttings it is: '. date("F j, Y
     <td><input type="submit" name="save_options" value="Save Options"></td>
 
   </tr></table>';
-
-
-
-do_action('cdm_premium_settings');
-
-
-
-echo '
+        do_action('cdm_premium_settings');
+        echo '
 
 
 
@@ -705,34 +544,12 @@ echo '
 	
 
 	';
-
-	
-
-	
-
-	
-
-	echo $content;
-
-	
-
-}
-
-
-
-if (!function_exists('sp_client_upload_help')){
-
-function sp_client_upload_help(){
-
-	
-
-	
-
-
-
-	
-
-echo '<h2>Smarty Pants Client Document Manager</h2>'.sp_client_upload_nav_menu().'
+        echo $content;
+    }
+    if (!function_exists('sp_client_upload_help')) {
+        function sp_client_upload_help()
+        {
+            echo '<h2>Smarty Pants Client Document Manager</h2>' . sp_client_upload_nav_menu() . '
 
 	
 
@@ -746,29 +563,16 @@ echo '<h2>Smarty Pants Client Document Manager</h2>'.sp_client_upload_nav_menu()
 
  
 
-';	
-
-	
-
-	
-
-}
-
-}
-
-if (!function_exists('sp_client_upload_nav_menu')){
-
-	
-
-	function sp_client_upload_nav_menu($nav = NULL){
-
-		global $cu_ver,$sp_client_upload,$sp_cdm_ver ;
-
-
-
-
-
-$content .= '
+';
+        }
+    }
+    if (!function_exists('sp_client_upload_nav_menu')) {
+        function sp_client_upload_nav_menu($nav = NULL)
+        {
+			
+			$content ='';
+            global $cu_ver, $sp_client_upload, $sp_cdm_ver;
+            $content .= '
 
 	<script type="text/javascript">
 
@@ -783,130 +587,52 @@ $content .= '
 	
 
 	<ul id="menu1" style="margin-top:20px;margin-bottom:10px;">';
-
-	
-
-	if(current_user_can('sp_cdm') ){
-
-	$content .='<li><a href="admin.php?page=sp-client-document-manager" >Home</a></li>';
-
-	}
-
-	if(current_user_can('sp_cdm_settings') ){
-
-	$content .='<li><a href="admin.php?page=sp-client-document-manager-settings" >'.__("Settings","sp-cdm").'</a><ul>';
-
-	
-
-	if(current_user_can('sp_cdm_vendors') ){
-
-	$content .='<li><a href="admin.php?page=sp-client-document-manager-vendors" >'.__("Vendors","sp-cdm").'</a></li>';	
-
-	}
-
-	if(current_user_can('sp_cdm_projects') ){
-
-$content .= '<li><a href="admin.php?page=sp-client-document-manager-projects" >'.__("Projects","sp-cdm").'</a></li>';
-
-}
-
-			
-
-			if (CU_PREMIUM == 1){
-
-			if(current_user_can('sp_cdm_settings') ){
-
-		$content .= '<li><a href="admin.php?page=sp-client-document-manager-groups" >'.__("Groups","sp-cdm").'</a></li>';
-
-		$content .= '<li><a href="admin.php?page=sp-client-document-manager-forms">'.__("Forms","sp-cdm").'</a></li>';
-
-		
-
-		$content .= '<li><a href="admin.php?page=sp-client-document-manager-categories" >'.__("Categories","sp-cdm").'</a></li>';
-
-		
-
-		}
-
-		
-
-		}
-
-
-
-
-
-	
-
-	$extra_menus .= '';
-
-	$extra_menus .= apply_filters('sp_client_upload_nav_menu', $extra_menus);
-
-	
-
-	$content .=''.$extra_menus.'</ul></li>';
-
-	}	
-
-
-
-if(current_user_can('sp_cdm_uploader') ){
-
-$content .= '<li><a href="admin.php?page=sp-client-document-manager-fileview" >'.__("User Files / Uploader","sp-cdm").'</a></li>
+            if (current_user_can('sp_cdm')) {
+                $content .= '<li><a href="admin.php?page=sp-client-document-manager" >Home</a></li>';
+            }
+            if (current_user_can('sp_cdm_settings')) {
+                $content .= '<li><a href="admin.php?page=sp-client-document-manager-settings" >' . __("Settings", "sp-cdm") . '</a><ul>';
+                if (current_user_can('sp_cdm_vendors')) {
+                    $content .= '<li><a href="admin.php?page=sp-client-document-manager-vendors" >' . __("Vendors", "sp-cdm") . '</a></li>';
+                }
+                if (current_user_can('sp_cdm_projects')) {
+                    $content .= '<li><a href="admin.php?page=sp-client-document-manager-projects" >' . __("Projects", "sp-cdm") . '</a></li>';
+                }
+                if (@CU_PREMIUM == 1) {
+                    if (current_user_can('sp_cdm_settings')) {
+                        $content .= '<li><a href="admin.php?page=sp-client-document-manager-groups" >' . __("Groups", "sp-cdm") . '</a></li>';
+                        $content .= '<li><a href="admin.php?page=sp-client-document-manager-forms">' . __("Forms", "sp-cdm") . '</a></li>';
+                        $content .= '<li><a href="admin.php?page=sp-client-document-manager-categories" >' . __("Categories", "sp-cdm") . '</a></li>';
+                    }
+                }
+                $extra_menus = '';
+                $extra_menus .= apply_filters('sp_client_upload_nav_menu', $extra_menus);
+                $content .= '' . $extra_menus . '</ul></li>';
+            }
+            if (current_user_can('sp_cdm_uploader')) {
+                $content .= '<li><a href="admin.php?page=sp-client-document-manager-fileview" >' . __("User Files / Uploader", "sp-cdm") . '</a></li>
 
 			';
-
-}
-
-	
-
-$content .= '	
+            }
+            $content .= '	
 
 
 
-	<li><a href="admin.php?page=sp-client-document-manager-help" >'.__("Instructions","sp-cdm").'</a></li>
+	<li><a href="admin.php?page=sp-client-document-manager-help" >' . __("Instructions", "sp-cdm") . '</a></li>
 
 	</ul>';
-
-
-
-		if(CU_PREMIUM == 1){
-
-		
-
-		$ver = $sp_cdm_ver;
-
-		
-
-	}else{
-
-	$ver = $sp_client_upload;	
-
-	}
-
-	
-
-$content .= '<div style="text-align:right"><strong style="margin-right:10px">Version:</strong> '.get_option('sp_client_upload').'';
-
-if(CU_PREMIUM == 1){
-
-$content .= ' <strong style="margin-left:50px;margin-right:10px;">Premium Version:</strong> '.get_option('sp_client_upload_premium').'';
-
-}
-
-$content .='</div>';
-
-
-
-
-
-
-
-if($_GET['sphidemessage'] == 1){
-
-	
-
-$content .='		
+            if (@CU_PREMIUM == 1) {
+                $ver = $sp_cdm_ver;
+            } else {
+                $ver = $sp_client_upload;
+            }
+            $content .= '<div style="text-align:right"><strong style="margin-right:10px">Version:</strong> ' . get_option('sp_client_upload') . '';
+            if (@CU_PREMIUM == 1) {
+                $content .= ' <strong style="margin-left:50px;margin-right:10px;">Premium Version:</strong> ' . get_option('sp_client_upload_premium') . '';
+            }
+            $content .= '</div>';
+            if (@$_GET['sphidemessage'] == 1) {
+                $content .= '		
 
 			<script type="text/javascript">
 
@@ -934,27 +660,14 @@ $content .='
 
 			</div>
 
-		    </div>';	
-
-			update_option("sp_cdm_ignore",1);
-
-}
-
-
-
-if($_GET['sphidemessage'] == '2'){
-
-	
-
-update_option("sp_cdm_ignore",0);	
-
-}
-
-if(CU_PREMIUM != 1 && get_option("sp_cdm_ignore") != 1){
-
-	
-
-	$content .='	
+		    </div>';
+                update_option("sp_cdm_ignore", 1);
+            }
+            if (@$_GET['sphidemessage'] == '2') {
+                update_option("sp_cdm_ignore", 0);
+            }
+            if (@CU_PREMIUM != 1 && get_option("sp_cdm_ignore") != 1) {
+                $content .= '	
 
 	<div style="border:1px solid #CCC;padding:5px;margin:5px;background-color:#eaf0ea; border-radius:10px">
 
@@ -965,150 +678,49 @@ if(CU_PREMIUM != 1 && get_option("sp_cdm_ignore") != 1){
 <a href="http://smartypantsplugins.com/sp-client-document-manager/" target="_blank" class="button">Click here to upgrade! </a> <a style="margin-left:10px" href="http://www.youtube.com/watch?feature=player_embedded&v=m6szdA3r-1Q" target="_blank" class="button">View the youtube video</a> <a style="margin-left:10px" href="http://smartypantsplugins.com/donate/" target="_blank" class="button">Click here to donate</a> <a href="admin.php?page=sp-client-document-manager&sphidemessage=1"  class="button" style="margin-left:10px">Click here to ignore us!</a></p>
 
 	</div>';
+            }
+            if (@$_GET['ignore'] == 'tml') {
+                add_option('cdm_ignore_tml', 1);
+            }
+            if (!function_exists('theme_my_login') && get_option('cdm_ignore_tml') != 1) {
+                $content .= '<div class="sp_cdm_error">This plugin works great with the "Theme My Login" plugin which allows you to use your own template for login and registration. <strong>Please remember to turn on registration in your wordpress settings if you need to have users registering</strong>.<div style="padding:10px"> <a href="plugin-install.php?tab=search&s=theme+my+login&plugin-search-input=Search+Plugins" class="button">Click here to get theme my login.</a> or <a href="admin.php?page=sp-client-document-manager-settings&ignore=tml" class="button">click here to ignore this message</a>.</div></div>';
+            }
+            echo $content;
+            do_action('sp_cdm_errors');
+        }
+        add_action('cdm_nav_menu', 'sp_client_upload_nav_menu');
+    }
+    if (!function_exists('sp_client_upload_admin')) {
+        function sp_client_upload_admin()
+        {
+            global $wpdb;
+			$html = '';
+            $user_id = @$_REQUEST['user_id'];
+            if (@$_GET['dlg-delete-file'] != "") {
+                $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where  id = " . $_GET['dlg-delete-file'] . "", ARRAY_A);
+                @unlink('' . SP_CDM_UPLOADS_DIR . '' . $user_id . '/' . $r[0]['file'] . '');
+                $wpdb->query("
 
-
-
-}
-
-		
-
-		if($_GET['ignore'] == 'tml'){
-
-		add_option('cdm_ignore_tml',1);	
-
-		}
-
-		
-
-		if(!function_exists('theme_my_login') && get_option('cdm_ignore_tml') != 1){
-
-	$content .= '<div class="sp_cdm_error">This plugin works great with the "Theme My Login" plugin which allows you to use your own template for login and registration. <strong>Please remember to turn on registration in your wordpress settings if you need to have users registering</strong>.<div style="padding:10px"> <a href="plugin-install.php?tab=search&s=theme+my+login&plugin-search-input=Search+Plugins" class="button">Click here to get theme my login.</a> or <a href="admin.php?page=sp-client-document-manager-settings&ignore=tml" class="button">click here to ignore this message</a>.</div></div>';	
-
-	}
-
-	
-
-
-
-echo $content;
-
-do_action('sp_cdm_errors');	
-
-	}
-
-	
-
-add_action( 'cdm_nav_menu', 'sp_client_upload_nav_menu' ); 
-
-
-
-}
-
-if (!function_exists('sp_client_upload_admin')){
-
-
-
-function sp_client_upload_admin(){
-
-	
-
-	global $wpdb;
-
-	
-
-	$user_id = $_REQUEST['user_id'];
-
-	
-
-
-
-if($_GET['dlg-delete-file'] != ""){
-
-	
-
-		$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where  id = ".$_GET['dlg-delete-file']."", ARRAY_A);
-
-		
-
-		
-
-		@unlink(''.SP_CDM_UPLOADS_DIR.''.$user_id.'/'.$r[0]['file'].'');
-
-	
-
-		$wpdb->query("
-
-	DELETE FROM ".$wpdb->prefix."sp_cu WHERE id = ".$_GET['dlg-delete-file']."
+	DELETE FROM " . $wpdb->prefix . "sp_cu WHERE id = " . $_GET['dlg-delete-file'] . "
 
 	");
-
-	
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-	
-
-	
-
-	if($user_id != ""){
-
-		echo '<h2>'.__("User Uploads","sp-cdm").'</h2><a name="downloads"></a>';
-
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where uid = $user_id  and parent = 0 order by date desc", ARRAY_A);
-
-	$delete_page = 'user-edit.php?user_id='.$user_id.'';
-
-	
-
-	$download_user = '<a href="'.SP_CDM_PLUGIN_URL.'ajax.php?function=download-archive&id='.$user_id.'" class="button">'.__("Click to download all files","sp-cdm").'</a>';
-
-	}else{
-
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where  parent = 0 order by id desc LIMIT 150", ARRAY_A);	
-
-	$html .='<form id="your-profile">';	
-
-	$delete_page = 'admin.php?page=sp-client-document-manager';
-
-		$download_user = '';
-
-	}
-
-
-
-if($r == FALSE){
-
-	
-
-	
-
-$html .=  '<p style="color:red">'.__("No Uploads Exist!","sp-cdm").'</p>';
-
-	
-
-}else{
-
-
-
-
-
-
-
-//show uploaded documents
-
-  $html .= '
+            }
+            if ($user_id != "") {
+                echo '<h2>' . __("User Uploads", "sp-cdm") . '</h2><a name="downloads"></a>';
+                $r             = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where uid = $user_id  and parent = 0 order by date desc", ARRAY_A);
+                $delete_page   = 'user-edit.php?user_id=' . $user_id . '';
+                $download_user = '<a href="' . SP_CDM_PLUGIN_URL . 'ajax.php?function=download-archive&id=' . $user_id . '" class="button">' . __("Click to download all files", "sp-cdm") . '</a>';
+            } else {
+                $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where  parent = 0 order by id desc LIMIT 150", ARRAY_A);
+                $html .= '<form id="your-profile">';
+                $delete_page   = 'admin.php?page=sp-client-document-manager';
+                $download_user = '';
+            }
+            if ($r == FALSE) {
+                $html .= '<p style="color:red">' . __("No Uploads Exist!", "sp-cdm") . '</p>';
+            } else {
+                //show uploaded documents
+                $html .= '
 
 <script type="text/javascript">
 
@@ -1126,7 +738,7 @@ function sp_client_upload_email_vendor(){
 
 		  type: "POST",
 
-		  url:  "'.SP_CDM_PLUGIN_URL.'ajax.php?function=email-vendor" ,
+		  url:  "' . SP_CDM_PLUGIN_URL . 'ajax.php?function=email-vendor" ,
 
 		 
 
@@ -1156,7 +768,7 @@ function sp_cdm_showFile(file){
 
 			
 
-		  var url = "'.SP_CDM_PLUGIN_URL.'ajax.php?function=view-file&id=" + file;
+		  var url = "' . SP_CDM_PLUGIN_URL . 'ajax.php?function=view-file&id=" + file;
 
 		  
 
@@ -1174,7 +786,7 @@ function sp_cdm_showFile(file){
 
      var fileArray = new Array();      
 
-	 var obj_file_info =   jQuery.getJSON("'.SP_CDM_PLUGIN_URL.'ajax.php?function=get-file-info&type=name&id=" + file, function(data) {
+	 var obj_file_info =   jQuery.getJSON("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=get-file-info&type=name&id=" + file, function(data) {
 
    
 
@@ -1254,7 +866,7 @@ function sp_cdm_showFile(file){
 
 </script>
 
-'.	$download_user.'
+' . $download_user . '
 
   <table class="wp-list-table widefat fixed posts" cellspacing="0">
 
@@ -1262,19 +874,19 @@ function sp_cdm_showFile(file){
 
 	<tr>
 
-	<th style="width:30px">'.__("ID","sp-cdm").'</th>	
+	<th style="width:30px">' . __("ID", "sp-cdm") . '</th>	
 
-<th style="width:80px">'.__("Thumbnail","sp-cdm").'</th>	
+<th style="width:80px">' . __("Thumbnail", "sp-cdm") . '</th>	
 
-<th>'.__("File Name","sp-cdm").'</th>
+<th>' . __("File Name", "sp-cdm") . '</th>
 
-<th>'.__("User","sp-cdm").'</th>
+<th>' . __("User", "sp-cdm") . '</th>
 
-<th>'.__("Date","sp-cdm").'</th>
+<th>' . __("Date", "sp-cdm") . '</th>
 
-<th>'.__("Download","sp-cdm").'</th>
+<th>' . __("Download", "sp-cdm") . '</th>
 
-<th>'.__("Email","sp-cdm").'</th>
+<th>' . __("Email", "sp-cdm") . '</th>
 
 </tr>
 
@@ -1285,191 +897,73 @@ function sp_cdm_showFile(file){
 
 
 ';
-
-
-
-
-
-
-
-				for($i=0; $i<count($r); $i++){
-
-					
-
-					
-
-					if($r[$i]['name'] == ""){
-
-						
-
-						$name = $r[$i]['file'];
-
-					}else{
-
-						
-
-						$name = $r[$i]['name'];
-
-			
-
-		
-
-		
-
-					}
-
-					
-
-			$r_user = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."users where ID = ".$r[$i]['uid']."", ARRAY_A);				
-
-				if(get_option('sp_cu_js_redirect') == 1){
-
-				$target = 'target="_blank"';	
-
-				}else{
-
-				$target = ' ';	
-
-				}	
-
-					
-
-					
-
-					
-
-			$ext = preg_replace('/^.*\./', '', $r[$i]['file']);
-
-		
-
-		$images_arr = array("jpg","png","jpeg", "gif", "bmp");
-
-		
-
-		if(in_array(strtolower($ext), $images_arr)){
-
-		
-
-		
-
-		
-
-		if(get_option('sp_cu_overide_upload_path')  != '' && get_option('sp_cu_overide_upload_url') == ''){
-
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/package_labled.png">';	
-
-			}else{
-
-	
-
-				
-			$img = '<img src="'.sp_cdm_thumbnail(''.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'',80,80).'">';	
-
-			}
-
-			
-
-		
-
-		
-
-		
-
-		
-
-		}elseif($ext == 'xls' or $ext == 'xlsx'){
-
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_excel.png">';
-
-		}elseif($ext == 'doc' or $ext == 'docx'){
-
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_word.png">';	
-
-		}elseif($ext == 'pub' or $ext == 'pubx'){
-
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_publisher.png">';		
-
-		}elseif($ext == 'ppt' or $ext == 'pptx'){
-
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_powerpoint.png">';
-
-		}elseif($ext == 'adb' or $ext == 'accdb'){
-
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/microsoft_office_access.png">';	
-
-			}elseif(($ext == 'pdf' or $ext == 'psd' or $ext == 'html' or $ext == 'eps') && get_option('sp_cu_user_projects_thumbs_pdf') == 1){
-
-			if(file_exists(''.SP_CDM_UPLOADS_DIR.''.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png')){			
-
-			$img = '<img src="'.SP_CDM_UPLOADS_DIR_URL.''.$r[$i]['uid'].'/'.$r[$i]['file'].'_small.png">';	
-
-			}else{
-
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/adobe.png">';		
-
-			}
-
-		}elseif($ext == 'pdf' ){
-
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/adobe.png">';	
-
-		
-
-		}else{
-
-			$img = '<img src="'.SP_CDM_PLUGIN_URL.'images/package_labled.png">';
-
-		}		
-
-					
-
-					
-
-					
-
-				$html .= '
+                for ($i = 0; $i < count($r); $i++) {
+                    if ($r[$i]['name'] == "") {
+                        $name = $r[$i]['file'];
+                    } else {
+                        $name = $r[$i]['name'];
+                    }
+                    $r_user = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "users where ID = " . $r[$i]['uid'] . "", ARRAY_A);
+                    if (get_option('sp_cu_js_redirect') == 1) {
+                        $target = 'target="_blank"';
+                    } else {
+                        $target = ' ';
+                    }
+                    $ext        = preg_replace('/^.*\./', '', $r[$i]['file']);
+                    $images_arr = array(
+                        "jpg",
+                        "png",
+                        "jpeg",
+                        "gif",
+                        "bmp"
+                    );
+                    if (in_array(strtolower($ext), $images_arr)) {
+                        if (get_option('sp_cu_overide_upload_path') != '' && get_option('sp_cu_overide_upload_url') == '') {
+                            $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/package_labled.png">';
+                        } else {
+                            $img = '<img src="' . sp_cdm_thumbnail('' . SP_CDM_UPLOADS_DIR_URL . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '', 80, 80) . '">';
+                        }
+                    } elseif ($ext == 'xls' or $ext == 'xlsx') {
+                        $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/microsoft_office_excel.png">';
+                    } elseif ($ext == 'doc' or $ext == 'docx') {
+                        $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/microsoft_office_word.png">';
+                    } elseif ($ext == 'pub' or $ext == 'pubx') {
+                        $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/microsoft_office_publisher.png">';
+                    } elseif ($ext == 'ppt' or $ext == 'pptx') {
+                        $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/microsoft_office_powerpoint.png">';
+                    } elseif ($ext == 'adb' or $ext == 'accdb') {
+                        $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/microsoft_office_access.png">';
+                    } elseif (($ext == 'pdf' or $ext == 'psd' or $ext == 'html' or $ext == 'eps') && get_option('sp_cu_user_projects_thumbs_pdf') == 1) {
+                        if (file_exists('' . SP_CDM_UPLOADS_DIR . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '_small.png')) {
+                            $img = '<img src="' . SP_CDM_UPLOADS_DIR_URL . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '_small.png">';
+                        } else {
+                            $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/adobe.png">';
+                        }
+                    } elseif ($ext == 'pdf') {
+                        $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/adobe.png">';
+                    } else {
+                        $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/package_labled.png">';
+                    }
+                    $html .= '
 
 	
 
  <tr>
 
- <td>'.$r[$i]['id'].'</td>
+ <td>' . $r[$i]['id'] . '</td>
 
- <td>'.$img.'</td>
+ <td>' . $img . '</td>
 
-    <td ><strong>'.stripslashes($name).'</strong>';
-
-	
-
-	
-
-	if(CU_PREMIUM == 1){
-
-		
-
-		$html .=sp_cdm_get_form_fields($r[$i]['id']);
-
-	}else{
-
-		
-
-		$html .='<br><em>'.__("Notes: ","sp-cdm").' '.stripslashes($r[$i]['notes']).'</em>';
-
-	}
-
-	
-
-	
-
-	if($r[$i]['tags'] != ""){
-
-		
-
-			$html .='<br><strong>'.__("Tags ","sp-cdm").'</strong><em>: '.$r[$i]['tags'].'</em>';
-
-	}
-
-	$html .='
+    <td ><strong>' . stripslashes($name) . '</strong>';
+                    if (@CU_PREMIUM == 1) {
+                        $html .= sp_cdm_get_form_fields($r[$i]['id']);
+                    } else {
+                        $html .= '<br><em>' . __("Notes: ", "sp-cdm") . ' ' . stripslashes($r[$i]['notes']) . '</em>';
+                    }
+                    if ($r[$i]['tags'] != "") {
+                        $html .= '<br><strong>' . __("Tags ", "sp-cdm") . '</strong><em>: ' . $r[$i]['tags'] . '</em>';
+                    }
+                    $html .= '
 
 	
 
@@ -1477,15 +971,15 @@ function sp_cdm_showFile(file){
 
 	</td>
 
-	<td><a href="user-edit.php?user_id='.$r[$i]['uid'].'">'.$r_user[0]['display_name'].'</a></td>
+	<td><a href="user-edit.php?user_id=' . $r[$i]['uid'] . '">' . $r_user[0]['display_name'] . '</a></td>
 
-	 <td >'.date('F jS Y h:i A', strtotime($r[$i]['date'])).'</td>
+	 <td >' . date('F jS Y h:i A', strtotime($r[$i]['date'])) . '</td>
 
    
 
-    <td><a style="margin-right:15px" href="javascript:sp_cdm_showFile('.$r[$i]['id'].')" >'.__("View","sp-cdm").'</a> <a href="'.$delete_page .'&dlg-delete-file='.$r[$i]['id'].'#downloads">'.__("Delete","sp-cdm").'</a> </td>
+    <td><a style="margin-right:15px" href="javascript:sp_cdm_showFile(' . $r[$i]['id'] . ')" >' . __("View", "sp-cdm") . '</a> <a href="' . $delete_page . '&dlg-delete-file=' . $r[$i]['id'] . '#downloads">' . __("Delete", "sp-cdm") . '</a> </td>
 
-<td><input type="checkbox" name="vendor_email[]" value="'.$r[$i]['id'].'"></td>	</tr>
+<td><input type="checkbox" name="vendor_email[]" value="' . $r[$i]['id'] . '"></td>	</tr>
 
 
 
@@ -1493,13 +987,9 @@ function sp_cdm_showFile(file){
 
   
 
-  ';	
-
-					
-
-				}
-
-			$html .= '</table>
+  ';
+                }
+                $html .= '</table>
 
 			
 
@@ -1507,98 +997,31 @@ function sp_cdm_showFile(file){
 
 			<div id="updateme"></div>
 
-				'.__("Choose  the files you want to send above, type a message and choose a vendor then click submit:","sp-cdm").'  <select name="vendor">
+				' . __("Choose  the files you want to send above, type a message and choose a vendor then click submit:", "sp-cdm") . '  <select name="vendor">
 
 				';
-
-				
-
-				
-
-				
-
-				if($_POST['submit-vendor'] != ""){
-
-					
-
-				//	print_r($_POST);
-
-					
-
-					
-
-				}
-
-				
-
-			$vendors = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."options   where option_name  LIKE 'sp_client_upload_vendors%'  order by option_name", ARRAY_A);
-
-
-
-						for($i=0; $i<count(	$vendors); $i++){
-
-				
-
-				$vendor_info[$i] = unserialize($vendors[$i]['option_value']);
-
-				
-
-				$html .=  '<option value="'.$vendor_info[$i]['email'].'">'.$vendor_info[$i]['name'].'</option>';
-
-				
-
-						}
-
-				
-
-				
-
-				$html .= '</select> '.__("Message:","sp-cdm").' <input type="text" name="vendor-message"> <select name="vendor_attach"><option value="1">'.__("Attach to email:","sp-cdm").' </option><option value="0">'.__("Send links to files","sp-cdm").' </option><option value="3">'.__("Attach and link to to files","sp-cdm").' </option></select> <input type="submit" name="submit-vendor" value="'.__("Email vendor files!","sp-cdm").'" onclick="sp_client_upload_email_vendor();return false;"> 
+                if ($_POST['submit-vendor'] != "") {
+                    //	print_r($_POST);
+                }
+                $vendors = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "options   where option_name  LIKE 'sp_client_upload_vendors%'  order by option_name", ARRAY_A);
+                for ($i = 0; $i < count($vendors); $i++) {
+                    $vendor_info[$i] = unserialize($vendors[$i]['option_value']);
+                    $html .= '<option value="' . $vendor_info[$i]['email'] . '">' . $vendor_info[$i]['name'] . '</option>';
+                }
+                $html .= '</select> ' . __("Message:", "sp-cdm") . ' <input type="text" name="vendor-message"> <select name="vendor_attach"><option value="1">' . __("Attach to email:", "sp-cdm") . ' </option><option value="0">' . __("Send links to files", "sp-cdm") . ' </option><option value="3">' . __("Attach and link to to files", "sp-cdm") . ' </option></select> <input type="submit" name="submit-vendor" value="' . __("Email vendor files!", "sp-cdm") . '" onclick="sp_client_upload_email_vendor();return false;"> 
 
 				</div>
 
 				';
-
-				
-
-		
-
+            }
+            if ($user_id != "") {
+                echo $html;
+            } else {
+                $html .= '</form>';
+                return $html;
+            }
+        }
+    }
 }
-
-if($user_id != ""){
-
-echo $html;
-
-}else{
-
-	$html .='</form>';	
-
-return $html;	
-
-}
-
-	
-
-}
-
-
-
-
-
-
-
-}
-
-
-
-
-
-}
-
-
-
-
-
-add_action( 'edit_user_profile', 'sp_client_upload_admin' );
-
+add_action('edit_user_profile', 'sp_client_upload_admin');
 ?>

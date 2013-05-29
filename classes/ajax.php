@@ -536,7 +536,7 @@ return str_replace(array('[', ']'), '', htmlspecialchars(json_encode($r[0]), ENT
 
 		$wpdb->query("DELETE FROM ".$wpdb->prefix ."sp_cu_project WHERE id = ".$_REQUEST['id']."	");		
 
-	$wpdb->query("DELETE FROM ".$wpdb->prefix ."sp_cut WHERE pid = ".$_REQUEST['id']."	");		
+	$wpdb->query("DELETE FROM ".$wpdb->prefix ."sp_cu WHERE pid = ".$_REQUEST['id']."	");		
 
 	}
 
@@ -764,7 +764,7 @@ $search_project .= " AND ".$wpdb->prefix."sp_cu_project.name LIKE '%".$_REQUEST[
 
 		';
 
-		if(($_GET['pid'] != "0" && $_GET['pid'] != '') && (get_option('sp_cu_user_projects') == 1  or current_user_can( 'manage_options' ))  ){	
+		if(($_GET['pid'] != "0" && $_GET['pid'] != '') && ((get_option('sp_cu_user_projects') == 1 and get_option('sp_cu_user_projects_modify') != 1)  or current_user_can( 'manage_options' ))  ){	
 
 			$r_project_info = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."sp_cu_project where id = ".$_GET['pid']."", ARRAY_A);
 

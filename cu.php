@@ -4,13 +4,12 @@ Plugin Name: SP Client Document & Project Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.6.9
+Version: 1.7.0
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.6.9";
-
+$sp_client_upload = "1.7.0";
 
 
 
@@ -93,7 +92,7 @@ sp_cdm_check_admin_caps();
 function sp_cdm_check_admin_caps(){
 global 	$current_user;
 	@require_once(ABSPATH . 'wp-includes/pluggable.php');
-if (  user_can($current_user->ID,'manage_options') && !current_user_can('sp_cdm') ) {
+if (  user_can(@$current_user->ID,'manage_options') && !current_user_can('sp_cdm') ) {
 		$role = get_role( 'administrator' );
 		$role->add_cap( 'sp_cdm' );	
 		$role->add_cap( 'sp_cdm_vendors' );	
@@ -225,7 +224,7 @@ if ( get_option( 'sp_client_upload') == '') {
 
 $updatesql = $wpdb->query('ALTER TABLE `'.$wpdb->prefix.'sp_cu` ADD `pid` INT( 11 ) NOT NULL; ');
 
-
+sp_cdm_update_db_check();
 
 }
 register_activation_hook(__FILE__,'sp_client_upload_install');
@@ -358,7 +357,7 @@ function sp_client_upload_menu() {
 function sp_client_upload_options(){
 	global $wpdb;
 	
-if($_POST['sp-client-document-manager-submit'] != ""){
+if(@$_POST['sp-client-document-manager-submit'] != ""){
 	
 	update_option('sp_client_upload_page', $_POST['sp_client_upload_page']);
 	echo '<p style="color:green">'.__("Updated Settings!","sp-cdm").'</p>';
