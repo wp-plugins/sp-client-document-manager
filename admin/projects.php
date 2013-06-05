@@ -20,7 +20,7 @@ if (!class_exists('cdmProjects')) {
 
   <tr>
 
-    <td>' . __("Name:", "sp-cdm") . '</td>
+    <td width="200">' . __("Name:", "sp-cdm") . '</td>
 
     <td><input type="text" name="project-name" value="' . stripslashes($r[0]['name']) . '"></td>
 
@@ -47,7 +47,11 @@ if (!class_exists('cdmProjects')) {
 
   </tr>
 
-</table>
+</table>';
+            
+            do_action('sp_cdm_edit_project_form',$_GET['id']);
+            
+            echo '
 
 </form>
 
@@ -69,10 +73,15 @@ if (!class_exists('cdmProjects')) {
                     $update['uid']        = $_POST['uid'];
                     $where_project['pid'] = $_POST['id'];
                     $wpdb->update("" . $wpdb->prefix . "sp_cu", $update, $where_project);
-                } //$_POST['id'] != ""
-                else {
+                    $insert_id = $_POST['id'];
+                    
+                } else {
                     $wpdb->insert("" . $wpdb->prefix . "sp_cu_project", $insert);
+                    $insert_id = $wpdb->insert_id;
                 }
+                
+                do_action('sp_cdm_edit_project_save', $insert_id);
+                
             } //$_POST['save-project'] != ""
             if ($_GET['function'] == 'add' or $_GET['function'] == 'edit') {
                 $this->add();
@@ -90,6 +99,7 @@ window.location = "admin.php?page=sp-client-document-manager-projects"
 </script>';
             } //$_GET['function'] == 'delete'
             else {
+                
                 $r = $wpdb->get_results("SELECT " . $wpdb->prefix . "sp_cu_project.name as projectName,
 
 									" . $wpdb->prefix . "sp_cu_project.uid,
@@ -109,6 +119,7 @@ window.location = "admin.php?page=sp-client-document-manager-projects"
 									 LEFT JOIN " . $wpdb->base_prefix . "users ON " . $wpdb->prefix . "sp_cu_project.uid = " . $wpdb->base_prefix . "users.ID
 
 									 order by " . $wpdb->prefix . "sp_cu_project.name", ARRAY_A);
+                
                 echo '<h2>' . __("Projects", "sp-cdm") . '</h2>' . sp_client_upload_nav_menu() . '';
                 echo '
 

@@ -356,7 +356,7 @@ function sp_cu_add_project(){
    jQuery("#sp_cu_add_project").dialog("close");
 
 	
-	jQuery(".pid_select").append(jQuery("<option>", { 
+	jQuery("#pid_select").append(jQuery("<option>", { 
     value: msg, 
     text : jQuery("#sub_category_name").val(),
 	selected : "selected"

@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: Project Management, web based document manager,online website documents organization, share documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 
 SP Online Client Document & Project Manager. Multi-functional - upload, group, distribute and organize all documents & files.
 
@@ -87,6 +87,7 @@ Login with:  user: test   password: test
 * Dropbox integration to allow your users to import files directly from their dropbox
 * Add unlimited sub folders for better organizing
 * File importer, upload and multiple files with a zip file.
+* Share projects with buddypress and wordpress roles!
 
 **Categories**
 
@@ -638,3 +639,7 @@ Major updates, new uploader and fixes to admin upload functions
 * Added the ability to disable user editing and delete of projects
 * fixed a sql error
 * removed some notices
+
+= 1.7.1 =
+
+* New hooks which give added features to make 3rd party extensions
