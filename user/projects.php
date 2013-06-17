@@ -58,15 +58,23 @@ if (@CU_PREMIUM == 1){
 
 
 
-  $projects = $wpdb->get_results("SELECT *
+
+
+
+$r_projects_query = "SELECT *
 
 	
 
 									 FROM ".$wpdb->prefix."sp_cu_project
 
-									WHERE  ( uid = '".$uid ."' ".$find_groups.") 
+									WHERE  ( uid = '".$uid ."' ".$find_groups.")  
 
-									 ", ARRAY_A);	
+									 ";
+			$r_projects_query = apply_filters('sp_cdm_projects_query', $r_projects_query ,$_GET['uid']);							 
+			$r_projects_query .="
+
+										ORDER by name";						 
+  $projects = $wpdb->get_results($r_projects_query, ARRAY_A);	
 
 
 

@@ -471,11 +471,11 @@ if (!function_exists('sp_client_upload_settings')) {
         }
         echo '
 
-    <td><span style="width:120px">System Path:</span> <input type="text" name="sp_cu_overide_upload_path"  value="' . get_option('sp_cu_overide_upload_path') . '"  size=80"><br>
+    <td><span style="width:120px">System Path:</span> <input type="text" name="sp_cu_overide_upload_path"  value="' .stripslashes( get_option('sp_cu_overide_upload_path')) . '"  size=80"><br>
 
 	<em><strong>Example: </strong><br>linux: /home/mysite/public_html/uploads/ <br>windows: C:\websites\mysite\uploads\</em><br><br><br>
 
-	   <span style="width:120px"> Direct URL:</span> <input type="text" name="sp_cu_overide_upload_url"  value="' . get_option('sp_cu_overide_upload_url') . '"  size=80"><br>
+	   <span style="width:120px"> Direct URL:</span> <input type="text" name="sp_cu_overide_upload_url"  value="' .stripslashes( get_option('sp_cu_overide_upload_url')) . '"  size=80"><br>
 
 	   	<em><strong>Example:</strong><br> http://mywebsites/uploads/</em>
 
@@ -517,7 +517,7 @@ if (!function_exists('sp_client_upload_settings')) {
 
     <td width="300"><strong>WP Folder</strong><br><em>Use this option only if your wp installation is in a sub folder of your url. For instance if your site is www.example.com/blog/ then put /blog/ in the field. This helps find the uploads directory.</em></td>
 
-    <td><input type="text" name="sp_cu_wp_folder"  value="' . get_option('sp_cu_wp_folder') . '"  size=80"> </td>
+    <td><input type="text" name="sp_cu_wp_folder"  value="' . stripslashes(get_option('sp_cu_wp_folder')) . '"  size=80"> </td>
 
   </tr>  <tr>
 
