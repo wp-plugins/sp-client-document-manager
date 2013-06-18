@@ -52,15 +52,15 @@ class spdm_ajax
 
 	<ul>
 
-		<li><a href="#cdm-file-main">File Info</a></li>';
+		<li><a href="#cdm-file-main">'.__("File Info","sp-cdm").'</a></li>';
         if (function_exists('sp_cdm_revision_add') && get_option('sp_cu_user_disable_revisions') != 1) {
-            $html .= '<li><a href="#cdm-file-revisions">Revisions</a></li>';
+            $html .= '<li><a href="#cdm-file-revisions">'.__("Revisions","sp-cdm").'</a></li>';
         }
         if (class_exists('cdmProductivityUser')) {
-            $html .= '<li><a href="#cdm-file-comments">Comments</a></li>';
+            $html .= '<li><a href="#cdm-file-comments">'.__("Comments","sp-cdm").'</a></li>';
         }
         if (class_exists('cdmProductivityLog')) {
-            $html .= '<li><a href="#cdm-file-log">Download Log</a></li>';
+            $html .= '<li><a href="#cdm-file-log">'.__("Download Log","sp-cdm").'</a></li>';
         }
         $html .= '</ul>
 

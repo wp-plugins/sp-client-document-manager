@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: Project Management, web based document manager,online website documents organization, share documents securely, customer file manager, client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.7.2
+Stable tag: 1.7.3
 
 SP Online Client Document & Project Manager. Multi-functional - upload, group, distribute and organize all documents & files.
 
@@ -647,3 +647,7 @@ Major updates, new uploader and fixes to admin upload functions
 = 1.7.2 =
 
 * Stripslashes issue on custom urls on a windows machine.
+
+= 1.7.3 = 
+
+* Add new fields to translating plugin. Please update in your language and mail the po to us if you need the new fields translated.
