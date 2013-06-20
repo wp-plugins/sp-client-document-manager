@@ -70,7 +70,7 @@ $r_projects_query = "SELECT *
 									WHERE  ( uid = '".$uid ."' ".$find_groups.")  
 
 									 ";
-			$r_projects_query = apply_filters('sp_cdm_projects_query', $r_projects_query ,$_GET['uid']);							 
+			$r_projects_query = apply_filters('sp_cdm_projects_query_dropdown', $r_projects_query ,$uid);							 
 			$r_projects_query .="
 
 										ORDER by name";						 
