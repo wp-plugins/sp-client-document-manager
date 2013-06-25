@@ -1,17 +1,17 @@
 === Plugin Name ===
 Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
-Tags: Project Management, web based document manager,online website documents organization, share documents securely, customer file manager, client files,
+Tags: Project Management, web based document manager,online website documents organization, share documents securely, customer file manager, FTP client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.7.4
+Stable tag: 1.7.5
 
-SP Online Client Document & Project Manager. Multi-functional - upload, group, distribute and organize all documents & files.
+SP Online Client Document & Project Manager. Multi-functional - upload, share, group, distribute and organize all documents & files.
 
 == Description ==
 
-Online document & project manager, the plug-in provides assurances that the user has complete control over the flow of information. Businesses utilizing the SP CDM are able to maintain web based document organization, manage client documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
-This new SP plug-in also demonstrates how quickly a business can take hold of their interactions with clients, vendors, and all in between.  With a straight-forward layout, access to template modifications and easy to manage features; clients can add and modify projects.
+Online document & project manager, the plug-in provides assurances that the user has complete control over the flow of information. Businesses utilizing the SP CDM are able to maintain and file web based document organization, manage client documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
+This new SP plug-in also demonstrates how quickly a business can take hold of their interactions with clients, sales organzation, vendors, and all in between.  With a straight-forward layout, access to template modifications and easy to manage features; clients can add and modify projects. Think of it as a old school filing cabinet that allows to manage you files from any wifi access point.
 
 
 We also now offer a premium version; please check out our website for more information: 
@@ -24,14 +24,14 @@ Works with WordPress Multi Site!
 Login with:  user: test   password: test
 
 **Overall Features**
-* Ability to choose multiple files
+* Ability to choose and upload multiple files
 * Delete uploaded documents
 * Automatically zip multiple files
 * Custom Forms
 * Search by file name
 * Ability to allow deleting documents and files 
 * Renaming of projects
-* Disable user uploads
+* Disable user uploads (View Only) 
 * Disable user deleting of files
 * Ability to translate plugin to multiple languages using the .po files.
 
@@ -86,7 +86,7 @@ Login with:  user: test   password: test
 
 * Dropbox integration to allow your users to import files directly from their dropbox
 * Add unlimited sub folders for better organizing
-* File importer, upload and multiple files with a zip file.
+* File importer, upload multiple files with a zip file.
 * Share projects with buddypress and wordpress roles!
 
 **Categories**
@@ -107,7 +107,7 @@ Login with:  user: test   password: test
 * Client can view all categories set by admin
 
 Full Support Available through email or Skype. 
-Coming Soon Add-on packs available for more features!
+Add-on packs available for more features!
 
 
 
@@ -651,3 +651,8 @@ Major updates, new uploader and fixes to admin upload functions
 = 1.7.3 = 
 
 * Add new fields to translating plugin. Please update in your language and mail the po to us if you need the new fields translated.
+
+= 1.7.5 =
+
+* Bug fixes
+* Added functionality to groups manager.

@@ -7,6 +7,14 @@ function sp_cdm_thumbnail($url,$w,$h){
 			return bfi_thumb($url, $params);
 }
 
+function sp_cdm_get_current_user_role_name () {
+    global $current_user;
+    get_currentuserinfo();
+    $user_roles = $current_user->roles;
+    $user_role = array_shift($user_roles);
+    return $user_role;
+}
+
 
 function sp_cdm_get_project_name($id){
 
