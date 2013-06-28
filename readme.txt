@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: Project Management, web based document manager,online website documents organization, share documents securely, customer file manager, FTP client files,
 Requires at least: 2.0.2
 Tested up to: 3.5.1
-Stable tag: 1.7.5
+Stable tag: 1.7.6
 
 SP Online Client Document & Project Manager. Multi-functional - upload, share, group, distribute and organize all documents & files.
 
@@ -656,3 +656,7 @@ Major updates, new uploader and fixes to admin upload functions
 
 * Bug fixes
 * Added functionality to groups manager.
+
+= 1.7.6 =
+
+* Permissions problem

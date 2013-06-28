@@ -890,7 +890,11 @@ jQuery(document).ready(function() {
             }
             // do_action('cdm_add_hidden_html');
             $html .= '<div id="cdm_nav_buttons"><div style="padding:10px">Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files"></div>';
-            if (get_option('sp_cu_user_uploads_disable') != 1  && (get_option('sp_cdm_groups_addon_global_add_roles_'.sp_cdm_get_current_user_role_name ().'') != 0)) {
+            if (get_option('sp_cu_user_uploads_disable') != 1  or 
+			(get_option('sp_cdm_groups_addon_global_add_roles_'.sp_cdm_get_current_user_role_name ().'') == '' or
+			get_option('sp_cdm_groups_addon_global_add_roles_'.sp_cdm_get_current_user_role_name ().'') == 1 )
+			
+			) {
                 if (class_exists('cdmPremiumUploader') && get_option('sp_cu_free_uploader') != 1) {
                     global $premium_add_file_link;
                     $link = $premium_add_file_link;
