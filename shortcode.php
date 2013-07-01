@@ -138,7 +138,13 @@ function display_sp_thumbnails2($r)
 
 			sp_cdm_loading_image();
 	jQuery("#cdm_current_folder").val(pid);
-	
+			if(pid != 0 && jQuery("#cdm_premium_sub_projects").val() != 1){
+				jQuery(".cdm_add_folder_button").hide();	
+			
+				}else{
+				jQuery(".cdm_add_folder_button").show();
+			
+				}
 	
 		jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=file-list&uid=' . $user_ID . '&pid=" + pid);	
 
