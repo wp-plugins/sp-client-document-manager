@@ -373,8 +373,8 @@ function sp_cu_add_project(){
 $add_project = '<div  id="sp_cu_add_project">
 		<input type="hidden" id="sub_category_uid" name="uid" value="'.$current_user->ID.'">
 		
-		'.__("Project Name:","sp-cdm").' <input  id="sub_category_name" type="text" name="project-name"  style="width:200px !important"> 
-		<input type="submit" value="'.__("Add Project","sp-cdm").'" name="add-project" onclick="sp_cu_add_project()">
+		'.sp_cdm_folder_name() .' '.__("Name","sp-cdm").':  <input  id="sub_category_name" type="text" name="project-name"  style="width:200px !important"> 
+		<input type="submit" value="'.__("Add","sp-cdm").' '.sp_cdm_folder_name() .'" name="add-project" onclick="sp_cu_add_project()">
 	
 	</div>';
 
@@ -683,7 +683,7 @@ if (CU_PREMIUM == 1){
 
   if(count($projects) > 0 or get_option('sp_cu_user_projects') == 1){
 	  $html .= ' <tr>
-    <td>'.__("Project:","sp-cdm").'
+    <td>'.sp_cdm_folder_name() .': 
 	
 
 	
@@ -693,7 +693,7 @@ if (CU_PREMIUM == 1){
 	<select name="pid" id="pid_select">';
 	
 	if(get_option('sp_cu_user_projects_required') == 0){	
-	$html .='<option name="" selected="selected">'.__("No Project","sp-cdm").'</option>';	
+	$html .='<option name="" selected="selected">'.__("No","sp-cdm").' '.sp_cdm_folder_name() .'</option>';	
 	}
 		for($i=0; $i<count($projects); $i++){
 								
@@ -709,7 +709,7 @@ if (CU_PREMIUM == 1){
 	
 	if(get_option('sp_cu_user_projects') == 1  or current_user_can( 'manage_options' )){
 		
-		$html .= '<a href="javascript:sp_cu_dialog(\'#sp_cu_add_project\',550,130)" class="button" style="margin-left:15px">'.__("Add Project","sp-cdm").'</a>
+		$html .= '<a href="javascript:sp_cu_dialog(\'#sp_cu_add_project\',550,130)" class="button" style="margin-left:15px">'.__("Add","sp-cdm").' '.sp_cdm_folder_name() .'</a>
 		
 	
 		

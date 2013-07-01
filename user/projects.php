@@ -84,7 +84,7 @@ $r_projects_query = "SELECT *
 
 	  $html .= ' <tr>
 
-    <td><strong>'.__("Project:","sp-cdm").'</strong>
+    <td><strong>'.sp_cdm_folder_name() .'</strong>
 
 	
 
@@ -108,7 +108,7 @@ $r_projects_query = "SELECT *
 
 	if(get_option('sp_cu_user_projects_required') == 0){	
 
-	$select_dropdown .='<option name="" selected="selected">'.__("No Project","sp-cdm").'</option>';	
+	$select_dropdown .='<option name="" selected="selected">'.__("No","sp-cdm").' '.sp_cdm_folder_name() .'</option>';	
 
 	}
 
@@ -152,7 +152,7 @@ $r_projects_query = "SELECT *
 
 		
 
-		$html .= '<a href="javascript:sp_cu_dialog(\'#sp_cu_add_project\',550,130)" class="button" style="margin-left:15px">'.__("Add Project","sp-cdm").'</a>
+		$html .= '<a href="javascript:sp_cu_dialog(\'#sp_cu_add_project\',550,130)" class="button" style="margin-left:15px">'.__("Add","sp-cdm").' '.sp_cdm_folder_name() .'</a>
 
 		
 

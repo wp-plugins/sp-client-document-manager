@@ -296,7 +296,13 @@ if (!function_exists('sp_client_upload_settings')) {
   </tr>
 
     
+    <tr>
 
+    <td width="300"><strong>Folders Name</strong><br><em>We call folders what they are "Folders", if you want to call them something else specify that here. Please give both the singular and plural word for the replacement.</em></td>
+
+    <td>Singular: <input type="text" name="sp_cu_folder_name_single"   value="'.stripslashes(get_option('sp_cu_folder_name_single')).'"> Plural:  <input type="text" name="sp_cu_folder_name_plural"   value="'.stripslashes(get_option('sp_cu_folder_name_plural')).'"></td>
+
+  </tr>
     <tr>
 
     <td width="300"><strong>Hide project if empty?</strong><br><em>Hide a project if there are no files on it.</em></td>
@@ -509,7 +515,7 @@ if (!function_exists('sp_client_upload_settings')) {
 
       <tr>
 
-    <td width="300"><strong>Mandatory Projects?</strong><br><em>If you want to require that a user select a project then check this box.</em></td>
+    <td width="300"><strong>Mandatory '.sp_cdm_folder_name(1).'?</strong><br><em>If you want to require that a user select a project then check this box.</em></td>
 
     <td><input type="checkbox" name="sp_cu_user_projects_required"   value="1" ' . $sp_cu_user_projects_required . '> </td>
 
@@ -596,7 +602,7 @@ if (!function_exists('sp_client_upload_settings')) {
                     $content .= '<li><a href="admin.php?page=sp-client-document-manager-vendors" >' . __("Vendors", "sp-cdm") . '</a></li>';
                 }
                 if (current_user_can('sp_cdm_projects')) {
-                    $content .= '<li><a href="admin.php?page=sp-client-document-manager-projects" >' . __("Projects", "sp-cdm") . '</a></li>';
+                    $content .= '<li><a href="admin.php?page=sp-client-document-manager-projects" >' .sp_cdm_folder_name(1) . '</a></li>';
                 }
                 if (@CU_PREMIUM == 1) {
                     if (current_user_can('sp_cdm_settings')) {

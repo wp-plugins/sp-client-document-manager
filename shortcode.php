@@ -137,10 +137,12 @@ function display_sp_thumbnails2($r)
 		function sp_cdm_load_project(pid){
 
 			sp_cdm_loading_image();
-
+	jQuery("#cdm_current_folder").val(pid);
+	
+	
 		jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=file-list&uid=' . $user_ID . '&pid=" + pid);	
 
-			
+		
 
 		}
 
@@ -249,9 +251,16 @@ function display_sp_thumbnails2($r)
 		}
 
 	</script>
+';
 
-	
+$extra_js = '';
 
+$extra_js = apply_filters('sp_cdm_uploader_above',$extra_js);
+
+
+$content .='
+	'.$extra_js.'
+  <input type="hidden" name="cdm_current_folder" id="cdm_current_folder" value="0">
 	<div id="cdm_wrapper">
 
 	<div id="cmd_file_thumbs">
@@ -533,9 +542,9 @@ function sp_cu_add_project(){
 
 		
 
-		' . __("Project Name:", "sp-cdm") . ' <input  id="sub_category_name" type="text" name="project-name"  style="width:200px !important"> 
+		'.sp_cdm_folder_name() .' ' . __("Name", "sp-cdm") . ' <input  id="sub_category_name" type="text" name="project-name"  style="width:200px !important"> 
 
-		<input type="submit" value="' . __("Add Project", "sp-cdm") . '" name="add-project" onclick="sp_cu_add_project()">
+		<input type="submit" value="' . __("Add", "sp-cdm") . ' '.sp_cdm_folder_name() .'" name="add-project" onclick="sp_cu_add_project()">
 
 	
 

@@ -125,9 +125,9 @@ switch ($function) {
 									 WHERE id = '" . $r[0]['pid'] . "'
 
 									 ", ARRAY_A);
-            $project_title = 'Project: ' . stripslashes($projecter[0]['name']) . '';
+            $project_title = ''.sp_cdm_folder_name() .': ' . stripslashes($projecter[0]['name']) . '';
         } else {
-            $project_title = '' . __("Project: None", "sp-cdm") . '';
+            $project_title = ''.sp_cdm_folder_name(1) .': ' . __("None", "sp-cdm") . '';
         }
         if ($ext == 'png' or $ext == 'jpg' or $ext = 'jpeg' or $ext = 'gif') {
             $icon = '<td width="160"><img src="' . SP_CDM_UPLOADS_DIR_URL . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '" width="150"></td>';
@@ -203,7 +203,7 @@ switch ($function) {
 
 <div class="sp_su_project">
 
-<strong>' . __("Project ", "sp-cdm") . ': </strong>' . $project_title . '
+<strong>' .sp_cdm_folder_name()  . ': </strong>' . $project_title . '
 
 </div>
 
@@ -346,7 +346,7 @@ switch ($function) {
 
 		<div style="padding-right:10px">
 
-		<a href="javascript:sp_cu_dialog(\'#edit_category_' . $_GET['pid'] . '\',550,130)"><img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png"> Edit Project Name</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/delete_small.png"> Remove Project</a>
+		<a href="javascript:sp_cu_dialog(\'#edit_category_' . $_GET['pid'] . '\',550,130)"><img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png"> '. __("Edit", "sp-cdm").' '.sp_cdm_folder_name() .' '. __("Name", "sp-cdm").'</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/delete_small.png">  '. __("Remove", "sp-cdm").' '.sp_cdm_folder_name().'</a>
 
 		
 
@@ -502,9 +502,9 @@ function sp_cu_remove_project(){
 
 			<input type="hidden"  name="edit_project_id" id="edit_project_id_' . $_GET['pid'] . '" value="' . $_GET['pid'] . '">		
 
-			' . __("Project Name:", "sp-cdm") . ' <input value="' . stripslashes($r_project_info[0]['name']) . '" id="edit_project_name_' . $_GET['pid'] . '" type="text" name="name"  style="width:200px !important"> 
+			'.sp_cdm_folder_name().'' . __("Name", "sp-cdm") . ':  <input value="' . stripslashes($r_project_info[0]['name']) . '" id="edit_project_name_' . $_GET['pid'] . '" type="text" name="name"  style="width:200px !important"> 
 
-			<input type="submit" value="' . __("Save Project", "sp-cdm") . '" onclick="sp_cu_edit_project()">
+			<input type="submit" value="' . __("Save", "sp-cdm") . ' '.sp_cdm_folder_name().'" onclick="sp_cu_edit_project()">
 
 			
 
@@ -669,7 +669,7 @@ function sp_cu_remove_project(){
 
 			<div style="padding-right:10px">
 
-		<a href="javascript:sp_cu_dialog(\'#edit_category_' . $_GET['pid'] . '\',550,130)"><img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png"> Edit Project Name</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/delete_small.png"> Remove Project</a>
+				<a href="javascript:sp_cu_dialog(\'#edit_category_' . $_GET['pid'] . '\',550,130)"><img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png"> '. __("Edit", "sp-cdm").' '.sp_cdm_folder_name() .' '. __("Name", "sp-cdm").'</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/delete_small.png">  '. __("Remove", "sp-cdm").' '.sp_cdm_folder_name().'</a>
 
 		
 
@@ -825,9 +825,9 @@ function sp_cu_remove_project(){
 
 			<input type="hidden"  name="edit_project_id" id="edit_project_id_' . $_GET['pid'] . '" value="' . $_GET['pid'] . '">		
 
-			' . __("Project Name:", "sp-cdm") . ' <input value="' . stripslashes($r_project_info[0]['name']) . '" id="edit_project_name_' . $_GET['pid'] . '" type="text" name="name"  style="width:200px !important"> 
+			'.sp_cdm_folder_name() .' ' . __("Name", "sp-cdm") . ': <input value="' . stripslashes($r_project_info[0]['name']) . '" id="edit_project_name_' . $_GET['pid'] . '" type="text" name="name"  style="width:200px !important"> 
 
-			<input type="submit" value="' . __("Save Project", "sp-cdm") . '" onclick="sp_cu_edit_project()">
+			<input type="submit" value="' . __("Save", "sp-cdm") . ' '.sp_cdm_folder_name() .'" onclick="sp_cu_edit_project()">
 
 			
 

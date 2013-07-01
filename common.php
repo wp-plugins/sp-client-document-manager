@@ -1,6 +1,26 @@
 <?php
 
-
+function sp_cdm_folder_name($type = 0){
+	
+	
+		if($type == 1){
+			
+			if(get_option('sp_cu_folder_name_plural') == ''){
+			return  __("Folders", "sp-cdm");	
+			}else{
+			return  stripslashes(get_option('sp_cu_folder_name_plural'));
+			}
+		}else{
+			if(get_option('sp_cu_folder_name_single') == ''){
+				return  __("Folder", "sp-cdm");
+			}else{
+			return  stripslashes(get_option('sp_cu_folder_name_single'));
+			
+			}
+		}
+				
+	
+}
 function sp_cdm_thumbnail($url,$w,$h){
 	global $wpdb;
 	$params = array('width' => 400, 'height' => $h,'width' => $w, 'crop' => true);
