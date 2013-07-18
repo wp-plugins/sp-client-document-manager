@@ -1,5 +1,5 @@
 <?php
-
+if(!function_exists('sp_cdm_folder_name')){
 function sp_cdm_folder_name($type = 0){
 	
 	
@@ -21,9 +21,11 @@ function sp_cdm_folder_name($type = 0){
 				
 	
 }
+}
 function sp_cdm_thumbnail($url,$w,$h){
 	global $wpdb;
 	$params = array('width' => 400, 'height' => $h,'width' => $w, 'crop' => true);
+
 			return bfi_thumb($url, $params);
 }
 

@@ -302,12 +302,13 @@ class spdm_ajax
         }
         if ($_REQUEST['search'] != "") {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.name LIKE '%" . $_REQUEST['search'] . "%' ";
-        }
+        }else{
         if ($_GET['pid'] == '') {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.parent = '0' ";
         } else {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.parent = '" . $_GET['pid'] . "' ";
         }
+		}
         if (get_option('sp_cu_hide_project') == 1) {
 			
 			
@@ -349,7 +350,7 @@ class spdm_ajax
 
 										ORDER by date desc";
 			
-			
+		
             $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
         } else {
 			
@@ -400,7 +401,7 @@ class spdm_ajax
 										" . $search_project . " ORDER by name
 ";
 								}
-					
+						
             $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
 		
         }
@@ -714,7 +715,16 @@ function sp_cu_remove_project(){
 		$_GET['pid'] = 0;
 		
 		}
-		 $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where (pid = '" . $_GET['pid'] . "') " . $search_file . "  order by " . $sort . "  ", ARRAY_A);	
+		
+		
+		
+		 if ($_REQUEST['search'] == "") {
+		
+			 $search_file .= " AND (pid = '" . $_GET['pid'] . "') ";
+		 }
+		 $query = "SELECT *  FROM " . $wpdb->prefix . "sp_cu  where id != ''   " . $search_file . "  order by " . $sort . "  ";
+		//echo  $query ;
+		 $r = $wpdb->get_results( $query , ARRAY_A);	
 		 
 		
 		}
@@ -758,12 +768,13 @@ function sp_cu_remove_project(){
         }
         if ($_REQUEST['search'] != "") {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.name LIKE '%" . $_REQUEST['search'] . "%' ";
-        }
+        }else{
         if ($_GET['pid'] == '') {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.parent = '0' ";
         } else {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.parent = '" . $_GET['pid'] . "' ";
         }
+		}
           if (get_option('sp_cu_hide_project') == 1) {
 			
 			
@@ -826,6 +837,10 @@ function sp_cu_remove_project(){
             $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
         } else {
 			
+				if($_GET['pid'] == 0 or $_GET['pid'] == ''){
+									$r_projects_groups_addon = apply_filters('sp_cdm_projects_query', $r_projects_groups_addon ,$_GET['uid']);	
+										}
+			
 			$r_projects_query = "SELECT 
 
 												" . $wpdb->prefix . "sp_cu_project.id,
@@ -842,21 +857,19 @@ function sp_cu_remove_project(){
 
 										FROM " . $wpdb->prefix . "sp_cu_project
 
-										WHERE (" . $wpdb->prefix . "sp_cu_project.uid = '" . $_GET['uid'] . "'  " . $find_groups . ")										
+										WHERE (" . $wpdb->prefix . "sp_cu_project.uid = '" . $_GET['uid'] . "'  " . $find_groups . " ".$r_projects_groups_addon.")										
 
 										
 
 										" . $search_project . "
 
 										";
-										if($_GET['pid'] == 0 or $_GET['pid'] == ''){
-									$r_projects_query = apply_filters('sp_cdm_projects_query', $r_projects_query ,$_GET['uid']);	
-										}
+									
 										$r_projects_query .="
 
 										ORDER by name";
 										
-					
+			
             $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
         }
         echo '<div id="dlg_cdm_thumbnails">';
@@ -1144,7 +1157,23 @@ function sp_cu_remove_project(){
 		
 		if(get_option('sp_cu_release_the_kraken') == 1){
 		unset($r);
-		 $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where id != '' " . $search_file . "  order by " . $sort . "  ", ARRAY_A);	
+		if($_GET['pid'] == ''){
+		
+		$_GET['pid'] = 0;
+		
+		}
+		
+		
+		
+		 if ($_REQUEST['search'] == "") {
+		
+			 $search_file .= " AND (pid = '" . $_GET['pid'] . "') ";
+		 }
+		 $query = "SELECT *  FROM " . $wpdb->prefix . "sp_cu  where id != ''   " . $search_file . "  order by " . $sort . "  ";
+		// echo  $query ;
+		 $r = $wpdb->get_results( $query , ARRAY_A);	
+		 
+		
 		}
         for ($i = 0; $i < count($r); $i++) {
             $ext        = preg_replace('/^.*\./', '', $r[$i]['file']);
