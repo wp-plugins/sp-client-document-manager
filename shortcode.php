@@ -217,6 +217,7 @@ function display_sp_thumbnails2($r)
                 },
 
                 modal: true,
+				autoResize:true,
 
 				height:"auto",
 
@@ -258,7 +259,7 @@ function display_sp_thumbnails2($r)
 
 	</script>
 ';
-
+$content .='<form id="cdm_wrapper_form">';
 $extra_js = '';
 
 $extra_js = apply_filters('sp_cdm_uploader_above',$extra_js);
@@ -266,6 +267,7 @@ $extra_js = apply_filters('sp_cdm_uploader_above',$extra_js);
 
 $content .='
 	'.$extra_js.'
+	
   <input type="hidden" name="cdm_current_folder" id="cdm_current_folder" value="0">
 	<div id="cdm_wrapper">
 
@@ -280,7 +282,7 @@ $content .='
 	<div style="clear:both"></div>
 
 	</div>
-
+</form>
 	';
     return $content;
 }
@@ -433,7 +435,7 @@ if (!function_exists('display_sp_upload_form')) {
     {
 		$html = '';
         global $wpdb, $current_user;
-        $html .= '
+        $hidden .= '
 
 <script type="text/javascript">
 
@@ -539,8 +541,9 @@ function sp_cu_add_project(){
 
 }
 
-</script>
+</script>';
 
+ $hidden.='
 <div style="display:none">';
         $add_project = '<div  id="sp_cu_add_project">
 
@@ -556,7 +559,7 @@ function sp_cu_add_project(){
 
 	</div>';
         $add_project = apply_filters('sp_cdm_add_project_form', $add_project);
-        $html .= '' . $add_project . '
+        $hidden .= '' . $add_project . '
 
 	
 
@@ -582,7 +585,9 @@ function sp_cu_add_project(){
 
 
 
-</div>
+</div>';
+
+$html .='
 
 
 
@@ -645,6 +650,12 @@ function sp_cu_add_project(){
 
   ';
         }
+		
+		$spcdm_form_upload_fields = '';
+		$spcdm_form_upload_fields .= apply_filters('spcdm_form_upload_fields',$spcdm_form_upload_fields);
+		$html .= $spcdm_form_upload_fields;
+		
+		
         $html .= '
 
   <tr>
@@ -674,7 +685,14 @@ function sp_cu_add_project(){
 	
 
 	';
-        return $html;
+	
+	if (class_exists('cdmPremiumUploader') && get_option('sp_cu_free_uploader') != 1) {
+		   global $cdmPremiumUploader;
+        $premium_uploader = $cdmPremiumUploader->construct();
+		return $premium_uploader. $hidden;
+	}else{
+        return $html. $hidden;
+	}
     }
     function check_folder_sp_client_upload()
     {
@@ -788,6 +806,13 @@ function sp_cu_add_project(){
                             }
                         }
                     }
+			$message = apply_filters('spcdm_user_email_message',$message,$post, $uid);
+			$to = apply_filters('spcdm_user_email_to',$to,$post, $uid);
+			$subject = apply_filters('spcdm_user_email_subject',$subject,$post, $uid);
+			$attachments = apply_filters('spcdm_user_email_attachments',$attachments,$post, $uid);
+			$user_headers = apply_filters('spcdm_user_email_headers',$user_headers,$post, $uid);
+			
+			
                     wp_mail($to, $subject, $message, $user_headers, $attachments);
                 }
                 $html .= '<script type="text/javascript">
@@ -821,13 +846,6 @@ jQuery(document).ready(function() {
             //show uploaded documents
             $html .= '
 
-  
-
-
-
-  
-
-  
 
     <div style="display:none">
 
@@ -913,8 +931,7 @@ jQuery(document).ready(function() {
                 if (class_exists('cdmPremiumUploader') && get_option('sp_cu_free_uploader') != 1) {
                     global $premium_add_file_link;
                     $link = $premium_add_file_link;
-                    global $cdmPremiumUploader;
-                    $html .= $cdmPremiumUploader->construct();
+                 
                 } else {
                     $link = 'javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)';
                 }

@@ -415,9 +415,11 @@ class spdm_ajax
         } else {
             $jscriptpid = "'" . $_GET['pid'] . "'";
         }
-        echo '<tr>
+        echo '<tr>';
+		
+		do_action('spdm_file_list_column_before_sort');
 
-		<th></th>
+		echo '<th></th>
 
 		<th class="cdm_file_info" style="text-align:left"><a href="javascript:sp_cdm_sort(\'name\',' . $jscriptpid . ')">Name</a></th>
 
@@ -443,7 +445,7 @@ class spdm_ajax
 
 	
 
-		<th colspan="4" style="text-align:right">
+		<th colspan="100%" style="text-align:right">
 
 		<div style="padding-right:10px">
 
@@ -649,17 +651,19 @@ function sp_cu_remove_project(){
 									
 
 									 ", ARRAY_A);
-            echo '<tr onclick="sp_cdm_load_project(' . $query_project[0]['parent'] . ')">
+            echo '<tr >';
+			
+			do_action('spdm_file_list_column_before_folder_back');
 
-		<td class="cdm_file_icon ext_directory"></td>
+		echo '<td class="cdm_file_icon ext_directory" onclick="sp_cdm_load_project(' . $query_project[0]['parent'] . ')"></td>
 
-		<td class="cdm_file_info">&laquo; Go Back</td>
+		<td class="cdm_file_info" onclick="sp_cdm_load_project(' . $query_project[0]['parent'] . ')">&laquo; Go Back</td>
 
-		<td class="cdm_file_date">&nbsp;</td>
+		<td class="cdm_file_date" onclick="sp_cdm_load_project(' . $query_project[0]['parent'] . ')">&nbsp;</td>
 
 		
 
-		<td class="cdm_file_type">Folder</td>	
+		<td class="cdm_file_type" onclick="sp_cdm_load_project(' . $query_project[0]['parent'] . ')">Folder</td>	
 
 		</tr>	
 
@@ -668,13 +672,15 @@ function sp_cu_remove_project(){
         if (count($r_projects) > 0) {
             for ($i = 0; $i < count($r_projects); $i++) {
                 if ($r_projects[$i]['project_name'] != "") {
-                    echo '<tr onclick="sp_cdm_load_project(' . $r_projects[$i]['pid'] . ')">
+                    echo '<tr >
+';
+do_action('spdm_file_list_column_before_folder', $r_projects[$i]['pid']);
+echo '
+		<td class="cdm_file_icon ext_directory" onclick="sp_cdm_load_project(' . $r_projects[$i]['pid'] . ')"></td>
 
-		<td class="cdm_file_icon ext_directory"></td>
+		<td class="cdm_file_info" onclick="sp_cdm_load_project(' . $r_projects[$i]['pid'] . ')">' . stripslashes($r_projects[$i]['project_name']) . '</td>
 
-		<td class="cdm_file_info">' . stripslashes($r_projects[$i]['project_name']) . '</td>
-
-		<td class="cdm_file_date">&nbsp;</td>
+		<td class="cdm_file_date" onclick="sp_cdm_load_project(' . $r_projects[$i]['pid'] . ')">&nbsp;</td>
 
 		
 
@@ -742,17 +748,19 @@ function sp_cu_remove_project(){
             } else {
                 $project_name = '';
             }
-            echo '<tr onclick="sp_cdm_showFile(' . $r[$i]['id'] . ')">
+            echo '<tr >
+			';
+			do_action('spdm_file_list_column_before_file',$r[$i]['id'] );
+			echo '
+				<td class="cdm_file_icon ext_' . $ext . '" onclick="sp_cdm_showFile(' . $r[$i]['id'] . ')"></td>
 
-				<td class="cdm_file_icon ext_' . $ext . '"></td>
+		<td class="cdm_file_info" onclick="sp_cdm_showFile(' . $r[$i]['id'] . ')">' . stripslashes($r[$i]['name']) . ' ' . $project_name . '</td>
 
-		<td class="cdm_file_info">' . stripslashes($r[$i]['name']) . ' ' . $project_name . '</td>
-
-		<td class="cdm_file_date">' . date("F Y g:i A", strtotime($r[$i]['date'])) . '</td>
+		<td class="cdm_file_date" onclick="sp_cdm_showFile(' . $r[$i]['id'] . ')">' . date("F Y g:i A", strtotime($r[$i]['date'])) . '</td>
 
 
 
-		<td class="cdm_file_type">' . $ext . '</td>	
+		<td class="cdm_file_type" onclick="sp_cdm_showFile(' . $r[$i]['id'] . ')">' . $ext . '</td>	
 
 		</tr>	
 
@@ -837,10 +845,9 @@ function sp_cu_remove_project(){
             $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
         } else {
 			
-				if($_GET['pid'] == 0 or $_GET['pid'] == ''){
-									$r_projects_groups_addon = apply_filters('sp_cdm_projects_query', $r_projects_groups_addon ,$_GET['uid']);	
-										}
 			
+									$r_projects_groups_addon = apply_filters('sp_cdm_projects_query', $r_projects_groups_addon ,$_GET['uid']);	
+					
 			$r_projects_query = "SELECT 
 
 												" . $wpdb->prefix . "sp_cu_project.id,
@@ -868,8 +875,8 @@ function sp_cu_remove_project(){
 										$r_projects_query .="
 
 										ORDER by name";
-										
-			
+							
+		
             $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
         }
         echo '<div id="dlg_cdm_thumbnails">';
@@ -1070,6 +1077,8 @@ function sp_cu_remove_project(){
 		';
         }
 		}
+			do_action('spdm_file_list_column_before_sort_thumbs');
+		
         if ($_GET['pid'] != 0) {
             $query_project = $wpdb->get_results("SELECT *
 
@@ -1123,7 +1132,10 @@ function sp_cu_remove_project(){
 
 				</div>
 
-				</a>
+				</a>';
+				
+				do_action('spdm_file_thumbs_column_before_folder', $r_projects[$i]['pid']);
+				echo '
 
 				</div>
 
@@ -1230,7 +1242,9 @@ function sp_cu_remove_project(){
 
 				</a>
 
-				</div>
+				</div>';
+				do_action('spdm_file_thumbs_column_before_file', $r_projects[$i]['pid']);
+				echo '
 
 				</div>
 
