@@ -4,12 +4,12 @@ Plugin Name: SP Client Document & Project Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 1.8.2
+Version: 1.8.3
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "1.8.2";
+$sp_client_upload = "1.8.3";
 
 
 
@@ -137,8 +137,14 @@ function sp_client_upload_load_css(){
 			$theme = 'smoothness';
 		}else{
 			$theme = get_option('sp_cu_jqueryui_theme');
-	}
-	     wp_register_style( 'jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/'.$theme .'/jquery-ui.min.css');
+	}		
+	
+		if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
+    	wp_register_style( 'jquery-ui-css', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/'.$theme .'/jquery-ui.min.css');
+		}else{
+		 wp_register_style( 'jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/'.$theme .'/jquery-ui.min.css');	
+		}
+	    
 	}
 	 wp_enqueue_style( 'cdm-style' );
 	  wp_enqueue_style( 'jquery-ui-css' );

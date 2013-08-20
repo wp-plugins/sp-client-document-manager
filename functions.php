@@ -1,5 +1,40 @@
 <?php
 if (!function_exists('sp_client_upload_settings')) {
+	
+	
+	function cdm_user_can_delete($uid){
+		
+		  if (
+		  
+		  ((
+		  
+		  ($current_user->ID == $r[0]['uid'] or cdmFindLockedGroup($current_user->ID, $r[0]['uid']) == true or get_option('' . $this->namesake . '_project_remove_' .  $r[0]['pid'] . '') == 1)
+		   && 
+		   get_option('sp_cu_user_delete_disable') != 1) or current_user_can('manage_options')) 
+		   && 
+		(get_option('sp_cdm_groups_addon_global_remove_roles_'.sp_cdm_get_current_user_role_name ().'') == '' 
+		or get_option('sp_cdm_groups_addon_global_remove_roles_'.sp_cdm_get_current_user_role_name ().'') == 1 )
+		) {
+			return true;
+			
+		}else{
+				return false;
+		}
+	}
+	
+	function cdm_user_can_add($uid){
+		 if (get_option('sp_cu_user_uploads_disable') != 1  and( 
+			(get_option('sp_cdm_groups_addon_global_add_roles_'.sp_cdm_get_current_user_role_name ().'') == '' or
+			get_option('sp_cdm_groups_addon_global_add_roles_'.sp_cdm_get_current_user_role_name ().'') == 1 )
+			)
+			) {
+				return true;
+				
+			}else{
+				return false;	
+			}
+		
+	}
     function cdmFindLockedGroup($uid, $creator_id)
     {
         global $wpdb;
