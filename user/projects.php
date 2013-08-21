@@ -80,7 +80,7 @@ $r_projects_query = "SELECT *
 
 
 
-  if(count($projects) > 0 or get_option('sp_cu_user_projects') == 1){
+  if(count($projects) > 0 or get_option('sp_cu_user_projects') == 1 or get_option('sp_cu_user_projects_required') ==1){
 
 	  $html .= ' <tr>
 
@@ -99,10 +99,15 @@ $r_projects_query = "SELECT *
     <td>';
 
 	
+	if(get_option('sp_cu_user_projects_required') == 1){
+	$requird = ' required';	
+	}else{
+		$requird = '';	
+  }
 
 	$select_dropdown .='
 
-	<select name="pid" class="pid_select">';
+	<select name="pid" class="pid_select'.$requird.'" >';
 
 	
 
