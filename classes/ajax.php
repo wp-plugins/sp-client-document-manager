@@ -1076,8 +1076,19 @@ function sp_cu_remove_project(){
 		';
         }
 		}
+			echo '
+
+	<div style="float:right">Sort by: <a href="javascript:sp_cdm_sort(\'name\',' . $_GET['pid'] . ')">Name</a>   <a href="javascript:sp_cdm_sort(\'date\',' . $_GET['pid']. ')">Date</a></div>
+
+	
+		
+
+		';
+		
+		
 			do_action('spdm_file_list_column_before_sort_thumbs');
 		
+		echo '<div style="clear:both"></div>';
         if ($_GET['pid'] != 0) {
             $query_project = $wpdb->get_results("SELECT *
 
