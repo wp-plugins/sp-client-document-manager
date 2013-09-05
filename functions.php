@@ -236,31 +236,7 @@ if (!function_exists('sp_client_upload_settings')) {
 
     <td><input type="text" name="sp_cu_company_name"  value="' . get_option('sp_cu_company_name') . '"  size=80"> </td>
 
-  </tr>';
-        $timeZones = DateTimeZone::listIdentifiers();
-        $time_select .= '<select name="sp_cu_time_zone">';
-        foreach ($timeZones as $timeZone) {
-            if ($timeZone == get_option('sp_cu_time_zone')) {
-                $selected = 'selected="selected"';
-            } else {
-                $selected = '';
-            }
-            $time_select .= '<option value="' . $timeZone . '" ' . $selected . '>' . $timeZone . '</option>';
-        }
-        $time_select .= '</select><br><em>Based on your setttings it is: ' . date("F j, Y, g:i a") . '</em>';
-        echo '
-
-		  <tr>
-
-    <td width="300"><strong>Time Zone</strong><br><em>Set your timezone for the below settings.</em></td>
-
-    <td>' . $time_select . ' </td>
-
   </tr>
-
-	
-
-  
 
 		 <tr>
 

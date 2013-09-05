@@ -754,6 +754,7 @@ $html .='
             check_folder_sp_client_upload();
             if ($files['dlg-upload-file']['name'] != "") {
                 $a['file'] = sp_uploadFile($files);
+				$a['date'] =  date("Y-m-d G:i:s",current_time( 'timestamp' ));
                 $wpdb->insert("" . $wpdb->prefix . "sp_cu", $a);
                 $file_id = $wpdb->insert_id;
                 add_user_meta($user_ID, 'last_project', $a['pid']);
