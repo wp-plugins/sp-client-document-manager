@@ -609,12 +609,14 @@ if (!function_exists('sp_client_upload_settings')) {
             }
             if (current_user_can('sp_cdm_settings')) {
                 $content .= '<li><a href="admin.php?page=sp-client-document-manager-settings" >' . __("Settings", "sp-cdm") . '</a><ul>';
+				    $content .= '<li><a href="admin.php?page=sp-client-document-manager-settings" >' . __("Global Settings", "sp-cdm") . '</a></li>';
                 if (current_user_can('sp_cdm_vendors')) {
                     $content .= '<li><a href="admin.php?page=sp-client-document-manager-vendors" >' . __("Vendors", "sp-cdm") . '</a></li>';
                 }
                 if (current_user_can('sp_cdm_projects')) {
                     $content .= '<li><a href="admin.php?page=sp-client-document-manager-projects" >' .sp_cdm_folder_name(1) . '</a></li>';
                 }
+					
                 if (@CU_PREMIUM == 1) {
                     if (current_user_can('sp_cdm_settings')) {
                         $content .= '<li><a href="admin.php?page=sp-client-document-manager-groups" >' . __("Groups", "sp-cdm") . '</a></li>';

@@ -702,6 +702,8 @@ $html .='
             mkdir($dir, 0777);
         }
     }
+	
+	
     function sp_cu_process_email($id, $email)
     {
         global $wpdb;
@@ -782,13 +784,14 @@ $html .='
                     }
                     $message = sp_cu_process_email($file_id, get_option('sp_cu_admin_email'));
                     add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
-                    $subject = get_option('sp_cu_admin_email_subject');
+                    $subject =  sp_cu_process_email($file_id, get_option('sp_cu_admin_email_subject'));
                     wp_mail($to, $subject, $message, $headers, $attachments);
                     unset($headers);
                     unset($pos);
                 }
                 if (get_option('sp_cu_user_email') != "") {
-                    $subject = get_option('sp_cu_user_email_subject');
+      
+					$subject =  sp_cu_process_email($file_id, get_option('sp_cu_user_email_subject'));
                     $message = sp_cu_process_email($file_id, get_option('sp_cu_user_email'));
                     $to      = $current_user->user_email;
                     if (get_option('sp_cu_additional_user_emails') != "") {

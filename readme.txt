@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: Project Management, web based document manager,online website documents organization, share documents securely, customer file manager, FTP client files,
 Requires at least: 2.0.2
 Tested up to: 3.6
-Stable tag: 1.8.6
+Stable tag: 1.8.7
 
 SP Online Client Document & Project Manager. Multi-functional - upload, share, group, distribute and organize all documents & files.
 
@@ -691,3 +691,10 @@ Major updates, new uploader and fixes to admin upload functions
 = 1.8.6 =
 
 * Now uses your wordpress settings time zone instead of a native time zone.
+
+= 1.8.7 =
+
+* Fixed issue with caching in IE 10
+* Added force upgrade button for tables
+* Fixed bugs mentioned in forums.
+* Added the ability to use the template tags in the email subject
