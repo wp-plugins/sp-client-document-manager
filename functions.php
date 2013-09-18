@@ -220,9 +220,27 @@ if (!function_exists('sp_client_upload_settings')) {
 
 
 
-</div>
+</div>';
 
-<h2>Settings</h2>
+
+if($_REQUEST['force_upgrades'] == 1){
+	sp_cdm_update_db_check();
+	echo'
+
+<div style="border:1px solid #CCC;padding:5px;margin:5px;background-color:#EFEFEF">
+Database verified, you should be good to go!</a>
+</div>';
+}else{
+	
+echo'
+
+<div style="border:1px solid #CCC;padding:5px;margin:5px;background-color:#EFEFEF">
+Having problems? <a href="admin.php?page=sp-client-document-manager-settings&force_upgrade=1&force_upgrades=1">Click here to make sure your database structure is correct</a>
+</div>';
+
+}
+
+echo '
 
 
 
