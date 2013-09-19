@@ -28,14 +28,14 @@ class spdm_ajax
             $html .= '<span id="cdm_comment_button_holder">' . $cdm_comments->button() . '</span>';
         }
         if (class_exists('cdmProductivityGoogle')) {
-            $html .= '<span id="cdm_shortlink_button_holder">' . $cdm_google->short_link_button($r[0]['id'], '' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . $r[0]['id'] . '') . '</span>';
+            $html .= '<span id="cdm_shortlink_button_holder">' . $cdm_google->short_link_button($r[0]['id'], '' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']). '') . '</span>';
         }
         if (get_option('sp_cu_js_redirect') == 1) {
             $target = 'target="_blank"';
         } else {
             $target = ' ';
         }
-        $html .= '<a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . $r[0]['id'] . '" title="Download" style="margin-right:15px"  ><img src="' . SP_CDM_PLUGIN_URL . 'images/download.png"> ' . __("Download File", "sp-cdm") . '</a> ';
+        $html .= '<a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']) . '" title="Download" style="margin-right:15px"  ><img src="' . SP_CDM_PLUGIN_URL . 'images/download.png"> ' . __("Download File", "sp-cdm") . '</a> ';
         if ( cdm_user_can_delete($current_user->ID) == true) {
             $html .= '
 
@@ -164,7 +164,7 @@ class spdm_ajax
 
 <td width="200" >
 
-<a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . $r[0]['id'] . '" title="Download" style="margin-right:15px"  >
+<a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']) . '" title="Download" style="margin-right:15px"  >
 
 ' . $img . '
 
@@ -1316,7 +1316,7 @@ function sp_cu_remove_project(){
                 } else {
                     $name = $r[$i]['name'];
                 }
-                $attachment_links .= '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . $r[0]['id'] . '">' . stripslashes($name) . '</a><br>';
+                $attachment_links .= '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']). '</a><br>';
                 $attachment_array[$i] = '' . SP_CDM_UPLOADS_DIR . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '';
             }
             $to      = $_POST['vendor'];

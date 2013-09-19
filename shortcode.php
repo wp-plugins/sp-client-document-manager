@@ -28,7 +28,7 @@ function sp_cdm_display_project_shortcode($atts)
             } else {
                 $inc_date = '';
             }
-            $content .= '<li><a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . $r[$i]['id'] . '">' . stripslashes($r[$i]['name']) . '</a> ' . $inc_date . ' </li>';
+            $content .= '<li><a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file']) . '">' . stripslashes($r[$i]['name']) . '</a> ' . $inc_date . ' </li>';
         }
         $content .= '</ul>';
     }
@@ -53,7 +53,7 @@ function sp_cdm_file_link_shortcode($atts)
             } else {
                 $inc_date = '';
             }
-            $content = '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . $r[0]['id'] . '" >' . stripslashes($r[0]['name']) . '</a> ' . $inc_date . ' </a>';
+            $content = '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']) . '" >' . stripslashes($r[0]['name']) . '</a> ' . $inc_date . ' </a>';
         }
         return $content;
     }
@@ -721,7 +721,7 @@ $html .='
         }
         $user_info = get_userdata($r[0]['uid']);
         $message   = nl2br($email);
-        $message   = str_replace('[file]', '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . $r[$i]['id'] . '">' . SP_CDM_UPLOADS_DIR_URL . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '</a>', $message);
+        $message   = str_replace('[file]', '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file'])  . '">' . SP_CDM_UPLOADS_DIR_URL . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '</a>', $message);
         $message   = str_replace('[notes]', $notes, $message);
         $message   = str_replace('[user]', $user_info->user_nicename, $message);
         $message   = str_replace('[project]', stripslashes($r_project[0]['name']), $message);

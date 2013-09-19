@@ -59,14 +59,14 @@ switch ($function) {
             $html .= '<span id="cdm_comment_button_holder">' . $cdm_comments->button() . '</span>';
         }
         if (class_exists('cdmProductivityGoogle')) {
-            $html .= '<span id="cdm_shortlink_button_holder">' . $cdm_google->short_link_button($r[0]['id'], '' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . $r[0]['id'] . '') . '</span>';
+            $html .= '<span id="cdm_shortlink_button_holder">' . $cdm_google->short_link_button($r[0]['id'], '' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file'])  . '') . '</span>';
         }
         if (get_option('sp_cu_js_redirect') == 1) {
             $target = 'target="_blank"';
         } else {
             $target = ' ';
         }
-        $html .= '<a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . $r[0]['id'] . '" title="Download" style="margin-right:15px"  ><img src="' . SP_CDM_PLUGIN_URL . 'images/download.png"> ' . __("Download File", "sp-cdm") . '</a> ';
+        $html .= '<a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']) . '" title="Download" style="margin-right:15px"  ><img src="' . SP_CDM_PLUGIN_URL . 'images/download.png"> ' . __("Download File", "sp-cdm") . '</a> ';
         if ((($current_user->ID == $r[0]['uid'] or cdmFindLockedGroup($current_user->ID, $r[0]['uid']) == true) && get_option('sp_cu_user_delete_disable') != 1) or current_user_can('manage_options')) {
             $html .= '
 
@@ -191,7 +191,7 @@ switch ($function) {
 
 <td width="200" >
 
-<a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . $r[0]['id'] . '" title="Download" style="margin-right:15px"  >
+<a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file'])  . '" title="Download" style="margin-right:15px"  >
 
 ' . $img . '
 
