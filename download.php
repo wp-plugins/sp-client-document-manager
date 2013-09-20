@@ -200,7 +200,9 @@ $cdm_log->add($fid,$current_user->ID);
 
 
 
-	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$wpdb->escape($fid)."' AND date = '".$wpdb->escape($file_date)."'  AND name = '".$wpdb->escape($file_name)."' order by date desc", ARRAY_A);
+	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$wpdb->escape($fid)."' AND date = '".$wpdb->escape($file_date)."'  AND file = '".$wpdb->escape($file_name)."' order by date desc", ARRAY_A);
+
+
 
 	if(count($r) == 0){header("HTTP/1.0 404 Not Found");exit;}
 
