@@ -783,9 +783,11 @@ $html .='
                         }
                     }
                     $message = sp_cu_process_email($file_id, get_option('sp_cu_admin_email'));
-                    add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
+                  
                     $subject =  sp_cu_process_email($file_id, get_option('sp_cu_admin_email_subject'));
-                    wp_mail($to, $subject, $message, $headers, $attachments);
+                     add_filter( 'wp_mail_content_type', 'set_html_content_type' );
+					wp_mail($to, $subject, $message, $headers, $attachments);
+					 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
                     unset($headers);
                     unset($pos);
                 }
@@ -816,8 +818,9 @@ $html .='
 			$attachments = apply_filters('spcdm_user_email_attachments',$attachments,$post, $uid);
 			$user_headers = apply_filters('spcdm_user_email_headers',$user_headers,$post, $uid);
 			
-			
+						 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
                     wp_mail($to, $subject, $message, $user_headers, $attachments);
+					 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
                 }
                 $html .= '<script type="text/javascript">
 

@@ -91,9 +91,11 @@ if( $_POST['submit-admin'] == 'Upload'){
 	$to = get_option('admin_email');
 	$headers .= "".__("From:","sp-cdm")." ".$user_info->user_firstname." ".$user_info->user_lastname." <".$user_info->user_email.">\r\n";	
 	$message = sp_cu_process_email($file_id,get_option('sp_cu_admin_email'));
-	add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
+	
 	$subject = get_option('sp_cu_admin_email_subject');
+	 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
 	wp_mail( $to, $subject, $message, $headers, $attachments );
+	 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
 	}
 	
 	
@@ -102,7 +104,9 @@ if( $_POST['submit-admin'] == 'Upload'){
 		$subject = get_option('sp_cu_user_email_subject');
 		$message = sp_cu_process_email($file_id,get_option('sp_cu_user_email'));
 		$to = $user_info->user_email;		
+		 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
 		wp_mail( $to, $subject, $message, $headers, $attachments );
+		 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
 	}
 	
 	
@@ -539,10 +543,11 @@ if($_POST['submit-admin'] != ""){
 	if(get_option('sp_cu_admin_email') != ""){
 	$headers .= "".__("From:","sp-cdm")." ".$current_user->user_firstname." ".$current_user->user_lastname." <".$current_user->user_email.">\r\n";	
 	$message = sp_cu_process_email($file_id,get_option('sp_cu_admin_email'));
-	add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-	$subject = get_option('sp_cu_admin_email_subject');
-	wp_mail( $to, $subject, $message, $headers, $attachments );
 	
+	$subject = get_option('sp_cu_admin_email_subject');
+	 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
+	wp_mail( $to, $subject, $message, $headers, $attachments );
+	 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
 	}
 	
 	
@@ -550,7 +555,9 @@ if($_POST['submit-admin'] != ""){
 		$subject = get_option('sp_cu_user_email_subject');
 		$message = sp_cu_process_email($file_id,get_option('sp_cu_user_email'));
 		$to = $current_user->user_email;		
+		 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
 		wp_mail( $to, $subject, $message, $headers, $attachments );
+		 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
 	}
 		$html .= '<script type="text/javascript">
 

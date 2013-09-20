@@ -1,5 +1,17 @@
 <?php
+
+
+if(!function_exists('set_html_content_type')){
+function set_html_content_type() {
+
+	return 'text/html';
+}	
+}
+
 if(!function_exists('sp_cdm_folder_name')){
+	
+
+	
 function sp_cdm_folder_name($type = 0){
 	
 	

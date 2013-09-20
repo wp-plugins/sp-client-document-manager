@@ -1334,7 +1334,9 @@ function sp_cu_remove_project(){
                 $message .= $attachment_links;
             }
             $subject = '' . __("New files from:", "sp-cdm") . ' ' . get_option('sp_cu_company_name') . '';
-            wp_mail($to, $subject, $message, $h, $attachments);
+           add_filter( 'wp_mail_content_type', 'set_html_content_type' );
+		    wp_mail($to, $subject, $message, $h, $attachments);
+			 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
             echo '<p style="color:green;font-weight:bold">' . __("Files Sent to", "sp-cdm") . ' ' . $_POST['vendor'] . '</p>';
         }
     }
