@@ -24,7 +24,7 @@ $upload_dir = wp_upload_dir();
 		break;	
 		
 		case "save-category":
-		echo $spcdm_ajax->save_cat();
+		echo $spcdm_ajax->save_cat($_REQUEST['uid']);
 		
 		break;
 		
