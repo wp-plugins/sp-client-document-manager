@@ -292,10 +292,14 @@ function sp_uploadFile($files, $history = NULL){
 
 	$ext = preg_replace('/^.*\./', '', $filename);
 
-	if($ext == 'pdf' && get_option('sp_cu_user_projects_thumbs_pdf') == 1){
-
-	cdm_thumbPdf($target_path);
-
+	if(get_option('sp_cu_user_projects_thumbs_pdf') == 1 && class_exists('imagick')){
+	
+	$info = new Imagick();
+	$formats = $info->queryFormats();
+		
+		if(in_array(strtoupper($ext),$formats)){
+		cdm_thumbPdf($target_path);
+		}
 	}
 
 	
@@ -416,11 +420,16 @@ $zip->setZipFile($dir.$return_file);
 
 	$ext = preg_replace('/^.*\./', '', $filename);
 
-	if(($ext == 'pdf' or $ext == 'psd' )&& get_option('sp_cu_user_projects_thumbs_pdf') == 1){
-
-	cdm_thumbPdf($target_path);
+	if(get_option('sp_cu_user_projects_thumbs_pdf') == 1 && class_exists('imagick')){
 	
+	$info = new Imagick();
+	$formats = $info->queryFormats();
+		
+		if(in_array(strtoupper($ext),$formats)){
+		cdm_thumbPdf($target_path);
+		}
 	}
+
 
 	return $filename;
 
@@ -474,11 +483,16 @@ function sp_Admin_uploadFile($files,$user_ID){
 
 	$ext = preg_replace('/^.*\./', '', $filename);
 
-	if($ext == 'pdf' && get_option('sp_cu_user_projects_thumbs_pdf') == 1){
-
-	cdm_thumbPdf($target_path);
-
+	if(get_option('sp_cu_user_projects_thumbs_pdf') == 1 && class_exists('imagick')){
+	
+	$info = new Imagick();
+	$formats = $info->queryFormats();
+		
+		if(in_array(strtoupper($ext),$formats)){
+		cdm_thumbPdf($target_path);
+		}
 	}
+
 
 	
 
@@ -604,11 +618,16 @@ $zip->setZipFile($dir.$return_file);
 
 	$ext = preg_replace('/^.*\./', '', $filename);
 
-	if(($ext == 'pdf' or $ext == 'psd' )&& get_option('sp_cu_user_projects_thumbs_pdf') == 1){
-
-	cdm_thumbPdf($target_path);
-
+	if(get_option('sp_cu_user_projects_thumbs_pdf') == 1 && class_exists('imagick')){
+	
+	$info = new Imagick();
+	$formats = $info->queryFormats();
+		
+		if(in_array(strtoupper($ext),$formats)){
+		cdm_thumbPdf($target_path);
+		}
 	}
+
 
 	return $filename;
 

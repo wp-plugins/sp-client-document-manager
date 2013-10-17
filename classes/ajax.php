@@ -111,7 +111,21 @@ class spdm_ajax
             "gif",
             "bmp"
         );
-        if (in_array(strtolower($ext), $images_arr)) {
+      
+	  
+	  
+			if(get_option('sp_cu_user_projects_thumbs_pdf') == 1 && class_exists('imagick')){
+	
+			$info = new Imagick();
+			$formats = $info->queryFormats();
+			
+			}else{
+				$formats = array();
+			}
+	  
+	  
+	  
+	    if (in_array(strtolower($ext), $images_arr)) {
             if (get_option('sp_cu_overide_upload_path') != '' && get_option('sp_cu_overide_upload_url') == '') {
                 $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/package_labled.png">';
             } else {
@@ -127,7 +141,7 @@ class spdm_ajax
             $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/microsoft_office_powerpoint.png">';
         } elseif ($ext == 'adb' or $ext == 'accdb') {
             $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/microsoft_office_access.png">';
-        } elseif (($ext == 'pdf' or $ext == 'psd' or $ext == 'html' or $ext == 'eps') && get_option('sp_cu_user_projects_thumbs_pdf') == 1) {
+        } elseif (in_array(strtoupper($ext),$formats)) {
             if (file_exists('' . SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '_big.png')) {
                 $img = '<img src="' . SP_CDM_UPLOADS_DIR_URL . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '_big.png" width="250">';
             } else {
@@ -750,16 +764,24 @@ echo '
             echo '<tr >
 			';
 			do_action('spdm_file_list_column_before_file',$r[$i]['id'] );
+			
+			
+			if(get_option('sp_cu_file_direct_access') == 1){
+			$file_link = 	'window.open(\'' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file']) . '\')'; ;
+			}else{
+			$file_link =  'sp_cdm_showFile(' . $r[$i]['id'] . ')';	
+			}
+			
 			echo '
 				<td class="cdm_file_icon ext_' . $ext . '" onclick="sp_cdm_showFile(' . $r[$i]['id'] . ')"></td>
 
-		<td class="cdm_file_info" onclick="sp_cdm_showFile(' . $r[$i]['id'] . ')">' . stripslashes($r[$i]['name']) . ' ' . $project_name . '</td>
+		<td class="cdm_file_info" onclick="'.$file_link.'">' . stripslashes($r[$i]['name']) . ' ' . $project_name . '</td>
 
-		<td class="cdm_file_date" onclick="sp_cdm_showFile(' . $r[$i]['id'] . ')">' . date("F Y g:i A", strtotime($r[$i]['date'])) . '</td>
+		<td class="cdm_file_date" onclick="'.$file_link.'">' . date("F Y g:i A", strtotime($r[$i]['date'])) . '</td>
 
 
 
-		<td class="cdm_file_type" onclick="sp_cdm_showFile(' . $r[$i]['id'] . ')">' . $ext . '</td>	
+		<td class="cdm_file_type" onclick="'.$file_link.'">' . $ext . '</td>	
 
 		</tr>	
 
@@ -1206,6 +1228,17 @@ function sp_cu_remove_project(){
                 "gif",
                 "bmp"
             );
+			
+					if(get_option('sp_cu_user_projects_thumbs_pdf') == 1 && class_exists('imagick')){
+	
+			$info = new Imagick();
+			$formats = $info->queryFormats();
+			
+			}else{
+				$formats = array();
+			}
+	  
+			
             if (in_array(strtolower($ext), $images_arr)) {
                 if (get_option('sp_cu_overide_upload_path') != '' && get_option('sp_cu_overide_upload_url') == '') {
                     $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/package_labled.png">';
@@ -1222,9 +1255,9 @@ function sp_cu_remove_project(){
                 $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/microsoft_office_powerpoint.png">';
             } elseif ($ext == 'adb' or $ext == 'accdb') {
                 $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/microsoft_office_access.png">';
-            } elseif (($ext == 'pdf' or $ext == 'psd' or $ext == 'html' or $ext == 'eps') && get_option('sp_cu_user_projects_thumbs_pdf') == 1) {
+            } elseif (in_array(strtoupper($ext),$formats)) {
                 if (file_exists('' . SP_CDM_UPLOADS_DIR . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '_small.png')) {
-                    $img = '<img src="' . SP_CDM_UPLOADS_DIR_URL . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '_small.png">';
+                    $img = '<img src="' . sp_cdm_thumbnail('' . SP_CDM_UPLOADS_DIR_URL . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '_small.png', 80, 80).'">';
                 } else {
                     $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/adobe.png">';
                 }
@@ -1238,11 +1271,19 @@ function sp_cu_remove_project(){
             } else {
                 $project_name = '';
             }
+			
+			
+			if(get_option('sp_cu_file_direct_access') == 1){
+			$file_link = 	'window.open(\'' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file']) . '\')'; ;
+			}else{
+			$file_link =  'sp_cdm_showFile(' . $r[$i]['id'] . ')';	
+			}
+			
             echo '<div class="dlg_cdm_thumbnail_folder">
 
 			<div class="dlg_cdm_thumbnail_image">
 
-				<a href="javascript:sp_cdm_showFile(' . $r[$i]['id'] . ')">' . $img . '
+				<a href="javascript:'.$file_link.'">' . $img . '
 
 				<div class="dlg_cdm_thumb_title">
 

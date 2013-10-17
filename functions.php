@@ -74,7 +74,49 @@ if (!function_exists('sp_client_upload_settings')) {
             return false;
         }
     }
-    function cdm_thumbPdf($pdf)
+	
+	
+	
+	function cdm_thumbPdf($pdf){
+		
+		if(class_exists('imagick')){
+			
+			$tmp    = SP_CDM_UPLOADS_DIR;
+            $format = "png";
+            $source = $pdf;
+            $dest   = "" . $pdf . "_big.$format";
+            $dest2   = "" . $pdf . "_small.$format";
+			
+			
+			// read page 1 
+$im = new imagick( ''.  $source.'[0]' ); 
+
+// convert to jpg 
+$im->setImageColorspace(255); 
+$im->setImageFormat( $format); 
+
+//resize 
+$im->resizeImage(650, 650, imagick::FILTER_LANCZOS, 1);  
+
+//write image on server 
+$im->writeImage($dest); 
+
+//resize 
+$im->resizeImage(250, 250, imagick::FILTER_LANCZOS, 1);  
+
+//write image on server 
+$im->writeImage($dest2); 
+
+$im->clear(); 
+$im->destroy(); 
+			
+		}else{
+			echo 'php-image-magick not installed. Please disable the pdf thumbnail options or install the php extention correctly.';exit;
+		}
+		
+	
+	}
+    function __depcreated_cdm_thumbPdf($pdf)
     {
         try {
             $tmp    = SP_CDM_UPLOADS_DIR;
