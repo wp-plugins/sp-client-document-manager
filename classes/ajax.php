@@ -1294,7 +1294,7 @@ function sp_cu_remove_project(){
 				</a>
 
 				</div>';
-				do_action('spdm_file_thumbs_column_before_file', $r_projects[$i]['pid']);
+				do_action('spdm_file_thumbs_column_before_file', $r[$i]['id']);
 				echo '
 
 				</div>

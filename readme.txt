@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: Web based document manager,FIle uploader, online website documents organization, share documents and graphic files securely, customer file manager
 Requires at least: 2.0.2
 Tested up to: 3.6.1
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 
 SP Online Client Document & Project Manager. Multi-functional - upload, share, group, distribute and organize all documents & files.
 
@@ -723,3 +723,7 @@ Major updates, new uploader and fixes to admin upload functions
 
 * Imagemagick now supports over 100 different file types based off your imageMagick installation!
 * Premium users can choose the option to force download a file instead of viewing the file info screen.
+
+= 1.9.4 =
+
+* Update to fix issue with batch operations manager
