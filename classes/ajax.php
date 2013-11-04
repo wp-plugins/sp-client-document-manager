@@ -269,6 +269,11 @@ class spdm_ajax
 
 	");
             unlink('' . SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '');
+			        $ext        = preg_replace('/^.*\./', '', $r[0]['file']);
+					$small = '' . SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/'.$r[0]['file'].'_small.png';
+					$big = '' . SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/'.$r[0]['file'].'_big.png';
+			@unlink($small);
+			@unlink($big);
         }
     }
     function get_file_info()
