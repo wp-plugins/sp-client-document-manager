@@ -70,7 +70,8 @@ add_filter('wp_head','sp_cdm_tinymce_editor');
   add_thickbox();
  }
 
-include_once ''.dirname(__FILE__).'/classes/mat.thumb.php';
+require_once ''.dirname(__FILE__).'/classes/mat.thumb.php';
+
 include_once ''.dirname(__FILE__).'/classes/ajax.php';
 include_once ''.dirname(__FILE__).'/common.php';
 

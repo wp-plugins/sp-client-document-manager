@@ -1,10 +1,26 @@
 
 
+function sp_cu_reload_all_projects(context_folder_pid){
+	
 
+		jQuery.ajax({
 
+			   type: "POST",
 
+			   url: jQuery('#sp_cu_ajax_url').val() + '?function=reload-project-dropdown&pid='+ context_folder_pid,			  
 
+			   success: function(msg){
 
+					
+				jQuery('.pid_select').html(msg);	
+			
+			   }
+
+			 });
+
+	
+	
+}
 
 function sp_cu_confirm_delete(div,h,url){
 

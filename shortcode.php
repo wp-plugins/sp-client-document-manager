@@ -854,16 +854,14 @@ jQuery(document).ready(function() {
             $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where uid = $user_ID  order by date desc", ARRAY_A);
             //show uploaded documents
             $html .= '
-
-
+<input type="text" value="'.SP_CDM_PLUGIN_URL.'ajax.php" id="sp_cu_ajax_url" class="sp_cu_ajax_url" name="sp_cu_ajax_url">
+	<div class="sp_client_document_manager_wrapper">
     <div style="display:none">
+	 <div id="cp_cdm_upload_form">
 
-  <div id="cp_cdm_upload_form">
-
-  ' . display_sp_upload_form() . '
+ 	 ' . display_sp_upload_form() . '
 
   </div>
-
   </div>
 
   
@@ -968,6 +966,7 @@ window.location = "' . wp_login_url($_SERVER['REQUEST_URI']) . '"
 
 </script>';
         }
+		$html .='</div>';
         return $html;
     }
 }
@@ -976,8 +975,10 @@ function sp_cu_add_file_link_free()
     $add_file_link = 'javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)';
 }
 
+
 add_action('sp_cu_add_file_link', 'sp_cu_add_file_link_free', 5);
 add_shortcode('sp-client-media-manager', 'display_sp_client_upload');
 add_shortcode('sp-client-document-manager', 'display_sp_client_upload');
 add_action('wp_footer', 'display_sp_client_upload_process');
+
 ?>

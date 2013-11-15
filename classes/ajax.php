@@ -1,6 +1,19 @@
 <?php
 class spdm_ajax
 {
+	
+	
+	function project_dropdown(){
+		
+		if(class_exists('spdm_sub_projects')){
+		echo spdm_sub_projects::project_dropdown_replace();
+		}else{
+		echo sp_cdm_replace_project_select();	
+		}
+		
+		
+		
+	}
     function view_file()
     {
         global $wpdb, $current_user, $cdm_comments, $cdm_google, $cdm_log;
@@ -1157,7 +1170,12 @@ function sp_cu_remove_project(){
         if (count($r_projects) > 0) {
             for ($i = 0; $i < count($r_projects); $i++) {
                 if ($r_projects[$i]['project_name'] != "") {
-                    echo '
+            
+				
+				
+				//if(cdm_has_permission($_GET['uid'],$r_projects[$i]['uid'],$r_projects[$i]['pid'],'folder') ==1 ){
+			
+			        echo '
 
 		<div class="dlg_cdm_thumbnail_folder">
 
@@ -1179,6 +1197,7 @@ function sp_cu_remove_project(){
 		
 
 		';
+				//}
                 }
             }
         }

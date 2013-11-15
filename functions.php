@@ -2,6 +2,24 @@
 if (!function_exists('sp_client_upload_settings')) {
 	
 	
+	function cdm_has_permission($uid,$file_uid,$id,$type){
+			global $wpdb,$current_user;
+		$view = 0; 
+		
+
+	
+			
+		if($file_uid == $uid){ $view = 1; }	
+			
+		$view = apply_filters('sp_cdm_has_permission',$view,$uid,$file_uid,$id,$type);	
+	
+		return $view;
+		
+		
+		
+	}
+	
+	
 	function cdm_user_can_delete($uid){
 		
 		  if (

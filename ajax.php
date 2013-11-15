@@ -10,7 +10,13 @@ $upload_dir = wp_upload_dir();
 	$function = $_GET['function'];
 	
 	
+	
+	
 	switch($function){
+		
+		  case "reload-project-dropdown":
+		echo $spcdm_ajax->project_dropdown();
+		break;
 		case "delete-file":
 		echo $spcdm_ajax->delete_file();	
 		break;
