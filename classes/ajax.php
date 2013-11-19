@@ -212,6 +212,20 @@ class spdm_ajax
 <strong>' . __("File Type ", "sp-cdm") . ': </strong>' . $ext . '
 
 </div>';
+
+  if (CU_PREMIUM == 1) {
+	 
+	 if($r[0]['cid'] != '' && $r[0]['cid'] != 0){
+		 
+	    
+	  $html .='<div class="sp_su_project">
+
+<strong>'.sp_cdm_category_name().': </strong>' .sp_cdm_category_value($r[0]['cid']) . '
+
+</div>';
+	 }	
+	  
+  }
         if ($r[0]['tags'] != "") {
             $html .= '
 

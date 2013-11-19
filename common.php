@@ -1,5 +1,23 @@
 <?php
+if(!function_exists('sp_cdm_category_value')){
+function sp_cdm_category_value($id){
+global $wpdb;
 
+    $r_cat = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu_cats   where id = '" . $id . "'", ARRAY_A);	 	
+	return stripslashes($r_cat[0]['name']);
+}
+	
+function sp_cdm_category_name(){
+	
+	if(get_option('sp_cu_cat_text') != ''){
+		$cat= get_option('sp_cu_cat_text');
+	}else{
+		$cat =  __("Category", "sp-cdm");
+	}
+return $cat;	
+}
+
+}
 
 if(!function_exists('set_html_content_type')){
 function set_html_content_type() {
@@ -9,7 +27,7 @@ function set_html_content_type() {
 }
 
 if(!function_exists('sp_cdm_folder_name')){
-	
+
 
 	
 function sp_cdm_folder_name($type = 0){

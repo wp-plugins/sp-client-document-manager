@@ -854,7 +854,7 @@ jQuery(document).ready(function() {
             $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where uid = $user_ID  order by date desc", ARRAY_A);
             //show uploaded documents
             $html .= '
-<input type="text" value="'.SP_CDM_PLUGIN_URL.'ajax.php" id="sp_cu_ajax_url" class="sp_cu_ajax_url" name="sp_cu_ajax_url">
+<input type="hidden" value="'.SP_CDM_PLUGIN_URL.'ajax.php" id="sp_cu_ajax_url" class="sp_cu_ajax_url" name="sp_cu_ajax_url">
 	<div class="sp_client_document_manager_wrapper">
     <div style="display:none">
 	 <div id="cp_cdm_upload_form">
