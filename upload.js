@@ -1,3 +1,49 @@
+function cdm_check_file_perms(pid){
+			
+		
+		jQuery.ajax({
+
+			   type: "POST",
+
+			   url: jQuery('#sp_cu_ajax_url').val() + '?function=check-file-permissions&pid='+ pid ,			  
+
+			   success: function(msg){
+				if(msg == 1){
+					jQuery('.hide_add_file_permission').show();	
+					}else{
+					jQuery('.hide_add_file_permission').hide();		
+					}
+			   }
+
+			 });
+
+				
+	
+}
+
+function cdm_check_folder_perms(pid){
+			
+		
+		jQuery.ajax({
+
+			   type: "POST",
+
+			   url: jQuery('#sp_cu_ajax_url').val() + '?function=check-folder-permissions&pid='+ pid ,			  
+
+			   success: function(msg){
+				  
+				if(msg == 1){
+					jQuery('.hide_add_folder_permission').show();	
+					}else{
+					jQuery('.hide_add_folder_permission').hide();		
+					}
+			   }
+
+			 });
+
+				
+	
+}
 
 
 function sp_cu_reload_all_projects(context_folder_pid){
@@ -147,6 +193,7 @@ function sp_cu_dialog(div,w,h){
 
 
 jQuery(document).ready(function() {
+
 
 
 

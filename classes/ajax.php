@@ -3,6 +3,8 @@ class spdm_ajax
 {
 	
 	
+	
+	
 	function project_dropdown(){
 		
 		if(class_exists('spdm_sub_projects')){
@@ -49,7 +51,7 @@ class spdm_ajax
             $target = ' ';
         }
         $html .= '<a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']) . '" title="Download" style="margin-right:15px"  ><img src="' . SP_CDM_PLUGIN_URL . 'images/download.png"> ' . __("Download File", "sp-cdm") . '</a> ';
-        if ( cdm_user_can_delete($current_user->ID) == true) {
+        if ( cdm_user_can_delete($current_user->ID) == true && cdm_delete_permission($r[0]['pid']) == 1) {
             $html .= '
 
 	<a href="javascript:sp_cu_confirm_delete(\'' . get_option('sp_cu_delete') . '\',200,\'' . SP_CDM_PLUGIN_URL . 'ajax.php?function=delete-file&dlg-delete-file=' . $r[0]['id'] . '\');" title="Delete" ><img src="' . SP_CDM_PLUGIN_URL . 'images/delete.png">' . __("Delete File", "sp-cdm") . '</a>';
@@ -73,7 +75,11 @@ class spdm_ajax
             $html .= '<li><a href="#cdm-file-comments">'.__("Comments","sp-cdm").'</a></li>';
         }
         if (class_exists('cdmProductivityLog')) {
+			if((get_option('sp_cu_log_admin_only') == 1 && current_user_can('manage_options') )
+	or (get_option('sp_cu_log_admin_only') == 0 or get_option('sp_cu_log_admin_only') == '')
+	){
             $html .= '<li><a href="#cdm-file-log">'.__("Download Log","sp-cdm").'</a></li>';
+	}
         }
         $html .= '</ul>
 
@@ -142,7 +148,7 @@ class spdm_ajax
             if (get_option('sp_cu_overide_upload_path') != '' && get_option('sp_cu_overide_upload_url') == '') {
                 $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/package_labled.png">';
             } else {
-                $img = '<img src="' . sp_cdm_thumbnail('' . SP_CDM_UPLOADS_DIR_URL . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '', 250, 250) . '">';
+                $img = '<img src="' . sp_cdm_thumbnail('' . SP_CDM_UPLOADS_DIR_URL . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '', 250) . '">';
             }
         } elseif ($ext == 'xls' or $ext == 'xlsx') {
             $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/microsoft_office_excel.png">';
@@ -211,7 +217,15 @@ class spdm_ajax
 
 <strong>' . __("File Type ", "sp-cdm") . ': </strong>' . $ext . '
 
-</div>';
+</div>
+<div class="sp_su_project">
+
+<strong>' . __("File Size ", "sp-cdm") . ': </strong>' . cdm_file_size(''.SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '') . ' 
+
+</div>
+
+
+';
 
   if (CU_PREMIUM == 1) {
 	 
@@ -1281,7 +1295,8 @@ function sp_cu_remove_project(){
                 if (get_option('sp_cu_overide_upload_path') != '' && get_option('sp_cu_overide_upload_url') == '') {
                     $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/package_labled.png">';
                 } else {
-                    $img = '<img src="' . sp_cdm_thumbnail('' . SP_CDM_UPLOADS_DIR_URL . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '', 80, 80) . '">';
+                    $img = '<img src="' . sp_cdm_thumbnail('' . SP_CDM_UPLOADS_DIR_URL . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '',NULL, 70) . '">';
+				
                 }
             } elseif ($ext == 'xls' or $ext == 'xlsx') {
                 $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/microsoft_office_excel.png">';
@@ -1295,7 +1310,8 @@ function sp_cu_remove_project(){
                 $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/microsoft_office_access.png">';
             } elseif (in_array(strtoupper($ext),$formats)) {
                 if (file_exists('' . SP_CDM_UPLOADS_DIR . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '_small.png')) {
-                    $img = '<img src="' . sp_cdm_thumbnail('' . SP_CDM_UPLOADS_DIR_URL . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '_small.png', 80, 80).'">';
+                    $img = '<img src="' . sp_cdm_thumbnail('' . SP_CDM_UPLOADS_DIR_URL . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '_small.png',NULL, 70).'">';
+				
                 } else {
                     $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/adobe.png">';
                 }
@@ -1321,7 +1337,7 @@ function sp_cu_remove_project(){
 
 			<div class="dlg_cdm_thumbnail_image">
 
-				<a href="javascript:'.$file_link.'">' . $img . '
+				<a href="javascript:'.$file_link.'" ><div class="cdm_img_container">' . $img . '</div>
 
 				<div class="dlg_cdm_thumb_title">
 

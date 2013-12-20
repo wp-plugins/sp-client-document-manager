@@ -664,7 +664,7 @@ echo '
     if (!function_exists('sp_client_upload_nav_menu')) {
         function sp_client_upload_nav_menu($nav = NULL)
         {
-			
+			global $wpdb,$current_user;
 			$content ='';
             global $cu_ver, $sp_client_upload, $sp_cdm_ver;
             $content .= '
@@ -715,7 +715,11 @@ echo '
 
 
 
-	<li><a href="admin.php?page=sp-client-document-manager-help" >' . __("Instructions", "sp-cdm") . '</a></li>
+	<li><a href="admin.php?page=sp-client-document-manager-help" >' . __("Instructions", "sp-cdm") . '</a></li>';
+	
+	 $extra_top_menus = '';
+       $extra_top_menus .= apply_filters('sp_client_upload_top_menu',  $extra_top_menus);
+	$content .=''. $extra_top_menus.'
 
 	</ul>';
             if (@CU_PREMIUM == 1) {
@@ -776,11 +780,51 @@ echo '
 
 	</div>';
             }
+			
+			
+			 $r = $wpdb->get_results("SELECT * FROM  " . $wpdb->prefix . "posts where post_content LIKE   '%[sp-client-document-manager]%' and post_type = 'page'", ARRAY_A);
+							
+	if (@$_GET['ignore'] == 'shortcode') {
+                add_option('cdm_ignore_shortcode', 1);
+            }
+			
+		if($r[0]['ID'] == ""  && get_option('cdm_ignore_shortcode') != 1){
+                $content .= '<div class="sp_cdm_error" style="margin-bottom:20px">It looks like you do not have a page with the shortcode <strong>[sp-client-document-manager]</strong> on it. Please create one or use the form below and we will create one for you!';
+				
+				
+				if($_POST['page-name-cdm'] != ''){
+				
+				// Create post object
+			$my_post = array(
+			  'post_title'    => $_POST['page-name-cdm'],
+			  'post_content'  => '[sp-client-document-manager]',
+			  'post_type'   => 'page',
+			  'post_status'   => 'publish',
+			  'post_author'   => $current_user->ID,
+			 
+			);
+
+	
+			$post = wp_insert_post( $my_post );
+			$content .= '<div style="margin:10px;font-size:1.3em" class="sp_cdm_success"><strong>'.$_POST['page-name-cdm'].'</strong> Page Created! <a href="'.get_page_link($post).'" target="_blank">Click here to preview the page</a></div>';	
+				}else{
+				$content .='<form action="admin.php?page=sp-client-document-manager" method="post">
+				Page Name: <input type="text" name="page-name-cdm" value=""> <input type="submit" name="add-shortcode-page" value="Add">
+				</form>
+				<div style="text-align:right">
+				<a href="admin.php?page=sp-client-document-manager-settings&ignore=shortcode" class="button">click here to ignore this message</a>
+				</div>
+				';
+					
+				}
+				$content .='</div>';
+            }
+			
             if (@$_GET['ignore'] == 'tml') {
                 add_option('cdm_ignore_tml', 1);
             }
             if (!function_exists('theme_my_login') && get_option('cdm_ignore_tml') != 1) {
-                $content .= '<div class="sp_cdm_error">This plugin works great with the "Theme My Login" plugin which allows you to use your own template for login and registration. <strong>Please remember to turn on registration in your wordpress settings if you need to have users registering</strong>.<div style="padding:10px"> <a href="plugin-install.php?tab=search&s=theme+my+login&plugin-search-input=Search+Plugins" class="button">Click here to get theme my login.</a> or <a href="admin.php?page=sp-client-document-manager-settings&ignore=tml" class="button">click here to ignore this message</a>.</div></div>';
+                $content .= '<div class="sp_cdm_error">This plugin works great with the "Theme My Login" plugin which allows you to use your own template for login and registration. <strong>Please remember to turn on registration in your wordpress settings if you need to have users registering</strong>.<div style="padding:10px"> <a href="plugin-install.php?tab=search&s=theme+my+login&plugin-search-input=Search+Plugins" class="button">Click here to get theme my login.</a>	<div style="text-align:right"><a href="admin.php?page=sp-client-document-manager-settings&ignore=tml" class="button">click here to ignore this message</a></div></div></div>';
             }
             echo $content;
             do_action('sp_cdm_errors');

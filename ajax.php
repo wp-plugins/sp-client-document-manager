@@ -14,6 +14,14 @@ $upload_dir = wp_upload_dir();
 	
 	switch($function){
 		
+		case "check-file-permissions":
+		
+		echo cdm_file_permissions($_GET['pid']);
+		break;
+		case "check-folder-permissions":
+		
+		echo cdm_folder_permissions($_GET['pid']);
+		break;
 		  case "reload-project-dropdown":
 		echo $spcdm_ajax->project_dropdown();
 		break;

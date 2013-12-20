@@ -117,12 +117,18 @@ function display_sp_thumbnails2($r)
 	jQuery(document).ready( function() {
 
 			
+var pid = jQuery.cookie("pid");
 
+	if(pid != 0){
+	sp_cdm_load_project(pid)
+	}else{
+	sp_cdm_load_file_manager();	
+	}
 			
 
 		
 
-		 sp_cdm_load_file_manager();
+		 
 
 
 
@@ -138,6 +144,10 @@ function display_sp_thumbnails2($r)
 
 			sp_cdm_loading_image();
 	jQuery("#cdm_current_folder").val(pid);
+	
+	jQuery(".cdm_premium_pid_field").attr("value", pid);
+	jQuery.cookie("pid", pid, { expires: 7 });
+	
 			if(pid != 0 && jQuery("#cdm_premium_sub_projects").val() != 1){
 				jQuery(".cdm_add_folder_button").hide();	
 			
@@ -145,7 +155,9 @@ function display_sp_thumbnails2($r)
 				jQuery(".cdm_add_folder_button").show();
 			
 				}
-	
+	    cdm_check_folder_perms(pid);
+		  cdm_check_file_perms(pid);
+		  jQuery(".cdm_premium_pid_field").val(pid);
 		jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=file-list&uid=' . $user_ID . '&pid=" + pid);	
 
 		
@@ -609,10 +621,16 @@ $html .='
   
 
   ';
+  
+  
+  		
         $html .= sp_cdm_display_projects();
-        if (@CU_PREMIUM == 1) {
+      
+	    if (@CU_PREMIUM == 1) {
             $html .= sp_cdm_display_categories();
         }
+		
+		
         $html .= '
 
   <tr>
@@ -721,14 +739,17 @@ $html .='
         }
         $user_info = get_userdata($r[0]['uid']);
         $message   = nl2br($email);
-        $message   = str_replace('[file]', '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file'])  . '">' . SP_CDM_UPLOADS_DIR_URL . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '</a>', $message);
+        $message = apply_filters('sp_cdm_shortcode_email_before',$message,$r ,$r_project,$r_cats);	
+	    $message   = str_replace('[file]', '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file'])  . '">' . SP_CDM_UPLOADS_DIR_URL . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '</a>', $message);
         $message   = str_replace('[notes]', $notes, $message);
-        $message   = str_replace('[user]', $user_info->user_nicename, $message);
-        $message   = str_replace('[project]', stripslashes($r_project[0]['name']), $message);
+        $message   = str_replace('[user]', $user_info->display_name , $message);
+        
+	    $message   = str_replace('[project]', stripslashes($r_project[0]['name']), $message);
         $message   = str_replace('[category]', stripslashes($r_cats[0]['name']), $message);
         $message   = str_replace('[user_profile]', '<a href="' . admin_url('user-edit.php?user_id=' . $r[0]['uid'] . '') . '">' . admin_url('user-edit.php?user_id=' . $r[0]['uid'] . '') . '</a>', $message);
         $message   = str_replace('[client_documents]', '<a href="' . admin_url('admin.php?page=sp-client-document-manager') . '">' . admin_url('admin.php?page=sp-client-document-manager') . '</a>', $message);
-        return $message;
+         $message = apply_filters('sp_cdm_shortcode_email_after',$message,$r ,$r_project,$r_cats);	
+	    return $message;
     }
     function display_sp_client_upload_process()
     {
@@ -929,7 +950,8 @@ jQuery(document).ready(function() {
 	';
             }
             // do_action('cdm_add_hidden_html');
-            $html .= '<div id="cdm_nav_buttons"><div style="padding:10px">Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files"></div>';
+            $html .= '<div id="cdm_nav_buttons">
+			<div style="padding:10px">Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files"></div>';
            
 		   
 		   
@@ -942,19 +964,23 @@ jQuery(document).ready(function() {
                 } else {
                     $link = 'javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)';
                 }
-                $html .= '  <a href="' . $link . '"><img src="' . SP_CDM_PLUGIN_URL . 'images/add.png" style="border:none"> ' . __("Add File", "sp-cdm") . '</a> ';
-               
+                $html .= '  <a href="' . $link . '"  class="sp_cdm_add_file hide_add_file_permission">' . __("Add File", "sp-cdm") . '</a> ';
+               if(get_option('sp_cu_user_projects') == 1  or current_user_can( 'manage_options' )){	
+			    $html .= '  <a href="javascript:sp_cu_dialog(\'#sp_cdm_add_folder\',500,200);" class="sp_cdm_add_folder hide_add_folder_permission">' . __("Add Folder", "sp-cdm") . '</a> </span> ';
+				}
 				$morebuttons = '';
                 $morebuttons .= apply_filters('sp_cdm_more_buttons', $morebuttons);
                 $html .= $morebuttons;
-                $html .= '   <a href="javascript:cdm_ajax_search()"><img src="' . SP_CDM_PLUGIN_URL . 'images/refresh.png" style="border:none"> ' . __("Refresh", "sp-cdm") . '</a> ';
+                $html .= '   <a href="javascript:cdm_ajax_search()"  class="sp_cdm_refresh">' . __("Refresh", "sp-cdm") . '</a> ';
             }
+			
+			$html .='<div style="clear:both"></div></div>';
             if (get_option('sp_cu_user_projects_thumbs') == 1 && @CU_PREMIUM == 1) {
                 $html .= display_sp_cdm_thumbnails($r);
             } else {
                 $html .= display_sp_thumbnails2($r);
             }
-            $html .= '</div></div>';
+		  $html .= '</div>';
         } else {
             return '<script type="text/javascript">
 

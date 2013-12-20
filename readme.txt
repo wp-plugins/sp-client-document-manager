@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: Web based document manager,FIle uploader, online website documents organization, share documents and graphic files securely, customer file manager
 Requires at least: 2.0.2
 Tested up to: 3.7.1
-Stable tag: 1.9.7
+Stable tag: 1.9.9
 
 SP Online Client Document & Project Manager. Multi-functional - upload, share, group, distribute and organize all documents & files.
 
@@ -745,3 +745,13 @@ Major updates, new uploader and fixes to admin upload functions
 
 * Enhanced the log for productivity pack
 * Productivity now uses the license manager so you can get automatic updates, please submit a support ticket if you need a new license.
+
+= 1.9.8 =
+
+* Major updates to the UI
+* Changed permission system
+* Removed the folder dropdown and replaced it with an as you see is what you get type of system
+
+= 1.9.9 =
+
+* Auto detect if theres no shortcode installed and asks if you want to create it automatically

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sp-cdm\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-18 16:16-0500\n"
-"PO-Revision-Date: 2013-06-18 16:16-0500\n"
+"POT-Creation-Date: 2013-12-05 14:53-0500\n"
+"PO-Revision-Date: 2013-12-05 14:53-0500\n"
 "Last-Translator: Anthony Brown <support@smartypantsplugins.com>\n"
 "Language-Team: Smarty Pants <support@smartypantsplugins.com>\n"
 "Language: en_US\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.5.5\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPath-1: ../../sp-client-document-manager-premium\n"
 "X-Poedit-SearchPath-2: ../../sp-client-document-manage-groups\n"
@@ -21,34 +21,43 @@ msgstr ""
 "X-Poedit-SearchPath-5: ../../sp-client-document-manager-import\n"
 "X-Poedit-SearchPath-6: ../../sp-client-document-manager-productivity\n"
 
-#: ../cu.php:363
+#: ../common.php:84
+msgid "Category"
+msgstr ""
+
+#: ../common.php:108 ../../sp-client-document-manager-premium/functions.php:15
+#: ../../sp-client-document-manager-premium/source/functions.php:15
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/functions.php:15
+msgid "Folders"
+msgstr ""
+
+#: ../common.php:114 ../../sp-client-document-manager-premium/functions.php:21
+#: ../../sp-client-document-manager-premium/source/functions.php:21
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/functions.php:21
+msgid "Folder"
+msgstr ""
+
+#: ../cu.php:386
 msgid "Updated Settings!"
 msgstr ""
 
-#: ../cu.php:365
+#: ../cu.php:388
 msgid "Latest uploads"
 msgstr ""
 
-#: ../functions.php:594
+#: ../functions.php:689
 msgid "Settings"
 msgstr ""
 
-#: ../functions.php:596 ../admin/vendors.php:40
+#: ../functions.php:690
+msgid "Global Settings"
+msgstr ""
+
+#: ../functions.php:692 ../admin/vendors.php:40
 msgid "Vendors"
 msgstr ""
 
-#: ../functions.php:599 ../admin/projects.php:16 ../admin/projects.php:123
-#: ../admin/_notes/projects.php:39 ../admin/_notes/projects.php:126
-#: ../../sp-client-document-manager-premium/admin/projects.php:37
-#: ../../sp-client-document-manager-premium/admin/projects.php:124
-#: ../../sp-client-document-manager-premium/source/admin/projects.php:37
-#: ../../sp-client-document-manager-premium/source/admin/projects.php:124
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/projects.php:37
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/projects.php:124
-msgid "Projects"
-msgstr ""
-
-#: ../functions.php:603
+#: ../functions.php:700
 #: ../../sp-client-document-manager-premium/admin/groups.php:42
 #: ../../sp-client-document-manager-premium/admin/groups.php:206
 #: ../../sp-client-document-manager-premium/source/admin/groups.php:42
@@ -58,11 +67,11 @@ msgstr ""
 msgid "Groups"
 msgstr ""
 
-#: ../functions.php:604
+#: ../functions.php:701
 msgid "Forms"
 msgstr ""
 
-#: ../functions.php:605
+#: ../functions.php:702
 #: ../../sp-client-document-manager-premium/admin/categories.php:26
 #: ../../sp-client-document-manager-premium/admin/categories.php:93
 #: ../../sp-client-document-manager-premium/source/admin/categories.php:26
@@ -72,27 +81,27 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
-#: ../functions.php:613
+#: ../functions.php:710
 msgid "User Files / Uploader"
 msgstr ""
 
-#: ../functions.php:621
+#: ../functions.php:718
 msgid "Instructions"
 msgstr ""
 
-#: ../functions.php:709
+#: ../functions.php:806
 msgid "User Uploads"
 msgstr ""
 
-#: ../functions.php:712
+#: ../functions.php:809
 msgid "Click to download all files"
 msgstr ""
 
-#: ../functions.php:720
+#: ../functions.php:817
 msgid "No Uploads Exist!"
 msgstr ""
 
-#: ../functions.php:877 ../admin/projects.php:144
+#: ../functions.php:974 ../admin/projects.php:144
 #: ../admin/_notes/projects.php:138
 #: ../../sp-client-document-manager-premium/admin/categories.php:107
 #: ../../sp-client-document-manager-premium/admin/groups.php:109
@@ -109,15 +118,15 @@ msgstr ""
 msgid "ID"
 msgstr ""
 
-#: ../functions.php:879
+#: ../functions.php:976
 msgid "Thumbnail"
 msgstr ""
 
-#: ../functions.php:881
+#: ../functions.php:978
 msgid "File Name"
 msgstr ""
 
-#: ../functions.php:883 ../admin/projects.php:148
+#: ../functions.php:980 ../admin/projects.php:148
 #: ../admin/_notes/projects.php:140
 #: ../../sp-client-document-manager-premium/admin/groups.php:110
 #: ../../sp-client-document-manager-premium/admin/projects.php:138
@@ -128,40 +137,40 @@ msgstr ""
 msgid "User"
 msgstr ""
 
-#: ../functions.php:885
+#: ../functions.php:982
 msgid "Date"
 msgstr ""
 
-#: ../functions.php:887
+#: ../functions.php:984
 msgid "Download"
 msgstr ""
 
-#: ../functions.php:889 ../admin/vendors.php:51
+#: ../functions.php:986 ../admin/vendors.php:51
 #: ../../sp-client-document-manager-premium/admin/groups.php:111
 #: ../../sp-client-document-manager-premium/source/admin/groups.php:111
 #: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/groups.php:111
 msgid "Email"
 msgstr ""
 
-#: ../functions.php:961 ../admin/ajax.php:238 ../classes/ajax.php:211
-#: ../../sp-client-document-manager-premium/ajax.php:192
-#: ../../sp-client-document-manager-premium/source/ajax.php:192
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/ajax.php:192
+#: ../functions.php:1058 ../admin/ajax.php:238 ../classes/ajax.php:254
+#: ../../sp-client-document-manager-premium/ajax.php:206
+#: ../../sp-client-document-manager-premium/source/ajax.php:206
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/ajax.php:206
 msgid "Notes: "
 msgstr ""
 
-#: ../functions.php:964 ../admin/ajax.php:220 ../classes/ajax.php:193
-#: ../../sp-client-document-manager-premium/ajax.php:177
-#: ../../sp-client-document-manager-premium/source/ajax.php:177
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/ajax.php:177
+#: ../functions.php:1061 ../admin/ajax.php:220 ../classes/ajax.php:236
+#: ../../sp-client-document-manager-premium/ajax.php:191
+#: ../../sp-client-document-manager-premium/source/ajax.php:191
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/ajax.php:191
 msgid "Tags "
 msgstr ""
 
-#: ../functions.php:980
+#: ../functions.php:1077
 msgid "View"
 msgstr ""
 
-#: ../functions.php:980 ../admin/projects.php:171 ../admin/vendors.php:52
+#: ../functions.php:1077 ../admin/projects.php:171 ../admin/vendors.php:52
 #: ../admin/vendors.php:62 ../admin/_notes/projects.php:155
 #: ../../sp-client-document-manager-premium/admin/categories.php:120
 #: ../../sp-client-document-manager-premium/admin/forms.php:144
@@ -181,184 +190,238 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: ../functions.php:1000
+#: ../functions.php:1097
 msgid ""
 "Choose  the files you want to send above, type a message and choose a vendor "
 "then click submit:"
 msgstr ""
 
-#: ../functions.php:1011
+#: ../functions.php:1108
 msgid "Message:"
 msgstr ""
 
-#: ../functions.php:1011
+#: ../functions.php:1108
 msgid "Attach to email:"
 msgstr ""
 
-#: ../functions.php:1011
+#: ../functions.php:1108
 msgid "Send links to files"
 msgstr ""
 
-#: ../functions.php:1011
+#: ../functions.php:1108
 msgid "Attach and link to to files"
 msgstr ""
 
-#: ../functions.php:1011
+#: ../functions.php:1108
 msgid "Email vendor files!"
 msgstr ""
 
-#: ../shortcode.php:467 ../admin/fileview.php:339
+#: ../shortcode.php:496 ../admin/fileview.php:343
 #: ../../sp-client-document-manager-premium/admin/forms.php:38
 #: ../../sp-client-document-manager-premium/classes/download-plugins.php:1106
-#: ../../sp-client-document-manager-premium/classes/uploader.php:899
+#: ../../sp-client-document-manager-premium/classes/uploader.php:553
 #: ../../sp-client-document-manager-premium/source/admin/forms.php:38
 #: ../../sp-client-document-manager-premium/source/classes/download-plugins.php:1106
-#: ../../sp-client-document-manager-premium/source/classes/uploader.php:899
+#: ../../sp-client-document-manager-premium/source/classes/uploader.php:552
 #: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/forms.php:38
 #: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/download-plugins.php:1106
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:899
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:552
 #: ../../sp-cdm-dropbox/index.php:69
 msgid "Required"
 msgstr ""
 
-#: ../shortcode.php:536 ../admin/ajax.php:505 ../admin/ajax.php:828
-#: ../admin/fileview.php:376 ../classes/ajax.php:586 ../classes/ajax.php:981
-#: ../../sp-cdm-sub-projects/index.php:237
-msgid "Project Name:"
+#: ../shortcode.php:566 ../admin/ajax.php:349 ../admin/ajax.php:505
+#: ../admin/ajax.php:672 ../admin/ajax.php:828 ../admin/fileview.php:380
+#: ../admin/projects.php:146 ../admin/vendors.php:50
+#: ../admin/_notes/projects.php:139 ../classes/ajax.php:499
+#: ../classes/ajax.php:655 ../classes/ajax.php:948 ../classes/ajax.php:1106
+#: ../../sp-client-document-manager-premium/admin/categories.php:108
+#: ../../sp-client-document-manager-premium/admin/forms.php:33
+#: ../../sp-client-document-manager-premium/admin/forms.php:127
+#: ../../sp-client-document-manager-premium/admin/groups.php:219
+#: ../../sp-client-document-manager-premium/admin/projects.php:137
+#: ../../sp-client-document-manager-premium/source/admin/categories.php:108
+#: ../../sp-client-document-manager-premium/source/admin/forms.php:33
+#: ../../sp-client-document-manager-premium/source/admin/forms.php:127
+#: ../../sp-client-document-manager-premium/source/admin/groups.php:219
+#: ../../sp-client-document-manager-premium/source/admin/projects.php:137
+#: ../../sp-client-document-manager-premium/source/user/context.php:112
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/categories.php:108
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/forms.php:33
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/forms.php:127
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/groups.php:219
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/projects.php:137
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/user/context.php:112
+#: ../../sp-client-document-manager-premium/user/context.php:117
+#: ../../sp-cdm-sub-projects/index.php:344
+msgid "Name"
 msgstr ""
 
-#: ../shortcode.php:538 ../admin/fileview.php:377 ../admin/fileview.php:712
-#: ../admin/projects.php:134 ../admin/_notes/projects.php:133
-#: ../user/projects.php:155
+#: ../shortcode.php:568 ../admin/fileview.php:381 ../admin/fileview.php:719
+#: ../admin/projects.php:134 ../user/projects.php:302 ../user/projects.php:479
 #: ../../sp-client-document-manager-premium/admin/projects.php:131
 #: ../../sp-client-document-manager-premium/source/admin/projects.php:131
 #: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/projects.php:131
-#: ../../sp-cdm-sub-projects/index.php:239
-msgid "Add Project"
+#: ../../sp-cdm-sub-projects/index.php:346
+msgid "Add"
 msgstr ""
 
-#: ../shortcode.php:583 ../admin/fileview.php:413
-#: ../../sp-client-document-manager-premium/classes/uploader.php:665
-#: ../../sp-client-document-manager-premium/source/classes/uploader.php:665
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:665
-#: ../../sp-cdm-dropbox/index.php:374
+#: ../shortcode.php:615 ../admin/fileview.php:417
+#: ../../sp-client-document-manager-premium/classes/uploader.php:279
+#: ../../sp-client-document-manager-premium/source/classes/uploader.php:277
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:277
+#: ../../sp-cdm-dropbox/index.php:380
 msgid "File Name:"
 msgstr ""
 
-#: ../shortcode.php:600 ../admin/fileview.php:430
+#: ../shortcode.php:638 ../admin/fileview.php:434
 msgid "File:"
 msgstr ""
 
-#: ../shortcode.php:615 ../admin/fileview.php:441
-#: ../../sp-client-document-manager-premium/classes/uploader.php:749
-#: ../../sp-client-document-manager-premium/source/classes/uploader.php:749
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:749
-#: ../../sp-cdm-dropbox/index.php:415
+#: ../shortcode.php:653 ../admin/fileview.php:445
+#: ../../sp-client-document-manager-premium/classes/uploader.php:339
+#: ../../sp-client-document-manager-premium/source/classes/uploader.php:337
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:337
+#: ../../sp-cdm-dropbox/index.php:421
 msgid "Tags:"
 msgstr ""
 
-#: ../shortcode.php:625 ../admin/fileview.php:452
-#: ../../sp-client-document-manager-premium/admin/history.php:94
-#: ../../sp-client-document-manager-premium/source/admin/history.php:94
-#: ../../sp-client-document-manager-premium/source/classes/uploader.php:771
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:94
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:771
-#: ../../sp-cdm-dropbox/index.php:426
+#: ../shortcode.php:663 ../admin/fileview.php:456
+#: ../../sp-client-document-manager-premium/admin/history.php:132
+#: ../../sp-client-document-manager-premium/source/admin/history.php:132
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:132
+#: ../../sp-cdm-dropbox/index.php:432
 msgid "Notes:"
 msgstr ""
 
-#: ../shortcode.php:732 ../admin/fileview.php:92 ../admin/fileview.php:540
-#: ../../sp-client-document-manager-premium/classes/uploader.php:425
-#: ../../sp-client-document-manager-premium/source/classes/uploader.php:425
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:425
-#: ../../sp-cdm-dropbox/index.php:234
+#: ../shortcode.php:788 ../admin/fileview.php:92 ../admin/fileview.php:544
+#: ../../sp-client-document-manager-premium/admin/history.php:60
+#: ../../sp-client-document-manager-premium/classes/uploader.php:163
+#: ../../sp-client-document-manager-premium/classes/uploader.php:215
+#: ../../sp-client-document-manager-premium/source/admin/history.php:60
+#: ../../sp-client-document-manager-premium/source/classes/uploader.php:163
+#: ../../sp-client-document-manager-premium/source/classes/uploader.php:215
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:60
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:163
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:215
+#: ../../sp-client-document-manage-groups/user/uploader.php:29
+#: ../../sp-cdm-dropbox/index.php:240
 msgid "From:"
 msgstr ""
 
-#: ../shortcode.php:792 ../admin/fileview.php:119 ../admin/fileview.php:564
-#: ../../sp-client-document-manager-premium/admin/history.php:39
-#: ../../sp-client-document-manager-premium/source/admin/history.php:39
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:39
+#: ../shortcode.php:859 ../admin/fileview.php:123 ../admin/fileview.php:571
+#: ../../sp-client-document-manager-premium/admin/history.php:77
+#: ../../sp-client-document-manager-premium/source/admin/history.php:77
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:77
 msgid "Please upload a file!"
 msgstr ""
 
-#: ../shortcode.php:902 ../admin/fileview.php:170 ../admin/fileview.php:633
+#: ../shortcode.php:964 ../admin/fileview.php:174 ../admin/fileview.php:640
 msgid "Add File"
 msgstr ""
 
-#: ../shortcode.php:907 ../admin/fileview.php:170
+#: ../shortcode.php:966
+msgid "Add Folder"
+msgstr ""
+
+#: ../shortcode.php:971 ../admin/fileview.php:174
+#: ../../sp-client-document-manager-premium/source/user/context.php:69
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/user/context.php:69
+#: ../../sp-client-document-manager-premium/user/context.php:74
 msgid "Refresh"
 msgstr ""
 
-#: ../admin/ajax.php:25 ../classes/ajax.php:285
+#: ../admin/ajax.php:25 ../classes/ajax.php:333
 msgid "Updated Category Name"
 msgstr ""
 
-#: ../admin/ajax.php:69 ../classes/ajax.php:38
-#: ../../sp-client-document-manager-premium/ajax.php:35
-#: ../../sp-client-document-manager-premium/source/ajax.php:35
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/ajax.php:35
+#: ../admin/ajax.php:69 ../classes/ajax.php:53
+#: ../../sp-client-document-manager-premium/ajax.php:49
+#: ../../sp-client-document-manager-premium/source/ajax.php:49
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/ajax.php:49
 msgid "Download File"
 msgstr ""
 
-#: ../admin/ajax.php:73 ../classes/ajax.php:42
+#: ../admin/ajax.php:73 ../classes/ajax.php:57
 msgid "Delete File"
 msgstr ""
 
-#: ../admin/ajax.php:100 ../classes/ajax.php:69
-#: ../../sp-client-document-manager-premium/ajax.php:63
-#: ../../sp-client-document-manager-premium/source/ajax.php:63
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/ajax.php:63
+#: ../admin/ajax.php:100 ../classes/ajax.php:84
+#: ../../sp-client-document-manager-premium/ajax.php:77
+#: ../../sp-client-document-manager-premium/source/ajax.php:77
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/ajax.php:77
 msgid "Revision History"
 msgstr ""
 
-#: ../admin/ajax.php:130 ../classes/ajax.php:99
-#: ../../sp-client-document-manager-premium/ajax.php:101
-#: ../../sp-client-document-manager-premium/source/ajax.php:101
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/ajax.php:101
-msgid "Project: None"
+#: ../admin/ajax.php:130 ../classes/ajax.php:114
+#: ../../sp-client-document-manager-premium/ajax.php:115
+#: ../../sp-client-document-manager-premium/source/ajax.php:115
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/ajax.php:115
+msgid "None"
 msgstr ""
 
-#: ../admin/ajax.php:206 ../classes/ajax.php:179
-#: ../../sp-client-document-manager-premium/ajax.php:168
-#: ../../sp-client-document-manager-premium/source/ajax.php:168
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/ajax.php:168
-msgid "Project "
-msgstr ""
-
-#: ../admin/ajax.php:212 ../classes/ajax.php:185
-#: ../../sp-client-document-manager-premium/ajax.php:171
-#: ../../sp-client-document-manager-premium/source/ajax.php:171
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/ajax.php:171
+#: ../admin/ajax.php:212 ../classes/ajax.php:214
+#: ../../sp-client-document-manager-premium/ajax.php:185
+#: ../../sp-client-document-manager-premium/source/ajax.php:185
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/ajax.php:185
 msgid "File Type "
 msgstr ""
 
-#: ../admin/ajax.php:487 ../admin/ajax.php:810 ../classes/ajax.php:568
-#: ../classes/ajax.php:963
+#: ../admin/ajax.php:349 ../admin/ajax.php:672 ../classes/ajax.php:499
+#: ../classes/ajax.php:948
+msgid "Edit"
+msgstr ""
+
+#: ../admin/ajax.php:349 ../admin/ajax.php:672 ../classes/ajax.php:499
+#: ../classes/ajax.php:948
+msgid "Remove"
+msgstr ""
+
+#: ../admin/ajax.php:487 ../admin/ajax.php:810 ../classes/ajax.php:637
+#: ../classes/ajax.php:1088
 msgid "Delete Category?"
 msgstr ""
 
-#: ../admin/ajax.php:489 ../admin/ajax.php:812 ../classes/ajax.php:570
-#: ../classes/ajax.php:965
+#: ../admin/ajax.php:489 ../admin/ajax.php:812 ../classes/ajax.php:639
+#: ../classes/ajax.php:1090
 msgid ""
 "Are you sure you would like to delete this category? Doing so will remove "
 "all files related to this category."
 msgstr ""
 
-#: ../admin/ajax.php:507 ../admin/ajax.php:830 ../classes/ajax.php:588
-#: ../classes/ajax.php:983
-msgid "Save Project"
+#: ../admin/ajax.php:507 ../admin/ajax.php:830 ../admin/projects.php:46
+#: ../admin/_notes/projects.php:52 ../classes/ajax.php:657
+#: ../classes/ajax.php:1108
+#: ../../sp-client-document-manager-premium/admin/categories.php:36
+#: ../../sp-client-document-manager-premium/admin/forms.php:57
+#: ../../sp-client-document-manager-premium/admin/groups.php:60
+#: ../../sp-client-document-manager-premium/admin/projects.php:50
+#: ../../sp-client-document-manager-premium/source/admin/categories.php:36
+#: ../../sp-client-document-manager-premium/source/admin/forms.php:57
+#: ../../sp-client-document-manager-premium/source/admin/groups.php:60
+#: ../../sp-client-document-manager-premium/source/admin/projects.php:50
+#: ../../sp-client-document-manager-premium/source/user/context.php:114
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/categories.php:36
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/forms.php:57
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/groups.php:60
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/projects.php:50
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/user/context.php:114
+#: ../../sp-client-document-manager-premium/user/context.php:119
+#: ../../sp-client-document-manage-groups/admin/projects.php:309
+#: ../../sp-client-document-manage-groups/admin/projects.php:331
+#: ../../sp-client-document-manage-groups/admin/projects.php:360
+msgid "Save"
 msgstr ""
 
-#: ../admin/ajax.php:1040 ../classes/ajax.php:1198
+#: ../admin/ajax.php:1040 ../classes/ajax.php:1387
 msgid "Please select at least one file!"
 msgstr ""
 
-#: ../admin/ajax.php:1070 ../classes/ajax.php:1228
+#: ../admin/ajax.php:1070 ../classes/ajax.php:1417
 msgid "New files from:"
 msgstr ""
 
-#: ../admin/ajax.php:1072 ../classes/ajax.php:1230
+#: ../admin/ajax.php:1074 ../classes/ajax.php:1421
 msgid "Files Sent to"
 msgstr ""
 
@@ -370,12 +433,9 @@ msgstr ""
 msgid "Choose a user below to view their files"
 msgstr ""
 
-#: ../admin/fileview.php:686 ../user/projects.php:87
-msgid "Project:"
-msgstr ""
-
-#: ../admin/fileview.php:696 ../user/projects.php:111
-msgid "No Project"
+#: ../admin/fileview.php:703 ../user/projects.php:95 ../user/projects.php:258
+#: ../user/projects.php:435
+msgid "No"
 msgstr ""
 
 #: ../admin/projects.php:23 ../admin/vendors.php:45
@@ -397,45 +457,6 @@ msgstr ""
 #: ../../sp-client-document-manager-premium/source/admin/projects.php:45
 #: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/projects.php:45
 msgid "User:"
-msgstr ""
-
-#: ../admin/projects.php:46 ../admin/_notes/projects.php:52
-#: ../../sp-client-document-manager-premium/admin/categories.php:36
-#: ../../sp-client-document-manager-premium/admin/forms.php:57
-#: ../../sp-client-document-manager-premium/admin/groups.php:60
-#: ../../sp-client-document-manager-premium/admin/projects.php:50
-#: ../../sp-client-document-manager-premium/source/admin/categories.php:36
-#: ../../sp-client-document-manager-premium/source/admin/forms.php:57
-#: ../../sp-client-document-manager-premium/source/admin/groups.php:60
-#: ../../sp-client-document-manager-premium/source/admin/projects.php:50
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/categories.php:36
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/forms.php:57
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/groups.php:60
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/projects.php:50
-#: ../../sp-client-document-manage-groups/admin/projects.php:173
-#: ../../sp-client-document-manage-groups/admin/projects.php:195
-#: ../../sp-client-document-manage-groups/admin/projects.php:224
-msgid "Save"
-msgstr ""
-
-#: ../admin/projects.php:146 ../admin/vendors.php:50
-#: ../admin/_notes/projects.php:139
-#: ../../sp-client-document-manager-premium/admin/categories.php:108
-#: ../../sp-client-document-manager-premium/admin/forms.php:33
-#: ../../sp-client-document-manager-premium/admin/forms.php:127
-#: ../../sp-client-document-manager-premium/admin/groups.php:219
-#: ../../sp-client-document-manager-premium/admin/projects.php:137
-#: ../../sp-client-document-manager-premium/source/admin/categories.php:108
-#: ../../sp-client-document-manager-premium/source/admin/forms.php:33
-#: ../../sp-client-document-manager-premium/source/admin/forms.php:127
-#: ../../sp-client-document-manager-premium/source/admin/groups.php:219
-#: ../../sp-client-document-manager-premium/source/admin/projects.php:137
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/categories.php:108
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/forms.php:33
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/forms.php:127
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/groups.php:219
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/projects.php:137
-msgid "Name"
 msgstr ""
 
 #: ../admin/projects.php:150 ../admin/_notes/projects.php:141
@@ -493,105 +514,120 @@ msgstr ""
 msgid "Email:"
 msgstr ""
 
-#: ../classes/ajax.php:55
+#: ../admin/_notes/projects.php:39 ../admin/_notes/projects.php:126
+msgid "Projects"
+msgstr ""
+
+#: ../admin/_notes/projects.php:133
+msgid "Add Project"
+msgstr ""
+
+#: ../classes/ajax.php:70
 msgid "File Info"
 msgstr ""
 
-#: ../classes/ajax.php:57
+#: ../classes/ajax.php:72
 msgid "Revisions"
 msgstr ""
 
-#: ../classes/ajax.php:60
+#: ../classes/ajax.php:75
 #: ../../sp-client-document-manager-productivity/user/comments.php:45
 msgid "Comments"
 msgstr ""
 
-#: ../classes/ajax.php:63
-#: ../../sp-client-document-manager-productivity/user/log.php:36
+#: ../classes/ajax.php:78
+#: ../../sp-client-document-manager-productivity/user/log.php:38
 msgid "Download Log"
 msgstr ""
 
-#: ../classes/mat.thumb.php:157
+#: ../classes/mat.thumb.php:65
+msgid ""
+"The server does not have ImageMagick or GD installed and/or enabled! Any of "
+"these libraries are required for WordPress to be able to resize images. "
+"Please contact your server administrator to enable this before continuing."
+msgstr ""
+
+#: ../classes/mat.thumb.php:173
 msgid "Image rotate failed."
 msgstr ""
 
-#: ../classes/mat.thumb.php:179
+#: ../classes/mat.thumb.php:195
 msgid "Image opacity change failed."
 msgstr ""
 
-#: ../classes/mat.thumb.php:257
+#: ../classes/mat.thumb.php:273
 msgid "Image color change failed."
 msgstr ""
 
-#: ../classes/mat.thumb.php:273
+#: ../classes/mat.thumb.php:289
 msgid "Image grayscale failed."
 msgstr ""
 
-#: ../classes/mat.thumb.php:289
+#: ../classes/mat.thumb.php:305
 msgid "Image negate failed."
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/index.php:116
+#: ../../sp-client-document-manager-premium/index.php:125
 #: ../../sp-client-document-manager-premium/classes/download-plugins.php:164
-#: ../../sp-client-document-manager-premium/source/index.php:116
+#: ../../sp-client-document-manager-premium/source/index.php:125
 #: ../../sp-client-document-manager-premium/source/classes/download-plugins.php:164
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/index.php:116
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/index.php:125
 #: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/download-plugins.php:164
 msgid "Install Required Plugins"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/index.php:117
+#: ../../sp-client-document-manager-premium/index.php:126
 #: ../../sp-client-document-manager-premium/classes/download-plugins.php:165
-#: ../../sp-client-document-manager-premium/source/index.php:117
+#: ../../sp-client-document-manager-premium/source/index.php:126
 #: ../../sp-client-document-manager-premium/source/classes/download-plugins.php:165
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/index.php:117
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/index.php:126
 #: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/download-plugins.php:165
 msgid "Install Plugins"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/index.php:118
+#: ../../sp-client-document-manager-premium/index.php:127
 #: ../../sp-client-document-manager-premium/classes/download-plugins.php:166
-#: ../../sp-client-document-manager-premium/source/index.php:118
+#: ../../sp-client-document-manager-premium/source/index.php:127
 #: ../../sp-client-document-manager-premium/source/classes/download-plugins.php:166
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/index.php:118
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/index.php:127
 #: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/download-plugins.php:166
 #, php-format
 msgid "Installing Plugin: %s"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/index.php:119
-#: ../../sp-client-document-manager-premium/source/index.php:119
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/index.php:119
+#: ../../sp-client-document-manager-premium/index.php:128
+#: ../../sp-client-document-manager-premium/source/index.php:128
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/index.php:128
 msgid "Something went wrong with the plugin API."
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/index.php:130
+#: ../../sp-client-document-manager-premium/index.php:139
 #: ../../sp-client-document-manager-premium/classes/download-plugins.php:178
 #: ../../sp-client-document-manager-premium/classes/download-plugins.php:490
-#: ../../sp-client-document-manager-premium/source/index.php:130
+#: ../../sp-client-document-manager-premium/source/index.php:139
 #: ../../sp-client-document-manager-premium/source/classes/download-plugins.php:178
 #: ../../sp-client-document-manager-premium/source/classes/download-plugins.php:490
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/index.php:130
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/index.php:139
 #: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/download-plugins.php:178
 #: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/download-plugins.php:490
 msgid "Return to Required Plugins Installer"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/index.php:131
+#: ../../sp-client-document-manager-premium/index.php:140
 #: ../../sp-client-document-manager-premium/classes/download-plugins.php:179
 #: ../../sp-client-document-manager-premium/classes/download-plugins.php:1846
-#: ../../sp-client-document-manager-premium/source/index.php:131
+#: ../../sp-client-document-manager-premium/source/index.php:140
 #: ../../sp-client-document-manager-premium/source/classes/download-plugins.php:179
 #: ../../sp-client-document-manager-premium/source/classes/download-plugins.php:1846
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/index.php:131
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/index.php:140
 #: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/download-plugins.php:179
 #: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/download-plugins.php:1846
 msgid "Plugin activated successfully."
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/index.php:132
-#: ../../sp-client-document-manager-premium/source/index.php:132
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/index.php:132
+#: ../../sp-client-document-manager-premium/index.php:141
+#: ../../sp-client-document-manager-premium/source/index.php:141
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/index.php:141
 #, php-format
 msgid "All plugins installed and activated successfully. %s"
 msgstr ""
@@ -662,54 +698,54 @@ msgstr ""
 msgid "Group Users"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/admin/history.php:32
-#: ../../sp-client-document-manager-premium/source/admin/history.php:32
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:32
+#: ../../sp-client-document-manager-premium/admin/history.php:33
+#: ../../sp-client-document-manager-premium/source/admin/history.php:33
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:33
 msgid "From"
-msgstr ""
-
-#: ../../sp-client-document-manager-premium/admin/history.php:33
-#: ../../sp-client-document-manager-premium/source/admin/history.php:33
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:33
-msgid "Client uploaded a new document"
-msgstr ""
-
-#: ../../sp-client-document-manager-premium/admin/history.php:33
-#: ../../sp-client-document-manager-premium/source/admin/history.php:33
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:33
-msgid "Click here view the files:"
 msgstr ""
 
 #: ../../sp-client-document-manager-premium/admin/history.php:34
 #: ../../sp-client-document-manager-premium/source/admin/history.php:34
 #: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:34
-msgid "New file upload from client"
+msgid "Client uploaded a new revision"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/admin/history.php:36
-#: ../../sp-client-document-manager-premium/source/admin/history.php:36
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:36
+#: ../../sp-client-document-manager-premium/admin/history.php:34
+#: ../../sp-client-document-manager-premium/source/admin/history.php:34
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:34
+msgid "Click here view the files:"
+msgstr ""
+
+#: ../../sp-client-document-manager-premium/admin/history.php:35
+#: ../../sp-client-document-manager-premium/source/admin/history.php:35
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:35
+msgid "New file revision upload from client"
+msgstr ""
+
+#: ../../sp-client-document-manager-premium/admin/history.php:74
+#: ../../sp-client-document-manager-premium/source/admin/history.php:74
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:74
 msgid "File uploaded!!"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/admin/history.php:57
-#: ../../sp-client-document-manager-premium/admin/history.php:99
-#: ../../sp-client-document-manager-premium/source/admin/history.php:57
-#: ../../sp-client-document-manager-premium/source/admin/history.php:99
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:57
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:99
+#: ../../sp-client-document-manager-premium/admin/history.php:95
+#: ../../sp-client-document-manager-premium/admin/history.php:142
+#: ../../sp-client-document-manager-premium/source/admin/history.php:95
+#: ../../sp-client-document-manager-premium/source/admin/history.php:142
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:95
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:142
 msgid "Add Revision"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/admin/history.php:90
-#: ../../sp-client-document-manager-premium/source/admin/history.php:90
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:90
+#: ../../sp-client-document-manager-premium/admin/history.php:128
+#: ../../sp-client-document-manager-premium/source/admin/history.php:128
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:128
 msgid "File"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/admin/history.php:150
-#: ../../sp-client-document-manager-premium/source/admin/history.php:150
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:150
+#: ../../sp-client-document-manager-premium/admin/history.php:194
+#: ../../sp-client-document-manager-premium/source/admin/history.php:194
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/admin/history.php:194
 msgid "No other files in history"
 msgstr ""
 
@@ -954,58 +990,94 @@ msgstr ""
 msgid "Installing Plugin %1$s (%2$d/%3$d)"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/classes/uploader.php:667
+#: ../../sp-client-document-manager-premium/classes/uploader.php:281
+#: ../../sp-client-document-manager-premium/source/classes/uploader.php:279
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:279
 msgid "Check this box to use the original file name"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/classes/uploader.php:699
+#: ../../sp-client-document-manager-premium/classes/uploader.php:296
+#: ../../sp-client-document-manager-premium/source/classes/uploader.php:294
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:294
 msgid "Files"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/classes/uploader.php:703
+#: ../../sp-client-document-manager-premium/classes/uploader.php:300
+#: ../../sp-client-document-manager-premium/source/classes/uploader.php:298
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:298
 msgid "Click the browse button to upload multiple files"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/classes/uploader.php:723
+#: ../../sp-client-document-manager-premium/classes/uploader.php:320
+#: ../../sp-client-document-manager-premium/source/classes/uploader.php:318
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:318
 msgid "Zip Files"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/classes/uploader.php:725
+#: ../../sp-client-document-manager-premium/classes/uploader.php:322
+#: ../../sp-client-document-manager-premium/source/classes/uploader.php:320
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:320
 msgid "Check this box to zip all files into a single archive"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/classes/uploader.php:771
+#: ../../sp-client-document-manager-premium/classes/uploader.php:349
+#: ../../sp-client-document-manager-premium/source/classes/uploader.php:347
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:347
 msgid "Notes"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/classes/uploader.php:791
+#: ../../sp-client-document-manager-premium/classes/uploader.php:371
+#: ../../sp-client-document-manager-premium/source/classes/uploader.php:369
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:369
 msgid "Click to upload"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/classes/uploader.php:903
-msgid "Uploading"
-msgstr ""
-
-#: ../../sp-client-document-manager-premium/classes/uploader.php:925
+#: ../../sp-client-document-manager-premium/classes/uploader.php:466
+#: ../../sp-client-document-manager-premium/source/classes/uploader.php:464
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:464
 msgid "Browse"
 msgstr ""
 
-#: ../../sp-client-document-manager-premium/source/user/shortcode.php:377
-#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/user/shortcode.php:377
-#: ../../sp-client-document-manager-premium/user/shortcode.php:377
+#: ../../sp-client-document-manager-premium/classes/uploader.php:557
+#: ../../sp-client-document-manager-premium/source/classes/uploader.php:556
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/classes/uploader.php:556
+msgid "Uploading"
+msgstr ""
+
+#: ../../sp-client-document-manager-premium/source/user/context.php:58
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/user/context.php:58
+#: ../../sp-client-document-manager-premium/user/context.php:63
+msgid "New"
+msgstr ""
+
+#: ../../sp-client-document-manager-premium/source/user/context.php:65
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/user/context.php:65
+#: ../../sp-client-document-manager-premium/user/context.php:70
+msgid "New File From DropBox"
+msgstr ""
+
+#: ../../sp-client-document-manager-premium/source/user/context.php:70
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/user/context.php:70
+#: ../../sp-client-document-manager-premium/user/context.php:75
+msgid "Signout"
+msgstr ""
+
+#: ../../sp-client-document-manager-premium/source/user/shortcode.php:413
+#: ../../sp-client-document-manager-premium/sp-client-document-manager-premium/user/shortcode.php:413
+#: ../../sp-client-document-manager-premium/user/shortcode.php:413
 msgid "No Category"
 msgstr ""
 
-#: ../../sp-client-document-manage-groups/admin/projects.php:164
+#: ../../sp-client-document-manage-groups/admin/projects.php:299
 msgid "Allow group users to add files"
 msgstr ""
 
-#: ../../sp-client-document-manage-groups/admin/projects.php:167
-msgid "Allow group users to remove files"
+#: ../../sp-client-document-manage-groups/admin/projects.php:304
+msgid "Allow group users to add  folders"
 msgstr ""
 
 #: ../../sp-client-document-manage-groups/admin/settings.php:23
-msgid "Groups Addon"
+msgid "Groups Global Settings"
 msgstr ""
 
 #: ../../sp-client-document-manage-groups/user/bp-tab.php:89
@@ -1016,11 +1088,19 @@ msgstr ""
 msgid "Settings saved successfully"
 msgstr ""
 
-#: ../../sp-cdm-sub-projects/index.php:238
-msgid "Project Parent:"
+#: ../../sp-client-document-manage-groups/user/uploader.php:58
+msgid "Notify Users? "
 msgstr ""
 
-#: ../../sp-cdm-dropbox/index.php:93
+#: ../../sp-client-document-manage-groups/user/uploader.php:73
+msgid "Check to email all members associated with this project "
+msgstr ""
+
+#: ../../sp-cdm-sub-projects/index.php:345
+msgid "Parent"
+msgstr ""
+
+#: ../../sp-cdm-dropbox/index.php:95
 msgid "Add From Dropbox"
 msgstr ""
 
@@ -1040,16 +1120,16 @@ msgstr ""
 msgid "Add Comment"
 msgstr ""
 
-#: ../../sp-client-document-manager-productivity/user/log.php:45
+#: ../../sp-client-document-manager-productivity/user/log.php:47
 msgid "Downloaded By:"
 msgstr ""
 
-#: ../../sp-client-document-manager-productivity/user/log.php:45
-msgid "times"
+#: ../../sp-client-document-manager-productivity/user/log.php:47
+msgid "Times Total"
 msgstr ""
 
-#: ../../sp-client-document-manager-productivity/user/log.php:45
-msgid "Last download on"
+#: ../../sp-client-document-manager-productivity/user/log.php:47
+msgid "on"
 msgstr ""
 
 #: ../../sp-client-document-manager-productivity/user/shortlink.php:53

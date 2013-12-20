@@ -1,4 +1,283 @@
 <?php
+function cdm_file_size($file)
+{
+	$size = @filesize($file);
+	
+	
+	if($size > 1048576){
+		  $filesize = ($size * .0009765625) * .0009765625; // bytes to MB
+			$type = 'MB';
+	}else{
+	 $filesize = $size* .0009765625; // bytes to KB	
+	 $type = 'KB';
+	}
+ 
+   if($filesize <= 0){
+      return $filesize = 'Unknown file size';}
+   else{return round($filesize, 2).' '.$type;}
+}
+
+function cdm_file_permissions($pid){
+			global $wpdb, $current_user;
+			$permission = 0;
+		
+				$uid = $current_user->ID;
+				//if an admin
+				if(current_user_can('manage_options')){
+				$permission = 1;	
+				}
+				
+				//if owner of the folder
+				$owner  = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_project WHERE id = '" . $wpdb->escape($pid)  . "'", ARRAY_A);
+				if($uid == $owner[0]['uid']){
+				$permission = 1;	
+				}
+					//if given permission for groups addon
+					if(class_exists('sp_cdm_groups_addon')){
+						$sp_cdm_groups_perm =  new sp_cdm_groups_addon;
+						//can delete folder
+							if(get_option('sp_cdm_groups_addon_project_add_folders_' . $pid . '') == 1){
+								$permission = 1;
+							}	
+							
+							
+							
+							//check to see if user is part of a buddy press group that has access to this folder
+							  if ($sp_cdm_groups_perm->buddypress == true) {
+								
+								
+								
+							  $folder_perm =sp_cdm_groups_addon_projects::get_permissions('' .$sp_cdm_groups_perm->namesake . '_buddypress_permission_add_' . $pid . '');
+							 
+							  $query = "SELECT user_id,group_id,name," . $wpdb->prefix . "bp_groups.id FROM  " . $wpdb->prefix . "bp_groups_members  
+	   									   LEFT JOIN " . $wpdb->prefix . "bp_groups ON " . $wpdb->prefix . "bp_groups_members.group_id = " . $wpdb->prefix . "bp_groups.id  where user_id = '".$uid."'";
+										
+	  						  $groups_info = $wpdb->get_results($query, ARRAY_A);
+	   
+	  
+									   if(count($groups_info) > 0){
+										   for ($i = 0; $i < count(  $groups_info); $i++) {
+											 
+												if (@in_array($groups_info[$i]['id'],$folder_perm )) {
+												 $permission = 1;
+												 }	
+											  
+										   }
+									   }
+											
+							  }//end buddypress
+							  
+							  
+							  //check roles permission
+							     $folder_perm_roles =sp_cdm_groups_addon_projects::get_permissions('' .$sp_cdm_groups_perm->namesake . '_role_permission_add_' . $pid . '');
+								$user_roles = $current_user->roles;
+							
+	 			 				 if(count($user_roles) > 0){
+										   foreach ($user_roles as $key =>$role) {
+											 
+												if (@in_array($role, $folder_perm_roles)) {
+												 $permission = 1;
+												 }	
+											  
+										   }
+									   }
+	 
+	 		  
+							  //end roles permission
+						    
+							//global setting
+							if(get_option('sp_cdm_groups_addon_project_add_' . $pid . '') == 1){
+								$permission = 1;
+							}		
+								
+					}//end grioups addon
+					
+				//is part of premium group
+		
+				if($pid == 0 or $pid == ''){
+					$permission = 1;
+					
+				}
+				
+				
+		return $permission;
+	}
+	
+
+function cdm_folder_permissions($pid){
+			global $wpdb, $current_user;
+			$permission = 0;
+		
+				$uid = $current_user->ID;
+				//if an admin
+				if(current_user_can('manage_options')){
+				$permission = 1;	
+				}
+				
+				//if owner of the folder
+				$owner  = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_project WHERE id = '" . $wpdb->escape($pid)  . "'", ARRAY_A);
+				if($uid == $owner[0]['uid']){
+				$permission = 1;	
+				}
+							//if given permission for groups addon
+					if(class_exists('sp_cdm_groups_addon')){
+						$sp_cdm_groups_perm =  new sp_cdm_groups_addon;
+						//can delete folder
+							if(get_option('sp_cdm_groups_addon_project_add_folders_' . $pid . '') == 1){
+								$permission = 1;
+							}	
+							
+							
+							
+							//check to see if user is part of a buddy press group that has access to this folder
+							  if ($sp_cdm_groups_perm->buddypress == true) {
+								
+								
+								
+							  $folder_perm =sp_cdm_groups_addon_projects::get_permissions('' .$sp_cdm_groups_perm->namesake . '_buddypress_permission_add_' . $pid . '');
+							 
+							  $query = "SELECT user_id,group_id,name," . $wpdb->prefix . "bp_groups.id FROM  " . $wpdb->prefix . "bp_groups_members  
+	   									   LEFT JOIN " . $wpdb->prefix . "bp_groups ON " . $wpdb->prefix . "bp_groups_members.group_id = " . $wpdb->prefix . "bp_groups.id  where user_id = '".$uid."'";
+										
+	  						  $groups_info = $wpdb->get_results($query, ARRAY_A);
+	   
+	  
+									   if(count($groups_info) > 0){
+										   for ($i = 0; $i < count(  $groups_info); $i++) {
+											 
+												if (@in_array($groups_info[$i]['id'],$folder_perm )) {
+												 $permission = 1;
+												 }	
+											  
+										   }
+									   }
+											
+							  }//end buddypress
+							  
+							  
+							  //check roles permission
+							     $folder_perm_roles =sp_cdm_groups_addon_projects::get_permissions('' .$sp_cdm_groups_perm->namesake . '_role_permission_add_' . $pid . '');
+								$user_roles = $current_user->roles;
+							
+	 			 				 if(count($user_roles) > 0){
+										   foreach ($user_roles as $key =>$role) {
+											 
+												if (@in_array($role, $folder_perm_roles)) {
+												 $permission = 1;
+												 }	
+											  
+										   }
+									   }
+	 
+	 		  
+							  //end roles permission
+						    
+							//global setting
+							if(get_option('sp_cdm_groups_addon_project_add_folder_' . $pid . '') == 1){
+								$permission = 1;
+							}		
+								
+					}//end grioups addon
+					
+				//is part of premium group
+		
+				if($pid == 0 or $pid == ''){
+					$permission = 1;
+					
+				}
+				
+				
+		return $permission;
+	}
+function cdm_delete_permission($pid){
+	
+	global $wpdb, $current_user;
+			$permission = 0;
+		
+				$uid = $current_user->ID;
+				//if an admin
+				if(current_user_can('manage_options')){
+				$permission = 1;	
+				}
+				
+				//if owner of the folder
+				$owner  = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_project WHERE id = '" . $wpdb->escape($pid)  . "'", ARRAY_A);
+				if($uid == $owner[0]['uid']){
+				$permission = 1;	
+				}
+							//if given permission for groups addon
+					if(class_exists('sp_cdm_groups_addon')){
+						$sp_cdm_groups_perm =  new sp_cdm_groups_addon;
+						//can delete folder
+							if(get_option('sp_cdm_groups_addon_project_delete_folders_' . $pid . '') == 1){
+								$permission = 1;
+							}	
+							
+							
+							
+							//check to see if user is part of a buddy press group that has access to this folder
+							  if ($sp_cdm_groups_perm->buddypress == true) {
+								
+								
+								
+							  $folder_perm =sp_cdm_groups_addon_projects::get_permissions('' .$sp_cdm_groups_perm->namesake . '_buddypress_permission_delete_' . $pid . '');
+							 
+							  $query = "SELECT user_id,group_id,name," . $wpdb->prefix . "bp_groups.id FROM  " . $wpdb->prefix . "bp_groups_members  
+	   									   LEFT JOIN " . $wpdb->prefix . "bp_groups ON " . $wpdb->prefix . "bp_groups_members.group_id = " . $wpdb->prefix . "bp_groups.id  where user_id = '".$uid."'";
+										
+	  						  $groups_info = $wpdb->get_results($query, ARRAY_A);
+	   
+	  
+									   if(count($groups_info) > 0){
+										   for ($i = 0; $i < count(  $groups_info); $i++) {
+											 
+												if (@in_array($groups_info[$i]['id'],$folder_perm )) {
+												 $permission = 1;
+												 }	
+											  
+										   }
+									   }
+											
+							  }//end buddypress
+							  
+							  
+							  //check roles permission
+							     $folder_perm_roles =sp_cdm_groups_addon_projects::get_permissions('' .$sp_cdm_groups_perm->namesake . '_role_permission_delete_' . $pid . '');
+								$user_roles = $current_user->roles;
+							
+	 			 				 if(count($user_roles) > 0){
+										   foreach ($user_roles as $key =>$role) {
+											 
+												if (@in_array($role, $folder_perm_roles)) {
+												 $permission = 1;
+												 }	
+											  
+										   }
+									   }
+	 
+	 		  
+							  //end roles permission
+						    
+							//global setting
+								
+								
+					}//end grioups addon
+					
+				//is part of premium group
+		
+				if($pid == 0 or $pid == ''){
+					$permission = 1;
+					
+				}
+				
+				
+		return $permission;
+	
+	
+	
+	
+	
+}
 if(!function_exists('sp_cdm_category_value')){
 function sp_cdm_category_value($id){
 global $wpdb;
@@ -52,11 +331,19 @@ function sp_cdm_folder_name($type = 0){
 	
 }
 }
-function sp_cdm_thumbnail($url,$w,$h){
+function sp_cdm_thumbnail($url,$w = NULL,$h= NULL){
 	global $wpdb;
-	$params = array('width' => 400, 'height' => $h,'width' => $w, 'crop' => true);
+	
+	if($h != NULL){
+	$settings['height'] = $h;		
+	}
+	if($w != NULL){
+	$settings['width'] = $w;	
+	}
+	$settings['crop'] = false;
 
-			return bfi_thumb($url, $params);
+
+			return bfi_thumb($url, $settings);
 }
 
 function sp_cdm_get_current_user_role_name () {
