@@ -756,13 +756,14 @@ echo '
         } else {
             $sort = $_GET['sort'];
         }
-        if ($_GET['pid'] == "" or $_GET['pid'] == "0") {
+        if ($_GET['pid'] == "" or $_GET['pid'] == "0" or $_GET['pid'] == "undefined") {
             if ($_REQUEST['search'] != "") {
                 $search_file .= " AND (name LIKE '%" . $_REQUEST['search'] . "%' or  tags LIKE '%" . $_REQUEST['search'] . "%')  ";
             } else {
                 $search_file .= " AND pid = 0  AND parent = 0  ";
             }
             $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where (uid = '" . $_GET['uid'] . "' " . $find_groups . ")  	 " . $search_file . " order by " . $sort . " ", ARRAY_A);
+			
         } else {
             if ($_REQUEST['search'] != "") {
                 $search_file .= " AND (name LIKE '%" . $_REQUEST['search'] . "%' or  tags LIKE '%" . $_REQUEST['search'] . "%')  ";
@@ -770,6 +771,7 @@ echo '
                 $search_file .= "  AND parent = 0   ";
             }
             $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where (pid = '" . $_GET['pid'] . "') " . $search_file . "  order by " . $sort . "  ", ARRAY_A);
+			
         }
 		
 		
@@ -793,7 +795,7 @@ echo '
 		 
 		
 		}
-		
+	
         for ($i = 0; $i < count($r); $i++) {
             $ext   = preg_replace('/^.*\./', '', $r[$i]['file']);
             $r_cat = $wpdb->get_results("SELECT name  FROM " . $wpdb->prefix . "sp_cu_cats   where id = '" . $r[$i]['cid'] . "' ", ARRAY_A);

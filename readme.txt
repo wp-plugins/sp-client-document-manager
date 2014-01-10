@@ -1,16 +1,16 @@
 === Plugin Name ===
 Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
-Tags: Web based document manager,FIle uploader, online website documents organization, share documents and graphic files securely, customer file manager
+Tags: document manager,File uploader, online website documents organization, share documents and graphic files securely, customer file manager
 Requires at least: 2.0.2
 Tested up to: 3.7.1
-Stable tag: 1.9.9
+Stable tag: 2.0.1
 
-SP Online Client Document & Project Manager. Multi-functional - upload, share, group, distribute and organize all documents & files.
+SP Document & Project Manager. Multi-functional file management system - upload, share, track, group, distribute and organize all documents, images, PDF's & files.
 
 == Description ==
 
-Online customer document & project manager,  Businesses & Organization utilizing this application can maintain and file web based documents.Companies can organization, manage client documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
+Online document & project managment application,  Businesses & Organization utilizing this application can maintain and file web based documents. You can organize, manage client, student & supplier's documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
 The plug-in also demonstrates how quickly a business can take hold of their interactions with clients, sales organzation, vendors, and all in between.  With a straight-forward layout, access to template modifications and easy to manage features; clients can add and modify projects. Think of it as a old school filing cabinet that allows to manage you files from any wifi access point.The plug-in provides assurances that the user has complete control over the flow of information.
 
 
@@ -755,3 +755,7 @@ Major updates, new uploader and fixes to admin upload functions
 = 1.9.9 =
 
 * Auto detect if theres no shortcode installed and asks if you want to create it automatically
+
+= 2.0.1 =
+
+* Fixed a small bug that would show all files to all users, some servers sent undefined in replace of project id.

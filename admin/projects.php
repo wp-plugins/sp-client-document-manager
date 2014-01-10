@@ -13,7 +13,7 @@ if (!class_exists('cdmProjects')) {
                 echo '<input type="hidden" name="id" value="' . $r[0]['id'] . '">';
             } //$_GET['id'] != ""
             $users = $wpdb->get_results("SELECT * FROM " . $wpdb->base_prefix . "users order by display_name  ", ARRAY_A);
-            echo '<h2>' .sp_cdm_folder_name(1) . '</h2>' . sp_client_upload_nav_menu() . '';
+            echo '<h2>' . sp_cdm_folder_name(1) . '</h2>' . sp_client_upload_nav_menu() . '';
             echo '
 
 	 <table class="wp-list-table widefat fixed posts" cellspacing="0">
@@ -48,9 +48,7 @@ if (!class_exists('cdmProjects')) {
   </tr>
 
 </table>';
-            
-            do_action('sp_cdm_edit_project_form',$_GET['id']);
-            
+            do_action('sp_cdm_edit_project_form', $_GET['id']);
             echo '
 
 </form>
@@ -61,6 +59,64 @@ if (!class_exists('cdmProjects')) {
 
 ';
         }
+		
+		function getParentName($id){
+			global $wpdb;	
+			
+		$r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project   where id = '" . $id . "'", ARRAY_A);	
+		
+		return $r[0]['name'];
+		}
+		function getChildren($id,$level = 0){
+			
+		global $wpdb;
+		
+		    
+		
+			$r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project   where parent = '" . $id . "' order by parent", ARRAY_A);
+			
+			if(count($r)>0){
+				$level += 1;
+				
+				for ($x = 1; $x <= $level; $x++) {
+				$spacer .= '<span style="margin-right:10px">&rarr; </div>';
+				}
+				
+				for ($i = 0; $i < count($r ); $i++) {
+					
+					//start loop
+					
+			
+                  $html .= '	<tr>
+<td colspan="2">'.$spacer.'' . stripslashes($r[$i]['name']) . '</td>
+				
+
+<td>'.$spacer.'<em>Parent: '.$this->getParentName($r[$i]['parent']).'</em></td>
+
+
+
+<td>
+
+<a href="' . SP_CDM_PLUGIN_URL . 'ajax.php?function=download-project&id=' . $r[$i]['id'] . '" style="margin-right:15px" >' . __("Download Archive", "sp-cdm") . '</a>  
+
+
+
+ <a href="admin.php?page=sp-client-document-manager-projects&function=delete&id=' . $r[$i]['id'] . '" style="margin-right:15px" >' . __("Delete", "sp-cdm") . '</a> 
+
+<a href="admin.php?page=sp-client-document-manager-projects&function=edit&id=' . $r[$i]['id'] . '" >' . __("Modify", "sp-cdm") . '</a></td>
+
+</tr><tr><td colspan="4">'.$this->getChildren($r[$i]['id'],	$level ).'</td></tr>';
+      
+					
+					//end loop
+					
+					
+				}
+			}
+			
+			
+			return $html;
+		}
         function view()
         {
             global $wpdb;
@@ -74,14 +130,11 @@ if (!class_exists('cdmProjects')) {
                     $where_project['pid'] = $_POST['id'];
                     $wpdb->update("" . $wpdb->prefix . "sp_cu", $update, $where_project);
                     $insert_id = $_POST['id'];
-                    
                 } else {
                     $wpdb->insert("" . $wpdb->prefix . "sp_cu_project", $insert);
                     $insert_id = $wpdb->insert_id;
                 }
-                
                 do_action('sp_cdm_edit_project_save', $insert_id);
-                
             } //$_POST['save-project'] != ""
             if ($_GET['function'] == 'add' or $_GET['function'] == 'edit') {
                 $this->add();
@@ -99,28 +152,21 @@ window.location = "admin.php?page=sp-client-document-manager-projects"
 </script>';
             } //$_GET['function'] == 'delete'
             else {
-                
                 $r = $wpdb->get_results("SELECT " . $wpdb->prefix . "sp_cu_project.name as projectName,
 
 									" . $wpdb->prefix . "sp_cu_project.uid,
-
+									" . $wpdb->prefix . "sp_cu_project.parent,
 									" . $wpdb->prefix . "sp_cu_project.id AS projectID,
-
 									" . $wpdb->base_prefix . "users.ID,
-
-									" . $wpdb->base_prefix . "users.user_nicename
-
+									" . $wpdb->base_prefix . "users.user_nicename								
+									
+									FROM " . $wpdb->prefix . "sp_cu_project
+									LEFT JOIN " . $wpdb->base_prefix . "users ON " . $wpdb->prefix . "sp_cu_project.uid = " . $wpdb->base_prefix . "users.ID
 										
-
-	
-
-									 FROM " . $wpdb->prefix . "sp_cu_project
-
-									 LEFT JOIN " . $wpdb->base_prefix . "users ON " . $wpdb->prefix . "sp_cu_project.uid = " . $wpdb->base_prefix . "users.ID
-
+									 WHERE " . $wpdb->prefix . "sp_cu_project.parent = 0 
+									 	
 									 order by " . $wpdb->prefix . "sp_cu_project.name", ARRAY_A);
-                
-                echo '<h2>' .sp_cdm_folder_name(1) . '</h2>' . sp_client_upload_nav_menu() . '';
+                echo '<h2>' . sp_cdm_folder_name(1) . '</h2>' . sp_client_upload_nav_menu() . '';
                 echo '
 
 								
@@ -131,7 +177,7 @@ window.location = "admin.php?page=sp-client-document-manager-projects"
 
 									 <div style="margin:10px">
 
-									 <a href="admin.php?page=sp-client-document-manager-projects&function=add" class="button">' . __("Add", "sp-cdm") . ' '.sp_cdm_folder_name().'</a>
+									 <a href="admin.php?page=sp-client-document-manager-projects&function=add" class="button">' . __("Add", "sp-cdm") . ' ' . sp_cdm_folder_name() . '</a>
 
 									 </div>
 
@@ -141,13 +187,13 @@ window.location = "admin.php?page=sp-client-document-manager-projects"
 
 	<tr>
 
-<th>' . __("ID", "sp-cdm") . '</th>
+<th style="width:40px"><strong>' . __("ID", "sp-cdm") . '</strong></th>
 
-<th>' . __("Name", "sp-cdm") . '</th>
+<th><strong>' . __("Name", "sp-cdm") . '</strong></th>
 
-<th>' . __("User", "sp-cdm") . '</th>
+<th><strong>' . __("User", "sp-cdm") . '</strong></th>
 
-<th>' . __("Action", "sp-cdm") . '</th>
+<th><strong>' . __("Action", "sp-cdm") . '</strong></th>
 
 </tr>
 
@@ -156,13 +202,13 @@ window.location = "admin.php?page=sp-client-document-manager-projects"
                     $vendor_info[$i] = unserialize($vendors[$i]['option_value']);
                     echo '	<tr>
 
-<td>' . $r[$i]['projectID'] . '</td>				
+<td style="font-weight:bold;background-color:#EFEFEF">' . $r[$i]['projectID'] . '</td>				
 
-<td>' . stripslashes($r[$i]['projectName']) . '</td>
+<td style="font-weight:bold;background-color:#EFEFEF">' . stripslashes($r[$i]['projectName']) . '</td>
 
-<td>' . $r[$i]['user_nicename'] . '</td>
+<td style="font-weight:bold;background-color:#EFEFEF">' . $r[$i]['user_nicename'] . '</td>
 
-<td>
+<td style="font-weight:bold;background-color:#EFEFEF">
 
 <a href="' . SP_CDM_PLUGIN_URL . 'ajax.php?function=download-project&id=' . $r[$i]['projectID'] . '" style="margin-right:15px" >' . __("Download Archive", "sp-cdm") . '</a>  
 
@@ -172,7 +218,7 @@ window.location = "admin.php?page=sp-client-document-manager-projects"
 
 <a href="admin.php?page=sp-client-document-manager-projects&function=edit&id=' . $r[$i]['projectID'] . '" >' . __("Modify", "sp-cdm") . '</a></td>
 
-</tr>';
+</tr><tr><td colspan="4">'.$this->getChildren($r[$i]['projectID'] ).'</td></tr>';
                 } //$i = 0; $i < count($r); $i++
                 echo '</table>';
             }
