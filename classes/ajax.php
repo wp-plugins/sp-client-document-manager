@@ -356,7 +356,7 @@ class spdm_ajax
     function file_list()
     {
         global $wpdb, $current_user;
-        if (function_exists('cdmFindGroups')) {
+         if (function_exists('cdmFindGroups')) {
             $find_groups = cdmFindGroups($_GET['uid'], 1);
         }
         if ($_REQUEST['search'] != "") {
@@ -368,7 +368,7 @@ class spdm_ajax
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.parent = '" . $_GET['pid'] . "' ";
         }
 		}
-        if (get_option('sp_cu_hide_project') == 1) {
+          if (get_option('sp_cu_hide_project') == 1) {
 			
 			
 			$r_projects_query = "SELECT " . $wpdb->prefix . "sp_cu.name,
@@ -408,41 +408,7 @@ class spdm_ajax
 										GROUP BY pid
 
 										ORDER by date desc";
-			
-		
-            $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
-        } else {
-			
-			$r_projects_query = "SELECT 
-
-												" . $wpdb->prefix . "sp_cu_project.id,
-
-												" . $wpdb->prefix . "sp_cu_project.id AS pid,
-
-												" . $wpdb->prefix . "sp_cu_project.uid,
-
-												 " . $wpdb->prefix . "sp_cu_project.name AS project_name,
-
-												  " . $wpdb->prefix . "sp_cu_project.parent
-
-												 
-
-										FROM " . $wpdb->prefix . "sp_cu_project
-
-										WHERE (" . $wpdb->prefix . "sp_cu_project.uid = '" . $_GET['uid'] . "'  " . $find_groups . ")										
-
-										
-
-										" . $search_project . "
-
-										";
-										if($_GET['pid'] == 0 or $_GET['pid'] == ''){
-									$r_projects_query = apply_filters('sp_cdm_projects_query', $r_projects_query ,$_GET['uid']);	
-										}
-										$r_projects_query .="
-
-										ORDER by name";
-								if(get_option('sp_cu_release_the_kraken') == 1){
+				if(get_option('sp_cu_release_the_kraken') == 1){
 								unset($r_projects_query);								
 								$r_projects_query =	 "SELECT 										 
 													" . $wpdb->prefix . "sp_cu_project.id,
@@ -460,9 +426,43 @@ class spdm_ajax
 										" . $search_project . " ORDER by name
 ";
 								}
-						
+			
             $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
+        } else {
+			
+			
+									$r_projects_groups_addon = apply_filters('sp_cdm_projects_query', $r_projects_groups_addon ,$_GET['uid']);	
+					
+			$r_projects_query = "SELECT 
+
+												" . $wpdb->prefix . "sp_cu_project.id,
+
+												" . $wpdb->prefix . "sp_cu_project.id AS pid,
+
+												" . $wpdb->prefix . "sp_cu_project.uid,
+
+												 " . $wpdb->prefix . "sp_cu_project.name AS project_name,
+
+												  " . $wpdb->prefix . "sp_cu_project.parent
+
+												 
+
+										FROM " . $wpdb->prefix . "sp_cu_project
+
+										WHERE (" . $wpdb->prefix . "sp_cu_project.uid = '" . $_GET['uid'] . "'  " . $find_groups . " ".$r_projects_groups_addon.")										
+
+										
+
+										" . $search_project . "
+
+										";
+									
+										$r_projects_query .="
+
+										ORDER by name";
+							
 		
+            $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
         }
         echo '<div id="dlg_cdm_file_list">
 
@@ -752,10 +752,12 @@ echo '
             }
         }
         if ($_GET['sort'] == '') {
-            $sort = 'date';
+            $sort = 'name';
         } else {
             $sort = $_GET['sort'];
         }
+		 $sort = 'date';
+		
         if ($_GET['pid'] == "" or $_GET['pid'] == "0" or $_GET['pid'] == "undefined") {
             if ($_REQUEST['search'] != "") {
                 $search_file .= " AND (name LIKE '%" . $_REQUEST['search'] . "%' or  tags LIKE '%" . $_REQUEST['search'] . "%')  ";
@@ -1233,7 +1235,7 @@ function sp_cu_remove_project(){
         }
         //
         if ($_GET['sort'] == '') {
-            $sort = 'date';
+            $sort = 'name';
         } else {
             $sort = $_GET['sort'];
         }
