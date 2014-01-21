@@ -1239,7 +1239,7 @@ function sp_cu_remove_project(){
         } else {
             $sort = $_GET['sort'];
         }
-        if ($_GET['pid'] == "" or $_GET['pid'] == "0") {
+        if ($_GET['pid'] == "" or $_GET['pid'] == "0" or $_GET['pid'] == "undefined") {
             if ($_REQUEST['search'] != "") {
                 $search_file .= " AND (name LIKE '%" . $_REQUEST['search'] . "%' or  tags LIKE '%" . $_REQUEST['search'] . "%')  ";
             } else {
