@@ -3,8 +3,8 @@ Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
 Tags: document manager,File uploader, online website documents organization, share documents and graphic files securely, customer file manager
 Requires at least: 2.0.2
-Tested up to: 3.7.1
-Stable tag: 2.0.3
+Tested up to: 3.8.1
+Stable tag: 2.0.4
 
 SP Document & Project Manager. Multi-functional file management system - upload, share, track, group, distribute and organize all documents, images, PDF's & files.
 
@@ -763,3 +763,8 @@ Major updates, new uploader and fixes to admin upload functions
 = 2.0.2 =
 
 * fixed a project adding issue
+
+= 2.0.4 =
+
+* Fixed a permissions issue with thumbnails
+* 3.8.1 compatible
