@@ -4,12 +4,12 @@ Plugin Name: SP Client Document & Project Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business to manage client files securely.
 Author: Smarty
-Version: 2.0.4
+Version: 2.0.6
 Author URI: http://smartypantsplugins.com
 */
 
 global $sp_client_upload;
-$sp_client_upload = "2.0.4";
+$sp_client_upload = "2.0.6";
 
 
 
@@ -69,7 +69,7 @@ add_filter('wp_head','sp_cdm_tinymce_editor');
   wp_enqueue_script('editor-functions');
   add_thickbox();
  }
-
+require_once ''.dirname(__FILE__).'/classes/install.php';
 require_once ''.dirname(__FILE__).'/classes/mat.thumb.php';
 
 include_once ''.dirname(__FILE__).'/classes/ajax.php';
@@ -87,21 +87,6 @@ include_once ''.dirname(__FILE__).'/shortcode.php';
 
 include_once ''.dirname(__FILE__).'/admin/fileview.php';
 
-sp_cdm_check_admin_caps();
-function sp_cdm_check_admin_caps(){
-global 	$current_user;
-	@require_once(ABSPATH . 'wp-includes/pluggable.php');
-if (  user_can(@$current_user->ID,'manage_options') && !current_user_can('sp_cdm') ) {
-		$role = get_role( 'administrator' );
-		$role->add_cap( 'sp_cdm' );	
-		$role->add_cap( 'sp_cdm_vendors' );	
-		$role->add_cap( 'sp_cdm_settings' );	
-		$role->add_cap( 'sp_cdm_projects' );	
-		$role->add_cap( 'sp_cdm_uploader' );
-		
-}
-	
-}
 
 function sp_client_upload_init() {
 	
@@ -167,180 +152,8 @@ add_action('init', 'sp_client_upload_init');
 add_action('admin_menu', 'sp_client_upload_load_css');
 add_action('admin_menu', 'sp_client_upload_load_admin_css');
 add_action('admin_init', 'sp_client_upload_admin_init');
-//add_action('plugins_loaded', 'sp_client_upload_install');
-function sp_client_upload_install() {
-   global $wpdb;
-   global  $sp_client_upload;
-
-	 $table_name = $wpdb->prefix . "sp_cu";
- 	  $project_table_name = $wpdb->prefix . "sp_cu_project";  
-	   $project_cat_name = $wpdb->prefix . "sp_cu_cats"; 
-	
-	 $sql = 'CREATE TABLE  `'.$table_name.'` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `file` varchar(255) NOT NULL,
-  `notes` text NOT NULL,
-  `tags` text NOT NULL,
-  `uid` int(11) NOT NULL,
-  `cid` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
-   `parent` int(11) NOT NULL,
-  `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ;';
-
-$sql2 = 'CREATE TABLE  `'.$project_table_name .'` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `uid` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-);';
-  
-$sql3 = 'CREATE TABLE IF NOT EXISTS `'.$project_cat_name.'` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ;
-';
-   
 
 
-   require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-  dbDelta($sql);
-  dbDelta($sql2); 
-  dbDelta($sql3);   
-  
-   	$dir = SP_CDM_UPLOADS_DIR;
-	
-	if(!is_dir($cdm_upload_dir['basedir'])){
-	
-		@mkdir($cdm_upload_dir['basedir'], 0777);
-	}
-	
-	if(!is_dir($dir)){
-	
-		@mkdir($dir, 0777);
-	}
-if ( get_option( 'sp_client_upload') == '') {
-  add_option("sp_client_upload", $sp_client_upload);
-  add_option("sp_client_upload_page", 'Please enter the page');
-
-}
-
-
-$updatesql = $wpdb->query('ALTER TABLE `'.$wpdb->prefix.'sp_cu` ADD `pid` INT( 11 ) NOT NULL; ');
-
-sp_cdm_update_db_check();
-
-
-if(function_exists('sp_client_upload_install_premium')){
-add_action('admin_init', 'sp_cdm_redirect_activate'); 
-}
-
-
-
-}
-register_activation_hook(__FILE__,'sp_client_upload_install');
-
-function sp_cdm_update_db_check() {
-    global $sp_client_upload,$wpdb;
-	
-    if (get_site_option('sp_client_upload') != $sp_client_upload) {        
-		
-		$cur_sp_client_upload = get_site_option('sp_client_upload');
-		
-		//upgrade 1.0.2
-		if($cur_sp_client_upload == '1.0.0' or $cur_sp_client_upload == '1.0.1' or $cur_sp_client_upload == '1.0.2' or $cur_sp_client_upload == '1.0.3' or $cur_sp_client_upload == '1.0.4' ){
-			
-			$wpdb->query('ALTER TABLE `'.$wpdb->prefix . 'sp_cu` ADD `cid` INT( 11 ) NOT NULL;');
-			
-			
-		}
-		
-		
-		if($cur_sp_client_upload < '1.1.3' ){
-			$sql1 = '
-CREATE TABLE  `'.$wpdb->prefix.'sp_cu_forms` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `template` text NOT NULL,
-  `type` varchar(255) NOT NULL,
-  `defaults` text NOT NULL,  
-  `sort` int(11) NOT NULL DEFAULT "0",
-  `required` varchar(11) NOT NULL DEFAULT "No",
-  PRIMARY KEY (`id`)
-) ;';
-
-$sql2 = 'CREATE TABLE IF NOT EXISTS `'.$wpdb->prefix.'sp_cu_form_entries` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NOT NULL,
-  `fid` int(11) NOT NULL,
-  `value` varchar(255) NOT NULL,
-  `file_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ';
-
-  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-  dbDelta($sql1);
-  dbDelta($sql2); 
-
-	}
-	
-	
-	if($cur_sp_client_upload < '1.1.7' ){
-			$sql3 = '
-CREATE TABLE IF NOT EXISTS `'.$wpdb->prefix.'sp_cu_groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-);';
-
-$sql4 = 'CREATE TABLE IF NOT EXISTS `'.$wpdb->prefix.'sp_cu_groups_assign` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `gid` int(11) NOT NULL,
-  `uid` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ;';
-
-  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-  dbDelta($sql3);
-  dbDelta($sql4);
-		}
-		
-		if($cur_sp_client_upload < '1.2.1' ){
-			
-	$wpdb->query('ALTER TABLE `'.$wpdb->prefix . 'sp_cu` ADD `cid` INT( 11 ) NOT NULL;');
- 
-		}	
-		
-			if($cur_sp_client_upload < '1.2.3' ){
-			
-	$wpdb->query('ALTER TABLE `'.$wpdb->prefix . 'sp_cu` ADD `tags` text NOT NULL;');
- 
-		}
-	
-		
-		
-		
-	if($cur_sp_client_upload < '1.2.7' ){
-		$wpdb->query("ALTER TABLE `".$wpdb->prefix ."sp_cu_project` ADD `parent` INT( 11 ) NOT NULL DEFAULT '0'");		
-	}
-	if($cur_sp_client_upload < '1.2.8' ){
-		$wpdb->query("ALTER TABLE `".$wpdb->prefix ."sp_cu_groups` ADD `locked` INT( 1 ) NOT NULL DEFAULT '0'");		
-	}
-			
-		
-		
-		
-		
-		update_option('sp_client_upload',$sp_client_upload);
-		
-	}
-}
-
-
-add_action('plugins_loaded', 'sp_cdm_update_db_check');
 function sp_client_upload_menu() {
 
 		$projects = new cdmProjects;
@@ -377,17 +190,5 @@ if(@$_POST['sp-client-document-manager-submit'] != ""){
 echo '<h2>'.__("Latest uploads","sp-cdm").'</h2>'.sp_client_upload_nav_menu().'
 				'. sp_client_upload_admin().'';
 }
-function sp_client_check_installed(){
-	global $wpdb;
-	
-	
-	$wpdb->query("SHOW TABLES LIKE '".$wpdb->prefix . "sp_cu'");
-if($wpdb->num_rows != 1) {
- sp_client_upload_install();
- sp_cdm_update_db_check();
-}
-	
-}
 
-sp_client_check_installed(); 
 ?>
