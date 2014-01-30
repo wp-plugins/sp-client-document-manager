@@ -284,7 +284,7 @@ $im->destroy();
 
 
 if($_REQUEST['force_upgrades'] == 1){
-	sp_cdm_update_db_check();
+	
 	echo'
 
 <div style="border:1px solid #CCC;padding:5px;margin:5px;background-color:#EFEFEF">
