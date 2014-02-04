@@ -36,7 +36,7 @@ class spdm_ajax
 
 	<div class="view-file-info"><h2>' . stripslashes($r[0]['name']) . '</h2></div>';
         $html .= '<div class="sp_cu_manage">';
-        if (CU_PREMIUM == 1 && get_option('sp_cu_user_uploads_disable') != 1 && get_option('sp_cu_user_disable_revisions') != 1) {
+        if (CU_PREMIUM == 1 && get_option('sp_cu_user_uploads_disable') != 1 && get_option('sp_cu_user_disable_revisions') != 1  && cdm_file_permissions($r[0]['pid']) == 1) {
             $html .= sp_cdm_revision_button();
         }
         if (class_exists('cdmProductivityUser')) {

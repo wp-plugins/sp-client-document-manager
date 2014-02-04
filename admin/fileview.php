@@ -233,6 +233,7 @@ function display_sp_thumbnails2($r){
 		
 		function sp_cdm_load_project(pid){
 			sp_cdm_loading_image();
+		jQuery(".cdm_premium_pid_field").attr("value", pid);
 		jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'admin/ajax.php?function=file-list&uid='.$user_ID.'&pid=" + pid);	
 			
 		}
