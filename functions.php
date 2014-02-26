@@ -530,6 +530,32 @@ echo '
 
   </tr>
 
+      <tr>
+
+
+    <tr>
+
+    <td width="300"><strong>Admin to user email</strong><br><em>This email is dispatched when an admin adds a file in the administration area to a user.</em><br><br>Template Tags:<br><br>
+
+	
+
+	[file] = Link to File<br>
+
+	[notes] = Notes or extra fields<br>
+
+	[user] = users name<br>
+
+	[project] = project<br>
+
+	[category] = category<br>
+
+	[user_profile] = Link to user profile<br>
+
+	[client_documents] = Link to the client document manager</td>
+
+    <td>Subject: <input style="width:100%" type="text" name="sp_cu_admin_user_email_subject" value="' . get_option('sp_cu_admin_user_email_subject') . '"><br>Body:<br><textarea name="sp_cu_admin_user_email"  style="width:100%" rows="15">' . get_option('sp_cu_admin_user_email') . '</textarea> </td>
+
+  </tr>
   <tr>
 
     <td>&nbsp;</td>

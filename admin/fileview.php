@@ -87,29 +87,26 @@ if( $_POST['submit-admin'] == 'Upload'){
 	
 	
 	$user_info = get_userdata($a['uid']);
-	if(get_option('sp_cu_admin_email') != ""){
-	$to = get_option('admin_email');
-	$headers .= "".__("From:","sp-cdm")." ".$user_info->user_firstname." ".$user_info->user_lastname." <".$user_info->user_email.">\r\n";	
-	$message = sp_cu_process_email($file_id,get_option('sp_cu_admin_email'));
-	
-	$subject = get_option('sp_cu_admin_email_subject');
-	 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
-	wp_mail( $to, $subject, $message, $headers, $attachments );
-	 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
-	}
+
 	
 	
-	
-	if(get_option('sp_cu_user_email') != ""){
-		$subject = get_option('sp_cu_user_email_subject');
-		$message = sp_cu_process_email($file_id,get_option('sp_cu_user_email'));
-		$to = $user_info->user_email;		
-		 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
-		wp_mail( $to, $subject, $message, $headers, $attachments );
-		 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
-	}
-	
-	
+
+	    if (get_option('sp_cu_admin_user_email') != "") {
+      
+					$subject =  sp_cu_process_email($file_id, get_option('sp_cu_admin_user_email_subject'));
+                    $message = sp_cu_process_email($file_id, get_option('sp_cu_admin_user_email'));
+                    $to      = $current_user->user_email;
+                   
+			$message = apply_filters('spcdm_user_email_message',$message,$post, $uid);
+			$to = apply_filters('spcdm_user_email_to',$to,$post, $uid);
+			$subject = apply_filters('spcdm_user_email_subject',$subject,$post, $uid);
+			$attachments = apply_filters('spcdm_user_email_attachments',$attachments,$post, $uid);
+			$user_headers = apply_filters('spcdm_user_email_headers',$user_headers,$post, $uid);
+			
+						 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
+                    wp_mail($to, $subject, $message, $user_headers, $attachments);
+					 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
+                }
 	
 		echo  '<script type="text/javascript">
 
@@ -406,7 +403,9 @@ $html .=''.$add_project .'
 
 </div>
 
-<form  action="'.$_SERVER['REQUEST_URI'].'" method="post" enctype="multipart/form-data" id="upload_form" name="sp_upload_form" >';
+<form  action="'.$_SERVER['REQUEST_URI'].'" method="post" enctype="multipart/form-data" id="upload_form" name="sp_upload_form" >
+<input type="text" name="admin-uploader" value="1">
+';
 
 
 
@@ -541,25 +540,44 @@ if($_POST['submit-admin'] != ""){
 	 }
 	 
 	$to = get_option('admin_email');
-	if(get_option('sp_cu_admin_email') != ""){
-	$headers .= "".__("From:","sp-cdm")." ".$current_user->user_firstname." ".$current_user->user_lastname." <".$current_user->user_email.">\r\n";	
-	$message = sp_cu_process_email($file_id,get_option('sp_cu_admin_email'));
-	
-	$subject = get_option('sp_cu_admin_email_subject');
-	 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
-	wp_mail( $to, $subject, $message, $headers, $attachments );
-	 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
-	}
+
 	
 	
-	if(get_option('sp_cu_user_email') != ""){
-		$subject = get_option('sp_cu_user_email_subject');
-		$message = sp_cu_process_email($file_id,get_option('sp_cu_user_email'));
-		$to = $current_user->user_email;		
-		 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
-		wp_mail( $to, $subject, $message, $headers, $attachments );
-		 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
-	}
+		
+		
+		    if (get_option('sp_cu_admin_user_email') != "") {
+      
+					$subject =  sp_cu_process_email($file_id, get_option('sp_cu_admin_user_email_subject'));
+                    $message = sp_cu_process_email($file_id, get_option('sp_cu_admin_user_email'));
+                    $to      = $current_user->user_email;
+                   
+			$message = apply_filters('spcdm_user_email_message',$message,$post, $uid);
+			$to = apply_filters('spcdm_user_email_to',$to,$post, $uid);
+			$subject = apply_filters('spcdm_user_email_subject',$subject,$post, $uid);
+			$attachments = apply_filters('spcdm_user_email_attachments',$attachments,$post, $uid);
+			$user_headers = apply_filters('spcdm_user_email_headers',$user_headers,$post, $uid);
+			
+						 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
+                    wp_mail($to, $subject, $message, $user_headers, $attachments);
+					 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
+                }
+
+	    if (get_option('sp_cu_user_email') != "") {
+      
+					$subject =  sp_cu_process_email($file_id, get_option('sp_cu_admin_user_email_subject'));
+                    $message = sp_cu_process_email($file_id, get_option('sp_cu_admin_user_email'));
+                    $to      = $current_user->user_email;
+                   
+			$message = apply_filters('spcdm_user_email_message',$message,$post, $uid);
+			$to = apply_filters('spcdm_user_email_to',$to,$post, $uid);
+			$subject = apply_filters('spcdm_user_email_subject',$subject,$post, $uid);
+			$attachments = apply_filters('spcdm_user_email_attachments',$attachments,$post, $uid);
+			$user_headers = apply_filters('spcdm_user_email_headers',$user_headers,$post, $uid);
+			
+						 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
+                    wp_mail($to, $subject, $message, $user_headers, $attachments);
+					 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
+                }
 		$html .= '<script type="text/javascript">
 
 
