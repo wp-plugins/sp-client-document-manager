@@ -1,16 +1,16 @@
 === Plugin Name ===
 Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
-Tags: document manager,File uploader, online website documents organization, share documents and graphic files securely, customer file manager
+Tags: document manager, File uploader, online website documents organization, share documents and graphic files securely, customer file manager
 Requires at least: 2.0.2
 Tested up to: 3.8.1
-Stable tag: 2.0.9
+Stable tag: 2.1.0
 
-SP Document & Project Manager. Multi-functional file management system - upload, share, track, group, distribute and organize all documents, images, PDF's & files.
+SP Project & Document Manager. Multi-functional document manager - upload, share, track, group, distribute and organize all documents, images, PDF's & files.
 
 == Description ==
 
-Online document & project managment application,  Businesses & Organization utilizing this application can maintain and file web based documents. You can organize, manage client, student & supplier's documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
+Online project & document managment application,  Businesses & Organization utilizing this application can maintain and file web based documents. You can organize, manage client, student & supplier's documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
 The plug-in also demonstrates how quickly a business can take hold of their interactions with clients, sales organzation, vendors, and all in between.  With a straight-forward layout, access to template modifications and easy to manage features; clients can add and modify projects. Think of it as a old school filing cabinet that allows to manage you files from any wifi access point.The plug-in provides assurances that the user has complete control over the flow of information.
 
 

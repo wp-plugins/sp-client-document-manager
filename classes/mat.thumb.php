@@ -339,6 +339,11 @@ class BFI_Thumb {
         $theme_url = get_template_directory_uri();
         $theme_dir = get_template_directory();
 
+    $dir = '' . $upload_dir . '/cache/';
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777);
+        }
+
         // find the path of the image. Perform 2 checks:
         // #1 check if the image is in the uploads folder
         if(strpos( $url, $upload_url ) !== false) {
@@ -408,8 +413,8 @@ class BFI_Thumb {
         if (isset($opacity)) $ext = 'png';
 
         // desination paths and urls
-        $destfilename = "{$upload_dir}/{$dst_rel_path}-{$suffix}.{$ext}";
-        $img_url = "{$upload_url}/{$dst_rel_path}-{$suffix}.{$ext}";
+        $destfilename = "{$upload_dir}/cache/{$dst_rel_path}-{$suffix}.{$ext}";
+        $img_url = "{$upload_url}/cache/{$dst_rel_path}-{$suffix}.{$ext}";
 
         // if file exists, just return it
         if (@file_exists($destfilename) && getimagesize($destfilename)) {

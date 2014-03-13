@@ -188,7 +188,15 @@ function sp_cu_dialog(div,w,h){
 
 }
 
+/*
+jQuery(document).ready(function() {
+//  jQuery("#cdm_upload_table tr:first").css("display", "none");
+jQuery("#cdm_og").attr("checked","checked");
+   
+setInterval(function(){cdmPremiumReValidate();},1000);
 
+});
+*/
 
 
 
