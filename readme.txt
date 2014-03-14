@@ -6,7 +6,7 @@ Requires at least: 2.0.2
 Tested up to: 3.8.1
 Stable tag: 2.1.0
 
-SP Project & Document Manager. Multi-functional document manager - upload, share, track, group, distribute and organize all documents, images, PDF's & files.
+Project & Document Manager. A multi-functional file management tool to upload, share, track, group, distribute and organize any type of document.
 
 == Description ==
 
