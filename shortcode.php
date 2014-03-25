@@ -740,10 +740,12 @@ $html .='
         $user_info = get_userdata($r[0]['uid']);
         $message   = nl2br($email);
         $message = apply_filters('sp_cdm_shortcode_email_before',$message,$r ,$r_project,$r_cats);	
-	    $message   = str_replace('[file]', '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file'])  . '">' . SP_CDM_UPLOADS_DIR_URL . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '</a>', $message);
-        $message   = str_replace('[notes]', $notes, $message);
+	    $message   = str_replace('[file]', '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file'])  . '">' . $r[0]['file'] . '</a>', $message);
+        $message   = str_replace('[file_name]',$r[0]['file'], $message);
+		$message   = str_replace('[file_real_path]', '' . SP_CDM_UPLOADS_DIR_URL . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '', $message);
+		$message   = str_replace('[notes]', $notes, $message);
         $message   = str_replace('[user]', $user_info->display_name , $message);
-        
+         $message   = str_replace('[uid]', $user_info->ID, $message);
 	    $message   = str_replace('[project]', stripslashes($r_project[0]['name']), $message);
         $message   = str_replace('[category]', stripslashes($r_cats[0]['name']), $message);
         $message   = str_replace('[user_profile]', '<a href="' . admin_url('user-edit.php?user_id=' . $r[0]['uid'] . '') . '">' . admin_url('user-edit.php?user_id=' . $r[0]['uid'] . '') . '</a>', $message);
@@ -949,10 +951,13 @@ jQuery(document).ready(function() {
 
 	';
             }
+			
+			  $html .= '<div id="cdm_nav_buttons">';
+			if (get_option('sp_cu_user_disable_search') != 1) {
             // do_action('cdm_add_hidden_html');
-            $html .= '<div id="cdm_nav_buttons">
-			<div style="padding:10px">Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files"></div>';
-           
+          
+			  $html .= '<div style="padding:10px">Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files"></div>';
+			}
 		   
 		   
 		    if (cdm_user_can_add($current_user->ID) == true)

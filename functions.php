@@ -215,9 +215,22 @@ $im->destroy();
             } else {
                 update_option('sp_cu_user_projects_modify', '0');
             }
+			 if ($_POST['sp_cu_user_disable_search'] == "1") {
+                update_option('sp_cu_user_disable_search', '1');
+            } else {
+                update_option('sp_cu_user_disable_search', '0');
+            }
+			
 			
 			
         }
+		
+		 if (get_option('sp_cu_user_disable_search') == 1) {
+            $sp_cu_user_disable_search = ' checked="checked" ';
+        } else {
+            $sp_cu_user_disable_search= '  ';
+        }
+		
         if (get_option('sp_cu_user_projects_required') == 1) {
             $sp_cu_user_projects_required = ' checked="checked" ';
         } else {
@@ -479,10 +492,18 @@ echo '
 	
 
 	[file] = Link to File<br>
+	
+	[file_name] = Actual File Name<br>
+	
+	[file_real_path] = Real Path URL to the file<br>
+	
+	
 
 	[notes] = Notes or extra fields<br>
 
 	[user] = users name<br>
+	
+	[uid] = User ID<br>
 
 	[project] = project<br>
 
@@ -513,11 +534,14 @@ echo '
 	
 
 	[file] = Link to File<br>
-
+	[file_name] = Actual File Name<br>
+	
+	[file_real_path] = Real Path URL to the file<br>
 	[notes] = Notes or extra fields<br>
 
 	[user] = users name<br>
-
+	
+	[uid] = User ID<br>
 	[project] = project<br>
 
 	[category] = category<br>
@@ -617,7 +641,13 @@ echo '
     <td><input type="checkbox" name="sp_cu_user_require_login_download"   value="1" ' . $sp_cu_user_require_login_download . '> </td>
 
   </tr>
+    <tr>
 
+    <td width="300"><strong>Disable Searching?</strong><br><em>Checking this will disable the search box on the front end.</em></td>
+
+    <td><input type="checkbox" name="sp_cu_user_disable_search"   value="1" ' . $sp_cu_user_disable_search . '> </td>
+
+  </tr>
   <tr>
 
   
