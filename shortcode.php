@@ -791,8 +791,8 @@ $html .='
                 $to = get_option('admin_email');
                 if (get_option('sp_cu_admin_email') != "") {
                     $headers[] = "" . __("From:", "sp-cdm") . " " . $current_user->user_firstname . " " . $current_user->user_lastname . " <" . $current_user->user_email . ">\r\n";
-                    if (get_option('sp_cu_additional_admin_emails') != "") {
-                        $cc_admin = explode(",", get_option('sp_cu_additional_admin_emails'));
+                    if (get_option('sp_cu_additional_admin_cc') != "") {
+                        $cc_admin = explode(",", get_option('sp_cu_additional_admin_cc'));
                         foreach ($cc_admin as $key => $email) {
                             if ($email != "") {
                                 $pos = strpos($email, '@');
@@ -953,11 +953,13 @@ jQuery(document).ready(function() {
             }
 			
 			  $html .= '<div id="cdm_nav_buttons">';
-			if (get_option('sp_cu_user_disable_search') != 1) {
-            // do_action('cdm_add_hidden_html');
-          
-			  $html .= '<div style="padding:10px">Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files"></div>';
+			if (get_option('sp_cu_user_disable_search') == 1) {
+            $hide_search = ';display:none;';
 			}
+			// do_action('cdm_add_hidden_html');
+          
+			  $html .= '<div style="padding:10px'.$hide_search.'">Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files"></div>';
+			
 		   
 		   
 		    if (cdm_user_can_add($current_user->ID) == true)
