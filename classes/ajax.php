@@ -461,7 +461,24 @@ class spdm_ajax
 
 										ORDER by name";
 							
-		
+		if(get_option('sp_cu_release_the_kraken') == 1){
+								unset($r_projects_query);								
+								$r_projects_query =	 "SELECT 										 
+													" . $wpdb->prefix . "sp_cu_project.id,
+
+												" . $wpdb->prefix . "sp_cu_project.id AS pid,
+
+												" . $wpdb->prefix . "sp_cu_project.uid,
+
+												 " . $wpdb->prefix . "sp_cu_project.name AS project_name,
+
+												  " . $wpdb->prefix . "sp_cu_project.parent
+										FROM " . $wpdb->prefix . "sp_cu_project
+										WHERE id != ''
+										
+										" . $search_project . " ORDER by name
+";
+								}
             $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
         }
         echo '<div id="dlg_cdm_file_list">
@@ -914,6 +931,8 @@ echo '
 								}
 			
             $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
+									
+	
         } else {
 			
 			
@@ -947,7 +966,26 @@ echo '
 
 										ORDER by name";
 							
+	
 		
+			if(get_option('sp_cu_release_the_kraken') == 1){
+								unset($r_projects_query);								
+								$r_projects_query =	 "SELECT 										 
+													" . $wpdb->prefix . "sp_cu_project.id,
+
+												" . $wpdb->prefix . "sp_cu_project.id AS pid,
+
+												" . $wpdb->prefix . "sp_cu_project.uid,
+
+												 " . $wpdb->prefix . "sp_cu_project.name AS project_name,
+
+												  " . $wpdb->prefix . "sp_cu_project.parent
+										FROM " . $wpdb->prefix . "sp_cu_project
+										WHERE id != ''
+										
+										" . $search_project . " ORDER by name
+";
+								}
             $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
         }
         echo '<div id="dlg_cdm_thumbnails">';

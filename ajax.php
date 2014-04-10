@@ -10,7 +10,7 @@ $upload_dir = wp_upload_dir();
 	$function = $_GET['function'];
 	
 	
-	
+	$spcdm_ajax = new spdm_ajax;
 	
 	switch($function){
 		

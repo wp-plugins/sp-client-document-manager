@@ -3,8 +3,8 @@ Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
 Tags: document manager, File uploader, online website documents organization, share documents and graphic files securely, customer file manager
 Requires at least: 2.0.2
-Tested up to: 3.8.1
-Stable tag: 2.1.2
+Tested up to: 3.8.2
+Stable tag: 2.1.3
 
 Project & Document Manager. A multi-functional file management tool to upload, share, track, group, distribute and organize any type of document.
 
@@ -782,3 +782,8 @@ Major updates, new uploader and fixes to admin upload functions
 * Fix to admin email
 * Added a few more template tags
 * Added the ability to remove the search field.
+
+= 2.1.3 =
+
+* Compatible with 3.8.2
+* Fixed show all files bug
