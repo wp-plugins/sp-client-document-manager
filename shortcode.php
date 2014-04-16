@@ -157,6 +157,7 @@ var pid = jQuery.cookie("pid");
 				}
 	    cdm_check_folder_perms(pid);
 		  cdm_check_file_perms(pid);
+		    jQuery("#sub_category_parent").val(pid);
 		  jQuery(".cdm_premium_pid_field").val(pid);
 		jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=file-list&uid=' . $user_ID . '&pid=" + pid);	
 

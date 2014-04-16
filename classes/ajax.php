@@ -3,7 +3,14 @@ class spdm_ajax
 {
 	
 	
-	
+	function order_by(){
+		
+		$orderby = 'name';
+		
+		$orderby = apply_filters('sp_cdm_order_by_ajax',$orderby);
+		
+		return $orderby ;
+	}
 	
 	function project_dropdown(){
 		
@@ -769,11 +776,12 @@ echo '
             }
         }
         if ($_GET['sort'] == '') {
-            $sort = 'name';
+            $sort = $this->order_by();
+		
         } else {
             $sort = $_GET['sort'];
         }
-		 $sort = 'date';
+
 		
         if ($_GET['pid'] == "" or $_GET['pid'] == "0" or $_GET['pid'] == "undefined" or $_GET['pid'] == "null") {
             if ($_REQUEST['search'] != "") {
@@ -1273,7 +1281,7 @@ function sp_cu_remove_project(){
         }
         //
         if ($_GET['sort'] == '') {
-            $sort = 'name';
+            $sort = $this->order_by();
         } else {
             $sort = $_GET['sort'];
         }

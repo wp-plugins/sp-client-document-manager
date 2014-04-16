@@ -585,7 +585,7 @@ function sp_cu_remove_project(){
             }
         }
         if ($_GET['sort'] == '') {
-            $sort = 'date';
+            $sort = spdm_ajax::order_by();
         } else {
             $sort = $_GET['sort'];
         }
