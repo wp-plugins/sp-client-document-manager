@@ -175,8 +175,7 @@ echo'<div id="cdm_nav_buttons">';
 			
 		   
 		   
-		    if (cdm_user_can_add($current_user->ID) == true)
-			 {
+		   
                 if (class_exists('cdmPremiumUploader') && get_option('sp_cu_free_uploader') != 1) {
                     global $premium_add_file_link;
                     $link = $premium_add_file_link;
@@ -192,8 +191,7 @@ echo'<div id="cdm_nav_buttons">';
                 $morebuttons .= apply_filters('sp_cdm_more_buttons', $morebuttons);
                echo $morebuttons;
                echo '   <a href="javascript:cdm_ajax_search()"  class="sp_cdm_refresh">' . __("Refresh", "sp-cdm") . '</a> ';
-            }
-			
+            
 			echo  '<div style="clear:both"></div></div>';
            echo '<div>';
 echo $this->display_sp_thumbnails2($r );

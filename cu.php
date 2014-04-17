@@ -8,7 +8,7 @@ Version: 2.1.4
 Author URI: http://smartypantsplugins.com
 */
 global $sp_client_upload;
-$sp_client_upload = "2.1.4";
+$sp_client_upload = "2.1.5";
 function sp_cdm_language_init()
 {
     load_plugin_textdomain('sp-cdm', false, dirname(plugin_basename(__FILE__)) . '/languages/');
