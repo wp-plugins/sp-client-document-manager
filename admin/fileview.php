@@ -183,9 +183,9 @@ echo'<div id="cdm_nav_buttons">';
                 } else {
                     $link = 'javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)';
                 }
-                echo '  <a href="' . $link . '"  class="sp_cdm_add_file hide_add_file_permission">' . __("Add File", "sp-cdm") . '</a> ';
+                echo '  <a href="' . $link . '"  class="sp_cdm_add_file">' . __("Add File", "sp-cdm") . '</a> ';
                
-			    echo'  <a href="javascript:sp_cu_dialog(\'#sp_cu_add_project\',500,200);" class="sp_cdm_add_folder hide_add_folder_permission">' . __("Add Folder", "sp-cdm") . '</a> </span> ';
+			    echo'  <a href="javascript:sp_cu_dialog(\'#sp_cu_add_project\',500,200);" class="sp_cdm_add_folder">' . __("Add Folder", "sp-cdm") . '</a> </span> ';
 			
 				$morebuttons = '';
                 $morebuttons .= apply_filters('sp_cdm_more_buttons', $morebuttons);
