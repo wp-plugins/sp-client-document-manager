@@ -32,6 +32,21 @@ function cdm_file_permissions($pid){
 				if($uid == $owner[0]['uid']){
 				$permission = 1;	
 				}
+				//cdm premium groups
+					if($pid >0 && is_numeric($pid)){
+					$groups_premium  = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_groups_assign WHERE uid = '" . $wpdb->escape($owner[0]['uid'])  . "'", ARRAY_A);
+					  for ($i = 0; $i < count( $groups_premium); $i++) {
+						  
+						  $groups_part_of[] = $groups_premium[$i]['gid'];
+					  }
+					
+					foreach($groups_part_of as $key=>$value){
+					$groups_premium_find  = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_groups_assign WHERE gid = '" . $wpdb->escape($value)  . "' AND uid = '".$current_user->ID."'", ARRAY_A);
+						if($groups_premium_find > 0){
+						$permission = 1;	
+						}
+					}
+					}
 					//if given permission for groups addon
 					if(class_exists('sp_cdm_groups_addon')){
 						$sp_cdm_groups_perm =  new sp_cdm_groups_addon;
@@ -119,6 +134,23 @@ function cdm_folder_permissions($pid){
 				if($uid == $owner[0]['uid']){
 				$permission = 1;	
 				}
+					
+					//cdm premium groups
+					if($pid >0 && is_numeric($pid)){
+					$groups_premium  = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_groups_assign WHERE uid = '" . $wpdb->escape($owner[0]['uid'])  . "'", ARRAY_A);
+					  for ($i = 0; $i < count( $groups_premium); $i++) {
+						  
+						  $groups_part_of[] = $groups_premium[$i]['gid'];
+					  }
+					
+					foreach($groups_part_of as $key=>$value){
+					$groups_premium_find  = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_groups_assign WHERE gid = '" . $wpdb->escape($value)  . "' AND uid = '".$current_user->ID."'", ARRAY_A);
+						if($groups_premium_find > 0){
+						$permission = 1;	
+						}
+					}
+					}
+				
 							//if given permission for groups addon
 					if(class_exists('sp_cdm_groups_addon')){
 						$sp_cdm_groups_perm =  new sp_cdm_groups_addon;
