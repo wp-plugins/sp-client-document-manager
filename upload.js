@@ -8,6 +8,7 @@ function cdm_check_file_perms(pid){
 			   url: jQuery('#sp_cu_ajax_url').val() + '?function=check-file-permissions&pid='+ pid ,			  
 
 			   success: function(msg){
+				  // alert(msg);
 				if(msg == 1){
 					jQuery('.hide_add_file_permission').show();	
 					}else{

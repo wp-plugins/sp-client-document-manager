@@ -7,10 +7,53 @@ add_action('init',  array($sp_cdm_installer,'check_caps') );
 if($_GET['force_upgrade'] == 1){
 add_action('plugins_loaded',  array($sp_cdm_installer,'install') );	
 }
+
+add_action( 'sp_cdm_errors', array($sp_cdm_installer,'sp_cdm_premium_upgrades') );	
 class sp_cdm_installer{
 	
 	
 	
+function sp_cdm_premium_upgrades(){
+	
+	   global $wpdb;
+	   $upgrade_count += 0;
+	
+  $table_name = "".$wpdb->prefix . "sp_cu_meta";
+		 if($wpdb->get_var("show tables like '$table_name'") != $table_name){			
+			$sql_meta = "CREATE TABLE IF NOT EXISTS `".$table_name."` (
+			  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			  `fid` bigint(20) unsigned NOT NULL DEFAULT '0',
+			  `pid` bigint(20) unsigned NOT NULL DEFAULT '0',
+			  `uid` bigint(20) unsigned NOT NULL DEFAULT '0',
+			  `meta_key` varchar(255) DEFAULT NULL,
+			  `meta_value` longtext,
+			  PRIMARY KEY (`id`)
+			);" ;
+			
+			$upgrade_count +=1;
+			
+			  
+		 }	
+	
+	apply_filters('sp_cdm_premium_upgrades',$upgrade_count);
+	
+	if($_GET['database_upgrade'] == 1){
+	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	dbDelta($sql_meta );
+	
+		echo '  <div class="updated"><p>Database updates applied!</p>
+    </div>';
+	
+	$updated = 1;
+	}
+	if($updated != 1){
+	if($upgrade_count > 0){
+	echo '  <div class="error"><p><strong>SP Client Document Manager Update:</strong> '.$upgrade_count.' Database update(s) needed. <a href="admin.php?page=sp-client-document-manager&database_upgrade=1" class="button">click here to upgrade</a></p>
+    </div>';
+	}
+	}
+	
+}
 	
 function install(){
 	global $wpdb,$sp_client_upload;

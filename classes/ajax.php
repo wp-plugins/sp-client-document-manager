@@ -409,7 +409,7 @@ class spdm_ajax
 								if($_GET['pid'] == 0 or $_GET['pid'] == ''){
 									$r_projects_query = apply_filters('sp_cdm_projects_query', $r_projects_query ,$_GET['uid']);	
 										}
-
+									
 									$r_projects_query .="	" . $search_project . "
 										
 										GROUP BY pid
@@ -468,6 +468,8 @@ class spdm_ajax
 
 										ORDER by name";
 							
+						
+							
 		if(get_option('sp_cu_release_the_kraken') == 1){
 								unset($r_projects_query);								
 								$r_projects_query =	 "SELECT 										 
@@ -486,6 +488,8 @@ class spdm_ajax
 										" . $search_project . " ORDER by name
 ";
 								}
+								
+								
             $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
         }
         echo '<div id="dlg_cdm_file_list">

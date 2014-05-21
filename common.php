@@ -39,12 +39,13 @@ function cdm_file_permissions($pid){
 						  
 						  $groups_part_of[] = $groups_premium[$i]['gid'];
 					  }
-					
+					if(count($groups_part_of) >0){
 					foreach($groups_part_of as $key=>$value){
 					$groups_premium_find  = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_groups_assign WHERE gid = '" . $wpdb->escape($value)  . "' AND uid = '".$current_user->ID."'", ARRAY_A);
 						if($groups_premium_find > 0){
 						$permission = 1;	
 						}
+					}
 					}
 					}
 					//if given permission for groups addon
@@ -115,6 +116,8 @@ function cdm_file_permissions($pid){
 				}
 				
 				
+			$permission = apply_filters('cdm_file_permissions',$permission,$pid,$uid);
+				
 		return $permission;
 	}
 	
@@ -142,12 +145,13 @@ function cdm_folder_permissions($pid){
 						  
 						  $groups_part_of[] = $groups_premium[$i]['gid'];
 					  }
-					
+					if(count($groups_part_of)> 0){
 					foreach($groups_part_of as $key=>$value){
 					$groups_premium_find  = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_groups_assign WHERE gid = '" . $wpdb->escape($value)  . "' AND uid = '".$current_user->ID."'", ARRAY_A);
 						if($groups_premium_find > 0){
 						$permission = 1;	
 						}
+					}
 					}
 					}
 				
@@ -218,7 +222,7 @@ function cdm_folder_permissions($pid){
 					
 				}
 				
-				
+			$permission = apply_filters('cdm_folder_permissions',$permission,$pid,$uid);	
 		return $permission;
 	}
 function cdm_delete_permission($pid){
@@ -302,7 +306,7 @@ function cdm_delete_permission($pid){
 					
 				}
 				
-				
+			$permission = apply_filters('cdm_delete_permissions',$permission,$pid,$uid);	
 		return $permission;
 	
 	
@@ -618,7 +622,7 @@ function sp_uploadFile($files, $history = NULL){
 	$filename = strtolower($filename);
 
 	$filename = sanitize_file_name($filename);
-
+	$filename    = remove_accents($filename);
 	$target_path = $dir .$filename; 
 
 	
@@ -704,7 +708,7 @@ function sp_uploadFile($files, $history = NULL){
 						$filename = strtolower($filename);
 
 						$filename = sanitize_file_name($filename);
-
+						$filename    = remove_accents($filename);
 						$target_path = $dir .$filename; 
 
 						move_uploaded_file($files['dlg-upload-file']['tmp_name'][$i], $target_path);
@@ -748,7 +752,7 @@ $zip->setZipFile($dir.$return_file);
 	$filename = strtolower($filename);
 
 	$filename = sanitize_file_name($filename);
-
+	$filename    = remove_accents($filename);
 	$target_path = $dir .$filename; 
 
 	
@@ -809,7 +813,7 @@ function sp_Admin_uploadFile($files,$user_ID){
 	$filename = strtolower($filename);
 
 	$filename = sanitize_file_name($filename);
-
+	$filename    = remove_accents($filename);
 	$target_path = $dir .$filename; 
 
 	
@@ -902,7 +906,7 @@ function sp_Admin_uploadFile($files,$user_ID){
 						$filename = strtolower($filename);
 
 						$filename = sanitize_file_name($filename);
-
+						$filename    = remove_accents($filename);
 						$target_path = $dir .$filename; 
 
 						move_uploaded_file($files['dlg-upload-file']['tmp_name'][$i], $target_path);
@@ -946,7 +950,7 @@ $zip->setZipFile($dir.$return_file);
 	$filename = strtolower($filename);
 
 	$filename = sanitize_file_name($filename);
-
+	$filename    = remove_accents($filename);
 	$target_path = $dir .$filename; 
 
 	

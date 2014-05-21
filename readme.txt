@@ -1,12 +1,12 @@
 === Plugin Name ===
 Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
-Tags: document manager, File uploader, online website documents organization, share documents and graphic files securely, customer file manager
-Requires at least: 2.0.2
-Tested up to: 3.9
-Stable tag: 2.1.7
+Tags: document manager, File uploader, online website documents organization, share documents and graphic files securely, customer file manager,Document management, Project management, File sharing, Dropbox importer, Buddypress integration, Google Drive, Enterprise document control, Distribution, Report Center, Retrieval & storage, Versioning, Productivity
+Requires at least: 3.9
+Tested up to: 3.9.1
+Stable tag: 2.1.8
 
-Project & Document Manager. A multi-functional file management tool to upload, share, track, group, distribute and organize any type of document.
+Document Manager. A robust file sharing & management tool to upload, share, track, group, distribute and organize any type of documents.
 
 == Description ==
 
@@ -22,6 +22,9 @@ Works with WordPress Multi Site!
 **[Click here to try out a demo](http://smartypantsplugins.com/client-upload-demo/ "Click here to try out a demo")**
 
 Login with:  user: test   password: test
+
+**Industries Served**
+* Healthcare, Banking & Finance, Legal, Education ,Consulting, Research firms Government, Architecture, Printers, Photographers, Manufacturing, Chemical, Distributors, Web Developers, Virtual offices, Media to name a few
 
 **Overall Features**
 * Enhanced file and document security
@@ -804,3 +807,10 @@ Major updates, new uploader and fixes to admin upload functions
 = 2.1.7 =
 
 * Permissions issue fix
+
+= 2.1.8 =
+
+* Major updates to the uploader, we now use plupload
+* GUI changes
+* Error message changes
+* Bug Fixes
