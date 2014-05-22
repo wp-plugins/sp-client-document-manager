@@ -379,9 +379,11 @@ $im->destroy();
 		
 	
         echo '<h2>Settings</h2>' . sp_client_upload_nav_menu() . '';
-        echo '
+     
+	 if(current_user_can('sp_cdm_help')){
+	    echo '
 
-<div style="border:1px solid #CCC;padding:5px;margin:5px;background-color:#e3f1d4;">';
+<div class="updated">';
         if (@CU_PREMIUM != 1) {
             echo '<h3>Upgrade to premium!</h3>
 
@@ -398,25 +400,24 @@ $im->destroy();
 
 
 </div>';
-
-
+	
 if($_REQUEST['force_upgrades'] == 1){
 	
 	echo'
 
-<div style="border:1px solid #CCC;padding:5px;margin:5px;background-color:#EFEFEF">
+<div class="updated">
 Database verified, you should be good to go!</a>
 </div>';
 }else{
 	
 echo'
 
-<div style="border:1px solid #CCC;padding:5px;margin:5px;background-color:#EFEFEF">
+<div class="update-nag">
 Having problems? <a href="admin.php?page=sp-client-document-manager-settings&force_upgrade=1&force_upgrades=1">Click here to make sure your database structure is correct</a>
 </div>';
 
 }
-
+ }
 echo '
 
 
@@ -804,20 +805,78 @@ echo '
     if (!function_exists('sp_client_upload_help')) {
         function sp_client_upload_help()
         {
-            echo '<h2>Smarty Pants Client Document Manager</h2>' . sp_client_upload_nav_menu() . '
+            echo '' . sp_client_upload_nav_menu() . '
 
-	
 
-<p>Please update the page where your uploader shortcode will be placed</p>
+ <table class="wp-list-table widefat fixed posts" cellspacing="0">
 
-<p>On the page place the shortcode [sp-client-document-manager] to show the uploader</p>
-
-<p>This plugin relies on 2 other plugins to make a seamless experience, you will want to download install "Theme my login" and "Cemys extra fields" You optionally download "Ajax login" for a nice login page on your sidebar</p>
-
-<p>Please donate to keep development going on this plugin! <a href="http://smartypantsplugins.com/donate/" target="_blank">http://smartypantsplugins.com/donate/</a></p>
-
- 
-
+ <tr>
+<td>
+	<h1>Smarty Pants Client Document Manager</h1>
+<ol>
+  <li>Upload the plugin to your plugins folder</li>
+  <li>Activate the plugin</li>
+  <li>Create a new page and enter the shortcode [sp-client-document-manager]</li>
+  <li>Go to the plugin admin page and click settings to configure the plugin (VERY IMPORTANT!)</li>
+  <li>If you\'re using the premium version please upload the zip archive in the settings area.</li>
+</ol>
+<h2>Short Codes</h2>
+<p>x = configurable area</p>
+<h3>Main shortcode</h3>
+<div class="updated"><strong>[sp-client-document-manager]</strong></div>
+<h3>Link to a file</h3>
+<div class="updated"><strong>[cdm-link file="x" date="1" real="1"]</strong></div>
+<ul>
+  <li>file = required, this is the file id. You can find the file id in admin under files or by clicking on a file. The ID is listed next to the date.</li>
+  <li>date = (set to 1) optional, show the date of a file</li>
+  <li>real = (set to 1) optional, generate the real url for the file, the link tags are not generated and only the url is returned. This is good for custom links and image url\'s</li>
+</ul>
+<h4>examples</h4>
+<ul>
+  <li>[cdm-link file="53" date="1"]</li>
+  <li>Will generate a link with the file name and date</li>
+</ul>
+<p>\'&lt; img src="[cdm-link file="53" real="1"]" width="100"&gt;</p>
+<p>Will generate a full url for use in an image</p>
+<h3>Link to a project</h3>
+<div class="updated"><strong>[cdm-project project="x" date="1" order="x" direction="x" limit="x" ]</strong></div>
+<p>This shortlink will display a unordered list of files, it is a basic html ul so you can use css to display it however you want.</p>
+<ul>
+  <li>project = required, this is the project id which you can get in admin under the projects tab.</li>
+  <li>date = optional, put\'s the date of the file next to the file name</li>
+  <li>order = (name,date,id,file) optional, use one of the fields to order the list by</li>
+  <li>direction = (asc,desc) optional, Only to be used with order, use asc for ascending order or desc for decending order</li>
+  <li>limit = optional, use to limit the amount of results shown.</li>
+</ul>
+<h4>examples</h4>
+<ul>
+  <li>[cdm-project project="1" date="1" ]</li>
+  <li>[cdm-project project="1" date="1" order="name" direction="asc" limit="10" ]</li>
+  </ul>
+<h3>Public view (premium only)</h3>
+<div class="updated"><strong>[cdm_public_view]</strong></div>
+</h3>
+<p>This is a shortcode for premium members only, it displays the file list to the public. This shortcode lists all the files from all users.
+<h2>User Role Capabilities</h2>
+<p>If you use "User Role Editor" plugin and want to assign CDM capabilities to another role then please use the following custom captabilities. All are automatically set for administrator</p>
+<ul>
+  <li>sp_cdm = You need this role to view the plugin, this is a very minimal role. You can view files, edit and delete.</li>
+  <li>sp_cdm_settings = Show Settings tab</li>
+  <li>sp_cdm_vendors = Show vendors tab</li>
+  <li>sp_cdm_projects = Show projects tab</li>
+  <li>sp_cdm_uploader = Use the uploader (add files) </li>
+  <li>sp_cdm_categories = Show the categories tab (premium only)</li>
+  <li>sp_cdm_forms = Show the forms tab (premium only)</li>
+  <li>sp_cdm_help = Show the help tab and display branding (premium only)</li>
+  <li>sp_cdm_logs = Show the user logs (premium only)</li>
+  <li>sp_cdm_show_folders_as_nav = Show the folders as its own nav (premium only)</li>
+  <li>sp_cdm_top_menu = Show or hide the top menu (premium only)</li>
+  <li>sp_cdm_uploader = Show the uploader tab (premium only)</li>
+</ul>
+<p><strong></p>
+<h3>Premium Users</h3>
+<p>*Premium users must have free + premium version installed. The premium extends the free version.</p>
+</td></tr></table>
 ';
         }
     }
@@ -827,7 +886,9 @@ echo '
 			global $wpdb,$current_user;
 			$content ='';
             global $cu_ver, $sp_client_upload, $sp_cdm_ver;
-            $content .= '
+    
+	 if (current_user_can('sp_cdm_top_menu')) {
+	        $content .= '
 
 	<script type="text/javascript">
 
@@ -856,9 +917,13 @@ echo '
                 }
 					
                 if (@CU_PREMIUM == 1) {
-                    if (current_user_can('sp_cdm_settings')) {
+                    if (current_user_can('sp_cdm_groups')) {
                         $content .= '<li><a href="admin.php?page=sp-client-document-manager-groups" >' . __("Groups", "sp-cdm") . '</a></li>';
+					}
+					 if (current_user_can('sp_cdm_forms')) {
                         $content .= '<li><a href="admin.php?page=sp-client-document-manager-forms">' . __("Forms", "sp-cdm") . '</a></li>';
+					 }
+					  if (current_user_can('sp_cdm_categories')) {
                         $content .= '<li><a href="admin.php?page=sp-client-document-manager-categories" >' . __("Categories", "sp-cdm") . '</a></li>';
                     }
                 }
@@ -871,17 +936,19 @@ echo '
 
 			';
             }
+			 if (current_user_can('sp_cdm_help')) {
             $content .= '	
-
-
-
 	<li><a href="admin.php?page=sp-client-document-manager-help" >' . __("Instructions", "sp-cdm") . '</a></li>';
+			 }
 	
 	 $extra_top_menus = '';
        $extra_top_menus .= apply_filters('sp_client_upload_top_menu',  $extra_top_menus);
 	$content .=''. $extra_top_menus.'
 
 	</ul>';
+	
+	 }
+			 if (current_user_can('sp_cdm_help')) {
             if (@CU_PREMIUM == 1) {
                 $ver = $sp_cdm_ver;
             } else {
@@ -890,8 +957,10 @@ echo '
             $content .= '<div style="text-align:right"><strong style="margin-right:10px">Version:</strong> ' . get_option('sp_client_upload') . '';
             if (@CU_PREMIUM == 1) {
                 $content .= ' <strong style="margin-left:50px;margin-right:10px;">Premium Version:</strong> ' . get_option('sp_client_upload_premium') . '';
-            }
+            
+			 }
             $content .= '</div>';
+			}
             if (@$_GET['sphidemessage'] == 1) {
                 $content .= '		
 
@@ -930,7 +999,7 @@ echo '
             if (@CU_PREMIUM != 1 && get_option("sp_cdm_ignore") != 1) {
                 $content .= '	
 
-	<div style="border:1px solid #CCC;padding:5px;margin:5px;background-color:#eaf0ea; border-radius:10px">
+	<div class="updated">
 
 	<p><strong>Upgrade to the premium version today to get enhanced features and support. Features include: File versioning system, Categories for files, Thumbnails for files, auto generation of thumbnails from PDF and PSD, Additional fields form builder, Support and many more enhanced settings!</strong> <br />
 

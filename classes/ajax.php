@@ -1011,8 +1011,12 @@ echo '
 
 			<div style="padding-right:10px">
 
-		<a href="javascript:sp_cu_dialog(\'#edit_category_' . $_GET['pid'] . '\',550,130)"><img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png"> '. __("Edit", "sp-cdm").' '.sp_cdm_folder_name() .' '. __("Name", "sp-cdm").'</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/delete_small.png">  '. __("Remove", "sp-cdm").' '.sp_cdm_folder_name().'</a>
-
+		<a href="javascript:sp_cu_dialog(\'#edit_category_' . $_GET['pid'] . '\',550,130)"><img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png"> '. __("Edit", "sp-cdm").' '.sp_cdm_folder_name() .' '. __("Name", "sp-cdm").'</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/delete_small.png">  '. __("Remove", "sp-cdm").' '.sp_cdm_folder_name().'</a> 
+';
+ if(current_user_can('sp_cdm_show_folders_as_nav') or current_user_can('sp_cdm_projects') ){
+		echo '<a href="'.admin_url('admin.php?page=sp-client-document-manager-projects&function=edit&id='.$_GET['pid'].'' ).'" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png">  '. __("Admin", "sp-cdm").'</a>';
+ }
+echo '
 		
 
 		<div style="display:none">	
