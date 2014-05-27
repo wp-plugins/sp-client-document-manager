@@ -9,8 +9,35 @@ add_action('plugins_loaded',  array($sp_cdm_installer,'install') );
 }
 
 add_action( 'sp_cdm_errors', array($sp_cdm_installer,'sp_cdm_premium_upgrades') );	
+add_action('admin_init',  array($sp_cdm_installer,'sp_cdm_check_admin_caps'));
 class sp_cdm_installer{
 	
+
+
+function sp_cdm_check_admin_caps(){
+	global $current_user;
+	if($current_user != ''){
+	
+	@require_once(ABSPATH . 'wp-includes/pluggable.php');
+if (  user_can($current_user->ID,'manage_options') && !current_user_can('sp_cdm') ) {
+		$role = get_role( 'administrator' );
+		$role->add_cap( 'sp_cdm' );	
+		$role->add_cap( 'sp_cdm_vendors' );	
+		$role->add_cap( 'sp_cdm_settings' );	
+		$role->add_cap( 'sp_cdm_projects' );	
+		$role->add_cap( 'sp_cdm_uploader' );
+	
+}
+if (  user_can($current_user->ID,'manage_options') && !current_user_can('sp_cdm_help') ) {$role = get_role( 'administrator' ); $role->add_cap( 'sp_cdm_help' );}
+if (  user_can($current_user->ID,'manage_options') && !current_user_can('sp_cdm_forms') ) {$role = get_role( 'administrator' ); $role->add_cap( 'sp_cdm_forms' );}
+if (  user_can($current_user->ID,'manage_options') && !current_user_can('sp_cdm_groups') ) {$role = get_role( 'administrator' );  $role->add_cap( 'sp_cdm_groups' );}
+if (  user_can($current_user->ID,'manage_options') && !current_user_can('sp_cdm_categories') ) {$role = get_role( 'administrator' ); $role->add_cap( 'sp_cdm_categories' );}
+if (  user_can($current_user->ID,'manage_options') && !current_user_can('sp_cdm_top_menu') ) {$role = get_role( 'administrator' ); $role->add_cap( 'sp_cdm_top_menu' );}
+if (  user_can($current_user->ID,'manage_options') && !current_user_can('sp_cdm_show_folders_as_nav') ) {$role = get_role( 'administrator' ); $role->add_cap( 'sp_cdm_show_folders_as_nav' );}
+	}
+}
+
+
 	
 	
 function sp_cdm_premium_upgrades(){
