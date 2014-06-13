@@ -203,7 +203,7 @@ setInterval(function(){cdmPremiumReValidate();},1000);
 
 jQuery(document).ready(function() {
 
-
+jQuery( ".cdm_button" ).button();
 
 
 jQuery.ajaxSetup({ cache: false });

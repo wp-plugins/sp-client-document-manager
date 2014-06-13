@@ -378,7 +378,7 @@ $im->destroy();
         }
 		
 	
-        echo '<h2>Settings</h2>' . sp_client_upload_nav_menu() . '';
+        echo '' . sp_client_upload_nav_menu() . '';
      
 	 if(current_user_can('sp_cdm_help')){
 	    echo '
@@ -389,10 +389,7 @@ $im->destroy();
 
 <p>If you would like to see the extra features and upgrade to premium please purchase the addon package by <a href="http://smartypantsplugins.com/sp-client-document-manager/" target="_blank">clicking here</a>. Once purchased you will receive a file, upload that file to your plugins directory or go to plugins > add new > upload and upload the zip file. Once you upload activate the plugin and let the fun begin!</p>';
         } else {
-            echo '<h3>Thanks for upgrading!</h3>
-
-<p>If you need to update the premium version of this plugin you can either overwrite the contents of the directory with the new version or use the wordpress plugin manager to delete the old version and add the new version.</p>';
-        }
+          }
         echo '
 
 
@@ -401,7 +398,33 @@ $im->destroy();
 
 </div>';
 	
-if($_REQUEST['force_upgrades'] == 1){
+
+ }
+echo '
+ <script>
+  jQuery(function() {
+    jQuery( "#cdm-settinsg-tabs" ).tabs();
+	
+	
+	
+  });
+  </script>
+<style type="text/css">
+strong{font-weight:800}
+</style>
+
+	<form action="admin.php?page=sp-client-document-manager-settings&save_options=1" method="post">
+	<div id="cdm-settinsg-tabs">
+  <ul>
+    <li><a href="#cdm-tab-settings">Main Settings</a></li>
+    <li><a href="#cdm-tab-mail">Mail Settings</a></li>
+     <li><a href="#cdm-tab-premium">Premium Settings</a></li>
+	   <li><a href="#cdm-tab-advanced">Advanced Settings</a></li>
+  
+  </ul>
+  <div id="cdm-tab-settings">
+ ';
+  if($_REQUEST['force_upgrades'] == 1){
 	
 	echo'
 
@@ -417,13 +440,7 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
 </div>';
 
 }
- }
-echo '
-
-
-
-	<form action="admin.php?page=sp-client-document-manager-settings&save_options=1" method="post">
-
+  echo '
 	 <table class="wp-list-table widefat fixed posts" cellspacing="0">
 
     <tr>
@@ -574,10 +591,13 @@ echo '
 
 </table>
 
-<h2>Email Settings</h2>
+</div>
 
 
+  <div id="cdm-tab-mail">
 
+
+<h2>Admin Email</h2>
  <table class="wp-list-table widefat fixed posts" cellspacing="0">
 
  
@@ -620,10 +640,19 @@ echo '
 
 	</td>
 
-    <td>Subject: <input style="width:100%" type="text" name="sp_cu_admin_email_subject" value="' . get_option('sp_cu_admin_email_subject') . '"><br>Body:<br><textarea name="sp_cu_admin_email" style="width:100%" rows="15">' . get_option('sp_cu_admin_email') . '</textarea> </td>
+    <td>Subject: <input style="width:100%" type="text" name="sp_cu_admin_email_subject" value="' . get_option('sp_cu_admin_email_subject') . '"><br>Body:<br>
+		';
+	echo wp_editor(  get_option('sp_cu_admin_email') , 'sp_cu_admin_email' );
+	echo '
+	
+ </td>
 
-  </tr>
-
+  </tr></table>
+  
+  
+  
+<h2>User Email</h2>
+<table class="wp-list-table widefat fixed posts" cellspacing="0">
       <tr>
 
     <td width="300"><strong>Additional User Emails</strong><br><em>If you have additional people that need to get a copy of the email when a user uploads a file then list them here seperated by a comma.  You can also specify a wordpress role that would receive the email, so for instance if you have a custom role called "Customer Service" the email would be sent to everyone in the "Customer Service" Role. Roles should be lower case.</em></td>
@@ -655,11 +684,18 @@ echo '
 
 	[client_documents] = Link to the client document manager</td>
 
-    <td>Subject: <input style="width:100%" type="text" name="sp_cu_user_email_subject" value="' . get_option('sp_cu_user_email_subject') . '"><br>Body:<br><textarea name="sp_cu_user_email"  style="width:100%" rows="15">' . get_option('sp_cu_user_email') . '</textarea> </td>
+    <td>Subject: <input style="width:100%" type="text" name="sp_cu_user_email_subject" value="' . get_option('sp_cu_user_email_subject') . '"><br>Body:<br>
+	';
+	echo wp_editor(  get_option('sp_cu_user_email') , 'sp_cu_user_email' );
+	echo ' </td>
 
-  </tr>
+  </tr></table>
+  
+  
+  
+<h2>Admin Upload to User Email</h2>
+<table class="wp-list-table widefat fixed posts" cellspacing="0">
 
-      <tr>
 
 
     <tr>
@@ -682,7 +718,12 @@ echo '
 
 	[client_documents] = Link to the client document manager</td>
 
-    <td>Subject: <input style="width:100%" type="text" name="sp_cu_admin_user_email_subject" value="' . get_option('sp_cu_admin_user_email_subject') . '"><br>Body:<br><textarea name="sp_cu_admin_user_email"  style="width:100%" rows="15">' . get_option('sp_cu_admin_user_email') . '</textarea> </td>
+    <td>Subject: <input style="width:100%" type="text" name="sp_cu_admin_user_email_subject" value="' . get_option('sp_cu_admin_user_email_subject') . '"><br>Body:<br>
+		';
+	echo wp_editor(  get_option('sp_cu_admin_user_email') , 'sp_cu_admin_user_email' );
+	echo '
+	
+	 </td>
 
   </tr>
   <tr>
@@ -695,13 +736,46 @@ echo '
 
  </table>
 
+<h2>Vendor Email</h2>
+<table class="wp-list-table widefat fixed posts" cellspacing="0">
 
 
 
+    <tr>
+
+    <td width="300"><strong>Vendor Email</strong><br><em>This email is dispatched when a user sends a file to a vendor.</em><br><br>Template Tags:<br><br>
+
+	
+
+	[file] = Link to File<br>
+
+	[notes] = Notes<br></td>
+
+    <td>Subject: <input style="width:100%" type="text" name="sp_cu_vendor_email_subject" value="' . get_option('sp_cu_vendor_email_subject') . '"><br>
+	CC: <input style="width:100%" type="text" name="sp_cu_vendor_email_cc" value="' . get_option('sp_cu_vendor_email_cc') . '"><br>
+	Body:<br>
+	';
+	echo wp_editor(  get_option('sp_cu_vendor_email') , 'sp_cu_vendor_email' );
+	echo '
+	
+	 </td>
+
+  </tr>
+  <tr>
+
+    <td>&nbsp;</td>
+
+    <td><input type="submit" name="save_options" value="Save Options"></td>
+
+  </tr>
+
+ </table>
+
+</div>
+
+  <div id="cdm-tab-advanced">
 
 
-
-<h2>Advanced Settings</h2>
 
 
 
@@ -787,9 +861,18 @@ echo '
 
     <td><input type="submit" name="save_options" value="Save Options"></td>
 
-  </tr></table>';
+  </tr></table>
+  </div>';
+  
+   if (@CU_PREMIUM == 1) {
+ echo ' <div id="cdm-tab-premium">  ';
         do_action('cdm_premium_settings');
-        echo '
+		
+		echo '</div>';
+		
+   }
+   
+        echo '</div>
 
 
 

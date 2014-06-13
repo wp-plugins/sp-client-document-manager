@@ -1460,36 +1460,42 @@ function sp_cu_remove_project(){
         } else {
             $files = implode(",", $_POST['vendor_email']);
             $r     = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu  WHERE id IN (" . $files . ")", ARRAY_A);
-            $message .= '
-
-	' . $_POST['vendor-message'] . '<br><br>';
+      
             for ($i = 0; $i < count($r); $i++) {
                 if ($r[$i]['name'] == "") {
                     $name = $r[$i]['file'];
                 } else {
                     $name = $r[$i]['name'];
                 }
-                $attachment_links .= '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']). '</a><br>';
+                $attachment_links .= '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file']). '">'.$r[$i]['name']. '</a><br>';
                 $attachment_array[$i] = '' . SP_CDM_UPLOADS_DIR . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '';
             }
-            $to      = $_POST['vendor'];
-            $headers = array(
-                'From: "' . get_option('sp_cu_company_name') . '" <' . get_option('admin_email') . '>',
-                "Content-Type: text/html"
-            );
-            $h       = implode("\r\n", $headers) . "\r\n";
+         
+        
+       
             if ($_POST['vendor_attach'] == 3) {
                 $attachments = $attachment_array;
-                $message .= $attachment_links;
+                $links.= $attachment_links;
             } elseif ($_POST['vendor_attach'] == 1) {
                 $attachments = $attachment_array;
             } else {
-                $message .= $attachment_links;
+                $links .= $attachment_links;
             }
-            $subject = '' . __("New files from:", "sp-cdm") . ' ' . get_option('sp_cu_company_name') . '';
-           add_filter( 'wp_mail_content_type', 'set_html_content_type' );
-		    wp_mail($to, $subject, $message, $h, $attachments);
+     
+		 	$message =get_option('sp_cu_vendor_email');      
+             $subject = get_option('sp_cu_vendor_email_subject');
+               $message   = str_replace('[file]', $links, $message);	 
+			   $message   = str_replace('[notes]',  $_POST['vendor-message'], $message);		
+				$message = wpautop($message);
+			//$headers = apply_filters('spcdm_admin_email_headers',$headers,$post, $uid);
+			 if (get_option('sp_cu_admin_email') != "") {
+			 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
+		     wp_mail( $_POST['vendor'], $subject, $message, $headers, $attachments);
 			 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
+          
+      		  }	
+		  
+		   
             echo '<p style="color:green;font-weight:bold">' . __("Files Sent to", "sp-cdm") . ' ' . $_POST['vendor'] . '</p>';
         }
     }

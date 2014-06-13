@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: document manager, File uploader, online website documents organization, share documents and graphic files securely, customer file manager,Document management, Project management, File sharing, Dropbox importer, Buddypress integration, Google Drive, Enterprise document control, Distribution, Report Center, Retrieval & storage, Versioning, Productivity
 Requires at least: 3.9
 Tested up to: 3.9.1
-Stable tag: 2.1.9
+Stable tag: 2.2.1
 
 Document Manager. A robust file sharing & management tool to upload, share, track, group, distribute and organize any type of documents.
 
@@ -822,3 +822,10 @@ Major updates, new uploader and fixes to admin upload functions
 * Updated instructions
 * Added link to folder admin while in folder
 * Bug fixes
+
+= 2.2.1 = 
+
+* Made settings page allot nicer to look at with a tabbed interface
+* Fixed Vendor Emails
+* Added WP Editor to email section
+* Add a custom vendor email to email section
