@@ -689,7 +689,11 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
 	echo wp_editor(  get_option('sp_cu_user_email') , 'sp_cu_user_email' );
 	echo ' </td>
 
-  </tr></table>
+  </tr></table>';
+  
+ 
+  
+  echo '
   
   
   
@@ -726,13 +730,6 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
 	 </td>
 
   </tr>
-  <tr>
-
-    <td>&nbsp;</td>
-
-    <td><input type="submit" name="save_options" value="Save Options"></td>
-
-  </tr>
 
  </table>
 
@@ -761,16 +758,21 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
 	 </td>
 
   </tr>
-  <tr>
 
-    <td>&nbsp;</td>
+ </table>';
+ 
+  do_action('sp_cdm_settings_email');
+ echo '
+ <table class="wp-list-table widefat fixed posts" cellspacing="0">
 
-    <td><input type="submit" name="save_options" value="Save Options"></td>
+<tr>
+
+    <td width="300">&nbsp;</td>
+
+    <td><input type="submit" name="save_options" value="Save Email Settings" style="padding:10px;font-size:1.5em"></td>
 
   </tr>
-
- </table>
-
+  </table>
 </div>
 
   <div id="cdm-tab-advanced">

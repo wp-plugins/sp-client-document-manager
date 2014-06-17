@@ -120,9 +120,9 @@ class spdm_ajax
 									 WHERE id = '" . $r[0]['pid'] . "'
 
 									 ", ARRAY_A);
-            $project_title = ''.sp_cdm_folder_name() .': ' . stripslashes($projecter[0]['name']) . '';
+            $project_title = '' . stripslashes($projecter[0]['name']) . '';
         } else {
-            $project_title = ''.sp_cdm_folder_name() .': ' . __("None", "sp-cdm") . '';
+            $project_title = '' . __("None", "sp-cdm") . '';
         }
         if ($ext == 'png' or $ext == 'jpg' or $ext = 'jpeg' or $ext = 'gif') {
             $icon = '<td width="160"><img src="' . SP_CDM_UPLOADS_DIR_URL . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '" width="150"></td>';
@@ -239,11 +239,7 @@ class spdm_ajax
 	 if($r[0]['cid'] != '' && $r[0]['cid'] != 0){
 		 
 	    
-	  $html .='<div class="sp_su_project">
-
-<strong>'.sp_cdm_category_name().': </strong>' .sp_cdm_category_value($r[0]['cid']) . '
-
-</div>';
+	
 	 }	
 	  
   }
@@ -257,13 +253,16 @@ class spdm_ajax
 </div>';
         }
         if (CU_PREMIUM == 1) {
-            $html .= '
+         
+		 if(sp_cdm_get_form_fields($r[0]['id']) != ''){
+		    $html .= '
 
 <div class="sp_su_notes">
 
 ' . sp_cdm_get_form_fields($r[0]['id']) . '
 
 </div>';
+		 }
         } else {
             if ($r[0]['notes'] != "") {
                 $html .= '
@@ -275,9 +274,12 @@ class spdm_ajax
 </div>';
             }
         }
-        $html .= '
+       
+	   
+	   $html = apply_filters('sp_cdm_view_file_notes', $html,$r);
+	    $html .= '
 
-
+	
 
 
 
