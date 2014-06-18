@@ -1490,7 +1490,7 @@ function sp_cu_remove_project(){
 			   $message   = str_replace('[notes]',  $_POST['vendor-message'], $message);		
 				$message = wpautop($message);
 			//$headers = apply_filters('spcdm_admin_email_headers',$headers,$post, $uid);
-			 if (get_option('sp_cu_admin_email') != "") {
+			 if (get_option('sp_cu_vendor_email') != "") {
 			 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
 		     wp_mail( $_POST['vendor'], $subject, $message, $headers, $attachments);
 			 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );

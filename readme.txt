@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: document manager, File uploader, online website documents organization, share documents and graphic files securely, customer file manager,Document management, Project management, File sharing, Dropbox importer, Buddypress integration, Google Drive, Enterprise document control, Distribution, Report Center, Retrieval & storage, Versioning, Productivity
 Requires at least: 3.9
 Tested up to: 3.9.1
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 
 Document Manager. A robust file sharing & management tool to upload, share, track, group, distribute and organize any type of documents.
 
