@@ -31,17 +31,9 @@ class spdm_ajax
 
 		
 
-		<script>
 
-	jQuery(function() {
 
-		jQuery( ".file-info-tabs" ).tabs();
-
-	});
-
-	</script>
-
-	<div class="view-file-info"><h2>' . stripslashes($r[0]['name']) . '</h2></div>';
+	';
         $html .= '<div class="sp_cu_manage">';
         if (CU_PREMIUM == 1 && get_option('sp_cu_user_uploads_disable') != 1 && get_option('sp_cu_user_disable_revisions') != 1  && cdm_file_permissions($r[0]['pid']) == 1) {
             $html .= sp_cdm_revision_button();
@@ -64,13 +56,21 @@ class spdm_ajax
 	<a href="javascript:sp_cu_confirm_delete(\'' . get_option('sp_cu_delete') . '\',200,\'' . SP_CDM_PLUGIN_URL . 'ajax.php?function=delete-file&dlg-delete-file=' . $r[0]['id'] . '\');" title="Delete" ><img src="' . SP_CDM_PLUGIN_URL . 'images/delete.png">' . __("Delete File", "sp-cdm") . '</a>';
         }
         $html .= '
-
-	<br> <em>' . date('F jS Y h:i A', strtotime($r[0]['date'])) . ' &bull; File ID: #' . $r[0]['id'] . '</em>
+<div style="clear:both"></div>
+	 <em>' . date('F jS Y h:i A', strtotime($r[0]['date'])) . ' &bull; File ID: #' . $r[0]['id'] . '</em>
 
 				</div>';
         $html .= '
+<script type="text/javascript">
+jQuery(".viewFileTabs").responsiveTabs({
+ startCollapsed: false
+});
+</script>
 
-		<div class="file-info-tabs">
+
+
+
+		<div class="viewFileTabs">
 
 	<ul>
 
@@ -194,26 +194,24 @@ class spdm_ajax
 
 				
 
-				
+		<div class="cdm-two-column">		
 
-				  <table width="100%" cellpadding="2" cellspacing="2" style="border:none;padding:0px;margin:0px;">
-
-
-
-<tr>
-
-<td width="200" >
-
+<div class="l-column">
 <a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']) . '" title="Download" style="margin-right:15px"  >
 
 ' . $img . '
 
 </a>
 
-</td>
+</div>
+<div class="r-column">
 
-<td>
+<div class="sp_su_project">
 
+<strong>' . __("File Name", "sp-cdm") . ': </strong> ' . stripslashes($r[0]['name']) . '<br>
+
+
+</div>
 <div class="sp_su_project">
 
 <strong>' .sp_cdm_folder_name()  . ': </strong>' . $project_title . '
@@ -283,13 +281,10 @@ class spdm_ajax
 
 
 
-</td>
 
-</tr>
+</div><div style="clear:both"></div>
 
-
-
-  </table></div></div></div>
+  </div></div></div></div>
 
   
 
@@ -850,11 +845,11 @@ echo '
 			if(get_option('sp_cu_file_direct_access') == 1){
 			$file_link = 	'window.open(\'' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file']) . '\')'; ;
 			}else{
-			$file_link =  'sp_cdm_showFile(' . $r[$i]['id'] . ')';	
+			$file_link =  'cdmViewFile(' . $r[$i]['id'] . ')';	
 			}
 			
 			echo '
-				<td class="cdm_file_icon ext_' . $ext . '" onclick="sp_cdm_showFile(' . $r[$i]['id'] . ')"></td>
+				<td class="cdm_file_icon ext_' . $ext . '" onclick="cdmViewFile(' . $r[$i]['id'] . ')"></td>
 
 		<td class="cdm_file_info" onclick="'.$file_link.'">' . stripslashes($r[$i]['name']) . ' ' . $project_name . '</td>
 
@@ -1390,7 +1385,7 @@ function sp_cu_remove_project(){
 			if(get_option('sp_cu_file_direct_access') == 1){
 			$file_link = 	'window.open(\'' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file']) . '\')'; ;
 			}else{
-			$file_link =  'sp_cdm_showFile(' . $r[$i]['id'] . ')';	
+			$file_link =  'cdmViewFile(' . $r[$i]['id'] . ')';	
 			}
 			
             echo '<div class="dlg_cdm_thumbnail_folder">

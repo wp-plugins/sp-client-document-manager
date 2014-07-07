@@ -75,6 +75,17 @@ function display_sp_thumbnails2($r)
 	<script type="text/javascript">
 
 	
+	function cdm_ajax_search(){
+
+		sp_cdm_loading_image();
+
+	var cdm_search = jQuery("#search_files").val();
+
+	jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=file-list&uid=' . $user_ID . '&search=" + cdm_search);		
+
+		
+
+	}
 
 	function sp_cdm_sort(sort,pid){
 
@@ -159,6 +170,9 @@ var pid = jQuery.cookie("pid");
 		  cdm_check_file_perms(pid);
 		    jQuery("#sub_category_parent").val(pid);
 		  jQuery(".cdm_premium_pid_field").val(pid);
+		  
+		  
+		  
 		jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=file-list&uid=' . $user_ID . '&pid=" + pid);	
 
 		
@@ -169,9 +183,7 @@ var pid = jQuery.cookie("pid");
 
 		
 
-		function sp_cdm_showFile(file){
-
-			
+		function sp_cdm_showFile(file){			
 
 		  var url = "' . SP_CDM_PLUGIN_URL . 'ajax.php?function=view-file&id=" + file;
 
@@ -299,150 +311,6 @@ $content .='
 	';
     return $content;
 }
-function display_sp_thumbnails($r)
-{
-    global $wpdb, $current_user, $user_ID;
-    if (get_option('sp_cu_wp_folder') == '') {
-        $wp_con_folder = '/';
-    } else {
-        $wp_con_folder = get_option('sp_cu_wp_folder');
-    }
-    $html .= '<script type="text/javascript" src="' . plugins_url('js/jqueryFileTree/jqueryFileTree.js', __FILE__) . '"></script>
-
-			<link rel="stylesheet" type="text/css" media="all" href="' . plugins_url('js/jqueryFileTree/jqueryFileTree.css', __FILE__) . '" />
-
-		';
-    $html .= "
-
-	<div class=\"sp_cu_filetree\">
-
-	<script type=\"text/javascript\">
-
-	
-
-	
-
-	function cdm_load_simple_file_manager(){
-
-		
-
-		var cdm_search = jQuery('#search_files').val();
-
-		
-
-		
-
-	jQuery('#file_manager').fileTree({
-
-        root: '" . SP_CDM_UPLOADS_DIR_URL . "" . $user_ID . "/',
-
-        script: '" . SP_CDM_PLUGIN_URL . "ajax.php?function=file-tree&uid=" . $user_ID . "&search=' + cdm_search,
-
-        expandSpeed: 100,
-
-        collapseSpeed: 100,
-
-        multiFolder: false
-
-    }, function(file) {
-
-       // alert(file);
-
-	   
-
-	   
-
-	   	  var url = '" . SP_CDM_PLUGIN_URL . "ajax.php?function=view-file&id=' + file;
-
-		 //alert( url);
-
-            // show a spinner or something via css
-
-            var dialog = jQuery('<div style=\"display:none\" class=\"loading viewFileDialog\"></div>').appendTo('body');
-
-            // open the dialog
-
-            dialog.dialog({
-
-                // add a close listener to prevent adding multiple divs to the document
-
-                close: function(event, ui) {
-
-                    // remove div with all data and events
-
-                    dialog.remove();
-
-                },
-
-                modal: true,
-
-				height:'auto',
-
-				width:850
-
-            });
-
-            // load remote content
-
-            dialog.load(
-
-                url, 
-
-                {}, // omit this param object to issue a GET request instead a POST request, otherwise you may provide post parameters within the object
-
-                function (responseText, textStatus, XMLHttpRequest) {
-
-                    // remove the loading class
-
-                    dialog.removeClass('loading');
-
-                }
-
-            );
-
-	   
-
-	   
-
-	   
-
-	   
-
-	   //end functions
-
-	   
-
-    });	
-
-		
-
-	}
-
-	
-
-	
-
-	jQuery(document).ready( function() {
-
-		cdm_load_simple_file_manager();
-
-    
-
-});
-
-	</script>
-
-	
-
-	<div id=\"file_manager\">
-
-	
-
-	</div></div>
-
-	";
-    return $html;
-}
 if (!function_exists('display_sp_upload_form')) {
     function display_sp_upload_form()
     {
@@ -510,69 +378,12 @@ jQuery(document).ready(function() {
 
 
 
-
-
-function sp_cu_add_project(){
-
-	
-
-	jQuery.ajax({
-
-   type: "POST",
-
-   url: "' . SP_CDM_PLUGIN_URL . 'ajax.php?function=save-category",
-
-   data: "name=" + jQuery("#sub_category_name").val() + "&uid=" +  jQuery("#sub_category_uid").val()+ "&parent=" +  jQuery("#sub_category_parent").val(),
-
-   success: function(msg){
-
-  
-
-   jQuery("#sp_cu_add_project").dialog("close");
-cdm_ajax_search();
-
-
-	
-
-	jQuery(".pid_select").append(jQuery("<option>", { 
-
-    value: msg, 
-
-    text : jQuery("#sub_category_name").val(),
-
-	selected : "selected"
-
- 	 }
-
-	 ));
-
-  
-
-   }
-
- });
-
-}
-
 </script>';
 
  $hidden.='
 <div style="display:none">';
-        $add_project = '<div  id="sp_cu_add_project">
-
-		<input type="hidden" id="sub_category_uid" name="uid" value="' . $current_user->ID . '">
-		
-		
-
-		'.sp_cdm_folder_name() .' ' . __("Name", "sp-cdm") . ' <input  id="sub_category_name" type="text" name="project-name"  style="width:200px !important"> 
-
-		<input type="submit" value="' . __("Add", "sp-cdm") . ' '.sp_cdm_folder_name() .'" name="add-project" onclick="sp_cu_add_project()">
-
-	
-
-	</div>';
-        $add_project = apply_filters('sp_cdm_add_project_form', $add_project);
-        $hidden .= '' . $add_project . '
+       
+        $hidden .= '
 
 	
 
@@ -609,15 +420,10 @@ $html .='
 
 			<p>' . stripslashes(get_option('sp_cu_form_instructions')) . '</p>
 
-				  <table width="100%" cellpadding="2" cellspacing="2" style="border:none;padding:0px;margin:0px;">
+			<p>
+			<label>' . __("File Name:", "sp-cdm") . '</label>
 
-  <tr>
-
-    <td>' . __("File Name:", "sp-cdm") . '</td>
-
-    <td><input  type="text" name="dlg-upload-name" class="required"></td>
-
-  </tr>
+    <input  type="text" name="dlg-upload-name" class="required"></p>
 
   
 
@@ -634,38 +440,29 @@ $html .='
 		
         $html .= '
 
-  <tr>
+  <p>
+		
+  	<div id="cdm_upload_fields">    <input id="file_upload" name="dlg-upload-file[]" type="file" class="required">
 
-    <td>' . __("File:", "sp-cdm") . '</td>
-
-    <td>	<div id="cdm_upload_fields">    <input id="file_upload" name="dlg-upload-file[]" type="file" class="required">
-
-<div id="upload_list"></div></div>
-
-							</td>
-
-  </tr>';
+<div id="upload_list"></div></div></p>';
         if (@CU_PREMIUM == 1) {
             if (get_option('sp_cu_enable_tags') == 1) {
                 $html .= '
 
-  <tr>
+ <p>
+			<label>' . __("Tags:", "sp-cdm") . '</label>
 
-    <td>' . __("Tags:", "sp-cdm") . '</td>
+    <textarea id="tags" name="tags"  style="width:90%;height:30px"></textarea>
 
-    <td><textarea id="tags" name="tags"  style="width:90%;height:30px"></textarea></td>
-
-  </tr>';
+  </p>';
             }
             $html .= display_sp_cdm_form();
         } else {
-            $html .= '<tr>
+            $html .= '<p>
+			<label>' . __("Notes:", "sp-cdm") . '</label>
 
-    <td>' . __("Notes:", "sp-cdm") . '</td>
-
-    <td><textarea style="width:90%;height:50px" name="dlg-upload-notes"></textarea></td>
-
-  </tr>
+    <textarea style="width:90%;height:50px" name="dlg-upload-notes"></textarea>
+	</p>
 
   ';
         }
@@ -677,22 +474,15 @@ $html .='
 		
         $html .= '
 
-  <tr>
-
-    <td>&nbsp;</td>
-
-    <td>
+  
 
 						<div class="sp_change_indicator_button"><input id="dlg-upload"  type="submit" name="submit" value="Upload" ></div>
 
 						<div class="sp_change_indicator" ></div>	
-
-							</td>
-
-  </tr>';
+';
         $html .= '
 
-</table></div>';
+</div>';
         $html .= '
 
 
@@ -705,13 +495,7 @@ $html .='
 
 	';
 	
-	if (class_exists('cdmPremiumUploader') && get_option('sp_cu_free_uploader') != 1) {
-		   global $cdmPremiumUploader;
-        $premium_uploader = $cdmPremiumUploader->construct();
-		return $premium_uploader. $hidden;
-	}else{
-        return $html. $hidden;
-	}
+return $html;
     }
     function check_folder_sp_client_upload()
     {
@@ -862,7 +646,7 @@ jQuery(document).ready(function() {
 
 </script>';
             } else {
-                $html .= '<p style="color:red">' . __("Please upload a file!", "sp-cdm") . '</p>';
+                #$html .= '<p style="color:red">' . __("Please upload a file!", "sp-cdm") . '</p>';
             }
         }
         echo $html;
@@ -879,87 +663,21 @@ jQuery(document).ready(function() {
             //show uploaded documents
             $html .= '
 <input type="hidden" value="'.SP_CDM_PLUGIN_URL.'ajax.php" id="sp_cu_ajax_url" class="sp_cu_ajax_url" name="sp_cu_ajax_url">
-	<div class="sp_client_document_manager_wrapper">
-    <div style="display:none">
-	 <div id="cp_cdm_upload_form">
 
- 	 ' . display_sp_upload_form() . '
-
-  </div>
-  </div>
-
-  
-
-
-
-
-
-	
-
-	<div >
 
 
 
  
 
 ';
-            if (get_option('sp_cu_user_projects_thumbs') == 1) {
-                $html .= '
-
-	<script type="text/javascript">
-
-	
-
-	function cdm_ajax_search(){
-
-		sp_cdm_loading_image();
-
-	var cdm_search = jQuery("#search_files").val();
-
-	jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=thumbnails&uid=' . $user_ID . '&search=" + cdm_search);		
-
-		
-
-	}
-
-	</script>
-
-	
-
-	';
-            } else {
-                $html .= '
-
-	<script type="text/javascript">
-
-	
-
-	function cdm_ajax_search(){
-
-		sp_cdm_loading_image();
-
-	var cdm_search = jQuery("#search_files").val();
-
-	jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=file-list&uid=' . $user_ID . '&search=" + cdm_search);		
-
-		
-
-	}
-
-	</script>
-
-	
-
-	';
-            }
-			
-			  $html .= '<div id="cdm_nav_buttons">';
-			if (get_option('sp_cu_user_disable_search') == 1) {
+  if (get_option('sp_cu_user_disable_search') == 1) {
             $hide_search = ';display:none;';
 			}
-			// do_action('cdm_add_hidden_html');
-          
-			  $html .= '<div style="padding:10px'.$hide_search.'">Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files"></div>';
+			
+ 		
+			$html = apply_filters('sp_cdm_above_nav_buttons', $html);
+			  $html .= '<div id="cdm_nav_buttons" >';
+			
 			
 		   
 		   
@@ -970,11 +688,11 @@ jQuery(document).ready(function() {
                     $link = $premium_add_file_link;
                  
                 } else {
-                    $link = 'javascript:sp_cu_dialog(\'#cp_cdm_upload_form\',700,600)';
+                    $link = '#upload';
                 }
                 $html .= '  <a href="' . $link . '"  class="sp_cdm_add_file hide_add_file_permission">' . __("Add File", "sp-cdm") . '</a> ';
                if(get_option('sp_cu_user_projects') == 1  or current_user_can( 'manage_options' )){	
-			    $html .= '  <a href="javascript:sp_cu_dialog(\'#sp_cu_add_project\',500,200);" class="sp_cdm_add_folder hide_add_folder_permission">' . __("Add Folder", "sp-cdm") . '</a> </span> ';
+			    $html .= '  <a href="#folder" class="sp_cdm_add_folder hide_add_folder_permission">' . __("Add Folder", "sp-cdm") . '</a> </span> ';
 				}
 				$morebuttons = '';
                 $morebuttons .= apply_filters('sp_cdm_more_buttons', $morebuttons);
@@ -982,12 +700,22 @@ jQuery(document).ready(function() {
                 $html .= '   <a href="javascript:cdm_ajax_search()"  class="sp_cdm_refresh">' . __("Refresh", "sp-cdm") . '</a> ';
             }
 			
-			$html .='<div style="clear:both"></div></div>';
+			$html .='<div style="clear:both"></div>';
+			
+		
+			$html .='</div>';
+				if (get_option('sp_cu_user_disable_search') == 1) {
+            $hide_search = ';display:none;';
+			}
+			$html .= '<div style="text-align:right;padding:10px'.$hide_search.'">Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files"></div>';
             if (get_option('sp_cu_user_projects_thumbs') == 1 && @CU_PREMIUM == 1) {
-                $html .= display_sp_cdm_thumbnails($r);
+                $upload_view = display_sp_cdm_thumbnails($r);
             } else {
-                $html .= display_sp_thumbnails2($r);
+                $upload_view = display_sp_thumbnails2($r);
             }
+				$html .= apply_filters('sp_cdm_upload_view',$upload_view);
+				
+				
 		  $html .= '</div>';
         } else {
             return '<script type="text/javascript">

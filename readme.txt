@@ -1,16 +1,16 @@
 === Plugin Name ===
 Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
-Tags: document manager, File uploader, online website documents organization, share documents and graphic files securely, customer file manager,Document management, Project management, File sharing, Dropbox importer, Buddypress integration, Google Drive, Enterprise document control, Distribution, Report Center, Retrieval & storage, Versioning, Productivity
+Tags: document management, records management, digital filing cabinet, customer file manager, Document manager, Project management, File sharing, Dropbox importer, Google Drive importer, Enterprise document control, Distribution, Report Center, Retrieval & storage, Versioning, Productivity
 Requires at least: 3.9
 Tested up to: 3.9.1
-Stable tag: 2.2.3
+Stable tag: 2.2.4
 
-Document Manager. A robust file sharing & management tool to upload, share, track, group, distribute and organize any type of documents.
+Document Manager. Digital file sharing & management tool to upload, share, track, group, distribute and organize any type of document records.
 
 == Description ==
 
-Online project & document managment application,  Businesses & Organization utilizing this application can maintain and file web based documents. You can organize, manage client, student & supplier's documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
+Digital project & document managment application,  Businesses & Organization utilizing this application can maintain records and file web based documents. You can organize, manage client, student & supplier's documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
 The plug-in also demonstrates how quickly a business can take hold of their interactions with clients, sales organzation, vendors, and all in between.  With a straight-forward layout, access to template modifications and easy to manage features; clients can add and modify projects. Think of it as a old school filing cabinet that allows to manage you files from any wifi access point.The plug-in provides assurances that the user has complete control over the flow of information.
 
 
@@ -70,6 +70,7 @@ Login with:  user: test   password: test
 
 
 **Overall Premium Features**
+* We are now Moblie with a updated responsive layout
 * Add custom fields to your client upload form, Sort the fields, view them in the file view page or in admin
 * Search by tags
 * Change text for category (ex: Status)
@@ -87,9 +88,11 @@ Login with:  user: test   password: test
 
 **Premium Addon Features**
 
+* Stand alone Dashboard for your customers - Great for Branding
 * Integrate wordpress roles and buddypress groups. When you share a project with a group everyone from that group has access to those files.
 * Batch operations - batch delete and move files to different folders. Download files as a zip archive keeping directory structure intact.
 * Dropbox integration to allow your users to import files directly from their dropbox
+* Google Drive Importer, supports multiple files
 * Add unlimited sub folders for better organizing
 * File importer, upload multiple files with a zip file.
 * Share projects with buddypress and wordpress roles!
@@ -829,3 +832,9 @@ Major updates, new uploader and fixes to admin upload functions
 * Fixed Vendor Emails
 * Added WP Editor to email section
 * Add a custom vendor email to email section
+
+= 2.2.4 =
+
+* Major release - Document manager is now responsive in premium mode
+* Community version also has responsive modals
+* Huge code rewrites so if you are going to update premium please update all your smarty plugins or you will recieve errors

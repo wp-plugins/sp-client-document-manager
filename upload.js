@@ -71,7 +71,12 @@ function sp_cu_reload_all_projects(context_folder_pid){
 
 function sp_cu_confirm_delete(div,h,url){
 
-	
+		
+if(jQuery(window).width()*0.9< 768){
+	var width = jQuery(window).width()*0.9;	
+	}else{
+		var width = 320;
+	}
 
 	var NewDialog = jQuery('<div id="sp_cu_confirm_delete"> ' + div + '</div>');
 
@@ -79,7 +84,7 @@ function sp_cu_confirm_delete(div,h,url){
 
 	jQuery(  NewDialog ).dialog({
 
-			resizable: false,
+			width:width,
 
 			height:'auto',
 
@@ -99,10 +104,10 @@ function sp_cu_confirm_delete(div,h,url){
 
 			   success: function(msg){
 
-				jQuery( NewDialog ).remove();
+				cdmCloseModal('file');
+jQuery( NewDialog ).remove();
 
-				jQuery( '.viewFileDialog' ).remove();
-
+			
 				 cdm_ajax_search();
 
 				 
@@ -142,10 +147,14 @@ function sp_cu_confirm_delete(div,h,url){
 function sp_cu_confirm(div,h,url){
 
 	
-
+if(jQuery(window).width()*0.9< 768){
+	var width = jQuery(window).width()*0.9;	
+	}else{
+		var width = 320;
+	}
 	jQuery(  div ).dialog({
 
-			resizable: false,
+			width:width,
 
 			height:'auto',
 
@@ -178,12 +187,18 @@ function sp_cu_confirm(div,h,url){
 function sp_cu_dialog(div,w,h){
 
 	
-
+	
+	
+	if(jQuery(window).width()*0.9< 768){
+	var width = jQuery(window).width()*0.9;	
+	}else{
+		var width = w;
+	}
 	jQuery(div ).dialog({
 
 			height:'auto',
 
-			width:w
+			width:width
 
 	});
 

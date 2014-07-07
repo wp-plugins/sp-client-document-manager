@@ -15,7 +15,7 @@
 <file name="mat.thumb.php" server="dlg360.com//public_html/" local="130125866067562836" remote="130241605800000000" Dst="2" />
 <file name="mat.thumb.php" server="fastvideopromos.com" local="130280705039271937" remote="130280632800000000" Dst="1" />
 <file name="ajax.php" server="dlgresults.com//public_html/wordpress/" local="130308382959356358" remote="130308382800000000" Dst="1" />
-<file name="ajax.php" server="dlgresults.com//public_html/wordpress2/" local="130474254215596816" remote="130474254000000000" Dst="2" />
+<file name="ajax.php" server="dlgresults.com//public_html/wordpress2/" local="130487874421970024" remote="130487874000000000" Dst="2" />
 <file name="mat.thumb.php" server="smartypantsplugins.com//public_html/" local="130387019291572024" remote="130456854000000000" Dst="2" />
 <file name="ajax.php" server="smartypantsplugins.com//public_html/" local="130452515236799558" remote="130456854000000000" Dst="2" />
 <file name="browser.detection.php" server="smartypantsplugins.com//public_html/" local="130120783144619833" remote="130456854000000000" Dst="2" />
@@ -43,4 +43,5 @@
 <file name="install.php" server="forneycorp.net//public_html/" local="130451585706913490" remote="130451483400000000" Dst="2" />
 <file name="browser.detection.php" server="forneycorp.net//public_html/" local="130120783144619833" remote="130451483400000000" Dst="2" />
 <file name="mat.thumb.php" server="forneycorp.net//public_html/" local="130387019291572024" remote="130451483400000000" Dst="2" />
+<file name="uploader.php" server="dlgresults.com//public_html/wordpress2/" local="130492302032535078" remote="130492302000000000" Dst="2" />
 </dwsync>

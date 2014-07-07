@@ -224,21 +224,9 @@ $r_projects_query = "SELECT *
 
   if(count($projects) > 0 or get_option('sp_cu_user_projects') == 1 or get_option('sp_cu_user_projects_required') ==1){
 
-	  $html .= ' <tr>
-
-    <td><strong>'.sp_cdm_folder_name() .'</strong>
-
-	
-
-
-
-	
-
-	
-
-	</td>
-
-    <td>';
+	  $html .= ' <p>
+			<label>'.sp_cdm_folder_name() .'</label>
+';
 
 	
 if(get_option('sp_cu_user_projects_required') == 1){
@@ -299,7 +287,7 @@ if(get_option('sp_cu_user_projects_required') == 1){
 
 		
 
-		$html .= '<a href="javascript:sp_cu_dialog(\'#sp_cu_add_project\',550,130)" class="button" style="margin-left:15px">'.__("Add","sp-cdm").' '.sp_cdm_folder_name() .'</a>
+		$html .= '<a href="#folder" class="button" style="margin-left:15px">'.__("Add","sp-cdm").' '.sp_cdm_folder_name() .'</a>
 
 		
 
@@ -313,9 +301,6 @@ if(get_option('sp_cu_user_projects_required') == 1){
 
 	}
 
-	$html .='</td>
-
-  </tr>';
 
 	  
 

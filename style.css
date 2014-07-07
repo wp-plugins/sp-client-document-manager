@@ -13,6 +13,9 @@
 
 
 }
+.view-file-content{font-size:12px; text-align:left}
+.ui-dialog{ z-index:999999999999999999 !important}
+
 .sp_client_document_manager_wrapper img{box-shadow:none !important;border:0px;}
 .cdm_img_container{height:80px; vertical-align:middle central;overflow:hidden; text-align:center}
 .cdm_img_container img{max-width:95%;}
@@ -324,6 +327,29 @@ overflow-y: scroll;}
 .buttonUpload { display:inline-block; padding: 4px 10px 4px; text-align: center; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); background-color: #0074cc; -webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px; border-color: #e6e6e6 #e6e6e6 #bfbfbf; border: 1px solid #cccccc; color:#fff; }
 
 .progress img{ margin-top:7px; margin-left:24px; }
+
+.remodal p {clear:both; text-align:left}
+.remodal p label{float:left;width:20%;}
+
+.cdm-two-column p {clear:both; text-align:left}
+.cdm-two-column .l-column{float:left;width:50%;}
+.cdm-two-column .r-column{float:left;width:50%}
+
+
+.sp_cu_manage{}
+
+
+@media (max-width:700px) {
+	
+.cdm-two-column p {clear:both; text-align:left}
+.cdm-two-column .l-column{float:none;width:100%; text-align:center}
+.cdm-two-column .r-column{float:none;width:100%;}
+	
+	
+.remodal p {clear:both; text-align:left}
+.remodal p label{float:none;width:100%;display:block;}
+	.sp_cu_manage a, #cdm_nav_buttons a{display:block;float:left;width:42%;background-color:#EFEFEF;border-radius:4px;padding:5px;margin:5px; text-align:left}
+}
 
 
 
