@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: SP Client Project & Document Manager
+Plugin Name: SP Project & Document Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business manage documents and projects with permissions in an easy to use interface.
 Author: smartypants
