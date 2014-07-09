@@ -185,11 +185,13 @@ echo'<div id="cdm_nav_buttons">';
                 }
                 echo '  <a href="' . $link . '"  class="sp_cdm_add_file">' . __("Add File", "sp-cdm") . '</a> ';
                
-			    echo'  <a href="javascript:sp_cu_dialog(\'#sp_cu_add_project\',500,200);" class="sp_cdm_add_folder">' . __("Add Folder", "sp-cdm") . '</a> </span> ';
+			    echo'  <a href="#folder" class="sp_cdm_add_folder">' . __("Add Folder", "sp-cdm") . '</a> </span> ';
 			
 				$morebuttons = '';
                 $morebuttons .= apply_filters('sp_cdm_more_buttons', $morebuttons);
                echo $morebuttons;
+			   
+			   
                echo '   <a href="javascript:cdm_ajax_search()"  class="sp_cdm_refresh">' . __("Refresh", "sp-cdm") . '</a> ';
             
 			echo  '<div style="clear:both"></div></div>';
@@ -426,20 +428,6 @@ function sp_cu_add_project(){
 <div style="display:none">';
 
 
-$add_project = '<div  id="sp_cu_add_project">
-
-		<input type="hidden" id="sub_category_uid" name="uid" value="' . $current_user->ID . '">
-		
-		
-
-		'.sp_cdm_folder_name() .' ' . __("Name", "sp-cdm") . ' <input  id="sub_category_name" type="text" name="project-name"  style="width:200px !important"> 
-
-		<input type="submit" value="' . __("Add", "sp-cdm") . ' '.sp_cdm_folder_name() .'" name="add-project" onclick="sp_cu_add_project()">
-
-	
-
-	</div>';
-        $add_project = apply_filters('sp_cdm_add_project_form', $add_project);
 	
 
 

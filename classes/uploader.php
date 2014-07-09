@@ -8,7 +8,7 @@ add_action('init', array($cdm_uploader,'js'));
 add_action('admin_menu',array($cdm_uploader,'css'));;
 add_action('admin_init',  array($cdm_uploader,'js'));
 add_action('wp_footer',  array($cdm_uploader,'upload_dialog'));
-
+add_action('admin_footer',  array($cdm_uploader,'upload_dialog'));
 class cdm_uploader{
 	
 	function __construct(){
