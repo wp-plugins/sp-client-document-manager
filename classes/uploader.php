@@ -93,7 +93,7 @@ class cdm_uploader{
 				jQuery(".view-file-content").empty();
 				
 				 var url = "'.SP_CDM_PLUGIN_URL.'ajax.php?function=view-file&id=" + file;
-			  jQuery(".modal").remodal({ hashTracking: false});	
+			  jQuery(".cdm-modal").remodal({ hashTracking: false});	
 			
 				
 				 jQuery.get(url, function (data) {
@@ -180,7 +180,7 @@ class cdm_uploader{
 		
 				
 		echo '
-		<div class="modal" data-remodal-options="{ \'hashTracking\': false }" data-remodal-id="file">
+		<div class="cdm-modal" data-remodal-options="{ \'hashTracking\': false }" data-remodal-id="file">
 			<div class="view-file-content">
 			
 			</div>
