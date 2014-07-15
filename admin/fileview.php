@@ -104,7 +104,7 @@ if( $_POST['submit-admin'] == 'Upload'){
 			$user_headers = apply_filters('spcdm_user_email_headers',$user_headers,$post, $uid);
 			
 						 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
-                    wp_mail($to, $subject, $message, $user_headers, $attachments);
+                    wp_mail($to, $subject,stripslashes( $message), $user_headers, $attachments);
 					 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
                 }
 	
@@ -604,7 +604,7 @@ if($_POST['submit-admin'] != ""){
 			$user_headers = apply_filters('spcdm_user_email_headers',$user_headers,$post, $uid);
 			
 						 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
-                    wp_mail($to, $subject, $message, $user_headers, $attachments);
+                    wp_mail($to, stripslashes($subject),stripslashes( $message), $user_headers, $attachments);
 					 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
                 }
 
@@ -621,7 +621,7 @@ if($_POST['submit-admin'] != ""){
 			$user_headers = apply_filters('spcdm_user_email_headers',$user_headers,$post, $uid);
 			
 						 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
-                    wp_mail($to, $subject, $message, $user_headers, $attachments);
+                    wp_mail($to, stripslashes($subject),stripslashes( $message), $user_headers, $attachments);
 					 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
                 }
 		$html .= '<script type="text/javascript">

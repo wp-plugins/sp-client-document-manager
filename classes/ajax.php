@@ -225,7 +225,7 @@ jQuery(".viewFileTabs").responsiveTabs({
 </div>
 <div class="sp_su_project">
 
-<strong>' . __("File Size ", "sp-cdm") . ': </strong>' . cdm_file_size(''.SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '') . ' 
+<strong>' . __("File Size ", "sp-cdm") . ': </strong>' . cdm_file_size(''.SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '') . '  '.''.SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/' . $r[0]['file'] . ''.'
 
 </div>
 
@@ -1487,7 +1487,7 @@ function sp_cu_remove_project(){
 			//$headers = apply_filters('spcdm_admin_email_headers',$headers,$post, $uid);
 			 if (get_option('sp_cu_vendor_email') != "") {
 			 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
-		     wp_mail( $_POST['vendor'], $subject, $message, $headers, $attachments);
+		     wp_mail( $_POST['vendor'], stripslashes($subject),stripslashes( $message), $headers, $attachments);
 			 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
           
       		  }	

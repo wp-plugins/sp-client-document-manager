@@ -642,7 +642,7 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
 
     <td>Subject: <input style="width:100%" type="text" name="sp_cu_admin_email_subject" value="' . get_option('sp_cu_admin_email_subject') . '"><br>Body:<br>
 		';
-	echo wp_editor(  get_option('sp_cu_admin_email') , 'sp_cu_admin_email' );
+	echo wp_editor(  stripslashes(get_option('sp_cu_admin_email') ), 'sp_cu_admin_email' );
 	echo '
 	
  </td>
@@ -686,7 +686,7 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
 
     <td>Subject: <input style="width:100%" type="text" name="sp_cu_user_email_subject" value="' . get_option('sp_cu_user_email_subject') . '"><br>Body:<br>
 	';
-	echo wp_editor(  get_option('sp_cu_user_email') , 'sp_cu_user_email' );
+	echo wp_editor(  stripslashes(get_option('sp_cu_user_email')) , 'sp_cu_user_email' );
 	echo ' </td>
 
   </tr></table>';
@@ -724,7 +724,7 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
 
     <td>Subject: <input style="width:100%" type="text" name="sp_cu_admin_user_email_subject" value="' . get_option('sp_cu_admin_user_email_subject') . '"><br>Body:<br>
 		';
-	echo wp_editor(  get_option('sp_cu_admin_user_email') , 'sp_cu_admin_user_email' );
+	echo wp_editor(  stripslashes(get_option('sp_cu_admin_user_email')) , 'sp_cu_admin_user_email' );
 	echo '
 	
 	 </td>
@@ -752,7 +752,7 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
 	CC: <input style="width:100%" type="text" name="sp_cu_vendor_email_cc" value="' . get_option('sp_cu_vendor_email_cc') . '"><br>
 	Body:<br>
 	';
-	echo wp_editor(  get_option('sp_cu_vendor_email') , 'sp_cu_vendor_email' );
+	echo wp_editor(  stripslashes(get_option('sp_cu_vendor_email')) , 'sp_cu_vendor_email' );
 	echo '
 	
 	 </td>

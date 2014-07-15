@@ -592,9 +592,9 @@ return $html;
                             }
                         }
                     }
-                    $message = sp_cu_process_email($file_id, get_option('sp_cu_admin_email'));
+                    $message = sp_cu_process_email($file_id, stripslashes(get_option('sp_cu_admin_email')));
                   
-                    $subject =  sp_cu_process_email($file_id, get_option('sp_cu_admin_email_subject'));
+                    $subject =  sp_cu_process_email($file_id, stripslashes(get_option('sp_cu_admin_email_subject')));
                      add_filter( 'wp_mail_content_type', 'set_html_content_type' );
 					wp_mail($to, $subject, $message, $headers, $attachments);
 					 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
@@ -603,8 +603,8 @@ return $html;
                 }
                 if (get_option('sp_cu_user_email') != "") {
       
-					$subject =  sp_cu_process_email($file_id, get_option('sp_cu_user_email_subject'));
-                    $message = sp_cu_process_email($file_id, get_option('sp_cu_user_email'));
+					$subject =  sp_cu_process_email($file_id, stripslashes(get_option('sp_cu_user_email_subject')));
+                    $message = sp_cu_process_email($file_id, stripslashes(get_option('sp_cu_user_email')));
                     $to      = $current_user->user_email;
                     if (get_option('sp_cu_additional_user_emails') != "") {
                         $cc_user = explode(",", get_option('sp_cu_additional_user_emails'));
