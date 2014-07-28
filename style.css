@@ -14,7 +14,7 @@
 
 }
 .view-file-content{font-size:12px; text-align:left}
-.ui-dialog{ z-index:999999999999999999 !important}
+.ui-dialog{ z-index:100000000 !important}
 
 .sp_client_document_manager_wrapper img{box-shadow:none !important;border:0px;}
 .cdm_img_container{height:80px; vertical-align:middle central;overflow:hidden; text-align:center}
@@ -339,12 +339,19 @@ overflow-y: scroll;}
 .sp_cu_manage{}
 
 
+form.cdm_form p {clear:both; text-align:left}
+form.cdm_form p label{float:left;width:20%;}
+
 @media (max-width:700px) {
 	
 .cdm-two-column p {clear:both; text-align:left}
 .cdm-two-column .l-column{float:none;width:100%; text-align:center}
 .cdm-two-column .r-column{float:none;width:100%;}
 	
+	
+form.cdm_form p {clear:both; text-align:left}
+form.cdm_form p label{float:none;width:100%;display:block;}
+
 	
 .remodal p {clear:both; text-align:left}
 .remodal p label{float:none;width:100%;display:block;}

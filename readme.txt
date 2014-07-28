@@ -1,17 +1,17 @@
 === Plugin Name ===
 Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
-Tags: document management, records management, digital filing cabinet, customer file manager, Document manager, Project management, File sharing, Dropbox importer, Google Drive importer, Enterprise document control, Distribution, Report Center, Retrieval & storage, Versioning, Productivity
+Tags: document management, records manager, filing cabinet, customer file manager, Document manager, Project management, File sharing, Dropbox importer, Google Drive importer, Enterprise document control, Distribution, Report Center, Retrieval & storage, Versioning, Productivity
 Requires at least: 3.9
 Tested up to: 3.9.1
-Stable tag: 2.2.7
+Stable tag: 2.2.9
 
-Document Manager. Digital file sharing & management tool to upload, share, track, group, distribute and organize any type of document records.
+Project & Document Manager. file sharing & management tool to upload, share, track, group, distribute and organize any type of document records.
 
 == Description ==
 
-Digital project & document managment application,  Businesses & Organization utilizing this application can maintain records and file web based documents. You can organize, manage client, student & supplier's documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
-The plug-in also demonstrates how quickly a business can take hold of their interactions with clients, sales organzation, vendors, and all in between.  With a straight-forward layout, access to template modifications and easy to manage features; clients can add and modify projects. Think of it as a old school filing cabinet that allows to manage you files from any wifi access point.The plug-in provides assurances that the user has complete control over the flow of information.
+Project & document management plugin,  Businesses & Organization utilizing this application can maintain documents, records, files, videos and images. You can organize, manage client, student & supplier documents and accounts, control individual documents, and select specific distribution of documents all in an easy to manage online process. 
+The plug-in also demonstrates how quickly a business can take hold of their interactions with clients, sales organization, vendors, and all in between.  With a straight-forward layout, access to template modifications and easy to manage features; clients can add and modify projects. The plug-in provides assurances that the user has complete control over the flow of information.
 
 
 We also now offer a premium version; please check out our website for more information: 
@@ -70,14 +70,14 @@ Login with:  user: test   password: test
 
 
 **Overall Premium Features**
-* We are now Moblie with a updated responsive layout
+* Mobile ready with a updated responsive layout
 * Add custom fields to your client upload form, Sort the fields, view them in the file view page or in admin
 * Search by tags
 * Change text for category (ex: Status)
 * Custom Email Notifications
 * Auto deletion of files based on a time you set.
 * Thumbnail view mode for a windows explorer type look and feel.
-* Automatically create thumbnails of pdfs and psds (must have imagemagick installed on server)
+* Automatically create thumbnails of pdfs and psds (must have image magick installed on server)
 * File versioning system, don't lose old versions 
 * Upload multiple files
 * File progress bar
@@ -86,9 +86,9 @@ Login with:  user: test   password: test
 * Assign a file or files to a category
 
 
-**Premium Addon Features**
+**Premium  Add-on Features**
 
-* Stand alone Dashboard for your customers - Great for Branding
+* Standalone Dashboard for your customers - Great for Branding
 * Integrate wordpress roles and buddypress groups. When you share a project with a group everyone from that group has access to those files.
 * Batch operations - batch delete and move files to different folders. Download files as a zip archive keeping directory structure intact.
 * Dropbox integration to allow your users to import files directly from their dropbox
@@ -842,3 +842,9 @@ Major updates, new uploader and fixes to admin upload functions
 = 2.2.7 =
 
 * Fixed a slashes issue in the email
+
+= 2.2.9 =
+
+* Made javascript translatable by using localize script
+* Removed 2 extra div ends that were breaking some designs.
+* Added new terms to the translation files, if you are using a different language please update the .po file and send us the updated version to support@smartypantsplugins.com to be included in future releases

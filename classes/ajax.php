@@ -35,12 +35,18 @@ class spdm_ajax
 
 	';
         $html .= '<div class="sp_cu_manage">';
-        if (CU_PREMIUM == 1 && get_option('sp_cu_user_uploads_disable') != 1 && get_option('sp_cu_user_disable_revisions') != 1  && cdm_file_permissions($r[0]['pid']) == 1) {
+        
+		$html = apply_filters('sp_cdm_view_file_first_add_button',$html,$r);
+		
+		if (CU_PREMIUM == 1 && get_option('sp_cu_user_uploads_disable') != 1 && get_option('sp_cu_user_disable_revisions') != 1  && cdm_file_permissions($r[0]['pid']) == 1) {
             $html .= sp_cdm_revision_button();
         }
         if (class_exists('cdmProductivityUser')) {
             $html .= '<span id="cdm_comment_button_holder">' . $cdm_comments->button() . '</span>';
         }
+		
+		$html = apply_filters('sp_cdm_view_file_add_button',$html,$r);
+		
         if (class_exists('cdmProductivityGoogle')) {
             $html .= '<span id="cdm_shortlink_button_holder">' . $cdm_google->short_link_button($r[0]['id'], '' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']). '') . '</span>';
         }
@@ -88,9 +94,14 @@ jQuery(".viewFileTabs").responsiveTabs({
             $html .= '<li><a href="#cdm-file-log">'.__("Download Log","sp-cdm").'</a></li>';
 	}
         }
+		
+			$html = apply_filters('sp_cdm_view_file_tab',$html,$r);
+		
         $html .= '</ul>
 
 	';
+		$html = apply_filters('sp_cdm_view_file_content',$html,$r);
+	
         if (function_exists('sp_cdm_revision_add') && get_option('sp_cu_user_disable_revisions') != 1) {
             $html .= '<div id="cdm-file-revisions"><div id="cdm_comments"><h4>' . __("Revision History", "sp-cdm") . '</h4>
 
@@ -225,7 +236,7 @@ jQuery(".viewFileTabs").responsiveTabs({
 </div>
 <div class="sp_su_project">
 
-<strong>' . __("File Size ", "sp-cdm") . ': </strong>' . cdm_file_size(''.SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '') . '  '.''.SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/' . $r[0]['file'] . ''.'
+<strong>' . __("File Size ", "sp-cdm") . ': </strong>' . cdm_file_size(''.SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '') . ' 
 
 </div>
 

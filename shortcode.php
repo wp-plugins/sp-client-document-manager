@@ -716,7 +716,7 @@ jQuery(document).ready(function() {
 				$html .= apply_filters('sp_cdm_upload_view',$upload_view);
 				
 				
-		  $html .= '</div>';
+		
         } else {
             return '<script type="text/javascript">
 
@@ -728,9 +728,7 @@ window.location = "' . wp_login_url($_SERVER['REQUEST_URI']) . '"
 
 </script>';
         }
-		$html .='</div>
-		
-			';
+	
         return $html;
     }
 }
