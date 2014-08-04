@@ -141,7 +141,17 @@ if (!class_exists('cdmProjects')) {
             } //$_GET['function'] == 'add' or $_GET['function'] == 'edit'
             elseif ($_GET['function'] == 'delete') {
                 $wpdb->query("DELETE FROM " . $wpdb->prefix . "sp_cu_project WHERE id = " . $_GET['id'] . "	");
-                echo '<script type="text/javascript">
+                $wpdb->query("DELETE FROM " . $wpdb->prefix . "sp_cu WHERE pid = " . $_GET['id'] . "	");
+				$r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where pid = '" . $_GET['id'] . "'", ARRAY_A);	
+		
+				 for ($i = 0; $i < count($r); $i++) {
+					 
+					 	
+					  unlink('' . SP_CDM_UPLOADS_DIR . '' . $r[$i]['uid']. '/' . $r[$i]['file'] . '');
+					 
+				 }
+			
+				echo '<script type="text/javascript">
 
 <!--
 

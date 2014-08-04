@@ -1,6 +1,7 @@
 <?php
 
-
+if( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ) )
+{
 require( '../../../wp-load.php' );
 	
 	
@@ -11,6 +12,8 @@ $upload_dir = wp_upload_dir();
 	
 	
 	$spcdm_ajax = new spdm_ajax;
+	
+	
 	
 	switch($function){
 		
@@ -77,5 +80,5 @@ $upload_dir = wp_upload_dir();
 		
 		
 	}
-
+}
 ?>

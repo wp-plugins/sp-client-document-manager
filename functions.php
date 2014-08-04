@@ -1153,7 +1153,7 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
             $user_id = @$_REQUEST['user_id'];
             if (@$_GET['dlg-delete-file'] != "") {
                 $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where  id = " . $_GET['dlg-delete-file'] . "", ARRAY_A);
-                @unlink('' . SP_CDM_UPLOADS_DIR . '' . $user_id . '/' . $r[0]['file'] . '');
+                @unlink('' . SP_CDM_UPLOADS_DIR . '' . $r[0]['uid']. '/' . $r[0]['file'] . '');
                 $wpdb->query("
 
 	DELETE FROM " . $wpdb->prefix . "sp_cu WHERE id = " . $_GET['dlg-delete-file'] . "
