@@ -141,25 +141,66 @@ if (!class_exists('cdmProjects')) {
             } //$_GET['function'] == 'add' or $_GET['function'] == 'edit'
             elseif ($_GET['function'] == 'delete') {
                 $wpdb->query("DELETE FROM " . $wpdb->prefix . "sp_cu_project WHERE id = " . $_GET['id'] . "	");
-                $wpdb->query("DELETE FROM " . $wpdb->prefix . "sp_cu WHERE pid = " . $_GET['id'] . "	");
+              
 				$r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where pid = '" . $_GET['id'] . "'", ARRAY_A);	
-		
+		$num = 0;
+				
+			
+				 if(count($r)>0){
+					 $last = count($r) - 1;
+				 $array .= 'var myArray = [';
 				 for ($i = 0; $i < count($r); $i++) {
 					 
-					 	
-					  unlink('' . SP_CDM_UPLOADS_DIR . '' . $r[$i]['uid']. '/' . $r[$i]['file'] . '');
+						if($i != $last){
+						$comma = ',';	
+						}else{
+						$comma = '';	
+						}
+						$array .=''. $r[$i]['id'].''.$comma.' ';
+
+						
+				 }
+				$array .= '];';
+				 }else{
+					
+				echo '<script type="text/javascript">
+				window.location = "admin.php?page=sp-client-document-manager-projects";
+				</script>';	 
+				exit;
 					 
 				 }
-			
+	
+		
+		
+		
+	
 				echo '<script type="text/javascript">
+				
+		'.$array.'
 
-<!--
+jQuery.each(myArray, function(index, value){
 
-window.location = "admin.php?page=sp-client-document-manager-projects"
-
-//-->
+		jQuery.ajax({
+		
+					   type: "POST",
+		
+					   url: "'.SP_CDM_PLUGIN_URL.'ajax.php?function=delete-file&dlg-delete-file="+ value ,			  
+		
+					   success: function(msg){
+						  
+					 if (index === '.count($r).' - 1) {
+						window.location = "admin.php?page=sp-client-document-manager-projects"
+					   }
+						
+					   }
+		
+		
+		});
+});
 
 </script>';
+
+
             } //$_GET['function'] == 'delete'
             else {
                 $r = $wpdb->get_results("SELECT " . $wpdb->prefix . "sp_cu_project.name as projectName,
