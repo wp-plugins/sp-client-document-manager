@@ -8,10 +8,22 @@ if (!class_exists('cdmProjects')) {
             echo '
 
 <form action="admin.php?page=sp-client-document-manager-projects" method="post">';
+
+if($_GET['parent'] != ''){
+	$parent = $wpdb->get_results("SELECT  * FROM " . $wpdb->prefix . "sp_cu_project where id = '" . $_GET['parent'] . "'  ", ARRAY_A);
+	echo '<input type="hidden" name="parent" value="'.$_GET['parent'].'">';
+
+$selected = $parent[0]['uid'];
+}else{
+	
+$selected = $r[0]['uid'];	
+}
             if ($_GET['id'] != "") {
                 $r = $wpdb->get_results("SELECT  * FROM " . $wpdb->prefix . "sp_cu_project where id = '" . $_GET['id'] . "'  ", ARRAY_A);
                 echo '<input type="hidden" name="id" value="' . $r[0]['id'] . '">';
-            } //$_GET['id'] != ""
+         $selected = $r[0]['uid'];
+		 
+		    } //$_GET['id'] != ""
             $users = $wpdb->get_results("SELECT * FROM " . $wpdb->base_prefix . "users order by display_name  ", ARRAY_A);
             echo '<h2>' . sp_cdm_folder_name(1) . '</h2>' . sp_client_upload_nav_menu() . '';
             echo '
@@ -33,7 +45,7 @@ if (!class_exists('cdmProjects')) {
     <td>';
             wp_dropdown_users(array(
                 'name' => 'uid',
-                'selected' => $r[0]['uid']
+                'selected' => $selected
             ));
             echo '</td>
 
@@ -48,7 +60,10 @@ if (!class_exists('cdmProjects')) {
   </tr>
 
 </table>';
-            do_action('sp_cdm_edit_project_form', $_GET['id']);
+           
+		   if($_GET['id'] != ''){
+		    do_action('sp_cdm_edit_project_form', $_GET['id']);
+		   }
             echo '
 
 </form>
@@ -97,11 +112,16 @@ if (!class_exists('cdmProjects')) {
 
 <td>
 
-<a href="' . SP_CDM_PLUGIN_URL . 'ajax.php?function=download-project&id=' . $r[$i]['id'] . '" style="margin-right:15px" >' . __("Download Archive", "sp-cdm") . '</a>  
+<a href="' . SP_CDM_PLUGIN_URL . 'ajax.php?function=download-project&id=' . $r[$i]['id'] . '" style="margin-right:15px" >' . __("Download Archive", "sp-cdm") . '</a> ';
+
+if($r[$i]['parent'] == 0 or class_exists('spdm_sub_projects')){
+ 
+ $html .='<a href="admin.php?page=sp-client-document-manager-projects&function=add&parent=' . $r[$i]['id'] . '" style="margin-right:15px" >' . __("Add Sub Folder", "sp-cdm") . '</a> '; 
+
+}
 
 
-
- <a href="admin.php?page=sp-client-document-manager-projects&function=delete&id=' . $r[$i]['id'] . '" style="margin-right:15px" >' . __("Delete", "sp-cdm") . '</a> 
+ $html .='<a href="admin.php?page=sp-client-document-manager-projects&function=delete&id=' . $r[$i]['id'] . '" style="margin-right:15px" >' . __("Delete", "sp-cdm") . '</a> 
 
 <a href="admin.php?page=sp-client-document-manager-projects&function=edit&id=' . $r[$i]['id'] . '" >' . __("Modify", "sp-cdm") . '</a></td>
 
@@ -123,7 +143,13 @@ if (!class_exists('cdmProjects')) {
             if ($_POST['save-project'] != "") {
                 $insert['name'] = $_POST['project-name'];
                 $insert['uid']  = $_POST['uid'];
-                if ($_POST['id'] != "") {
+               if($_POST['parent'] != ''){
+				  $insert['parent']  = $_POST['parent']; 
+				   
+			   }
+			   
+			   
+			    if ($_POST['id'] != "") {
                     $where['id'] = $_POST['id'];
                     $wpdb->update("" . $wpdb->prefix . "sp_cu_project", $insert, $where);
                     $update['uid']        = $_POST['uid'];
@@ -261,11 +287,19 @@ jQuery.each(myArray, function(index, value){
 
 <td style="font-weight:bold;background-color:#EFEFEF">
 
-<a href="' . SP_CDM_PLUGIN_URL . 'ajax.php?function=download-project&id=' . $r[$i]['projectID'] . '" style="margin-right:15px" >' . __("Download Archive", "sp-cdm") . '</a>  
+<a href="' . SP_CDM_PLUGIN_URL . 'ajax.php?function=download-project&id=' . $r[$i]['projectID'] . '" style="margin-right:15px" >' . __("Download Archive", "sp-cdm") . '</a>  ';
+
+
+if($r[$i]['parent'] == 0 or class_exists('spdm_sub_projects')){
+ 
+ echo '<a href="admin.php?page=sp-client-document-manager-projects&function=add&parent=' . $r[$i]['projectID'] . '" style="margin-right:15px" >' . __("Add Sub Folder", "sp-cdm") . '</a> '; 
+
+}
 
 
 
- <a href="admin.php?page=sp-client-document-manager-projects&function=delete&id=' . $r[$i]['projectID'] . '" style="margin-right:15px" >' . __("Delete", "sp-cdm") . '</a> 
+
+ echo '<a href="admin.php?page=sp-client-document-manager-projects&function=delete&id=' . $r[$i]['projectID'] . '" style="margin-right:15px" >' . __("Delete", "sp-cdm") . '</a> 
 
 <a href="admin.php?page=sp-client-document-manager-projects&function=edit&id=' . $r[$i]['projectID'] . '" >' . __("Modify", "sp-cdm") . '</a></td>
 

@@ -49,10 +49,13 @@ class cdm_uploader{
 		
 		
 		
-		 $add_project = '<div class="remodal" data-remodal-id="folder">
+		 $add_project = '<div class="remodal" data-remodal-id="folder">';
 
-		<input type="hidden" id="sub_category_uid" name="uid" value="' . $current_user->ID . '">';
-		
+		if($_GET['page'] == 'sp-client-document-manager-fileview'){
+			$add_project .='<input type="hidden" id="sub_category_uid" name="uid" value="' . $_GET['id'] . '">';
+		}else{
+		$add_project .='<input type="hidden" id="sub_category_uid" name="uid" value="' . $current_user->ID . '">';
+		}
 		if (@CU_PREMIUM == 1) {
 			
 			$add_project .='	<input type="hidden" class="cdm_premium_pid_field" name="parent" value="0">';
