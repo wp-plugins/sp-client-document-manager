@@ -3,7 +3,7 @@ Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
 Tags: document management, records manager, filing cabinet, customer file manager, Document manager, Project management, File sharing, Dropbox importer, Google Drive importer, Enterprise document control, Distribution, Report Center, Retrieval & storage, Versioning, Productivity
 Requires at least: 3.9
-Tested up to: 3.9.1
+Tested up to: 3.9.2
 Stable tag: 2.3.2
 
 Project & Document Manager. file sharing & management tool to upload, share, track, group, distribute and organize any type of document records.
@@ -861,3 +861,7 @@ Major updates, new uploader and fixes to admin upload functions
 
 * Fixed an error where folders were being added to the wrong user when using the admin uploader
 * Fixed an error which displayed files when accessing ajax files
+
+= 2.3.3 =
+
+* Fixed an error with admin uploader where the folder id was being saved as a cookie and loading that folder for different clients.

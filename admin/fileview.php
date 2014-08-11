@@ -222,10 +222,14 @@ function display_sp_thumbnails2($r){
 		$wp_con_folder = get_option('sp_cu_wp_folder') ;
 	}
 	
+
 	
 	$content .='
 	
-	<script type="text/javascript">
+	<script type="text/javascript">';
+	
+	
+	$content .='
 	
 	function sp_cdm_sort(sort,pid){
 	if(pid != ""){
@@ -247,6 +251,21 @@ function display_sp_thumbnails2($r){
 	}
 	
 	jQuery(document).ready( function() {
+		
+		';
+		
+		if($_GET['id'] != '' && $_COOKIE['uid'] != $_GET['id']){
+			
+		$content .='jQuery.cookie("uid", "'.$_GET['id'].'", { expires: 7 });
+					jQuery.removeCookie("pid"); 
+					';	
+		
+		
+		}
+		
+		
+		$content .='
+		
 			
 			
 	var pid = jQuery.cookie("pid");
