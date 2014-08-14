@@ -4,7 +4,7 @@ Donate link: http://smartypantsplugins.com/donate/
 Tags: document management, records manager, filing cabinet, customer file manager, Document manager, Project management, File sharing, Dropbox importer, Google Drive importer, Enterprise document control, Distribution, Report Center, Retrieval & storage, Versioning, Productivity
 Requires at least: 3.9
 Tested up to: 3.9.2
-Stable tag: 2.3.3
+Stable tag: 2.3.4
 
 Project & Document Manager. file sharing & management tool to upload, share, track, group, distribute and organize any type of document records.
 
@@ -600,30 +600,6 @@ Major updates, new uploader and fixes to admin upload functions
 * Released two premium addons, dropbox integration and sub projects.
 * Fixed a flash upload bug
 * Total rewrite of the ajax core
-
-
-= 1.6.0 = 
-
-* Fixed a quick shortcode bug.
-
-= 1.6.1 = 
-
-* Fixed an error when viewing admin uploader and users are part of a group
-
-= 1.6.3 = 
-
-* Fixed a security hole when backing out of a project displaying files from other useres.
-* Fixed a bug that was not allowing the adding of projects in the admin file uploader.
-* Replaced the buttons with a nice dropdown menu with hooks for the addons.
-* Added lots of hooks and actions for extending CDM
-
-= 1.6.4 = 
-
-*Fixed multisite permissions issue. (please update both free and premium)
-
-= 1.6.5 = 
-
-*Update to timthumb
 
 = 1.6.6 =
 

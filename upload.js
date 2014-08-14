@@ -1,3 +1,9 @@
+
+function cdm_refresh_file_view(fid){
+	jQuery(".view-file-content").empty();
+	 jQuery(".view-file-content").load(jQuery('#sp_cu_ajax_url').val()  + "?function=view-file&id=" + fid);
+}
+
 function cdm_check_file_perms(pid){
 			
 		
@@ -194,7 +200,13 @@ function sp_cu_dialog(div,w,h){
 	}else{
 		var width = w;
 	}
-	jQuery(div ).dialog({
+	var dialogBox = jQuery(div);
+     var usableDialog = dialogBox[0];
+      //jQuery("div.ui-dialog").remove();
+            
+	
+	
+	jQuery(usableDialog).dialog({
 
 			height:'auto',
 
