@@ -608,7 +608,7 @@ function sp_cu_remove_project(){
 
 		<td class="cdm_file_info">' . stripslashes($r[$i]['name']) . '</td>
 
-		<td class="cdm_file_date">' . date("F Y g:i A", strtotime($r[$i]['date'])) . '</td>
+		<td class="cdm_file_date">' . date("F jS Y g:i A", strtotime($r[$i]['date'])) . '</td>
 
 
 
