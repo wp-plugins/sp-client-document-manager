@@ -1,6 +1,6 @@
 <?php
 
-if( isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ) )
+if( (isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' )) or (in_array($_GET['function'],array('download-project','download-archive'))) )
 {
 require( '../../../wp-load.php' );
 	
