@@ -4,11 +4,11 @@ Plugin Name: SP Project & Document Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business manage documents and projects with permissions in an easy to use interface.
 Author: smartypants
-Version: 2.3.6
+Version: 2.3.7
 Author URI: http://smartypantsplugins.com
 */
 global $sp_client_upload;
-$sp_client_upload = "2.3.6";
+$sp_client_upload = "2.3.7";
 function sp_cdm_language_init()
 {
     load_plugin_textdomain('sp-cdm', false, dirname(plugin_basename(__FILE__)) . '/languages/');
@@ -122,6 +122,15 @@ function sp_client_upload_load_admin_css()
 function sp_client_upload_admin_init()
 {
     wp_enqueue_script('cdm-potatoe-menu-js', plugins_url('js/menu.js', __FILE__));
+	
+	
+	wp_enqueue_script('jquery');
+    wp_enqueue_script('smUpload', plugins_url('upload.js', __FILE__));
+    wp_enqueue_script('jquery-ui-core');
+    wp_enqueue_script('jquery-ui-dialog');
+    wp_enqueue_script('jquery-ui-tabs');
+	wp_enqueue_script('jquery-ui-button');
+	
 }
 add_action('wp_head', 'sp_client_upload_load_css');
 add_action('init', 'sp_client_upload_init');

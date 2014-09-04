@@ -1,7 +1,7 @@
 <?php
 
-if( (isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' )) or (in_array($_GET['function'],array('download-project','download-archive'))) )
-{
+
+
 require( '../../../wp-load.php' );
 	
 	
@@ -46,17 +46,18 @@ $upload_dir = wp_upload_dir();
 		break;
 		
 		case"view-file":
+		if( (isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' )) )
 		echo $spcdm_ajax->view_file();	
 		break;
 		
 		case "file-list":
-		
+		if( (isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' )) )
 		echo $spcdm_ajax->file_list();		
 		
 		break;
 		
 		case "thumbnails":
-		
+		if( (isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) && ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' )) )
 		echo $spcdm_ajax->thumbnails();		
 		
 		break;
@@ -79,6 +80,6 @@ $upload_dir = wp_upload_dir();
 		
 		
 		
-	}
+	
 }
 ?>

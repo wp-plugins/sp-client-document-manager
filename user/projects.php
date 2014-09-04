@@ -148,7 +148,7 @@ if(get_option('sp_cu_user_projects_required') == 1){
 }
 
 
-function sp_cdm_display_projects(){
+function sp_cdm_display_projects($showadd = true){
 
 	
 
@@ -283,7 +283,7 @@ if(get_option('sp_cu_user_projects_required') == 1){
 
 	
 
-	if(get_option('sp_cu_user_projects') == 1  or current_user_can( 'manage_options' )){
+	if(get_option('sp_cu_user_projects') == 1  or current_user_can( 'manage_options' ) && $showadd == true){
 
 		
 

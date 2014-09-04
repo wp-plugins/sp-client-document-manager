@@ -16,6 +16,15 @@ class sp_cdm_installer{
 
 function sp_cdm_check_admin_caps(){
 	global $current_user;
+	
+	
+	wp_enqueue_script('jquery');
+   
+    wp_enqueue_script('jquery-ui-core');
+    wp_enqueue_script('jquery-ui-dialog');
+    wp_enqueue_script('jquery-ui-tabs');
+	wp_enqueue_script('jquery-ui-button');
+	
 	if($current_user != ''){
 	
 	@require_once(ABSPATH . 'wp-includes/pluggable.php');

@@ -49,7 +49,10 @@ $selected = $r[0]['uid'];
             ));
             echo '</td>
 
-  </tr>
+  </tr>';
+  
+   do_action('sp_cdm_edit_project_main_form', $r);
+  echo '
 
   <tr>
 

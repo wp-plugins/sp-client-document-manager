@@ -261,6 +261,17 @@ jQuery(".viewFileTabs").responsiveTabs({
 
 </div>';
         }
+		
+		if ($r[0]['notes'] != "") {
+            $html .= '
+
+<div class="sp_su_notes">
+
+<strong>' . __("Notes ", "sp-cdm") . ': </strong> ' . stripslashes($r[0]['notes']) . '
+
+</div>';
+        }
+		
         if (CU_PREMIUM == 1) {
          
 		 if(sp_cdm_get_form_fields($r[0]['id']) != ''){

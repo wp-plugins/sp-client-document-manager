@@ -1,4 +1,37 @@
 <?php
+   function  cdm_document_ajax_url(){
+	   global $current_user;
+	   $pid = $_COOKIE['pid'];
+		
+		   if($pid == ''){
+			$pid = 0;
+		   }
+		   
+		   if($_GET['page'] == 'sp-client-document-manager-fileview'){
+			$uid = $_GET['uid'];   
+		   }else{
+			$uid = $current_user->ID;   
+		   }
+		   
+	   if(get_option('sp_cu_user_projects_thumbs') == 1){
+			
+		$url =  'jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=file-list&uid=' . $uid . '&pid='.$pid.'").hide().fadeIn();';	   
+   	   }
+	   
+	    if(get_option('sp_cu_free_file_list') == 1){
+		$url =  'jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=thumbnails&uid=' . $uid . '&pid='.$pid.'").hide().fadeIn();';	   
+		}else{
+			
+		$url =  'jQuery("#cdm-responsive-view").load("'. plugins_url().'/sp-client-document-manager-premium/ajax.php?function=responsive-view&uid=' . $uid . '&pid='.$pid.'").hide().fadeIn();';	   
+   	    }
+		
+		$url = apply_filters('sp_document_view_ajax_url', $url);
+	
+		return $url;
+		}
+	
+	
+
 function cdm_file_size($file)
 {
 	$size = @filesize($file);
