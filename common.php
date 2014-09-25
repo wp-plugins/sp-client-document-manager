@@ -1,4 +1,17 @@
 <?php
+
+
+	function cdm_shortcode_url(){
+			global $wpdb;
+
+	 $r = $wpdb->get_results("SELECT * FROM  " . $wpdb->prefix . "posts where post_content LIKE   '%[sp-client-document-manager]%' and post_type = 'page' and post_status = 'publish'", ARRAY_A);
+			
+		if($r[0]['ID'] == ""){
+		return false;
+		}else{
+		return get_permalink( wpfh_obit_page_id() );	
+		}
+	}
    function  cdm_document_ajax_url(){
 	   global $current_user;
 	   $pid = $_COOKIE['pid'];

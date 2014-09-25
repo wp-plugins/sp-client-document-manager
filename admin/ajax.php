@@ -284,6 +284,9 @@ switch ($function) {
         } else {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.parent = '" . $_GET['pid'] . "' ";
         }
+		
+		$r_projects_groups_addon = apply_filters('sp_cdm_projects_query', $r_projects_groups_addon ,$_GET['uid']);	
+		
         $r_projects = $wpdb->get_results("SELECT 
 
 												" . $wpdb->prefix . "sp_cu_project.id,
@@ -300,7 +303,7 @@ switch ($function) {
 
 										FROM " . $wpdb->prefix . "sp_cu_project
 
-										WHERE (" . $wpdb->prefix . "sp_cu_project.uid = '" . $_GET['uid'] . "'  " . $find_groups . ")										
+										WHERE (" . $wpdb->prefix . "sp_cu_project.uid = '" . $_GET['uid'] . "'  " . $find_groups . "  ".$r_projects_groups_addon.")										
 
 										
 

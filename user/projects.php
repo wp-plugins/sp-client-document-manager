@@ -92,7 +92,7 @@ if(get_option('sp_cu_user_projects_required') == 1){
 
 	if(get_option('sp_cu_user_projects_required') == 0){	
 
-	$select_dropdown .='<option name="" selected="selected">'.__("No","sp-cdm").' '.sp_cdm_folder_name() .'</option>';	
+	$select_dropdown .='<option name="" selected="selected">' . __("No Folder", "sp-cdm") . '</option>';	
 
 	}
 
@@ -243,7 +243,7 @@ if(get_option('sp_cu_user_projects_required') == 1){
 
 	if(get_option('sp_cu_user_projects_required') == 0){	
 
-	$select_dropdown .='<option name="" selected="selected">'.__("No","sp-cdm").' '.sp_cdm_folder_name() .'</option>';	
+	$select_dropdown .='<option name="" selected="selected">' . __("No Folder", "sp-cdm") . '</option>';	
 
 	}
 
@@ -287,7 +287,7 @@ if(get_option('sp_cu_user_projects_required') == 1){
 
 		
 
-		$html .= '<a href="#folder" class="button" style="margin-left:15px">'.__("Add","sp-cdm").' '.sp_cdm_folder_name() .'</a>
+		$html .= '<a href="#folder" class="button" style="margin-left:15px">' . __("Add Folder", "sp-cdm") . '</a>
 
 		
 
@@ -461,7 +461,7 @@ $r_projects_query = "SELECT *
 
 		
 
-		$html .= '<a href="javascript:sp_cu_dialog(\'#sp_cu_add_project\',550,130)" class="button" style="margin-left:15px">'.__("Add","sp-cdm").' '.sp_cdm_folder_name() .'</a>
+		$html .= '<a href="javascript:sp_cu_dialog(\'#sp_cu_add_project\',550,130)" class="button" style="margin-left:15px">' . __("Add Folder", "sp-cdm") . '</a>
 
 		
 

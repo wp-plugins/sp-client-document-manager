@@ -55,7 +55,12 @@ class spdm_ajax
         } else {
             $target = ' ';
         }
-        $html .= '<a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']) . '" title="Download" style="margin-right:15px"  ><img src="' . SP_CDM_PLUGIN_URL . 'images/download.png"> ' . __("Download File", "sp-cdm") . '</a> ';
+       
+	    $download_url = '<a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']) . '" title="Download" style="margin-right:15px"  ><img src="' . SP_CDM_PLUGIN_URL . 'images/download.png"> ' . __("Download File", "sp-cdm") . '</a> ';
+		$download_url = apply_filters('sp_cdm_viewfile_download_url', $download_url, $r);
+		$html .= $download_url;
+		
+		
         if ( cdm_user_can_delete($current_user->ID) == true && cdm_delete_permission($r[0]['pid']) == 1) {
             $html .= '
 
@@ -184,7 +189,7 @@ jQuery(".viewFileTabs").responsiveTabs({
             } else {
                 $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/adobe.png">';
             }
-        } elseif ($ext == 'pdf') {
+        } elseif ($ext == 'pdf' or $ext == 'xod') {
             $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/adobe.png">';
         } else {
             $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/package_labled.png">';
@@ -508,7 +513,7 @@ jQuery(".viewFileTabs").responsiveTabs({
 ";
 								}
 								
-								
+			 $r_projects_query = apply_filters('sp_cdm_project_query_final', $r_projects_query);					
             $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
         }
         echo '<div id="dlg_cdm_file_list">
@@ -527,13 +532,13 @@ jQuery(".viewFileTabs").responsiveTabs({
 
 		echo '<th></th>
 
-		<th class="cdm_file_info" style="text-align:left"><a href="javascript:sp_cdm_sort(\'name\',' . $jscriptpid . ')">Name</a></th>
+		<th class="cdm_file_info" style="text-align:left"><a href="javascript:sp_cdm_sort(\'name\',' . $jscriptpid . ')">' . __("Name", "sp-cdm") . '</a></th>
 
-		<th class="cdm_file_date"><a href="javascript:sp_cdm_sort(\'date\',' . $jscriptpid . ')">Date</a></th>
+		<th class="cdm_file_date"><a href="javascript:sp_cdm_sort(\'date\',' . $jscriptpid . ')">' . __("Date", "sp-cdm") . '</a></th>
 
 	
 
-		<th class="cdm_file_type">Type</th>	
+		<th class="cdm_file_type">' . __("Type", "sp-cdm") . '</th>	
 
 		</tr>	
 
@@ -583,7 +588,7 @@ function sp_cu_edit_project(){
 
 		
 
-		alert("Please enter a project name");
+		alert("' . __("Please enter a project name", "sp-cdm") . '");
 
 	}else{
 
@@ -763,13 +768,13 @@ function sp_cu_remove_project(){
 
 		echo '<td class="cdm_file_icon ext_directory" onclick="sp_cdm_load_project(' . $query_project[0]['parent'] . ')"></td>
 
-		<td class="cdm_file_info" onclick="sp_cdm_load_project(' . $query_project[0]['parent'] . ')">&laquo; Go Back</td>
+		<td class="cdm_file_info" onclick="sp_cdm_load_project(' . $query_project[0]['parent'] . ')">&laquo; ' . __("Go Back", "sp-cdm") . '</td>
 
 		<td class="cdm_file_date" onclick="sp_cdm_load_project(' . $query_project[0]['parent'] . ')">&nbsp;</td>
 
 		
 
-		<td class="cdm_file_type" onclick="sp_cdm_load_project(' . $query_project[0]['parent'] . ')">Folder</td>	
+		<td class="cdm_file_type" onclick="sp_cdm_load_project(' . $query_project[0]['parent'] . ')">' . __("Folder", "sp-cdm") . '</td>	
 
 		</tr>	
 
@@ -960,7 +965,7 @@ echo '
 										" . $search_project . " ORDER by name
 ";
 								}
-			
+			 $r_projects_query = apply_filters('sp_cdm_project_query_final', $r_projects_query);
             $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
 									
 	
@@ -1223,7 +1228,7 @@ function sp_cu_remove_project(){
 		}
 			echo '
 
-	<div style="float:right">Sort by: <a href="javascript:sp_cdm_sort(\'name\',' . $_GET['pid'] . ')">Name</a>   <a href="javascript:sp_cdm_sort(\'date\',' . $_GET['pid']. ')">Date</a></div>
+	<div style="float:right">' . __("Sort by", "sp-cdm") . ': <a href="javascript:sp_cdm_sort(\'name\',' . $_GET['pid'] . ')">' . __("Name", "sp-cdm") . '</a>   <a href="javascript:sp_cdm_sort(\'date\',' . $_GET['pid']. ')">' . __("Date", "sp-cdm") . '</a></div>
 
 	
 		
@@ -1256,7 +1261,7 @@ function sp_cu_remove_project(){
 
 				<div class="dlg_cdm_thumb_title">
 
-				&laquo; Go Back
+				&laquo; ' . __("Go Back", "sp-cdm") . '
 
 				</div>
 

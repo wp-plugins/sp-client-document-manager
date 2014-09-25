@@ -157,7 +157,7 @@ var pid = jQuery.cookie("pid");
 	jQuery("#cdm_current_folder").val(pid);
 	
 	jQuery(".cdm_premium_pid_field").attr("value", pid);
-	jQuery.cookie("pid", pid, { expires: 7 });
+	jQuery.cookie("pid", pid, { expires: 7 , path:"/" });
 	
 			if(pid != 0 && jQuery("#cdm_premium_sub_projects").val() != 1){
 				jQuery(".cdm_add_folder_button").hide();	
@@ -340,7 +340,7 @@ jQuery(".sp_change_indicator").slideDown();
 
 
 
-jQuery(\'.sp_change_indicator\').html(\'<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"  width="204" height="16"  id="mymoviename"><param name="movie" value="' . SP_CDM_PLUGIN_URL . 'image_138464.swf" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="' . SP_CDM_PLUGIN_URL . 'image_138464.swf" quality="high" bgcolor="#ffffff" width="204" height="16" name="mymoviename" align="" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object><br><em>Please wait, your file is currently uploading! </em>\');
+jQuery(\'.sp_change_indicator\').html(\'<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"  width="204" height="16"  id="mymoviename"><param name="movie" value="' . SP_CDM_PLUGIN_URL . 'image_138464.swf" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="' . SP_CDM_PLUGIN_URL . 'image_138464.swf" quality="high" bgcolor="#ffffff" width="204" height="16" name="mymoviename" align="" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object><br><em>' . __("Please wait, your file is currently uploading", "sp-cdm") . 'Please wait, your file is currently uploading! </em>\');
 
 document.forms["sp_upload_form"].submit();
 
@@ -476,7 +476,7 @@ $html .='
 
   
 
-						<div class="sp_change_indicator_button"><input id="dlg-upload"  type="submit" name="submit" value="Upload" ></div>
+						<div class="sp_change_indicator_button"><input id="dlg-upload"  type="submit" name="submit" value="' . __("Upload", "sp-cdm") . '" ></div>
 
 						<div class="sp_change_indicator" ></div>	
 ';
@@ -707,7 +707,7 @@ jQuery(document).ready(function() {
 				if (get_option('sp_cu_user_disable_search') == 1) {
             $hide_search = ';display:none;';
 			}
-			$html .= '<div style="text-align:right;padding:10px'.$hide_search.'">Search: <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files"></div>';
+			$html .= '<div style="text-align:right;padding:10px'.$hide_search.'">' . __("Search", "sp-cdm") . ': <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files"></div>';
             if (get_option('sp_cu_user_projects_thumbs') == 1 && @CU_PREMIUM == 1) {
                 $upload_view = display_sp_cdm_thumbnails($r);
             } else {

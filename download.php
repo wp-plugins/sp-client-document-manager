@@ -10,6 +10,9 @@ require( '../../../wp-load.php' );
 
 if ( (is_user_logged_in() && get_option('sp_cu_user_require_login_download') == 1 ) or (get_option('sp_cu_user_require_login_download') == '' or get_option('sp_cu_user_require_login_download') == 0 )){
 
+do_action('wp_cdm_download_before');
+
+
 if(!function_exists('mime_content_type')) {
 
 
@@ -303,11 +306,10 @@ if(is_file($file_name))
   exit(); 
 
  }else{
-
-	 
-
+set_time_limit(0); 
 
 
+if (ob_get_level()) ob_end_clean();
   header('Pragma: public');   // required
 
   header('Expires: 0');    // no cache
@@ -342,7 +344,7 @@ if(is_file($file_name))
 
   readfile($file_name,filesize($filename));    // push it out
 
-  exit();
+exit(0);
 
  }
 
