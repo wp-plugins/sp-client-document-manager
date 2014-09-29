@@ -1,7 +1,71 @@
 <?php
 
 
-	function cdm_shortcode_url(){
+
+function sp_cdm_show_file_linked($html){
+	global $wpdb;
+		$fid = $_GET['fid'];
+		if($fid != ''){
+		$fid = base64_decode($fid);
+		$r  = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu WHERE id = '" . $wpdb->escape($fid)  . "'", ARRAY_A);
+		
+		
+		$html .='<script type="text/javascript">
+					jQuery(document).ready(function() {
+				
+					';
+					
+					if($r[0]['pid'] != ''){
+					
+					$html .= 'sp_cdm_load_project('.$r[0]['pid'].')';	
+						
+					}
+		$html .='	
+		
+						cdmViewFile(' . $r[0]['id'] . ');
+					});
+				</script>';
+		}
+	
+	return $html;
+}
+add_filter('sp_cdm_upload_view','sp_cdm_show_file_linked'); 
+function sp_cdm_file_link($fid){
+			
+				
+		return ''.get_site_url().'/?sp-cdm-link='.base64_encode($fid).'';		
+			
+}
+function sp_cdm_link_to_file(){
+			
+			if($_GET['sp-cdm-link'] != ''){		
+			if ( (is_user_logged_in() && get_option('sp_cu_user_require_login_download') == 1 ) or (get_option('sp_cu_user_require_login_download') == '' or get_option('sp_cu_user_require_login_download') == 0 )){
+				
+			
+			$url = cdm_shortcode_url('fid='.$_GET['sp-cdm-link'].'');
+			if(get_option('sp_cu_dashboard_page') != ''){
+				$url = get_permalink(get_option('sp_cu_dashboard_page') );	
+				if ( get_option('permalink_structure') != '' ) { 	
+				$url = ''.$url.'?fid='.$_GET['sp-cdm-link'].''	;		
+				}else{				
+				$url = ''.$url.'&fid='.$_GET['sp-cdm-link'].''	;				
+				}
+			}
+			$url = apply_filters('sp_cdm_before_link_redirect',$url);
+			wp_redirect($url);
+			
+	
+			}else{
+
+			auth_redirect();	
+		
+	
+			}	
+			}		
+}
+add_action('init', 'sp_cdm_link_to_file');
+
+	function cdm_shortcode_url($and){
 			global $wpdb;
 
 	 $r = $wpdb->get_results("SELECT * FROM  " . $wpdb->prefix . "posts where post_content LIKE   '%[sp-client-document-manager]%' and post_type = 'page' and post_status = 'publish'", ARRAY_A);
@@ -9,7 +73,25 @@
 		if($r[0]['ID'] == ""){
 		return false;
 		}else{
-		return get_permalink( wpfh_obit_page_id() );	
+			
+			$url = get_permalink( $r[0]['ID'] );	
+
+				if ( get_option('permalink_structure') != '' ) { 
+				
+				
+				return ''.$url.'?'.$and.''	;
+				
+				
+				}else{
+					
+						return ''.$url.'&'.$and.''	;
+					
+					
+				}
+			
+					
+			
+		
 		}
 	}
    function  cdm_document_ajax_url(){

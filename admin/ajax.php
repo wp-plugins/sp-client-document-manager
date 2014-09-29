@@ -440,8 +440,8 @@ function sp_cu_remove_project(){
 					   data: "id=' . $_GET['pid'] . '" ,
 
 					   success: function(msg){
-
-					   jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=file-list&uid=' . $_GET['uid'] . '");
+							jQuery.removeCookie("pid");
+					  location.reload();
 
 					 
 

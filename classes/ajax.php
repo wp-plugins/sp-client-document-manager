@@ -390,6 +390,11 @@ jQuery(".viewFileTabs").responsiveTabs({
          if (function_exists('cdmFindGroups')) {
             $find_groups = cdmFindGroups($_GET['uid'], 1);
         }
+		
+		
+		
+		
+		
         if ($_REQUEST['search'] != "") {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.name LIKE '%" . $_REQUEST['search'] . "%' ";
         }else{
@@ -622,7 +627,7 @@ function sp_cu_edit_project(){
 
 function sp_cu_remove_project(){
 
-	
+
 
 	jQuery( "#delete_category_' . $_GET['pid'] . '" ).dialog({
 
@@ -651,7 +656,9 @@ function sp_cu_remove_project(){
 					   data: "id=' . $_GET['pid'] . '" ,
 
 					   success: function(msg){
-
+						
+							jQuery.removeCookie("pid");
+						
 					   jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=file-list&uid=' . $_GET['uid'] . '");
 
 					 
@@ -1130,7 +1137,7 @@ function sp_cu_remove_project(){
 					   data: "id=' . $_GET['pid'] . '" ,
 
 					   success: function(msg){
-
+	jQuery.removeCookie("pid");
 					   jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=file-list&uid=' . $_GET['uid'] . '");
 
 					 

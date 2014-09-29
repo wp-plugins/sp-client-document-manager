@@ -68,4 +68,9 @@
 <file name="browser.detection.php" server="smartypantsplugins.com//public_html/sandbox/" local="130120783144619833" remote="130560425400000000" Dst="2" />
 <file name="uploader.php" server="smartypantsplugins.com//public_html/sandbox/" local="130523261992707362" remote="130560425400000000" Dst="2" />
 <file name="mat.thumb.php" server="smartypantsplugins.com//public_html/sandbox/" local="130387019291572024" remote="130560425400000000" Dst="2" />
+<file name="ajax.php" server="F:/ampps/www/" local="130562237550717689" remote="130562237550000000" Dst="2" />
+<file name="browser.detection.php" server="F:/ampps/www/" local="130120783144619833" remote="130120783140000000" Dst="2" />
+<file name="install.php" server="F:/ampps/www/" local="130536284611768132" remote="130536284610000000" Dst="2" />
+<file name="mat.thumb.php" server="F:/ampps/www/" local="130387019291572024" remote="130387019290000000" Dst="2" />
+<file name="uploader.php" server="F:/ampps/www/" local="130523261992707362" remote="130523261990000000" Dst="2" />
 </dwsync>

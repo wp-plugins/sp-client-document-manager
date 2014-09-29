@@ -621,7 +621,7 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
 	[file_name] = Actual File Name<br>
 	
 	[file_real_path] = Real Path URL to the file<br>
-	
+	[file_in_document_area] = Link to the file in document area<br>
 	
 
 	[notes] = Notes or extra fields<br>
@@ -671,6 +671,7 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
 	[file_name] = Actual File Name<br>
 	
 	[file_real_path] = Real Path URL to the file<br>
+	[file_in_document_area] = Link to the file in document area<br>
 	[notes] = Notes or extra fields<br>
 
 	[user] = users name<br>
@@ -709,7 +710,7 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
 	
 
 	[file] = Link to File<br>
-
+	[file_in_document_area] = Link to the file in document area<br>
 	[notes] = Notes or extra fields<br>
 
 	[user] = users name<br>

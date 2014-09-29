@@ -528,6 +528,9 @@ return $html;
 	    $message   = str_replace('[file]', '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file'])  . '">' . $r[0]['file'] . '</a>', $message);
         $message   = str_replace('[file_name]',$r[0]['file'], $message);
 		$message   = str_replace('[file_real_path]', '' . SP_CDM_UPLOADS_DIR_URL . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '', $message);
+		$message   = str_replace('[file_in_document_area]','<a href="'.sp_cdm_file_link($id).'">'. __("View File", "sp-cdm") .'</a>', $message);
+		
+		
 		$message   = str_replace('[notes]', $notes, $message);
         $message   = str_replace('[user]', $user_info->display_name , $message);
          $message   = str_replace('[uid]', $user_info->ID, $message);
