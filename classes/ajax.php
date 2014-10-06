@@ -824,6 +824,7 @@ echo '
             } else {
                 $search_file .= " AND pid = 0  AND parent = 0  ";
             }
+			$search_file = apply_filters("sp_cdm_file_search_query", $search_file, $_GET['pid']);
             $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where (uid = '" . $_GET['uid'] . "' " . $find_groups . ")  	 " . $search_file . " order by " . $sort . " ", ARRAY_A);
 			
         } else {
@@ -832,6 +833,7 @@ echo '
             } else {
                 $search_file .= "  AND parent = 0   ";
             }
+			$search_file = apply_filters("sp_cdm_file_search_query", $search_file, $_GET['pid']);
             $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where (pid = '" . $_GET['pid'] . "') " . $search_file . "  order by " . $sort . "  ", ARRAY_A);
 			
         }
@@ -851,6 +853,7 @@ echo '
 		
 			 $search_file .= " AND (pid = '" . $_GET['pid'] . "') ";
 		 }
+		 $search_file = apply_filters("sp_cdm_file_search_query", $search_file, $_GET['pid']);
 		 $query = "SELECT *  FROM " . $wpdb->prefix . "sp_cu  where id != ''   " . $search_file . "  order by " . $sort . "  ";
 		//echo  $query ;
 		 $r = $wpdb->get_results( $query , ARRAY_A);	
@@ -1330,6 +1333,7 @@ function sp_cu_remove_project(){
             } else {
                 $search_file .= " AND pid = 0  AND parent = 0  ";
             }
+			$search_file = apply_filters("sp_cdm_file_search_query", $search_file, $_GET['pid']);
             $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where (uid = '" . $_GET['uid'] . "' " . $find_groups . ")  	 " . $search_file . " order by " . $sort . " ", ARRAY_A);
         } else {
             if ($_REQUEST['search'] != "") {
@@ -1337,6 +1341,7 @@ function sp_cu_remove_project(){
             } else {
                 $search_file .= "  AND parent = 0   ";
             }
+			$search_file = apply_filters("sp_cdm_file_search_query", $search_file, $_GET['pid']);
             $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where (pid = '" . $_GET['pid'] . "') " . $search_file . "  order by " . $sort . "  ", ARRAY_A);
         }
 		
@@ -1354,6 +1359,7 @@ function sp_cu_remove_project(){
 		
 			 $search_file .= " AND (pid = '" . $_GET['pid'] . "') ";
 		 }
+		 $search_file = apply_filters("sp_cdm_file_search_query", $search_file, $_GET['pid']);
 		 $query = "SELECT *  FROM " . $wpdb->prefix . "sp_cu  where id != ''   " . $search_file . "  order by " . $sort . "  ";
 		// echo  $query ;
 		 $r = $wpdb->get_results( $query , ARRAY_A);	
