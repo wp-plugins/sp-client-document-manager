@@ -68,14 +68,19 @@
 <file name="browser.detection.php" server="smartypantsplugins.com//public_html/sandbox/" local="130120783144619833" remote="130560425400000000" Dst="2" />
 <file name="uploader.php" server="smartypantsplugins.com//public_html/sandbox/" local="130523261992707362" remote="130560425400000000" Dst="2" />
 <file name="mat.thumb.php" server="smartypantsplugins.com//public_html/sandbox/" local="130387019291572024" remote="130560425400000000" Dst="2" />
-<file name="ajax.php" server="F:/ampps/www/" local="130562237550717689" remote="130562237550000000" Dst="2" />
+<file name="ajax.php" server="F:/ampps/www/" local="130577060704152449" remote="130577060700000000" Dst="2" />
 <file name="browser.detection.php" server="F:/ampps/www/" local="130120783144619833" remote="130120783140000000" Dst="2" />
 <file name="install.php" server="F:/ampps/www/" local="130536284611768132" remote="130536284610000000" Dst="2" />
 <file name="mat.thumb.php" server="F:/ampps/www/" local="130387019291572024" remote="130387019290000000" Dst="2" />
-<file name="uploader.php" server="F:/ampps/www/" local="130523261992707362" remote="130523261990000000" Dst="2" />
+<file name="uploader.php" server="F:/ampps/www/" local="130577016773896298" remote="130577016770000000" Dst="2" />
 <file name="install.php" server="obp2-09.nexcess.net//public_html/documents/" local="130536284611768132" remote="130568358600000000" Dst="2" />
 <file name="ajax.php" server="obp2-09.nexcess.net//public_html/documents/" local="130568230846735128" remote="130568358600000000" Dst="2" />
 <file name="browser.detection.php" server="obp2-09.nexcess.net//public_html/documents/" local="130120783144619833" remote="130568358600000000" Dst="2" />
 <file name="mat.thumb.php" server="obp2-09.nexcess.net//public_html/documents/" local="130387019291572024" remote="130568358600000000" Dst="2" />
 <file name="uploader.php" server="obp2-09.nexcess.net//public_html/documents/" local="130523261992707362" remote="130568358600000000" Dst="2" />
+<file name="ajax.php" server="electronicsi.com//public_html/main/" local="130568230846735128" remote="130571910600000000" Dst="2" />
+<file name="browser.detection.php" server="electronicsi.com//public_html/main/" local="130120783144619833" remote="130571910600000000" Dst="2" />
+<file name="install.php" server="electronicsi.com//public_html/main/" local="130536284611768132" remote="130571910600000000" Dst="2" />
+<file name="mat.thumb.php" server="electronicsi.com//public_html/main/" local="130387019291572024" remote="130571910600000000" Dst="2" />
+<file name="uploader.php" server="electronicsi.com//public_html/main/" local="130523261992707362" remote="130571910600000000" Dst="2" />
 </dwsync>

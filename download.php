@@ -125,7 +125,7 @@ if(!function_exists('mime_content_type')) {
 
             'ps' => 'application/postscript',
 
-
+		
 
             // ms office
 
@@ -137,7 +137,16 @@ if(!function_exists('mime_content_type')) {
 
             'ppt' => 'application/vnd.ms-powerpoint',
 
-
+			'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+			'xltx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.template',
+			'potx' => 'application/vnd.openxmlformats-officedocument.presentationml.template',
+			'ppsx' => 'application/vnd.openxmlformats-officedocument.presentationml.slideshow',
+			'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+			'sldx' => 'application/vnd.openxmlformats-officedocument.presentationml.slide',
+			'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+			'dotx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.template',
+			'xlam' => 'application/vnd.ms-excel.addin.macroEnabled.12',
+			'xlsb' => 'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
 
             // open office
 
@@ -160,11 +169,11 @@ if(!function_exists('mime_content_type')) {
         if (array_key_exists($ext, $mime_types)) {
 
             return $mime_types[$ext];
-
+		
         }
 
         elseif (function_exists('finfo_open')) {
-
+		
             $finfo = finfo_open(FILEINFO_MIME);
 
             $mimetype = finfo_file($finfo, $filename);
@@ -186,6 +195,7 @@ if(!function_exists('mime_content_type')) {
     }
 
 }
+
 
 $file_decrypt = base64_decode($_GET['fid']);
 $file_arr = explode("|",$file_decrypt);
@@ -222,7 +232,7 @@ $r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$r
 }
 
 
-
+do_action('sp_download_file_after_query', $r);
 
 
 
@@ -248,7 +258,6 @@ exit;
 
 
 $file = ''.SP_CDM_UPLOADS_DIR.''.$r[0]['uid'].'/'.$r[0]['file'].'';
-
 
 
 
@@ -293,7 +302,6 @@ if(is_file($file_name))
 
  $mime = mime_content_type($file_name);
 
- 
 
  
 

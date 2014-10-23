@@ -194,6 +194,8 @@ jQuery(".viewFileTabs").responsiveTabs({
         } else {
             $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/package_labled.png">';
         }
+		
+		$img = apply_filters('sp_cdm_viewfile_image', $img,$r[0]);
         $html .= '
 
 				
@@ -244,9 +246,11 @@ jQuery(".viewFileTabs").responsiveTabs({
 <strong>' . __("File Size ", "sp-cdm") . ': </strong>' . cdm_file_size(''.SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '') . ' 
 
 </div>
-
-
 ';
+
+$extra_file_info = '';
+$html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
+
 
   if (CU_PREMIUM == 1) {
 	 
@@ -346,6 +350,7 @@ jQuery(".viewFileTabs").responsiveTabs({
 					$big = '' . SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/'.$r[0]['file'].'_big.png';
 			@unlink($small);
 			@unlink($big);
+			do_action('sp_cdm_delete_file',  $r[0]); 
         }
     }
     function get_file_info()
@@ -1421,7 +1426,7 @@ function sp_cu_remove_project(){
                 $project_name = '';
             }
 			
-			
+			$img = apply_filters('sp_cdm_viewfile_image', $img,$r[$i]);
 			if(get_option('sp_cu_file_direct_access') == 1){
 			$file_link = 	'window.open(\'' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file']) . '\')'; ;
 			}else{

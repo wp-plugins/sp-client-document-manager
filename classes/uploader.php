@@ -91,6 +91,24 @@ class cdm_uploader{
 				inst.close();	
 				
 			}
+			
+			function cdmRefreshFile(file){
+				
+					jQuery(".view-file-content").empty();
+				
+				 var url = "'.SP_CDM_PLUGIN_URL.'ajax.php?function=view-file&id=" + file;
+			  
+			
+				
+				 jQuery.get(url, function (data) {
+				 jQuery(".view-file-content").html(data);			
+				
+			
+				 
+				
+				});			
+				
+			}
 			function cdmViewFile(file){
 				
 				jQuery(".view-file-content").empty();

@@ -1400,6 +1400,7 @@ function sp_cdm_showFile(file){
                     } else {
                         $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/package_labled.png">';
                     }
+					$img = apply_filters('sp_cdm_viewfile_image', $img,$r[$i]);
                     $html .= '
 
 	
