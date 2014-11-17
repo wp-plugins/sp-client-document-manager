@@ -316,8 +316,7 @@ if(is_file($file_name))
  }else{
 set_time_limit(0); 
 
-
-if (ob_get_level()) ob_end_clean();
+ob_start();
   header('Pragma: public');   // required
 
   header('Expires: 0');    // no cache
@@ -349,7 +348,8 @@ if (ob_get_level()) ob_end_clean();
   header('Content-Length: '.filesize($file_name));  // provide file size
 
   header('Connection: close');
-
+ ob_clean();
+            flush();
   readfile($file_name,filesize($filename));    // push it out
 
 exit(0);

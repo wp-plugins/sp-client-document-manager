@@ -7,7 +7,7 @@ add_action('wp_head', array($cdm_uploader,'css'));
 add_action('init', array($cdm_uploader,'js'));
 add_action('admin_menu',array($cdm_uploader,'css'));;
 add_action('admin_init',  array($cdm_uploader,'js'));
-add_action('wp_footer',  array($cdm_uploader,'upload_dialog'));
+add_action('sp_cdm_bottom_uploader_page',  array($cdm_uploader,'upload_dialog'));
 add_action('admin_footer',  array($cdm_uploader,'upload_dialog'));
 class cdm_uploader{
 	
@@ -185,7 +185,13 @@ class cdm_uploader{
 	
 	function upload_dialog(){
 		
+		global $post;
 		
+		$pos = strpos( $post->post_content, '[sp-client-document-manager]');
+		$pos2 = strpos( $post->post_content, '[sp-client-media-manager]');
+		if ($pos === false && $pos2 === false) {
+			
+		}else{
 		echo  '<div style="display:none">
 				';
 		echo cdm_uploader::above_uploader();	
@@ -210,7 +216,7 @@ class cdm_uploader{
 		</div>';
 		
 	
-	
+		}
 	
 		
 		

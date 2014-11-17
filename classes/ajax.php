@@ -1509,7 +1509,13 @@ function sp_cu_remove_project(){
                 } else {
                     $name = $r[$i]['name'];
                 }
-                $attachment_links .= '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file']). '">'.$r[$i]['name']. '</a><br>';
+				
+				if($r[$i]['name'] == ''){
+				$filename = $r[$i]['file'];
+				}else{
+				$filename = $r[$i]['name'];	
+				}
+                $attachment_links .= '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file']). '">'.$filename . '</a><br>';
                 $attachment_array[$i] = '' . SP_CDM_UPLOADS_DIR . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '';
             }
          

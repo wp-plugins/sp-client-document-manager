@@ -652,7 +652,10 @@ jQuery(document).ready(function() {
                 #$html .= '<p style="color:red">' . __("Please upload a file!", "sp-cdm") . '</p>';
             }
         }
+		do_action('sp_cdm_bottom_uploader_page');
         echo $html;
+		
+		
     }
     function display_sp_client_upload($atts)
     {
