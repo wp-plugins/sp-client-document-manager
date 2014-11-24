@@ -187,11 +187,7 @@ class cdm_uploader{
 		
 		global $post;
 		
-		$pos = strpos( $post->post_content, '[sp-client-document-manager]');
-		$pos2 = strpos( $post->post_content, '[sp-client-media-manager]');
-		if ($pos === false && $pos2 === false) {
-			
-		}else{
+	
 		echo  '<div style="display:none">
 				';
 		echo cdm_uploader::above_uploader();	
@@ -216,7 +212,7 @@ class cdm_uploader{
 		</div>';
 		
 	
-		}
+
 	
 		
 		

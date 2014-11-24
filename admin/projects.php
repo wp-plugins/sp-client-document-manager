@@ -32,7 +32,7 @@ $selected = $r[0]['uid'];
 
   <tr>
 
-    <td width="200">' . __("Name:", "sp-cdm") . '</td>
+    <th width="250">' . __("Name:", "sp-cdm") . '</th>
 
     <td><input type="text" name="project-name" value="' . stripslashes($r[0]['name']) . '"></td>
 
@@ -40,7 +40,7 @@ $selected = $r[0]['uid'];
 
   <tr>
 
-    <td>' . __("User:", "sp-cdm") . '</td>
+    <th>' . __("User:", "sp-cdm") . '</th>
 
     <td>';
             wp_dropdown_users(array(
@@ -159,9 +159,11 @@ if($r[$i]['parent'] == 0 or class_exists('spdm_sub_projects')){
                     $where_project['pid'] = $_POST['id'];
                     $wpdb->update("" . $wpdb->prefix . "sp_cu", $update, $where_project);
                     $insert_id = $_POST['id'];
+					do_action('sp_cdm_edit_project_update', $insert_id);
                 } else {
                     $wpdb->insert("" . $wpdb->prefix . "sp_cu_project", $insert);
                     $insert_id = $wpdb->insert_id;
+					do_action('sp_cdm_edit_project_add', $insert_id);
                 }
                 do_action('sp_cdm_edit_project_save', $insert_id);
             } //$_POST['save-project'] != ""

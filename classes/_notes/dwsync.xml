@@ -63,16 +63,16 @@
 <file name="uploader.php" server="dlg360.com//public_html/" local="130523261992707362" remote="130525168800000000" Dst="2" />
 <file name="install.php" server="dlg360.com//public_html/" local="130536284611768132" remote="130546709400000000" Dst="2" />
 <file name="uploader.php" server="forneycorp.net//public_html/" local="130523261992707362" remote="130549294800000000" Dst="2" />
-<file name="ajax.php" server="smartypantsplugins.com//public_html/sandbox/" local="130559693186175620" remote="130560425400000000" Dst="2" />
-<file name="install.php" server="smartypantsplugins.com//public_html/sandbox/" local="130536284611768132" remote="130560425400000000" Dst="2" />
-<file name="browser.detection.php" server="smartypantsplugins.com//public_html/sandbox/" local="130120783144619833" remote="130560425400000000" Dst="2" />
-<file name="uploader.php" server="smartypantsplugins.com//public_html/sandbox/" local="130523261992707362" remote="130560425400000000" Dst="2" />
-<file name="mat.thumb.php" server="smartypantsplugins.com//public_html/sandbox/" local="130387019291572024" remote="130560425400000000" Dst="2" />
-<file name="ajax.php" server="F:/ampps/www/" local="130577060704152449" remote="130577060700000000" Dst="2" />
-<file name="browser.detection.php" server="F:/ampps/www/" local="130120783144619833" remote="130120783140000000" Dst="2" />
-<file name="install.php" server="F:/ampps/www/" local="130536284611768132" remote="130536284610000000" Dst="2" />
-<file name="mat.thumb.php" server="F:/ampps/www/" local="130387019291572024" remote="130387019290000000" Dst="2" />
-<file name="uploader.php" server="F:/ampps/www/" local="130577016773896298" remote="130577016770000000" Dst="2" />
+<file name="ajax.php" server="smartypantsplugins.com//public_html/sandbox/" local="130586387931686570" remote="130610613000000000" Dst="1" />
+<file name="install.php" server="smartypantsplugins.com//public_html/sandbox/" local="130536284611768132" remote="130610613000000000" Dst="1" />
+<file name="browser.detection.php" server="smartypantsplugins.com//public_html/sandbox/" local="130120783144619833" remote="130610613000000000" Dst="1" />
+<file name="uploader.php" server="smartypantsplugins.com//public_html/sandbox/" local="130609748022243578" remote="130610613000000000" Dst="1" />
+<file name="mat.thumb.php" server="smartypantsplugins.com//public_html/sandbox/" local="130387019291572024" remote="130610613000000000" Dst="1" />
+<file name="ajax.php" server="F:/ampps/www/" local="130586387931686570" remote="130586387930000000" Dst="1" />
+<file name="browser.detection.php" server="F:/ampps/www/" local="130120783144619833" remote="130120783140000000" Dst="1" />
+<file name="install.php" server="F:/ampps/www/" local="130536284611768132" remote="130536284610000000" Dst="1" />
+<file name="mat.thumb.php" server="F:/ampps/www/" local="130387019291572024" remote="130387019290000000" Dst="1" />
+<file name="uploader.php" server="F:/ampps/www/" local="130609748022243578" remote="130609748020000000" Dst="1" />
 <file name="install.php" server="obp2-09.nexcess.net//public_html/documents/" local="130536284611768132" remote="130568358600000000" Dst="2" />
 <file name="ajax.php" server="obp2-09.nexcess.net//public_html/documents/" local="130568230846735128" remote="130568358600000000" Dst="2" />
 <file name="browser.detection.php" server="obp2-09.nexcess.net//public_html/documents/" local="130120783144619833" remote="130568358600000000" Dst="2" />
@@ -84,4 +84,9 @@
 <file name="mat.thumb.php" server="electronicsi.com//public_html/main/" local="130387019291572024" remote="130571910600000000" Dst="2" />
 <file name="uploader.php" server="electronicsi.com//public_html/main/" local="130523261992707362" remote="130571910600000000" Dst="2" />
 <file name="uploader.php" server="smartypantsplugins.com//public_html/" local="130602827274747896" remote="130602827400000000" Dst="1" />
+<file name="install.php" server="frimec-international.es//httpdocs/" local="130536284611768132" remote="130609934400000000" Dst="1" />
+<file name="ajax.php" server="frimec-international.es//httpdocs/" local="130586387931686570" remote="130609934400000000" Dst="1" />
+<file name="browser.detection.php" server="frimec-international.es//httpdocs/" local="130120783144619833" remote="130609934400000000" Dst="1" />
+<file name="mat.thumb.php" server="frimec-international.es//httpdocs/" local="130387019291572024" remote="130609934400000000" Dst="1" />
+<file name="uploader.php" server="frimec-international.es//httpdocs/" local="130609748022243578" remote="130609963800000000" Dst="1" />
 </dwsync>

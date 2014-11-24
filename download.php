@@ -1,8 +1,8 @@
-<?php 
-
+<?php  ob_start();
+ 
 require( '../../../wp-load.php' );
 
-	
+	ini_set('memory_limit', '256M');
 
 	global $wpdb;
 
@@ -11,7 +11,57 @@ require( '../../../wp-load.php' );
 if ( (is_user_logged_in() && get_option('sp_cu_user_require_login_download') == 1 ) or (get_option('sp_cu_user_require_login_download') == '' or get_option('sp_cu_user_require_login_download') == 0 )){
 
 do_action('wp_cdm_download_before');
+function smartReadFile($location, $filename, $mimeType='application/octet-stream')
+{ if(!file_exists($location))
+  { header ("HTTP/1.0 404 Not Found");
+    return;
+  }
+  
+  $size=filesize($location);
+  $time=date('r',filemtime($location));
+  
+  $fm=@fopen($location,'rb');
+  if(!$fm)
+  { header ("HTTP/1.0 505 Internal server error");
+    return;
+  }
+  
+  $begin=0;
+  $end=$size;
+  
+  if(isset($_SERVER['HTTP_RANGE']))
+  { if(preg_match('/bytes=\h*(\d+)-(\d*)[\D.*]?/i', $_SERVER['HTTP_RANGE'], $matches))
+    { $begin=intval($matches[0]);
+      if(!empty($matches[1]))
+        $end=intval($matches[1]);
+    }
+  }
+ 
 
+  if($begin>0||$end<$size)
+    header('HTTP/1.0 206 Partial Content');
+  else
+    header('HTTP/1.0 200 OK');  
+  
+  header('Content-Type: application/force-download');
+  header('Cache-Control: public, must-revalidate, max-age=0');
+  header('Pragma: no-cache');  
+  header('Accept-Ranges: bytes');
+  header('Content-Length:'.($end-$begin));
+  header("Content-Range: bytes $begin-$end/$size");
+  header("Content-Disposition: inline; filename=$filename");
+    header('Content-Transfer-Encoding: binary');
+  header("Last-Modified: $time");
+  header('Connection: close');  
+  
+  $cur=$begin;
+  fseek($fm,$begin,0);
+
+  while(!feof($fm)&&$cur<$end&&(connection_status()==0))
+  { print fread($fm,min(1024*16,$end-$cur));
+    $cur+=1024*16;
+  }
+}
 
 if(!function_exists('mime_content_type')) {
 
@@ -314,44 +364,10 @@ if(is_file($file_name))
   exit(); 
 
  }else{
-set_time_limit(0); 
+  set_time_limit(0); 
 
-ob_start();
-  header('Pragma: public');   // required
-
-  header('Expires: 0');    // no cache
-
- 
-
-  header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-
-  header('Last-Modified: '.gmdate ('D, d M Y H:i:s', filemtime ($file_name)).' GMT');
-
-  header('Cache-Control: private',false);
-
-
-
-
-
-
-
-
-
-
-
-  header('Content-Type: '.$mime);
-
-  header('Content-Disposition: attachment; filename="'.basename($file_name).'"');
-
-  header('Content-Transfer-Encoding: binary');
-
-  header('Content-Length: '.filesize($file_name));  // provide file size
-
-  header('Connection: close');
- ob_clean();
-            flush();
-  readfile($file_name,filesize($filename));    // push it out
-
+smartReadFile($file_name,basename($file_name),$mime);
+ob_end_flush();
 exit(0);
 
  }
