@@ -26,7 +26,8 @@ class spdm_ajax
     function view_file()
     {
         global $wpdb, $current_user, $cdm_comments, $cdm_google, $cdm_log;
-        $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where id = '" . $_GET['id'] . "'  order by date desc", ARRAY_A);
+        $r = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where id = %d order by date desc", $_GET['id']), ARRAY_A);
+		
         $html .= '<div id="view_file_refresh">
 
 		
@@ -337,8 +338,10 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
     function delete_file()
     {
         global $wpdb, $current_user;
-        $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where id = '" . $_GET['dlg-delete-file'] . "'  order by date desc", ARRAY_A);
-        if ((($current_user->ID == $r[0]['uid'] or cdmFindLockedGroup($current_user->ID, $r[0]['uid']) == true) && get_option('sp_cu_user_delete_disable') != 1) or current_user_can('manage_options')) {
+        $r = $wpdb->get_results($wp->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where id = %d  order by date desc",$_GET['dlg-delete-file']), ARRAY_A);
+       
+	   
+	    if ((($current_user->ID == $r[0]['uid'] or cdmFindLockedGroup($current_user->ID, $r[0]['uid']) == true) && get_option('sp_cu_user_delete_disable') != 1) or current_user_can('manage_options')) {
             $wpdb->query("
 
 	DELETE FROM " . $wpdb->prefix . "sp_cu WHERE id = " . $_GET['dlg-delete-file'] . "
@@ -359,7 +362,7 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
         header('Cache-Control: no-cache, must-revalidate');
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
         header('Content-type: application/json');
-        $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where id = '" . $_GET['id'] . "'", ARRAY_A);
+        $r = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where id = %d",  $_GET['id']), ARRAY_A);
         return str_replace(array(
             '[',
             ']'
@@ -368,8 +371,8 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
     function remove_cat()
     {
         global $wpdb, $current_user;
-        $wpdb->query("DELETE FROM " . $wpdb->prefix . "sp_cu_project WHERE id = " . $_REQUEST['id'] . "	");
-        $wpdb->query("DELETE FROM " . $wpdb->prefix . "sp_cu WHERE pid = " . $_REQUEST['id'] . "	");
+        $wpdb->query($wp->prepare("DELETE FROM " . $wpdb->prefix . "sp_cu_project WHERE id = %d",$_REQUEST['id'] ));
+        $wpdb->query($wp->prepare("DELETE FROM " . $wpdb->prefix . "sp_cu WHERE pid = %d",$_REQUEST['id'] ));
     }
     function save_cat()
     {
@@ -1463,8 +1466,8 @@ function sp_cu_remove_project(){
     {
         global $wpdb, $current_user;
         $user_ID     = $_GET['id'];
-        $r           = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where pid = $user_ID  order by date desc", ARRAY_A);
-        $r_project   = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project where id = $user_ID  ", ARRAY_A);
+        $r           = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where pid = %d order by date desc,",$user_ID ), ARRAY_A);
+        $r_project   = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project where id = %d  ",$user_ID ), ARRAY_A);
         $return_file = "" . preg_replace('/[^\w\d_ -]/si', '', stripslashes($r_project[0]['name'])) . ".zip";
         $zip         = new Zip();
         $dir         = '' . SP_CDM_UPLOADS_DIR . '' . $r_project[0]['uid'] . '/';
@@ -1485,7 +1488,7 @@ function sp_cu_remove_project(){
         $path        = '' . SP_CDM_UPLOADS_DIR_URL . '' . $user_ID . '/';
         $return_file = "Account.zip";
         $zip         = new Zip();
-        $r           = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where uid = $user_ID  order by date desc", ARRAY_A);
+        $r           = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where uid = %d  order by date desc",$user_ID), ARRAY_A);
         //@unlink($dir.$return_file);
         for ($i = 0; $i < count($r); $i++) {
             $zip->addFile(file_get_contents($dir . $r[$i]['file']), $r[$i]['file'], filectime($dir . $r[$i]['file']));
@@ -1500,8 +1503,15 @@ function sp_cu_remove_project(){
         if (count($_POST['vendor_email']) == 0) {
             echo '<p style="color:red;font-weight:bold">' . __("Please select at least one file!", "sp-cdm") . '</p>';
         } else {
-            $files = implode(",", $_POST['vendor_email']);
-            $r     = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu  WHERE id IN (" . $files . ")", ARRAY_A);
+           
+		   
+		    $files = $_POST['vendor_email'];    
+		 	$how_many = count($files);
+			$placeholders = array_fill(0, $how_many, '%d');
+			$format = implode(', ', $placeholders);
+			$query = $wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu  WHERE id IN ($format)", $files);
+		 
+			$r     = $wpdb->get_results($query, ARRAY_A);
       
             for ($i = 0; $i < count($r); $i++) {
                 if ($r[$i]['name'] == "") {
