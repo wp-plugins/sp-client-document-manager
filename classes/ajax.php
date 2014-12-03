@@ -338,15 +338,14 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
     function delete_file()
     {
         global $wpdb, $current_user;
-        $r = $wpdb->get_results($wp->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where id = %d  order by date desc",$_GET['dlg-delete-file']), ARRAY_A);
+        $r = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where id = %d  order by date desc",$_GET['dlg-delete-file']), ARRAY_A);
        
 	   
 	    if ((($current_user->ID == $r[0]['uid'] or cdmFindLockedGroup($current_user->ID, $r[0]['uid']) == true) && get_option('sp_cu_user_delete_disable') != 1) or current_user_can('manage_options')) {
-            $wpdb->query("
+            $wpdb->query($wpdb->prepare("
+	DELETE FROM " . $wpdb->prefix . "sp_cu WHERE id = %d ",$_GET['dlg-delete-file'])
 
-	DELETE FROM " . $wpdb->prefix . "sp_cu WHERE id = " . $_GET['dlg-delete-file'] . "
-
-	");
+	);
             unlink('' . SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '');
 			        $ext        = preg_replace('/^.*\./', '', $r[0]['file']);
 					$small = '' . SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/'.$r[0]['file'].'_small.png';
@@ -371,8 +370,8 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
     function remove_cat()
     {
         global $wpdb, $current_user;
-        $wpdb->query($wp->prepare("DELETE FROM " . $wpdb->prefix . "sp_cu_project WHERE id = %d",$_REQUEST['id'] ));
-        $wpdb->query($wp->prepare("DELETE FROM " . $wpdb->prefix . "sp_cu WHERE pid = %d",$_REQUEST['id'] ));
+        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->prefix . "sp_cu_project WHERE id = %d",$_REQUEST['id'] ));
+        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->prefix . "sp_cu WHERE pid = %d",$_REQUEST['id'] ));
     }
     function save_cat()
     {

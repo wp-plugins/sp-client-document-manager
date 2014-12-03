@@ -697,7 +697,11 @@ jQuery(document).ready(function() {
                     $link = '#upload';
                 }
                 $html .= '  <a href="' . $link . '"  class="sp_cdm_add_file hide_add_file_permission">' . __("Add File", "sp-cdm") . '</a> ';
-               if(get_option('sp_cu_user_projects') == 1  or current_user_can( 'manage_options' )){	
+                
+				$addbuttons = '';
+                $addbuttons = apply_filters('sp_cdm_add_buttons', $addbuttons);
+				$html .= $addbuttons;
+				if(get_option('sp_cu_user_projects') == 1  or current_user_can( 'manage_options' )){	
 			    $html .= '  <a href="#folder" class="sp_cdm_add_folder hide_add_folder_permission">' . __("Add Folder", "sp-cdm") . '</a> </span> ';
 				}
 				$morebuttons = '';

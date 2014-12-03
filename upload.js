@@ -118,7 +118,7 @@ if(jQuery(window).width()*0.9< 768){
 			   url: url,			  
 
 			   success: function(msg){
-
+			
 				cdmCloseModal('file');
 jQuery( NewDialog ).remove();
 

@@ -249,6 +249,8 @@ if(!function_exists('mime_content_type')) {
 
 $file_decrypt = base64_decode($_GET['fid']);
 $file_arr = explode("|",$file_decrypt);
+
+#print_r($file_arr);
 $fid = $file_arr[0];
 $file_date = $file_arr[1];
 $file_name = $file_arr[2];
@@ -264,7 +266,7 @@ $cdm_log->add($fid,$current_user->ID);
 
 
 	$r = $wpdb->get_results("SELECT *  FROM ".$wpdb->prefix."sp_cu   where id= '".$wpdb->escape($fid)."' AND date = '".$wpdb->escape($file_date)."'  AND file = '".$wpdb->escape($file_name)."' order by date desc", ARRAY_A);
-
+#print_r($r);exit;
 
 
 	if(count($r) == 0){header("HTTP/1.0 404 Not Found");exit;}

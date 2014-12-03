@@ -1004,7 +1004,7 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
 					
                 if (@CU_PREMIUM == 1) {
                     if (current_user_can('sp_cdm_groups')) {
-                        $content .= '<li><a href="admin.php?page=sp-client-document-manager-groups" >' . __("Groups", "sp-cdm") . '</a></li>';
+                        $content .= '<li><a href="admin.php?page=sp-client-document-manager-groups" >' . __("Share Spaces", "sp-cdm") . '</a></li>';
 					}
 					 if (current_user_can('sp_cdm_forms')) {
                         $content .= '<li><a href="admin.php?page=sp-client-document-manager-forms">' . __("Forms", "sp-cdm") . '</a></li>';
