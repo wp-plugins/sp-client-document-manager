@@ -49,11 +49,19 @@ function smartReadFile($location, $filename, $mimeType='application/octet-stream
   header('Accept-Ranges: bytes');
   header('Content-Length:'.($end-$begin));
   header("Content-Range: bytes $begin-$end/$size");
-  header("Content-Disposition: inline; filename=$filename");
+  header("Content-Disposition: attachment; filename=$filename");
     header('Content-Transfer-Encoding: binary');
   header("Last-Modified: $time");
   header('Connection: close');  
   
+// check for IE only headers
+
+if(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) {
+    header("Cache-control: private");
+    header('Pragma: private');
+} else {
+    header('Pragma: public');
+}
   $cur=$begin;
   fseek($fm,$begin,0);
 
