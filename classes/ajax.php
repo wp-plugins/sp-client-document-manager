@@ -891,7 +891,7 @@ echo '
 			}else{
 			$file_link =  'cdmViewFile(' . $r[$i]['id'] . ')';	
 			}
-			
+			if(cdm_file_permissions($r[$i]['pid']) == 1){
 			echo '
 				<td class="cdm_file_icon ext_' . $ext . '" onclick="cdmViewFile(' . $r[$i]['id'] . ')"></td>
 
@@ -906,6 +906,7 @@ echo '
 		</tr>	
 
 		';
+			}
         }
         echo '</tbody></table><div style="clear:both"></div></div>';
     }
@@ -1430,11 +1431,11 @@ function sp_cu_remove_project(){
 			
 			$img = apply_filters('sp_cdm_viewfile_image', $img,$r[$i]);
 			if(get_option('sp_cu_file_direct_access') == 1){
-			$file_link = 	'window.open(\'' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file']) . '\')'; ;
+			$file_link = 	'window.open(\'' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file']) . '\'); void(0)'; ;
 			}else{
 			$file_link =  'cdmViewFile(' . $r[$i]['id'] . ')';	
 			}
-			
+			if(cdm_file_permissions($r[$i]['pid']) == 1){
             echo '<div class="dlg_cdm_thumbnail_folder">
 
 			<div class="dlg_cdm_thumbnail_image">
@@ -1453,11 +1454,8 @@ function sp_cu_remove_project(){
 				do_action('spdm_file_thumbs_column_before_file', $r[$i]['id']);
 				echo '
 
-				</div>
-
-		
-
-		';
+				</div>';
+			}
         }
         echo '<div style="clear:both"></div></div>';
     }

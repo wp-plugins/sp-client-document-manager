@@ -63,7 +63,7 @@
 <file name="uploader.php" server="dlg360.com//public_html/" local="130523261992707362" remote="130525168800000000" Dst="2" />
 <file name="install.php" server="dlg360.com//public_html/" local="130536284611768132" remote="130546709400000000" Dst="2" />
 <file name="uploader.php" server="forneycorp.net//public_html/" local="130523261992707362" remote="130549294800000000" Dst="2" />
-<file name="ajax.php" server="smartypantsplugins.com//public_html/sandbox/" local="130620869552220486" remote="130620869400000000" Dst="1" />
+<file name="ajax.php" server="smartypantsplugins.com//public_html/sandbox/" local="130621771574705515" remote="130621771200000000" Dst="1" />
 <file name="install.php" server="smartypantsplugins.com//public_html/sandbox/" local="130536284611768132" remote="130610613000000000" Dst="1" />
 <file name="browser.detection.php" server="smartypantsplugins.com//public_html/sandbox/" local="130120783144619833" remote="130610613000000000" Dst="1" />
 <file name="uploader.php" server="smartypantsplugins.com//public_html/sandbox/" local="130609748022243578" remote="130610613000000000" Dst="1" />
@@ -89,4 +89,5 @@
 <file name="browser.detection.php" server="frimec-international.es//httpdocs/" local="130120783144619833" remote="130609934400000000" Dst="1" />
 <file name="mat.thumb.php" server="frimec-international.es//httpdocs/" local="130387019291572024" remote="130609934400000000" Dst="1" />
 <file name="uploader.php" server="frimec-international.es//httpdocs/" local="130609748022243578" remote="130609963800000000" Dst="1" />
+<file name="ajax.php" server="obp2-09.nexcess.net" local="130621053882590893" remote="130621053600000000" Dst="1" />
 </dwsync>
