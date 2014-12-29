@@ -1,8 +1,8 @@
-<?php  ob_start();
+<?php  
  
 require( '../../../wp-load.php' );
 
-	ini_set('memory_limit', '256M');
+	ini_set('memory_limit', '1024M');
 
 	global $wpdb;
 
@@ -17,10 +17,13 @@ function smartReadFile($location, $filename, $mimeType='application/octet-stream
     return;
   }
   
-  $size=filesize($location);
+  $size= @filesize($location);
   $time=date('r',filemtime($location));
   
   $fm=@fopen($location,'rb');
+  ob_start();
+  
+  
   if(!$fm)
   { header ("HTTP/1.0 505 Internal server error");
     return;
@@ -69,6 +72,8 @@ if(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_
   { print fread($fm,min(1024*16,$end-$cur));
     $cur+=1024*16;
   }
+  
+  ob_end_flush();
 }
 
 if(!function_exists('mime_content_type')) {
@@ -377,7 +382,7 @@ if(is_file($file_name))
   set_time_limit(0); 
 
 smartReadFile($file_name,basename($file_name),$mime);
-ob_end_flush();
+
 exit(0);
 
  }

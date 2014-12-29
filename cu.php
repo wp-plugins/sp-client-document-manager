@@ -4,11 +4,11 @@ Plugin Name: SP Project & Document Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business manage documents and projects with permissions in an easy to use interface.
 Author: smartypants
-Version: 2.4.7
+Version: 2.4.8
 Author URI: http://smartypantsplugins.com
 */
 global $sp_client_upload;
-$sp_client_upload = "2.4.7";
+$sp_client_upload = "2.4.8";
 function sp_cdm_language_init()
 {
     load_plugin_textdomain('sp-cdm', false, dirname(plugin_basename(__FILE__)) . '/languages/');
@@ -61,15 +61,15 @@ require_once '' . dirname(__FILE__) . '/classes/install.php';
 if(!function_exists('bfi_thumb')){
 require_once '' . dirname(__FILE__) . '/classes/mat.thumb.php';
 }
-include_once '' . dirname(__FILE__) . '/classes/ajax.php';
-include_once '' . dirname(__FILE__) . '/common.php';
-include_once '' . dirname(__FILE__) . '/zip.class.php';
-include_once '' . dirname(__FILE__) . '/admin/vendors.php';
-include_once '' . dirname(__FILE__) . '/admin/projects.php';
-include_once '' . dirname(__FILE__) . '/user/projects.php';
-include_once '' . dirname(__FILE__) . '/functions.php';
-include_once '' . dirname(__FILE__) . '/shortcode.php';
-include_once '' . dirname(__FILE__) . '/admin/fileview.php';
+require_once '' . dirname(__FILE__) . '/classes/ajax.php';
+require_once '' . dirname(__FILE__) . '/common.php';
+require_once '' . dirname(__FILE__) . '/zip.class.php';
+require_once '' . dirname(__FILE__) . '/admin/vendors.php';
+require_once '' . dirname(__FILE__) . '/admin/projects.php';
+require_once '' . dirname(__FILE__) . '/user/projects.php';
+require_once '' . dirname(__FILE__) . '/functions.php';
+require_once '' . dirname(__FILE__) . '/shortcode.php';
+require_once '' . dirname(__FILE__) . '/admin/fileview.php';
 function sp_client_upload_init()
 {
     wp_enqueue_script('jquery');

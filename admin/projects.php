@@ -45,7 +45,8 @@ $selected = $r[0]['uid'];
     <td>';
             wp_dropdown_users(array(
                 'name' => 'uid',
-                'selected' => $selected
+                'selected' => $selected,
+				'show_option_none'  => __("Not Assigned","sp-cdm")
             ));
             echo '</td>
 

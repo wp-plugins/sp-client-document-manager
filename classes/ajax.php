@@ -87,6 +87,8 @@ jQuery(".viewFileTabs").responsiveTabs({
 	<ul>
 
 		<li><a href="#cdm-file-main">'.__("File Info","sp-cdm").'</a></li>';
+		$html = apply_filters('sp_cdm_view_file_after_file_info_tab',$html,$r);
+		
         if (function_exists('sp_cdm_revision_add') && get_option('sp_cu_user_disable_revisions') != 1) {
             $html .= '<li><a href="#cdm-file-revisions">'.__("Revisions","sp-cdm").'</a></li>';
         }

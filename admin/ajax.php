@@ -15,7 +15,7 @@ switch ($function) {
         break;
     case "remove-category":
         $wpdb->query("DELETE FROM " . $wpdb->prefix . "sp_cu_project WHERE id = " . $_REQUEST['id'] . "	");
-        $wpdb->query("DELETE FROM " . $wpdb->prefix . "sp_cut WHERE pid = " . $_REQUEST['id'] . "	");
+        $wpdb->query("DELETE FROM " . $wpdb->prefix . "sp_cu WHERE pid = " . $_REQUEST['id'] . "	");
         break;
     case "save-category":
         $insert['name'] = $_POST['name'];

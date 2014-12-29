@@ -1,5 +1,6 @@
 <?php
-function sp_cdm_display_project_shortcode($atts)
+if(!function_exists('sp_cdm_display_project_shortcode_show')){
+function sp_cdm_display_project_shortcode_show($atts)
 {
     global $wpdb, $current_user, $user_ID;
     $pid       = $atts['project'];
@@ -34,7 +35,8 @@ function sp_cdm_display_project_shortcode($atts)
     }
     return $content;
 }
-add_shortcode('cdm-project', 'sp_cdm_display_project_shortcode');
+add_shortcode('cdm-project', 'sp_cdm_display_project_shortcode_show');
+
 function sp_cdm_file_link_shortcode($atts)
 {
     global $wpdb, $current_user, $user_ID;
@@ -724,7 +726,7 @@ jQuery(document).ready(function() {
                 $upload_view = display_sp_thumbnails2($r);
             }
 				$html .= apply_filters('sp_cdm_upload_view',$upload_view);
-				
+				$html = apply_filters('sp_cdm_upload_bottom',$html);
 				
 		
         } else {
@@ -752,5 +754,5 @@ add_action('sp_cu_add_file_link', 'sp_cu_add_file_link_free', 5);
 add_shortcode('sp-client-media-manager', 'display_sp_client_upload');
 add_shortcode('sp-client-document-manager', 'display_sp_client_upload');
 add_action('wp_footer', 'display_sp_client_upload_process');
-
+}
 ?>
