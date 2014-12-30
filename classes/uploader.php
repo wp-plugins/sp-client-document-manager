@@ -8,7 +8,7 @@ add_action('init', array($cdm_uploader,'js'));
 add_action('admin_menu',array($cdm_uploader,'css'));;
 add_action('admin_init',  array($cdm_uploader,'js'));
 add_action('sp_cdm_bottom_uploader_page',  array($cdm_uploader,'upload_dialog'));
-add_action('admin_footer',  array($cdm_uploader,'upload_dialog'));
+add_action('admin_footer',  array($cdm_uploader,'admin_upload_dialog'));
 class cdm_uploader{
 	
 	function __construct(){
@@ -182,12 +182,20 @@ class cdm_uploader{
 			do_action('cdm_above_uploader');
 		
 	}
-	
+	function admin_upload_dialog(){
+		
+			if($_GET['page'] == 'sp-client-document-manager-fileview'){
+				
+				$this->upload_dialog();
+				
+			}
+		
+	}
 	function upload_dialog(){
 		
 		global $post;
 		
-	
+	 
 		echo  '<div style="display:none">
 				';
 		echo cdm_uploader::above_uploader();	

@@ -469,7 +469,7 @@ $html .=''.$add_project .'
 </div>
 
 <form  action="'.$_SERVER['REQUEST_URI'].'" method="post" enctype="multipart/form-data" id="upload_form" name="sp_upload_form" >
-<input type="text" name="admin-uploader" value="1">
+<input type="hidden" name="admin-uploader" value="1">
 ';
 
 
