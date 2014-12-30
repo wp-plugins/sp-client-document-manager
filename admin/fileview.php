@@ -133,7 +133,7 @@ jQuery(document).ready(function() {
 	function cdm_ajax_search(){
 		
 	var cdm_search = jQuery("#search_files").val();
-	jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'admin/ajax.php?function=file-list&uid='.$_GET['id'].'&search=" + cdm_search);		
+	jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'ajax.php?function=file-list&uid='.$_GET['id'].'&search=" + cdm_search);		
 		
 	}
 	</script>
@@ -237,7 +237,7 @@ function display_sp_thumbnails2($r){
 	}else{
 		var pidurl = "&cid=" + pid;	
 	}
-		jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'admin/ajax.php?function=file-list&uid='.$user_ID.'&sort=" + sort + "" + pidurl);	
+		jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'ajax.php?function=file-list&uid='.$user_ID.'&sort=" + sort + "" + pidurl);	
 }
 
 	
@@ -246,7 +246,7 @@ function display_sp_thumbnails2($r){
 	}
 	function sp_cdm_load_file_manager(){
 		sp_cdm_loading_image();
-	jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'admin/ajax.php?function=file-list&uid='.$user_ID.'");	
+	jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'ajax.php?function=file-list&uid='.$user_ID.'");	
 	cdm_ajax_search();
 	}
 	
@@ -358,15 +358,22 @@ function display_sp_thumbnails2($r){
 		
 
 		}
-	</script>
+	</script>';
+	$content .='<form id="cdm_wrapper_form">';
 	
-	<div id="cdm_wrapper">
+	$extra_js = apply_filters('sp_cdm_uploader_above_admin',$extra_js);
+	$content .=''.$extra_js.'<input type="hidden" value="'.SP_CDM_PLUGIN_URL.'ajax.php" id="sp_cu_ajax_url" class="sp_cu_ajax_url" name="sp_cu_ajax_url"><div id="cdm_wrapper">';
+	$extra_js = '';
+
+
+
+	$content .='
 	<div id="cmd_file_thumbs">
 	<div style="padding:100px; text-align:center"><img src="'.SP_CDM_PLUGIN_URL.'images/loading.gif"></div>	
 	
 	</div>
 	<div style="clear:both"></div>
-	</div>
+	</div></form>
 	';
 	return $content;
 	
@@ -709,7 +716,7 @@ if(get_option('sp_cu_user_projects_thumbs') == 1){
 	function cdm_ajax_search(){
 		
 	var cdm_search = jQuery("#search_files").val();
-	jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'admin/ajax.php?function=file-list&uid='.$user_ID.'&search=" + cdm_search);		
+	jQuery("#cmd_file_thumbs").load("'.SP_CDM_PLUGIN_URL.'ajax.php?function=file-list&uid='.$user_ID.'&search=" + cdm_search);		
 		
 	}
 	</script>

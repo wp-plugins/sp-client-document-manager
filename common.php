@@ -255,6 +255,7 @@ function cdm_folder_permissions($pid){
 			$permission = 0;
 		
 				$uid = $current_user->ID;
+				
 				//if an admin
 				if(current_user_can('manage_options')){
 				$permission = 1;	

@@ -213,12 +213,14 @@ $r_projects_query = "SELECT *
 
 									 ";
 			$r_projects_query = apply_filters('sp_cdm_projects_query_dropdown', $r_projects_query ,$uid);							 
+			
+			
 			$r_projects_query .="
 
-										ORDER by name";						 
+										ORDER by name";		
+										
+													 
   $projects = $wpdb->get_results($r_projects_query, ARRAY_A);	
-
-
 
 
 
