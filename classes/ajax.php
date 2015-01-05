@@ -337,15 +337,21 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
   ';
         return $html;
     }
-    function delete_file()
+    function delete_file($file_id = NULL)
     {
         global $wpdb, $current_user;
-        $r = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where id = %d  order by date desc",$_GET['dlg-delete-file']), ARRAY_A);
+		
+		if($file_id != NULL){
+		$file_id = $file_id;	
+		}else{
+		$file_id = $_GET['dlg-delete-file'];	
+		}
+        $r = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where id = %d  order by date desc",$file_id), ARRAY_A);
        
 	   
 	    if ((($current_user->ID == $r[0]['uid'] or cdmFindLockedGroup($current_user->ID, $r[0]['uid']) == true) && get_option('sp_cu_user_delete_disable') != 1) or current_user_can('manage_options')) {
             $wpdb->query($wpdb->prepare("
-	DELETE FROM " . $wpdb->prefix . "sp_cu WHERE id = %d ",$_GET['dlg-delete-file'])
+	DELETE FROM " . $wpdb->prefix . "sp_cu WHERE id = %d ",$file_id)
 
 	);
             unlink('' . SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '');
@@ -354,6 +360,7 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
 					$big = '' . SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/'.$r[0]['file'].'_big.png';
 			@unlink($small);
 			@unlink($big);
+			sp_cdm_user_logs::write('Deleted file: '.$r[0]['name'].'');
 			do_action('sp_cdm_delete_file',  $r[0]); 
         }
     }
@@ -369,11 +376,49 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
             ']'
         ), '', htmlspecialchars(json_encode($r[0]), ENT_NOQUOTES));
     }
-    function remove_cat()
+	
+
+    function remove_cat($project_id= NULL)
     {
         global $wpdb, $current_user;
-        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->prefix . "sp_cu_project WHERE id = %d",$_REQUEST['id'] ));
-        $wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->prefix . "sp_cu WHERE pid = %d",$_REQUEST['id'] ));
+		
+		if($project_id != NULL){
+		$project_id = $project_id;	
+		}else{
+		$project_id = $_REQUEST['id'];	
+		}
+         $r = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project   where id = %d ",$project_id), ARRAY_A);
+       
+	   
+		if ((($current_user->ID == $r[0]['uid'] or cdmFindLockedGroup($current_user->ID, $r[0]['uid']) == true) && get_option('sp_cu_user_delete_disable') != 1) or current_user_can('manage_options') or cdm_folder_permissions($project_id) == 1) {
+		  
+					
+     
+				 
+					  #delete this projects files
+						$f = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu where pid = %d ",$project_id), ARRAY_A);
+							
+							for ($j = 0; $j < count($f); $j++) {
+							
+								$this->delete_file($f[$j]['id']);
+								
+								#$this->remove_cat($id);
+							}
+					
+						#find and remove sub folders
+						$p = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project where parent = %d ",$project_id), ARRAY_A);
+						for ($i = 0; $i < count($p); $i++) {
+							
+							$this->remove_cat($p[$i]['id']);
+						}
+					#delete the project
+					sp_cdm_user_logs::write('Deleted folder: '.$r[0]['name'].'');
+					$wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->prefix . "sp_cu_project WHERE id = %d",$project_id ));							
+						
+				
+		}else{
+		sp_cdm_user_logs::write('Error: Failed removing folder: '.$r[0]['name'].'');	
+		}
     }
     function save_cat()
     {
@@ -668,9 +713,9 @@ function sp_cu_remove_project(){
 						
 							jQuery.removeCookie("pid");
 						
-					   jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=file-list&uid=' . $_GET['uid'] . '");
+					  cdm_ajax_search();
 
-					 
+					 	
 
 					 
 
@@ -1150,8 +1195,8 @@ function sp_cu_remove_project(){
 					   data: "id=' . $_GET['pid'] . '" ,
 
 					   success: function(msg){
-	jQuery.removeCookie("pid");
-					   jQuery("#cmd_file_thumbs").load("' . SP_CDM_PLUGIN_URL . 'ajax.php?function=file-list&uid=' . $_GET['uid'] . '");
+						jQuery.removeCookie("pid");
+					  cdm_ajax_search();
 
 					 
 

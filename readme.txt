@@ -1,12 +1,12 @@
 === Plugin Name ===
 Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
-Tags: document management, records manager, filing cabinet, customer file manager, Document manager, Project management, File sharing, Dropbox importer, Google Drive importer, Enterprise document control, Distribution, Report Center, Retrieval & storage, Versioning, Productivity
+Tags: document management, records manager, customer file manager, document manager, project management, file sharing, Dropbox importer, Google Drive importer, enterprise document control, Distribution, Retrieval & storage, Versioning, Productivity
 Requires at least: 3.9
 Tested up to: 4.1
-Stable tag: 2.5.0
+Stable tag: 2.5.1
 
-Project & Document Manager. file sharing & management tool to upload, share, track, group, distribute and organize any type of document records.
+Project & Document Manager. file sharing & management tool to upload, share, track, group, distribute & organize any type of document.
 
 == Description ==
 
@@ -38,6 +38,8 @@ Login with:  user: test   password: test
 * Disable user uploads (View Only) 
 * Disable user deleting of files
 * Ability to translate plugin to multiple languages using the .po files.
+* File Logging
+* Responsive
 
 **Client / Customers**
 * Clients upload files and Documents online to their own personal page
@@ -64,7 +66,7 @@ Login with:  user: test   password: test
 * Add multiple admin emails to receive files
 * Advanced admin file manager
 * Assign custom capabilities to user roles
-
+* File Logging
 
 **Premium Features**
 
@@ -96,7 +98,9 @@ Login with:  user: test   password: test
 * Add unlimited sub folders for better organizing
 * File importer, upload multiple files with a zip file.
 * Share projects with buddypress and wordpress roles!
-
+* AES Encryption to secure file data
+* Tasks and Reminders for files
+ 
 **Categories**
 
 * Add Categories
@@ -242,6 +246,12 @@ The premium version relies on common functions to operate, please activate the F
 
 
 == Changelog ==
+
+= 2.5.1 =
+
+* Important patch
+* Added the ability to log who deletes files, shown under settings->user logs
+* Fixed a bug where spam bots could delete files
 
 = 2.4.4 =
 
