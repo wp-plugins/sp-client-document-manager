@@ -189,6 +189,19 @@ if (  user_can(@$current_user->ID,'manage_options') && !current_user_can('sp_cdm
 		if($cur_sp_client_upload < '2.0.6' ){
 			$alters[] = "ALTER TABLE `".$wpdb->prefix ."sp_cu_project` ADD `permissions` TEXT ";	
 		}
+	
+		if($cur_sp_client_upload < '2.5.2' ){
+			$alters[] = "ALTER TABLE `".$wpdb->prefix ."sp_cu_project` ADD `status` INT( 11 ) NOT NULL;";	
+			$alters[] = "ALTER TABLE `".$wpdb->prefix ."sp_cu_project` ADD `form_id` INT( 11 ) NOT NULL; ";
+			$alters[] = "ALTER TABLE `".$wpdb->prefix ."sp_cu_project` ADD `group_id` INT( 11 ) NOT NULL; ";
+			$alters[] = "ALTER TABLE `".$wpdb->prefix ."sp_cu_project` ADD `client_id` INT( 11 ) NOT NULL; ";
+			
+				$alters[] = "ALTER TABLE `".$wpdb->prefix ."sp_cu` ADD `status` INT( 11 ) NOT NULL;";	
+			$alters[] = "ALTER TABLE `".$wpdb->prefix ."sp_cu` ADD `form_id` INT( 11 ) NOT NULL; ";
+			$alters[] = "ALTER TABLE `".$wpdb->prefix ."sp_cu` ADD `group_id` INT( 11 ) NOT NULL; ";
+			$alters[] = "ALTER TABLE `".$wpdb->prefix ."sp_cu` ADD `client_id` INT( 11 ) NOT NULL; ";
+		}
+		
 		return $alters;
 	
 	}
@@ -207,6 +220,11 @@ global $wpdb,$sp_client_upload;
 					  `pid` int(11) NOT NULL,
 					  `parent` int(11) NOT NULL,
 					  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+					  `status` int(11) NOT NULL,
+					  `form_id` int(11) NOT NULL,
+					  `entry_id` int(11) NOT NULL,
+					  `group_id` int(11) NOT NULL,
+					  `client_id` int(11) NOT NULL,
 					  PRIMARY KEY (`id`)
 						) ;",
 						"".$wpdb->prefix ."sp_cu_cats" => 

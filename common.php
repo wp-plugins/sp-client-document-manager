@@ -726,8 +726,7 @@ function sp_uploadFile($files, $history = NULL){
 
 	global $current_user;
 
-	
-
+	 
 			
 
 			$dir = ''.SP_CDM_UPLOADS_DIR.''.$user_ID.'/';
@@ -741,6 +740,12 @@ function sp_uploadFile($files, $history = NULL){
 
 
 			if($history == 1){
+					$name = $files['dlg-upload-file']['name'][0];
+				 $wp_filetype = wp_check_filetype( $name );
+				   if ( ! $wp_filetype['ext'] && ! current_user_can( 'unfiltered_upload' ) ){
+	                echo  __( 'Invalid file type' );exit;
+					}
+				
 
 		$dir = ''.SP_CDM_UPLOADS_DIR.''.$current_user->ID.'/';
 
@@ -821,7 +826,11 @@ function sp_uploadFile($files, $history = NULL){
 				
 
 				for($i=0; $i<count($files['dlg-upload-file']['name']); $i++){
-
+				  $name = $files['dlg-upload-file']['name'][$i];
+				 $wp_filetype = wp_check_filetype( $name );
+				   if ( ! $wp_filetype['ext'] && ! current_user_can( 'unfiltered_upload' ) ){
+	                echo  __( 'Invalid file type' );exit;
+					}
 				
 
 					if($files['dlg-upload-file']['error'][$i] == 0){
@@ -870,7 +879,11 @@ $zip->setZipFile($dir.$return_file);
 
 	}else{
 
-
+  $name = $files['dlg-upload-file']['name'][1];
+				 $wp_filetype = wp_check_filetype( $name );
+				   if ( ! $wp_filetype['ext'] && ! current_user_can( 'unfiltered_upload' ) ){
+	              return  'upload_error';
+					}
 
 	$dir = ''.SP_CDM_UPLOADS_DIR.''.$current_user->ID.'/';
 
