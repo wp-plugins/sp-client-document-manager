@@ -9,7 +9,7 @@
             }
 			
 			$sp_cdm_disable_features = $_POST['sp_cdm_disable_features'];
-			
+			if(count($sp_cdm_disable_features) > 0){
 			foreach($sp_cdm_disable_features as $feature){
 				foreach($feature as $setting){
 					
@@ -19,7 +19,7 @@
 						$sp_cdm_disable_features[$feature][$setting] = 0;
 					}
 				}
-							
+			}
 			}
 			update_option('sp_cdm_disable_features', $sp_cdm_disable_features);
             if ($_POST['sp_cu_user_projects'] == "1") {
