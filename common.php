@@ -1,7 +1,144 @@
 <?php
 
+function sp_cdm_date($date){
+	
+$date = new DateTime($date);
+
+return $date->format(get_option('date_format') );	
+	
+	
+}
 
 
+	function sp_cdm_is_featured_disabled($plugin, $feature){
+		 $disable_features = get_option('sp_cdm_disable_features');
+
+  
+  
+		if($disable_features[$plugin][$feature] == '' or $disable_features[$plugin][$feature] == 0){
+			
+		return false;
+		}else{
+			
+		return true;	
+		}
+		
+	}
+	function sp_cdm_array_flatten($array,$return) {
+	for($x = 0; $x <= count($array); $x++) {
+		if(is_array($array[$x])) {
+			
+			
+			
+			$return = sp_cdm_array_flatten($array[$x], $return);
+		}
+		else {
+			if(isset($array[$x])) {
+				$return[] = $array[$x];
+			}
+		}
+	}
+	return $return;
+}
+	function sp_cdm_short_url($url){
+		
+		global $wpdb;
+		
+
+		$longUrl = $url;
+		$apiKey = get_option('sp_cu_google_api_key');
+		
+		 
+		$postData = array('longUrl' => $longUrl, 'key' => $apiKey);
+		$jsonData = json_encode($postData);
+		 
+		$curlObj = curl_init();
+		 
+		curl_setopt($curlObj, CURLOPT_URL, 'https://www.googleapis.com/urlshortener/v1/url');
+		curl_setopt($curlObj, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curlObj, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($curlObj, CURLOPT_HEADER, 0);
+		curl_setopt($curlObj, CURLOPT_HTTPHEADER, array('Content-type:application/json'));
+		curl_setopt($curlObj, CURLOPT_POST, 1);
+		curl_setopt($curlObj, CURLOPT_POSTFIELDS, $jsonData);
+		 
+		$response = curl_exec($curlObj);
+		 
+		
+		$json = json_decode($response);
+		 
+		curl_close($curlObj);
+		 
+		return $json->id;
+				
+		
+	}	
+	
+	
+	function sp_cdm_short_link($id){
+		
+		global $wpdb;
+		
+						
+		$url = sp_cdm_file_link($id);
+		$longUrl = $url;
+		$apiKey = get_option('sp_cu_google_api_key');
+		
+		 
+		$postData = array('longUrl' => $longUrl, 'key' => $apiKey);
+		$jsonData = json_encode($postData);
+		 
+		$curlObj = curl_init();
+		 
+		curl_setopt($curlObj, CURLOPT_URL, 'https://www.googleapis.com/urlshortener/v1/url');
+		curl_setopt($curlObj, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curlObj, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($curlObj, CURLOPT_HEADER, 0);
+		curl_setopt($curlObj, CURLOPT_HTTPHEADER, array('Content-type:application/json'));
+		curl_setopt($curlObj, CURLOPT_POST, 1);
+		curl_setopt($curlObj, CURLOPT_POSTFIELDS, $jsonData);
+		 
+		$response = curl_exec($curlObj);
+		 
+		
+		$json = json_decode($response);
+		 
+		curl_close($curlObj);
+		 
+		return $json->id;
+				
+		
+	}	
+	
+	
+	
+
+function sp_cdm_show_folder_linked($html){
+	global $wpdb;
+		$fid = $_GET['folder_id'];
+		if($fid != ''){
+		$fid = base64_decode($fid);
+	
+		$html .='<script type="text/javascript">
+					jQuery(document).ready(function() {
+				
+					';
+					
+					if($fid  != ''){
+					
+					$html .= 'sp_cdm_load_project('.$fid .')';	
+						
+					}
+		$html .='	
+		
+					
+					});
+				</script>';
+		}
+	
+	return $html;
+}
+add_filter('sp_cdm_upload_view','sp_cdm_show_folder_linked'); 
 function sp_cdm_show_file_linked($html){
 	global $wpdb;
 		$fid = $_GET['fid'];
@@ -36,6 +173,39 @@ function sp_cdm_file_link($fid){
 		return ''.get_site_url().'/?sp-cdm-link='.base64_encode($fid).'';		
 			
 }
+function sp_cdm_folder_link($fid){
+			
+				
+		return ''.get_site_url().'/?cdm-f='.base64_encode($fid).'';		
+			
+}
+
+function sp_cdm_link_to_folder(){
+			
+			if($_GET['cdm-f'] != ''){		
+			if ( (is_user_logged_in() && get_option('sp_cu_user_require_login_download') == 1 ) or (get_option('sp_cu_user_require_login_download') == '' or get_option('sp_cu_user_require_login_download') == 0 )){
+				
+			
+			$url = cdm_shortcode_url($and);
+			if(get_option('sp_cu_dashboard_page') != ''){
+				$url = get_permalink(get_option('sp_cu_dashboard_page') );	
+				
+			}
+			setcookie("pid", base64_decode($_GET['cdm-f']),0,'/');
+			$url = apply_filters('sp_cdm_before_link_redirect',$url);
+			wp_redirect($url);
+			
+	
+			}else{
+
+			auth_redirect();	
+		
+	
+			}	
+			}		
+}
+add_action('init', 'sp_cdm_link_to_folder');
+
 function sp_cdm_link_to_file(){
 			
 			if($_GET['sp-cdm-link'] != ''){		
@@ -226,7 +396,27 @@ function cdm_file_permissions($pid){
 										   }
 									   }
 	 
-	 		  
+	 		  				//check to see if user is part of a buddy press group that has access to this folder
+							
+								
+								
+								
+					  $folder_perm =sp_cdm_groups_addon_projects::get_permissions('sp_cdm_groups_addon_groups_permission_add_' . $pid . '');
+						
+							 
+	   				$r = $wpdb->get_results($wpdb->prepare("SELECT  * FROM ".$wpdb->prefix."sp_cu_advanced_groups_assign where uid = %d ",$uid), ARRAY_A);	
+	  		
+									   if(count($r) > 0){
+										   for ($i = 0; $i < count(  $r); $i++) {
+											 
+												if (@in_array($r[$i]['gid'],$folder_perm )) {
+												 $permission = 1;
+												 }	
+											  
+										   }
+									   }
+											
+							
 							  //end roles permission
 						    
 							//global setting
@@ -336,13 +526,32 @@ function cdm_folder_permissions($pid){
 	 
 	 		  
 							  //end roles permission
-						    
+						      $folder_perm =sp_cdm_groups_addon_projects::get_permissions('sp_cdm_groups_addon_groups_permission_add_' . $pid . '');
+						
+							 
+	   				$r = $wpdb->get_results($wpdb->prepare("SELECT  * FROM ".$wpdb->prefix."sp_cu_advanced_groups_assign where uid = %d ",$uid), ARRAY_A);	
+	  		
+									   if(count($r) > 0){
+										   for ($i = 0; $i < count(  $r); $i++) {
+											 
+												if (@in_array($r[$i]['gid'],$folder_perm )) {
+												 $permission = 1;
+												 }	
+											  
+										   }
+									   }
 							//global setting
 							if(get_option('sp_cdm_groups_addon_project_add_folder_' . $pid . '') == 1){
 								$permission = 1;
 							}		
 								
 					}//end grioups addon
+					
+					
+					
+					
+					
+					
 					
 				//is part of premium group
 		

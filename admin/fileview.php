@@ -58,7 +58,7 @@ if( $_POST['submit-admin'] == 'Upload'){
 	$a['cid'] = $data['cid'];
 	$a['tags'] = $data['tags'];
 	$a['notes'] = $data['dlg-upload-notes'];
-	
+	$post = $data;
 		
 	$dir = ''.SP_CDM_UPLOADS_DIR.''.$a['uid'].'/';
 	if(!is_dir($dir)){
@@ -106,6 +106,7 @@ if( $_POST['submit-admin'] == 'Upload'){
 						 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
                     wp_mail($to, $subject,stripslashes( $message), $user_headers, $attachments);
 					 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
+					 do_action('sp_cdm_email_send','sp_cu_admin_user_email',$file_id ,$post, $uid,$to, $subject, $message, $user_headers, $attachments);
                 }
 	
 		echo  '<script type="text/javascript">
@@ -287,7 +288,7 @@ function display_sp_thumbnails2($r){
 	jQuery("#cdm_current_folder").val(pid);
 	
 	jQuery(".cdm_premium_pid_field").attr("value", pid);
-	jQuery.cookie("pid", pid, { expires: 7 });
+	jQuery.cookie("pid", pid, { expires: 7, path:"/" });
 	
 			if(pid != 0 && jQuery("#cdm_premium_sub_projects").val() != 1){
 				jQuery(".cdm_add_folder_button").hide();	
@@ -591,14 +592,13 @@ if($_POST['submit-admin'] != ""){
 	$a['cid'] = $data['cid'];
 	$a['tags'] = $data['tags'];
 	$a['notes'] = $data['dlg-upload-notes'];
-	
+	$post = $data;
 	
 	check_folder_sp_client_upload();
 	
 
 	if($files['dlg-upload-file']['name'] != ""){
 	
-	print_r($a);exit;
 	
 	$a['file'] = sp_uploadFile($files);
     $wpdb->insert(  "".$wpdb->prefix."sp_cu", $a );
@@ -632,6 +632,7 @@ if($_POST['submit-admin'] != ""){
 						 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
                     wp_mail($to, stripslashes($subject),stripslashes( $message), $user_headers, $attachments);
 					 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
+					  do_action('sp_cdm_email_send','sp_cu_admin_user_email',$file_id,$post, $uid,$to, $subject, $message, $user_headers, $attachments);
                 }
 
 	    if (get_option('sp_cu_user_email') != "") {
@@ -649,6 +650,7 @@ if($_POST['submit-admin'] != ""){
 						 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
                     wp_mail($to, stripslashes($subject),stripslashes( $message), $user_headers, $attachments);
 					 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
+					 do_action('sp_cdm_email_send','sp_cu_admin_user_email',$post, $uid,$to, $subject, $message, $headers, $attachments);
                 }
 		$html .= '<script type="text/javascript">
 

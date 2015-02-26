@@ -4,11 +4,11 @@ Plugin Name: SP Project & Document Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business manage documents and projects with permissions in an easy to use interface.
 Author: smartypants
-Version: 2.5.2
+Version: 2.5.3
 Author URI: http://smartypantsplugins.com
 */
 global $sp_client_upload;
-$sp_client_upload = "2.5.2";
+$sp_client_upload = "2.5.3";
 function sp_cdm_language_init()
 {
     load_plugin_textdomain('sp-cdm', false, dirname(plugin_basename(__FILE__)) . '/languages/');
@@ -56,6 +56,7 @@ function sp_cdm_tinymce_editor()
     wp_enqueue_script('editor-functions');
     add_thickbox();
 }
+
 require_once '' . dirname(__FILE__) . '/admin/logs.php';
 require_once '' . dirname(__FILE__) . '/classes/uploader.php';
 require_once '' . dirname(__FILE__) . '/classes/install.php';
@@ -71,10 +72,11 @@ require_once '' . dirname(__FILE__) . '/user/projects.php';
 require_once '' . dirname(__FILE__) . '/functions.php';
 require_once '' . dirname(__FILE__) . '/shortcode.php';
 require_once '' . dirname(__FILE__) . '/admin/fileview.php';
+require_once '' . dirname(__FILE__) . '/admin/settings.php';
 function sp_client_upload_init()
 {
     wp_enqueue_script('jquery');
-    wp_enqueue_script('smUpload', plugins_url('upload.js', __FILE__));
+    wp_enqueue_script('smUpload', plugins_url('upload.js', __FILE__),array('jquery','jquery-ui-core','jquery-ui-dialog','jquery-ui-button','jquery-cookie'));
     wp_enqueue_script('jquery-ui-core');
     wp_enqueue_script('jquery-ui-dialog');
     wp_enqueue_script('jquery-ui-tabs');
@@ -91,13 +93,15 @@ function sp_client_upload_init()
     ));
 	wp_enqueue_script('jquery-dialog-responsive', plugins_url('js/jquery.modal.responsive.js', __FILE__), array(
         'jquery',
-		'jquery-ui-dialog'
+		'jquery-ui-dialog',
+		'jquery-cookie'
     ));
 
 }
 function sp_client_upload_load_css()
 {
-    wp_register_style('cdm-style', plugins_url('style.css', __FILE__));
+	global $sp_client_upload;
+  
     if (get_option('sp_cu_jqueryui_theme') != 'none') {
         if (get_option('sp_cu_jqueryui_theme') == '') {
             $theme = 'smoothness';
@@ -105,14 +109,14 @@ function sp_client_upload_load_css()
             $theme = get_option('sp_cu_jqueryui_theme');
         }
         if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-            wp_register_style('jquery-ui-css', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/' . $theme . '/jquery-ui.min.css');
+            wp_register_style('jquery-ui-css', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/' . $theme . '/jquery-ui.min.css');
         } else {
-            wp_register_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/' . $theme . '/jquery-ui.min.css');
+            wp_register_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/' . $theme . '/jquery-ui.min.css');
         }
     }
 	
+wp_enqueue_style('cdm-style', plugins_url('style.css', __FILE__), array(), $sp_client_upload);
 
-    wp_enqueue_style('cdm-style');
     wp_enqueue_style('jquery-ui-css');
     //echo '<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" >';
 }
@@ -128,12 +132,15 @@ function sp_client_upload_admin_init()
 	
 	
 	wp_enqueue_script('jquery');
-    wp_enqueue_script('smUpload', plugins_url('upload.js', __FILE__));
+    wp_enqueue_script('smUpload', plugins_url('upload.js', __FILE__),array('jquery','jquery-ui-core','jquery-ui-dialog','jquery-ui-button','jquery-cookie'));
     wp_enqueue_script('jquery-ui-core');
     wp_enqueue_script('jquery-ui-dialog');
     wp_enqueue_script('jquery-ui-tabs');
 	wp_enqueue_script('jquery-ui-button');
 	
+	  wp_enqueue_script('jquery-cookie', plugins_url('js/jquery.cookie.js', __FILE__), array(
+        'jquery'
+    ));
 }
 add_action('wp_head', 'sp_client_upload_load_css');
 add_action('init', 'sp_client_upload_init');

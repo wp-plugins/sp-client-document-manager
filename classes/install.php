@@ -200,6 +200,7 @@ if (  user_can(@$current_user->ID,'manage_options') && !current_user_can('sp_cdm
 			$alters[] = "ALTER TABLE `".$wpdb->prefix ."sp_cu` ADD `form_id` INT( 11 ) NOT NULL; ";
 			$alters[] = "ALTER TABLE `".$wpdb->prefix ."sp_cu` ADD `group_id` INT( 11 ) NOT NULL; ";
 			$alters[] = "ALTER TABLE `".$wpdb->prefix ."sp_cu` ADD `client_id` INT( 11 ) NOT NULL; ";
+			$alters[] = "ALTER TABLE `".$wpdb->prefix ."sp_cu` ADD `entry_id` INT( 11 ) NOT NULL; ";
 		}
 		
 		return $alters;

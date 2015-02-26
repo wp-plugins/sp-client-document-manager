@@ -373,8 +373,3 @@ jQuery("#cdm_upload_fields input[type='file']").change(replaceMe);
 
 
 
-
-
-
-	
-

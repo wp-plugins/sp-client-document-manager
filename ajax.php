@@ -2,7 +2,8 @@
 
 
 
-require( '../../../wp-load.php' );
+$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
+require_once( $parse_uri[0] . 'wp-load.php' );
 	
 	
 $upload_dir = wp_upload_dir();	

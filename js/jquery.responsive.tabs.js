@@ -2,7 +2,7 @@
  *  Project: jquery.responsiveTabs.js
  *  Description: A plugin that creates responsive tabs, optimized for all devices
  *  Author: Jelle Kralt (jelle@jellekralt.nl)
- *  Version: 1.3.5
+ *  Version: 1.4.2
  *  License: MIT
  */
 
@@ -11,6 +11,7 @@
     /** Default settings */
     var defaults = {
         active: null,
+        event: 'click',
         disabled: [],
         collapsible: 'accordion',
         startCollapsed: false,
@@ -18,6 +19,7 @@
         setHash: false,
         animation: 'default',
         duration: 500,
+        scrollToAccordion: false,
         activate: function(){},
         deactivate: function(){},
         load: function(){},
@@ -101,32 +103,27 @@
         this.$element.bind('tabs-deactivate', function(e, oTab) {
             _this.options.deactivate.call(this, e, oTab);
         });
+        // Activate State: this event is called when the plugin switches states
+        this.$element.bind('tabs-activate-state', function(e, state) {
+            _this.options.activateState.call(this, e, state);
+        });
+
         // Load: this event is called when the plugin has been loaded
         this.$element.bind('tabs-load', function(e) {
-            var tabRef = _this._getTabRefBySelector(window.location.hash);
-            var firstTab;
+            var startTab;
 
             _this._setState(e); // Set state
 
             // Check if the panel should be collaped on load
             if(_this.options.startCollapsed !== true && !(_this.options.startCollapsed === 'accordion' && _this.state === 'accordion')) {
 
-                // Check if the page has a hash set that is linked to a tab
-                if(tabRef >= 0 && !_this._getTab(tabRef).disabled) {
-                    // If so, set the current tab to the linked tab
-                    firstTab = _this._getTab(tabRef);
-                } else if(_this.options.active > 0 && !_this._getTab(_this.options.active).disabled) {
-                    firstTab = _this._getTab(_this.options.active);
-                } else {
-                    // If not, just get the first one
-                    firstTab = _this._getTab(0);
-                }
+                startTab = _this._getStartTab();
 
                 // Open the initial tab
-                _this._openTab(e, firstTab); // Open first tab
+                _this._openTab(e, startTab); // Open first tab
 
                 // Call the callback function
-                _this.options.load.call(this, e, firstTab); // Call the load callback
+                _this.options.load.call(this, e, startTab); // Call the load callback
             }
         });
         // Trigger loaded event
@@ -211,32 +208,33 @@
      */
     ResponsiveTabs.prototype._loadEvents = function() {
         var _this = this;
-        // Define click event on a tab element
-        var fClick = function(e) {
+
+        // Define activate event on a tab element
+        var fActivate = function(e) {
             var current = _this._getCurrentTab(); // Fetch current tab
-            var clickedTab = e.data.tab;
+            var activatedTab = e.data.tab;
 
             e.preventDefault();
 
             // Make sure this tab isn't disabled
-            if(!clickedTab.disabled) {
+            if(!activatedTab.disabled) {
 
                 // Check if hash has to be set in the URL location
                 if(_this.options.setHash) {
-                    window.location.hash = clickedTab.selector;
+                    window.location.hash = activatedTab.selector;
                 }
 
                 e.data.tab._ignoreHashChange = true;
 
-                // Check if the clicked tab isnt the current one or if its collapsible. If not, do nothing
-                if(current !== clickedTab || _this._isCollapisble()) {
-                    // The clicked tab is either another tab of the current one. If it's the current tab it is collapsible
+                // Check if the activated tab isnt the current one or if its collapsible. If not, do nothing
+                if(current !== activatedTab || _this._isCollapisble()) {
+                    // The activated tab is either another tab of the current one. If it's the current tab it is collapsible
                     // Either way, the current tab can be closed
                     _this._closeTab(e, current);
 
-                    // Check if the clicked tab isnt the current one or if it isnt collapsible
-                    if(current !== clickedTab || !_this._isCollapisble()) {
-                        _this._openTab(e, clickedTab, false, true);
+                    // Check if the activated tab isnt the current one or if it isnt collapsible
+                    if(current !== activatedTab || !_this._isCollapisble()) {
+                        _this._openTab(e, activatedTab, false, true);
                     }
                 }
             }
@@ -244,10 +242,32 @@
 
         // Loop tabs
         for (var i=0; i<this.tabs.length; i++) {
-            // Add click function to the tab and accordion selection element
-            this.tabs[i].anchor.on('click', {tab: _this.tabs[i]}, fClick);
-            this.tabs[i].accordionAnchor.on('click', {tab: _this.tabs[i]}, fClick);
+            // Add activate function to the tab and accordion selection element
+            this.tabs[i].anchor.on(_this.options.event, {tab: _this.tabs[i]}, fActivate);
+            this.tabs[i].accordionAnchor.on(_this.options.event, {tab: _this.tabs[i]}, fActivate);
         }
+    };
+
+    /**
+     * This function gets the tab that should be opened at start
+     * @returns {Object} Tab object
+     */
+    ResponsiveTabs.prototype._getStartTab = function() {
+        var tabRef = this._getTabRefBySelector(window.location.hash);
+        var startTab;
+        
+        // Check if the page has a hash set that is linked to a tab
+        if(tabRef >= 0 && !this._getTab(tabRef).disabled) {
+            // If so, set the current tab to the linked tab
+            startTab = this._getTab(tabRef);
+        } else if(this.options.active > 0 && !this._getTab(this.options.active).disabled) {
+            startTab = this._getTab(this.options.active);
+        } else {
+            // If not, just get the first one
+            startTab = this._getTab(0);
+        }
+
+        return startTab;
     };
 
     /**
@@ -257,6 +277,8 @@
     ResponsiveTabs.prototype._setState = function(e) {
         var $ul = $('ul', this.$element);
         var oldState = this.state;
+        var startCollapsedIsState = (typeof this.options.startCollapsed === 'string');
+        var startTab;
 
         // The state is based on the visibility of the tabs list
         if($ul.is(':visible')){
@@ -267,9 +289,20 @@
             this.state = 'accordion';
         }
 
-        // If the new state is different from the old state, the state activate trigger must be called
+        // If the new state is different from the old state
         if(this.state !== oldState) {
-            this.$element.trigger('tabs-activate-state', e, {oldState: oldState, newState: this.state});
+            // If so, the state activate trigger must be called
+            this.$element.trigger('tabs-activate-state', {oldState: oldState, newState: this.state});
+
+            // Check if the state switch should open a tab
+            if(oldState && startCollapsedIsState && this.options.startCollapsed !== this.state && this._getCurrentTab() === undefined) {
+                // Get initial tab
+                startTab = this._getStartTab(e);
+                // Open the initial tab
+                this._openTab(e, startTab); // Open first tab
+            }
+
+
         }
     };
 
@@ -303,7 +336,23 @@
         _this._doTransition(oTab.panel, _this.options.animation, 'open', function() {
             // When finished, set active class to the panel
             oTab.panel.removeClass(_this.options.classes.stateDefault).addClass(_this.options.classes.stateActive);
+          
+           // And if enabled and state is accordion, scroll to the accordion tab
+            if(_this.getState() === 'accordion' && _this.options.scrollToAccordion && (!_this._isInView(oTab.accordionTab) || _this.options.animation !== 'default')) {
+                // Check if the animation option is enabled, and if the duration isn't 0
+                if(_this.options.animation !== 'default' && _this.options.duration > 0) {
+                    // If so, set scrollTop with animate and use the 'animation' duration
+                    $('html, body').animate({
+                        scrollTop: oTab.accordionTab.offset().top
+                    }, _this.options.duration);
+                } else {
+                    //  If not, just set scrollTop
+                    $('html, body').scrollTop(oTab.accordionTab.offset().top);
+                }
+            }
         });
+
+
 
         this.$element.trigger('tabs-activate', oTab);
     };
@@ -460,6 +509,18 @@
     };
 
     //
+    // HELPER FUNCTIONS
+    // 
+
+    ResponsiveTabs.prototype._isInView = function($element) {
+        var docViewTop = $(window).scrollTop(),
+            docViewBottom = docViewTop + $(window).height(),
+            elemTop = $element.offset().top,
+            elemBottom = elemTop + $element.height();
+        return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+    };
+
+    //
     // PUBLIC FUNCTIONS
     //
 
@@ -476,6 +537,17 @@
         }
     };
 
+    /**
+     * This function deactivates a tab
+     * @param {Integer} tabRef - Numeric tab reference
+     */
+    ResponsiveTabs.prototype.deactivate = function(tabRef) {
+        var e = jQuery.Event('tabs-dectivate');
+        var oTab = this._getTab(tabRef);
+        if(!oTab.disabled) {
+            this._closeTab(e, oTab);
+        }
+    };
 
     /**
      * This function gets the current state of the plugin
@@ -537,3 +609,4 @@
     };
 
 }(jQuery, window));
+

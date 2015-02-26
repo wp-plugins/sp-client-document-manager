@@ -25,7 +25,7 @@ $selected = $r[0]['uid'];
 		 
 		    } //$_GET['id'] != ""
             $users = $wpdb->get_results("SELECT * FROM " . $wpdb->base_prefix . "users order by display_name  ", ARRAY_A);
-            echo '<h2>' . sp_cdm_folder_name(1) . '</h2>' . sp_client_upload_nav_menu() . '';
+           
             echo '
 
 	 <table class="wp-list-table widefat fixed posts" cellspacing="0">
@@ -144,6 +144,8 @@ if($r[$i]['parent'] == 0 or class_exists('spdm_sub_projects')){
         function view()
         {
             global $wpdb;
+			  echo '<h2>' . sp_cdm_folder_name(1) . '</h2>' . sp_client_upload_nav_menu() . '';
+			
             if ($_POST['save-project'] != "") {
                 $insert['name'] = $_POST['project-name'];
                 $insert['uid']  = $_POST['uid'];
@@ -249,7 +251,7 @@ jQuery.each(myArray, function(index, value){
 									 WHERE " . $wpdb->prefix . "sp_cu_project.parent = 0 
 									 	
 									 order by " . $wpdb->prefix . "sp_cu_project.name", ARRAY_A);
-                echo '<h2>' . sp_cdm_folder_name(1) . '</h2>' . sp_client_upload_nav_menu() . '';
+              
                 echo '
 
 								

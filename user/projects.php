@@ -493,6 +493,114 @@ $r_projects_query = "SELECT *
 
 }
 
+function sp_cdm_display_projects_select_by_id($uid,$name,$class = 'pid_select'){
+
+	
+
+	
+
+	global $wpdb;
+
+
+
+
+
+
+
+if (@CU_PREMIUM == 1){  	
+
+		$find_groups = cdmFindGroups($uid,'_project');
+
+			 }else{
+				$find_groups = ''; 
+			 }
+
+
+
+
+
+
+$r_projects_query = "SELECT *
+
+	
+
+									 FROM ".$wpdb->prefix."sp_cu_project
+
+									WHERE  ( uid = '".$uid ."' ".$find_groups.")  
+
+									 ";
+			$r_projects_query = apply_filters('sp_cdm_projects_query_dropdown', $r_projects_query ,$uid);							 
+			$r_projects_query .="
+
+										ORDER by name";						 
+  $projects = $wpdb->get_results($r_projects_query, ARRAY_A);	
+
+
+
+
+
+  if(count($projects) > 0 or get_option('sp_cu_user_projects') == 1){
+
+	
+
+	$select_dropdown .='
+
+	<select name="'.$name.'" class="'.$class.'">';
+
+	
+
+	if(get_option('sp_cu_user_projects_required') == 0){	
+
+	$select_dropdown .='<option name="" selected="selected">'.__("No","sp-cdm").' '.sp_cdm_folder_name() .'</option>';	
+
+	}
+
+		for($i=0; $i<count($projects); $i++){
+
+								
+
+		if($current_user->last_project == $projects[$i]['id'] ){	
+
+			$required = ' selected="selected" '	;
+
+		}else{
+
+			$required = ''	;
+
+		}
+
+		
+
+		if($projects[$i]['name'] != ''){
+
+	 $select_dropdown .='<option value="'.$projects[$i]['id'].'" '.$required.'>'.stripslashes($projects[$i]['name']).'</option>';	
+
+		}
+
+		}
+
+	
+
+	$select_dropdown .='</select>';
+
+	
+
+	$select_dropdown =  apply_filters('wpfh_sub_projects', $select_dropdown ); 	
+
+	$html  .= $select_dropdown;
+
+
+	  
+
+  }
+
+
+
+	return $html;
+
+	
+
+}
 
 
 }

@@ -25,9 +25,16 @@ class spdm_ajax
 	}
     function view_file()
     {
-        global $wpdb, $current_user, $cdm_comments, $cdm_google, $cdm_log;
-        $r = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where id = %d order by date desc", $_GET['id']), ARRAY_A);
 		
+        
+		global $wpdb, $current_user, $cdm_comments, $cdm_google, $cdm_log;
+        $file_types = array();
+		$r = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where id = %d order by date desc", $_GET['id']), ARRAY_A);
+			$ext = substr(strrchr($r[0]['file'], '.'), 1);
+			$stream_file_types = get_option('sp_cu_stream_file_types');
+		if($stream_file_types != ''){
+		$file_types = explode(",",$stream_file_types);	
+		}
         $html .= '<div id="view_file_refresh">
 
 		
@@ -39,8 +46,13 @@ class spdm_ajax
         
 		$html = apply_filters('sp_cdm_view_file_first_add_button',$html,$r);
 		
-		if (CU_PREMIUM == 1 && get_option('sp_cu_user_uploads_disable') != 1 && get_option('sp_cu_user_disable_revisions') != 1  && cdm_file_permissions($r[0]['pid']) == 1) {
-            $html .= sp_cdm_revision_button();
+		if (CU_PREMIUM == 1 && get_option('sp_cu_user_uploads_disable') != 1 && get_option('sp_cu_user_disable_revisions') != 1  && cdm_file_permissions($r[0]['pid']) == 1 ) {
+            
+			if($r[0]['form_id'] == '' or $r[0]['form_id'] == 0){
+		
+			$revision_button = sp_cdm_revision_button();
+			$html .= apply_filters('sp_cdm_viewfile_revision_button',  $revision_button , $r);
+			}
         }
         if (class_exists('cdmProductivityUser')) {
             $html .= '<span id="cdm_comment_button_holder">' . $cdm_comments->button() . '</span>';
@@ -49,24 +61,29 @@ class spdm_ajax
 		$html = apply_filters('sp_cdm_view_file_add_button',$html,$r);
 		
         if (class_exists('cdmProductivityGoogle')) {
-            $html .= '<span id="cdm_shortlink_button_holder">' . $cdm_google->short_link_button($r[0]['id'], '' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']). '') . '</span>';
+           $shortlink_button = '<span id="cdm_shortlink_button_holder">' . $cdm_google->short_link_button($r[0]['id'], '' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']). '') . '</span>';
+		   $html .= apply_filters('sp_cdm_viewfile_shortlink_button',  $shortlink_button , $r);
         }
-        if (get_option('sp_cu_js_redirect') == 1) {
+        if (get_option('sp_cu_js_redirect') == 1 or in_array($ext,$file_types)) {
             $target = 'target="_blank"';
         } else {
             $target = ' ';
         }
        
 	    $download_url = '<a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']) . '" title="Download" style="margin-right:15px"  ><img src="' . SP_CDM_PLUGIN_URL . 'images/download.png"> ' . __("Download File", "sp-cdm") . '</a> ';
-		$download_url = apply_filters('sp_cdm_viewfile_download_url', $download_url, $r);
-		$html .= $download_url;
+		$html .= apply_filters('sp_cdm_viewfile_download_url', $download_url, $r);
+		
 		
 		
         if ( cdm_user_can_delete($current_user->ID) == true && cdm_delete_permission($r[0]['pid']) == 1) {
-            $html .= '
+           $delete_button = '
 
 	<a href="javascript:sp_cu_confirm_delete(\'' . get_option('sp_cu_delete') . '\',200,\'' . SP_CDM_PLUGIN_URL . 'ajax.php?function=delete-file&dlg-delete-file=' . $r[0]['id'] . '\');" title="Delete" ><img src="' . SP_CDM_PLUGIN_URL . 'images/delete.png">' . __("Delete File", "sp-cdm") . '</a>';
+	  $html .= apply_filters('sp_cdm_viewfile_delete_button', $delete_button,$r);
         }
+		
+		
+		
         $html .= '
 <div style="clear:both"></div>
 	 <em>' . date('F jS Y h:i A', strtotime($r[0]['date'])) . ' &bull; File ID: #' . $r[0]['id'] . '</em>
@@ -90,7 +107,9 @@ jQuery(".viewFileTabs").responsiveTabs({
 		$html = apply_filters('sp_cdm_view_file_after_file_info_tab',$html,$r);
 		
         if (function_exists('sp_cdm_revision_add') && get_option('sp_cu_user_disable_revisions') != 1) {
-            $html .= '<li><a href="#cdm-file-revisions">'.__("Revisions","sp-cdm").'</a></li>';
+            if($r[0]['form_id'] == '' or $r[0]['form_id'] == 0){
+			$html .= '<li><a href="#cdm-file-revisions">'.__("Revisions","sp-cdm").'</a></li>';
+			}
         }
         if (class_exists('cdmProductivityUser')) {
             $html .= '<li><a href="#cdm-file-comments">'.__("Comments","sp-cdm").'</a></li>';
@@ -111,10 +130,12 @@ jQuery(".viewFileTabs").responsiveTabs({
 		$html = apply_filters('sp_cdm_view_file_content',$html,$r);
 	
         if (function_exists('sp_cdm_revision_add') && get_option('sp_cu_user_disable_revisions') != 1) {
-            $html .= '<div id="cdm-file-revisions"><div id="cdm_comments"><h4>' . __("Revision History", "sp-cdm") . '</h4>
+           if($r[0]['form_id'] == '' or $r[0]['form_id'] == 0){
+		    $html .= '<div id="cdm-file-revisions"><div id="cdm_comments"><h4>' . __("Revision History", "sp-cdm") . '</h4>
 
 ' . sp_cdm_file_history($r[0]['id']) . '</div></div>';
-        }
+		   }
+	    }
         if (class_exists('cdmProductivityUser')) {
             $html .= '<div id="cdm-file-comments"><div id="cdm_comments_container">' . $cdm_comments->view($r[0]['id']) . '</div></div>';
         }
@@ -199,7 +220,7 @@ jQuery(".viewFileTabs").responsiveTabs({
         }
 		
 		$img = apply_filters('sp_cdm_viewfile_image', $img,$r[0]);
-        $html .= '
+        $file_info .= '
 
 				
 
@@ -215,19 +236,25 @@ jQuery(".viewFileTabs").responsiveTabs({
 
 				
 
-		<div class="cdm-two-column">		
-
-<div class="l-column">
+		<div class="cdm-two-column"><div class="l-column">';
+		
+		$info_left_column .= '
 <a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']) . '" title="Download" style="margin-right:15px"  >
 
 ' . $img . '
 
 </a>
 
-</div>
-<div class="r-column">
+';
 
-<div class="sp_su_project">
+		
+  $info_left_column = apply_filters('sp_cdm_viewfile_replace_file_info', $info_left_column, $r);
+  $file_info .=$info_left_column;
+  
+
+ $file_info .= '</div><div class="r-column">';
+
+$info_right_column .= '<div class="sp_su_project">
 
 <strong>' . __("File Name", "sp-cdm") . ': </strong> ' . stripslashes($r[0]['name']) . '<br>
 
@@ -252,7 +279,7 @@ jQuery(".viewFileTabs").responsiveTabs({
 ';
 
 $extra_file_info = '';
-$html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
+$info_right_column  .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
 
 
   if (CU_PREMIUM == 1) {
@@ -265,7 +292,7 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
 	  
   }
         if ($r[0]['tags'] != "") {
-            $html .= '
+           $info_right_column .= '
 
 <div class="sp_su_notes">
 
@@ -275,7 +302,7 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
         }
 		
 		if ($r[0]['notes'] != "") {
-            $html .= '
+           $info_right_column .= '
 
 <div class="sp_su_notes">
 
@@ -287,7 +314,7 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
         if (CU_PREMIUM == 1) {
          
 		 if(sp_cdm_get_form_fields($r[0]['id']) != ''){
-		    $html .= '
+		  $info_right_column  .= '
 
 <div class="sp_su_notes">
 
@@ -297,7 +324,7 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
 		 }
         } else {
             if ($r[0]['notes'] != "") {
-                $html .= '
+             $info_right_column  .= '
 
 <div class="sp_su_notes">
 
@@ -308,8 +335,9 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
         }
        
 	   
-	   $html = apply_filters('sp_cdm_view_file_notes', $html,$r);
-	    $html .= '
+	   $info_right_column = apply_filters('sp_cdm_view_file_notes',$info_right_column,$r);
+	   $file_info .=$info_right_column;
+	    $file_info .= '
 
 	
 
@@ -318,7 +346,12 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
 
 </div><div style="clear:both"></div>
 
-  </div></div></div></div>
+  </div></div>';
+  
+  $file_info = apply_filters('sp_cdm_viewfile_replace_file_infos', $file_info, $r,$info_left_column,$info_right_column);
+  $html .= $file_info;
+  
+  $html .='</div></div>
 
   
 
@@ -335,6 +368,7 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
   </div>
 
   ';
+  		$html = apply_filters('sp_cdm_viewfile', $html,$r);
         return $html;
     }
     function delete_file($file_id = NULL)
@@ -449,10 +483,11 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
 		
 		
 		
+       
         if ($_REQUEST['search'] != "") {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.name LIKE '%" . $_REQUEST['search'] . "%' ";
         }else{
-        if ($_GET['pid'] == '') {
+        if ($_GET['pid'] == '' or $_GET['pid'] == 'undefined') {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.parent = '0' ";
         } else {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.parent = '" . $_GET['pid'] . "' ";
@@ -617,13 +652,17 @@ $html .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$r[0]);
 
 		<th colspan="100%" style="text-align:right">
 
-		<div style="padding-right:10px">
+		<div style="padding-right:10px">';
 
-	<a href="javascript:sp_cu_dialog(\'#edit_category_' . $_GET['pid'] . '\',550,130)"><img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png"> '. __("Edit", "sp-cdm").' '.sp_cdm_folder_name() .' '. __("Name", "sp-cdm").'</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/delete_small.png">  '. __("Remove", "sp-cdm").' '.sp_cdm_folder_name().'</a>
-
+	echo'<a href="javascript:sp_cu_dialog(\'#edit_category_' . $_GET['pid'] . '\',550,130)"><img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png"> '. __("Edit", "sp-cdm").' '.sp_cdm_folder_name() .' '. __("Name", "sp-cdm").'</a>   
+	<a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/delete_small.png">  '. __("Remove", "sp-cdm").' '.sp_cdm_folder_name().'</a>';
+	
+	
+	do_action('cdm/ajax/folder/navigation', $_GET['pid']);
+		
 		
 
-		<div style="display:none">	
+		echo'<div style="display:none">	
 
 		
 
@@ -944,7 +983,7 @@ echo '
 
 		<td class="cdm_file_info" onclick="'.$file_link.'">' . stripslashes($r[$i]['name']) . ' ' . $project_name . '</td>
 
-		<td class="cdm_file_date" onclick="'.$file_link.'">' . date("F Y g:i A", strtotime($r[$i]['date'])) . '</td>
+		<td class="cdm_file_date" onclick="'.$file_link.'">' . date("F jS Y g:i A", strtotime($r[$i]['date'])) . '</td>
 
 
 
@@ -963,10 +1002,11 @@ echo '
         if (function_exists('cdmFindGroups')) {
             $find_groups = cdmFindGroups($_GET['uid'], 1);
         }
+       
         if ($_REQUEST['search'] != "") {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.name LIKE '%" . $_REQUEST['search'] . "%' ";
         }else{
-        if ($_GET['pid'] == '') {
+        if ($_GET['pid'] == '' or $_GET['pid'] == 'undefined') {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.parent = '0' ";
         } else {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.parent = '" . $_GET['pid'] . "' ";
@@ -1098,13 +1138,16 @@ echo '
             if($r_project_info[0]['uid'] == $_GET['uid']){
 		    echo '
 
-			<div style="padding-right:10px">
+			<div style="padding-right:10px">';
 
-		<a href="javascript:sp_cu_dialog(\'#edit_category_' . $_GET['pid'] . '\',550,130)"><img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png"> '. __("Edit", "sp-cdm").' '.sp_cdm_folder_name() .' '. __("Name", "sp-cdm").'</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/delete_small.png">  '. __("Remove", "sp-cdm").' '.sp_cdm_folder_name().'</a> 
+		echo '<a href="javascript:sp_cu_dialog(\'#edit_category_' . $_GET['pid'] . '\',550,130)"><img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png"> '. __("Edit", "sp-cdm").' '.sp_cdm_folder_name() .' '. __("Name", "sp-cdm").'</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/delete_small.png">  '. __("Remove", "sp-cdm").' '.sp_cdm_folder_name().'</a> 
 ';
  if(current_user_can('sp_cdm_show_folders_as_nav') or current_user_can('sp_cdm_projects') ){
 		echo '<a href="'.admin_url('admin.php?page=sp-client-document-manager-projects&function=edit&id='.$_GET['pid'].'' ).'" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png">  '. __("Admin", "sp-cdm").'</a>';
  }
+
+ 	do_action('cdm/ajax/folder/navigation', $_GET['pid']);
+		
 echo '
 		
 
@@ -1448,6 +1491,8 @@ function sp_cu_remove_project(){
                     $img = '<img src="' . sp_cdm_thumbnail('' . SP_CDM_UPLOADS_DIR_URL . '' . $r[$i]['uid'] . '/' . $r[$i]['file'] . '',NULL, 70) . '">';
 				
                 }
+					 } elseif (in_array( $ext , array('mp4','ogg','webm','avi','mpg','mpeg','mkv'))) {
+                $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/video.png" >';	
             } elseif ($ext == 'xls' or $ext == 'xlsx') {
                 $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/microsoft_office_excel.png">';
             } elseif ($ext == 'doc' or $ext == 'docx') {
@@ -1541,6 +1586,14 @@ function sp_cu_remove_project(){
         $zip->setZipFile($dir . $return_file);
         header("Location: " . $path . $return_file . "");
     }
+	function vendor_replace_vars( $message,$post){
+		
+			  $message   = str_replace('[file]', $post['links'], $message);	 
+			   $message   = str_replace('[notes]',  $post['vendor-message'], $message);		
+				$message = wpautop($message);
+				return $message;
+		
+	}
     function email_vendor()
     {
         global $wpdb, $current_user;
@@ -1583,18 +1636,19 @@ function sp_cu_remove_project(){
             } else {
                 $links .= $attachment_links;
             }
-     
-		 	$message =get_option('sp_cu_vendor_email');      
-             $subject = get_option('sp_cu_vendor_email_subject');
-               $message   = str_replace('[file]', $links, $message);	 
-			   $message   = str_replace('[notes]',  $_POST['vendor-message'], $message);		
-				$message = wpautop($message);
+     	
+		$post['links'] = $links;
+		$post['vendor-message'] = $_POST['vendor-message'];
+		 	$message =spdm_ajax::vendor_replace_vars(get_option('sp_cu_vendor_email'), $post);      
+             $subject = spdm_ajax::vendor_replace_vars(get_option('sp_cu_vendor_email_subject'), $post);
+             
 			//$headers = apply_filters('spcdm_admin_email_headers',$headers,$post, $uid);
 			 if (get_option('sp_cu_vendor_email') != "") {
 			 add_filter( 'wp_mail_content_type', 'set_html_content_type' );
 		     wp_mail( $_POST['vendor'], stripslashes($subject),stripslashes( $message), $headers, $attachments);
 			 remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
           
+ do_action('sp_cdm_email_send','sp_cu_vendor_email',$r[0]['id'],$post, $uid,$to, $subject, $message, $headers, $attachments);		  	
       		  }	
 		  
 		   

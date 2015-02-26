@@ -1,6 +1,7 @@
 <?php  
  
-require( '../../../wp-load.php' );
+$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
+require_once( $parse_uri[0] . 'wp-load.php' );
 
 	ini_set('memory_limit', '1024M');
 
@@ -16,12 +17,14 @@ function smartReadFile($location, $filename, $mimeType='application/octet-stream
   { header ("HTTP/1.0 404 Not Found");
     return;
   }
-  
-  $size= @filesize($location);
+
+  $size= filesize($location);
   $time=date('r',filemtime($location));
   
-  $fm=@fopen($location,'rb');
-  ob_start();
+  $fm=fopen($location,'r')  or die("Couldn't get handle");
+  
+
+#  ob_start();
   
   
   if(!$fm)
@@ -73,7 +76,7 @@ if(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_
     $cur+=1024*16;
   }
   
-  ob_end_flush();
+#  ob_end_flush();
 }
 
 if(!function_exists('mime_content_type')) {

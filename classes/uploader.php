@@ -183,8 +183,16 @@ class cdm_uploader{
 		
 	}
 	function admin_upload_dialog(){
+	
 		
-			if($_GET['page'] == 'sp-client-document-manager-fileview'){
+				$mystring = $_GET['page'] ;
+				$findme   = 'sp-client-document-manager';
+				$pos = strpos($mystring, $findme);
+
+
+if ($pos !== false) {
+		
+		
 				
 				$this->upload_dialog();
 				

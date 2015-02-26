@@ -528,9 +528,18 @@ return $html;
         $message   = nl2br($email);
         $message = apply_filters('sp_cdm_shortcode_email_before',$message,$r ,$r_project,$r_cats);	
 	    $message   = str_replace('[file]', '<a href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' . base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file'])  . '">' . $r[0]['file'] . '</a>', $message);
+		
+		
+		$message   = str_replace('[file_directory]',sp_cdm_folder_link($r[0]['pid']), $message);
+		$message   = str_replace('[file_directory_shortlink]',sp_cdm_short_url(sp_cdm_folder_link($r[0]['pid'])), $message);
+		
+		
         $message   = str_replace('[file_name]',$r[0]['file'], $message);
 		$message   = str_replace('[file_real_path]', '' . SP_CDM_UPLOADS_DIR_URL . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '', $message);
 		$message   = str_replace('[file_in_document_area]','<a href="'.sp_cdm_file_link($id).'">'. __("View File", "sp-cdm") .'</a>', $message);
+		
+		$message   = str_replace('[file_shortlink]',sp_cdm_short_link($id), $message);
+	
 		
 		
 		$message   = str_replace('[notes]', $notes, $message);
