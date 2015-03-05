@@ -1,5 +1,20 @@
 <?php
 
+	function findRootParent($id){
+		
+		global $wpdb;
+		$r = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $wpdb->prefix . "sp_cu_project WHERE  id = %d", $id), ARRAY_A);
+		
+		if($r[0]['parent'] != 0){
+		$super_id = findRootParent($r[0]['parent'] );
+		}else{
+			
+		$super_id = $r[0]['id'];	
+		}
+		
+		return $super_id;
+	}
+
 function sp_cdm_date($date){
 	
 $date = new DateTime($date);
@@ -381,9 +396,9 @@ function cdm_file_permissions($pid){
 											
 							  }//end buddypress
 							  
-							  
+							  if(class_exists('sp_cdm_groups_addon_projects')){
 							  //check roles permission
-							     $folder_perm_roles =sp_cdm_groups_addon_projects::get_permissions('' .$sp_cdm_groups_perm->namesake . '_role_permission_add_' . $pid . '');
+							    $folder_perm_roles =sp_cdm_groups_addon_projects::get_permissions('' .$sp_cdm_groups_perm->namesake . '_role_permission_add_' . $pid . '');
 								$user_roles = $current_user->roles;
 							
 	 			 				 if(count($user_roles) > 0){
@@ -395,15 +410,15 @@ function cdm_file_permissions($pid){
 											  
 										   }
 									   }
-	 
+	 							
 	 		  				//check to see if user is part of a buddy press group that has access to this folder
 							
 								
 								
 								
-					  $folder_perm =sp_cdm_groups_addon_projects::get_permissions('sp_cdm_groups_addon_groups_permission_add_' . $pid . '');
+					  $folder_perm =sp_cdm_groups_addon_projects::get_permissions('sp_cdm_groups_addon_groups_permission_add_' . findRootParent($pid) . '');
 						
-							 
+						 
 	   				$r = $wpdb->get_results($wpdb->prepare("SELECT  * FROM ".$wpdb->prefix."sp_cu_advanced_groups_assign where uid = %d ",$uid), ARRAY_A);	
 	  		
 									   if(count($r) > 0){
@@ -419,13 +434,19 @@ function cdm_file_permissions($pid){
 							
 							  //end roles permission
 						    
-							//global setting
-							if(get_option('sp_cdm_groups_addon_project_add_' . $pid . '') == 1){
-								$permission = 1;
-							}		
+						
+							
+							
+							
 								
 					}//end grioups addon
 					
+					
+						//global setting
+							if(get_option('sp_cdm_groups_addon_project_add_' . $pid . '') == 1){
+								$permission = 1;
+							}	
+					}
 				//is part of premium group
 		
 				if($pid == 0 or $pid == ''){

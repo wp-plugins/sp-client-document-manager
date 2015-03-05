@@ -203,7 +203,13 @@ if (!function_exists('sp_client_upload_settings')) {
 		
 		if(class_exists('imagick')){
 			
-			$tmp    = SP_CDM_UPLOADS_DIR;
+			$upload_dir = wp_upload_dir();
+			$tmp_folder =  $upload_dir['basedir'].'/imageMagick_tmp/';
+			      if (!is_dir($tmp_folder)) {
+            mkdir($tmp_folder, 0777);
+        }
+			
+			$tmp    = $tmp_folder;
             $format = "png";
             $source = $pdf;
             $dest   = "" . $pdf . "_big.$format";

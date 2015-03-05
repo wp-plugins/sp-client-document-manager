@@ -94,12 +94,15 @@ class spdm_ajax
 jQuery(".viewFileTabs").responsiveTabs({
  startCollapsed: false
 });
-</script>
+</script>';
+
+
+	$html = apply_filters('cdm/viewfile/under_date',$html,$r);
 
 
 
 
-		<div class="viewFileTabs">
+		$html .='<div class="viewFileTabs">
 
 	<ul>
 
@@ -1131,7 +1134,7 @@ echo '
         }
         echo '<div id="dlg_cdm_thumbnails">';
         if ($_GET['pid'] != "") {
-            $r_current_project = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project  WHERE id = " . $_GET['pid'] . "", ARRAY_A);
+            $r_current_project = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project  WHERE id = %d",$_GET['pid']), ARRAY_A);
         }
        if (($_GET['pid'] != "0" && $_GET['pid'] != '') && ((get_option('sp_cu_user_projects') == 1 and get_option('sp_cu_user_projects_modify') != 1) or current_user_can('manage_options'))) {
             $r_project_info = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_project where id = " . $_GET['pid'] . "", ARRAY_A);
