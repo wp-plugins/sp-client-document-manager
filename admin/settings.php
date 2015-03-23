@@ -11,13 +11,16 @@
 			$sp_cdm_disable_features = $_POST['sp_cdm_disable_features'];
 			if(count($sp_cdm_disable_features) > 0){
 			foreach($sp_cdm_disable_features as $feature){
+				if(count($feature) > 0){
+					
 				foreach($feature as $setting){
 					
-					if($sp_cdm_disable_features[$feature][$setting] == 1){
-						$sp_cdm_disable_features[$feature][$setting] = 1;
+					if(@$sp_cdm_disable_features[$feature][$setting] == 1){
+						@$sp_cdm_disable_features[$feature][$setting] = 1;
 					}else{
-						$sp_cdm_disable_features[$feature][$setting] = 0;
+						@$sp_cdm_disable_features[$feature][$setting] = 0;
 					}
+				}
 				}
 			}
 			}
@@ -649,7 +652,9 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
  <tr>
  <td >Disable Folders</td><td>
  <input type="checkbox" name="sp_cdm_disable_features[base][disable_folders]"   value="1" ' . sp_client_upload_settings_checkbox($disable_features, 'base', 'disable_folders'). '></td>
- </tr>';
+ </tr>
+ 
+ ';
  
  do_action('sp_cdm_disable_features', $disable_features);
  echo '<tr>
