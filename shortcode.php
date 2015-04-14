@@ -61,7 +61,7 @@ function sp_cdm_file_link_shortcode($atts)
     }
 }
 add_shortcode('cdm-link', 'sp_cdm_file_link_shortcode');
-function display_sp_thumbnails2($r)
+function display_sp_thumbnails2($r,$overide_uid = false)
 {
     global $wpdb, $current_user, $user_ID;
 	$content = '';
@@ -70,7 +70,12 @@ function display_sp_thumbnails2($r)
     } else {
         $wp_con_folder = get_option('sp_cu_wp_folder');
     }
-    $content .= '
+    
+	if($overide_uid != false){
+	
+	$user_ID = $overide_uid;
+	}
+	$content .= '
 
 	
 
@@ -687,6 +692,13 @@ jQuery(document).ready(function() {
         global $wpdb;
         global $user_ID;
         global $current_user;
+	
+		if($atts['uid'] != ''){
+		$overide_uid = $atts['uid'];	
+		}else{
+		$overide_uid = false;	
+		}
+	
 		$html = '';
         get_currentuserinfo();
         if (is_user_logged_in()) {
@@ -744,11 +756,11 @@ jQuery(document).ready(function() {
 			}
 			$html .= '<div style="text-align:right;padding:10px'.$hide_search.'">' . __("Search", "sp-cdm") . ': <input  onkeyup="cdm_ajax_search()" type="text" name="search" id="search_files"></div>';
             if (get_option('sp_cu_user_projects_thumbs') == 1 && @CU_PREMIUM == 1) {
-                $upload_view = display_sp_cdm_thumbnails($r);
+                $upload_view = display_sp_cdm_thumbnails($r,$overide_uid);
             } else {
-                $upload_view = display_sp_thumbnails2($r);
+                $upload_view = display_sp_thumbnails2($r,$overide_uid);
             }
-				$html .= apply_filters('sp_cdm_upload_view',$upload_view);
+				$html .= apply_filters('sp_cdm_upload_view',$upload_view,$overide_uid );
 				$html = apply_filters('sp_cdm_upload_bottom',$html);
 				
 		

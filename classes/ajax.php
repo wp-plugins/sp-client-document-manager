@@ -1390,7 +1390,7 @@ function sp_cu_remove_project(){
         }
         if (count($r_projects) > 0) {
             for ($i = 0; $i < count($r_projects); $i++) {
-                if ($r_projects[$i]['project_name'] != "") {
+                  if ($r_projects[$i]['project_name'] != "" && cdm_file_permissions($r_projects[$i]['id']) == 1 ) {
             
 				
 				

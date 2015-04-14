@@ -1,5 +1,27 @@
 <?php
-
+	
+	
+	function sp_cdm_get_user_projects($uid = false){
+		global $current_user,$wpdb;
+		$projects = array();
+		if($uid == false){
+		$uid = $current_user->ID;	
+		}
+	$r = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $wpdb->prefix . "sp_cu_project WHERE  uid = %d", $uid), ARRAY_A);
+	
+	  for ($i = 0; $i < count(  $r); $i++) {
+		  
+		$projects[] =   $r[$i]['id'];
+		
+	  }
+	  
+	
+	
+		 $projects_final = apply_filters('cdm/common/get_projects',$projects,$uid);
+		return $projects_final;
+	}
+	
+	
 	function findRootParent($id){
 		
 		global $wpdb;
@@ -345,24 +367,11 @@ function cdm_file_permissions($pid){
 				if($uid == $owner[0]['uid']){
 				$permission = 1;	
 				}
-				//cdm premium groups
-					if($pid >0 && is_numeric($pid)){
-					$groups_premium  = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_groups_assign WHERE uid = '" . $wpdb->escape($owner[0]['uid'])  . "'", ARRAY_A);
-					  for ($i = 0; $i < count( $groups_premium); $i++) {
-						  
-						  $groups_part_of[] = $groups_premium[$i]['gid'];
-					  }
-					if(count($groups_part_of) >0){
-					foreach($groups_part_of as $key=>$value){
-					$groups_premium_find  = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_groups_assign WHERE gid = '" . $wpdb->escape($value)  . "' AND uid = '".$current_user->ID."'", ARRAY_A);
-						if($groups_premium_find > 0){
-						$permission = 1;	
-						}
-					}
-					}
-					}
+				
+	
 					//if given permission for groups addon
 					if(class_exists('sp_cdm_groups_addon')){
+						global $sp_cdm_groups_addon_projects ;
 						$sp_cdm_groups_perm =  new sp_cdm_groups_addon;
 						//can delete folder
 							if(get_option('sp_cdm_groups_addon_project_add_folders_' . $pid . '') == 1){
@@ -435,8 +444,28 @@ function cdm_file_permissions($pid){
 							  //end roles permission
 						    
 						
+						
+	 			$folder_user_permissions = get_option("sp_cdm_groups_share_user_".$pid."");
+					
+				
+					if($folder_user_permissions != false){
+					
+					$folder_user_permissions =unserialize($folder_user_permissions);
+					
+						foreach($folder_user_permissions as $key=>$folder){
 							
+							if($key == $current_user->ID && $folder['read'] == 1){
+								
+								$permission= 1;
+								
+							}
+						}
+						
+					}
+						
 							
+						
+					
 							
 								
 					}//end grioups addon
