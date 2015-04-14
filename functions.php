@@ -110,7 +110,8 @@ if (!function_exists('sp_client_upload_settings')) {
 			global $wpdb,$current_user;
 		$view = 0; 
 		
-
+	 if(is_admin())
+		 return true;
 	
 			
 		if($file_uid == $uid){ $view = 1; }	
@@ -125,6 +126,10 @@ if (!function_exists('sp_client_upload_settings')) {
 	
 	
 	function cdm_user_can_delete($uid){
+		
+			 if(is_admin())
+		 return true;
+		
 		
 		  if (
 		  
@@ -145,6 +150,10 @@ if (!function_exists('sp_client_upload_settings')) {
 	}
 	
 	function cdm_user_can_add($uid){
+		 
+		 if(is_admin())
+		 return true;
+		 
 		 if (get_option('sp_cu_user_uploads_disable') != 1  and( 
 			(get_option('sp_cdm_groups_addon_global_add_roles_'.sp_cdm_get_current_user_role_name ().'') == '' or
 			get_option('sp_cdm_groups_addon_global_add_roles_'.sp_cdm_get_current_user_role_name ().'') == 1 )
