@@ -693,7 +693,7 @@ jQuery(document).ready(function() {
         global $user_ID;
         global $current_user;
 	
-		if($atts['uid'] != ''){
+		if(@$atts['uid'] != ''){
 		$overide_uid = $atts['uid'];	
 		}else{
 		$overide_uid = false;	
