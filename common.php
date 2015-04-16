@@ -50,7 +50,7 @@ return $date->format(get_option('date_format') );
 	function sp_cdm_is_featured_disabled($plugin, $feature){
 		 $disable_features = get_option('sp_cdm_disable_features');
 
-  
+ if(is_array($disable_features)){
   
 		if($disable_features[$plugin][$feature] == '' or $disable_features[$plugin][$feature] == 0){
 			
@@ -59,7 +59,7 @@ return $date->format(get_option('date_format') );
 			
 		return true;	
 		}
-		
+ }
 	}
 	function sp_cdm_array_flatten($array,$return) {
 	for($x = 0; $x <= count($array); $x++) {

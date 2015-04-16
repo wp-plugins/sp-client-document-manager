@@ -9,7 +9,7 @@ function view(){
 	
 	
 	echo '<h2>'.__("User Files","sp-cdm").'</h2>'.sp_client_upload_nav_menu().''.__("Choose a user below to view their files","sp-cdm").'<p>
-	
+	<div style="margin-top:20px;margin-bottom:20px">
 	<script type="text/javascript">
 	jQuery(document).ready(function() {
 	
@@ -24,7 +24,7 @@ function view(){
 	<form>';
 	wp_dropdown_users(array('name' => 'user_uid', 'show_option_none' => 'Choose a user', 'selected'=>$_GET['id']));
 	 
-	echo '</form>';
+	echo '</form></div>';
 
 
 		if($_GET['id'] != ''){
