@@ -1001,11 +1001,13 @@ echo '
     }
     function thumbnails()
     {
-        global $wpdb, $current_user;
-        if (function_exists('cdmFindGroups')) {
+    global $wpdb, $current_user;
+         if (function_exists('cdmFindGroups')) {
             $find_groups = cdmFindGroups($_GET['uid'], 1);
         }
-       
+		
+		$current_user_projects = sp_cdm_get_user_projects($_GET['uid']);
+	
         if ($_REQUEST['search'] != "") {
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.name LIKE '%" . $_REQUEST['search'] . "%' ";
         }else{
@@ -1015,9 +1017,11 @@ echo '
             $search_project .= " AND " . $wpdb->prefix . "sp_cu_project.parent = '" . $_GET['pid'] . "' ";
         }
 		}
+		
+
           if (get_option('sp_cu_hide_project') == 1) {
 			
-			
+		
 			$r_projects_query = "SELECT " . $wpdb->prefix . "sp_cu.name,
 
 												 " . $wpdb->prefix . "sp_cu.id,
@@ -1049,7 +1053,7 @@ echo '
 								if($_GET['pid'] == 0 or $_GET['pid'] == ''){
 									$r_projects_query = apply_filters('sp_cdm_projects_query', $r_projects_query ,$_GET['uid']);	
 										}
-
+									
 									$r_projects_query .="	" . $search_project . "
 										
 										GROUP BY pid
@@ -1073,15 +1077,21 @@ echo '
 										" . $search_project . " ORDER by name
 ";
 								}
-			 $r_projects_query = apply_filters('sp_cdm_project_query_final', $r_projects_query);
+			
             $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
-									
-	
         } else {
 			
 			
 									$r_projects_groups_addon = apply_filters('sp_cdm_projects_query', $r_projects_groups_addon ,$_GET['uid']);	
-					
+									
+									$search_project = apply_filters('sp_cdm_search_project_query', $search_project );
+									
+									
+					//echo $r_projects_groups_addon ;
+			
+			if($_GET['pid'] == 0 or $_GET['pid'] == ''){
+			$user_query = " AND " . $wpdb->prefix . "sp_cu_project.uid = '" . $_GET['uid'] . "' ";	
+			}
 			$r_projects_query = "SELECT 
 
 												" . $wpdb->prefix . "sp_cu_project.id,
@@ -1098,7 +1108,7 @@ echo '
 
 										FROM " . $wpdb->prefix . "sp_cu_project
 
-										WHERE (" . $wpdb->prefix . "sp_cu_project.uid = '" . $_GET['uid'] . "'  " . $find_groups . " ".$r_projects_groups_addon.")										
+									  WHERE (" . $wpdb->prefix . "sp_cu_project.id != '' ".$user_query." " . $find_groups . " ".$r_projects_groups_addon.")										
 
 										
 
@@ -1110,9 +1120,9 @@ echo '
 
 										ORDER by name";
 							
-	
-		
-			if(get_option('sp_cu_release_the_kraken') == 1){
+						
+						
+		if(get_option('sp_cu_release_the_kraken') == 1){
 								unset($r_projects_query);								
 								$r_projects_query =	 "SELECT 										 
 													" . $wpdb->prefix . "sp_cu_project.id,
@@ -1129,42 +1139,87 @@ echo '
 										
 										" . $search_project . " ORDER by name
 ";
-								}
-            $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
+		}
+								
+						
+		  $r_projects_query = apply_filters('sp_cdm_project_query_final', $r_projects_query);
+
+		   $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
         }
-        echo '<div id="dlg_cdm_thumbnails">';
-        if ($_GET['pid'] != "") {
-            $r_current_project = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project  WHERE id = %d",$_GET['pid']), ARRAY_A);
+	
+		
+		if($_GET['pid'] == 'drafts'){
+		unset($r_projects);
+		}
+		 echo '
+		 <script type="text/javascript">
+		 
+		 jQuery( document ).ready(function() {
+	
+	jQuery(".cdm-hover-thumb").hover(function() {
+			
+		
+			jQuery(this).before("<div  class=cdm-preview-image><img src=" + jQuery(this).attr("rel") + " ></div>");
+		}, function () {
+			jQuery(".cdm-preview-image").remove();
+    });
+  });
+		 </script>
+		 
+		  <div id="dlg_cdm_thumbnails">';
+      
+	  
+	    if ($_GET['pid'] == '') {
+            $jscriptpid = "''";
+        } else {
+            $jscriptpid = "'" . $_GET['pid'] . "'";
         }
-       if (($_GET['pid'] != "0" && $_GET['pid'] != '') && ((get_option('sp_cu_user_projects') == 1 and get_option('sp_cu_user_projects_modify') != 1) or current_user_can('manage_options'))) {
+        echo '<div class="sp-cdm-r-head">';
+					
+		do_action('spdm_file_list_column_before_sort');
+		echo '
+
+	<div style="float:right">' . __("Sort by", "sp-cdm") . ': <a href="javascript:sp_cdm_sort(\'name\',' . $_GET['pid'] . ')">' . __("Name", "sp-cdm") . '</a>   <a href="javascript:sp_cdm_sort(\'date\',' . $_GET['pid']. ')">' . __("Date", "sp-cdm") . '</a></div>
+
+	
+		
+
+		';
+		
+		echo '
+
+		
+		</div>	
+
+		
+
+		';
+	
+		
+		
+        if (($_GET['pid'] != "0" && $_GET['pid'] != '') && ((get_option('sp_cu_user_projects') == 1 and get_option('sp_cu_user_projects_modify') != 1) or current_user_can('manage_options'))) {
             $r_project_info = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_project where id = " . $_GET['pid'] . "", ARRAY_A);
-            if($r_project_info[0]['uid'] == $_GET['uid']){
-		    echo '
+          
+		  if($r_project_info[0]['uid'] == $_GET['uid'] && get_option('sp_cu_user_delete_folders') != 1){
+		    echo '<div style="padding-right:10px">';
 
-			<div style="padding-right:10px">';
-
-		echo '<a href="javascript:sp_cu_dialog(\'#edit_category_' . $_GET['pid'] . '\',550,130)"><img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png"> '. __("Edit", "sp-cdm").' '.sp_cdm_folder_name() .' '. __("Name", "sp-cdm").'</a>   <a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/delete_small.png">  '. __("Remove", "sp-cdm").' '.sp_cdm_folder_name().'</a> 
-';
- if(current_user_can('sp_cdm_show_folders_as_nav') or current_user_can('sp_cdm_projects') ){
-		echo '<a href="'.admin_url('admin.php?page=sp-client-document-manager-projects&function=edit&id='.$_GET['pid'].'' ).'" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png">  '. __("Admin", "sp-cdm").'</a>';
- }
-
- 	do_action('cdm/ajax/folder/navigation', $_GET['pid']);
-		
-echo '
+	echo '<a href="javascript:sp_cu_dialog(\'#edit_category_' . $_GET['pid'] . '\',550,130)"><img src="' . SP_CDM_PLUGIN_URL . 'images/application_edit.png"> '. __("Edit Folder Name", "sp-cdm").'</a>';   
+	echo '<a href="javascript:sp_cu_remove_project()" style="margin-left:20px"> <img src="' . SP_CDM_PLUGIN_URL . 'images/delete_small.png">  '. __("Remove Folder", "sp-cdm").' </a>';
+	
+	do_action('cdm/ajax/folder/navigation', $_GET['pid']);
 		
 
-		<div style="display:none">	
+		echo'<div style="display:none">	
 
 		
 
 		
 
-	<script type="text/javascript">
+		<script type="text/javascript">
 
 		
 
-		
+			
 
 function sp_cu_edit_project(){
 
@@ -1241,8 +1296,13 @@ function sp_cu_remove_project(){
 					   data: "id=' . $_GET['pid'] . '" ,
 
 					   success: function(msg){
-						jQuery.removeCookie("pid");
+
+					   
+					   
+					   jQuery.removeCookie("pid");
+						
 					  cdm_ajax_search();
+
 
 					 
 
@@ -1277,8 +1337,6 @@ function sp_cu_remove_project(){
 	
 
 	
-
-
 
 
 
@@ -1326,31 +1384,23 @@ function sp_cu_remove_project(){
 
 		
 
-	
-
 		
 
-		</div>	
 
 		
 
 		';
+		  }
         }
-		}
-			echo '
 
-	<div style="float:right">' . __("Sort by", "sp-cdm") . ': <a href="javascript:sp_cdm_sort(\'name\',' . $_GET['pid'] . ')">' . __("Name", "sp-cdm") . '</a>   <a href="javascript:sp_cdm_sort(\'date\',' . $_GET['pid']. ')">' . __("Date", "sp-cdm") . '</a></div>
-
+       
+	   echo '				<div class="sp_isotope_filter">';
+	   
+	   do_action('spdm_file_responsive_top',$_GET['pid']);			
+	 	
 	
-		
-
-		';
-		
-		
-			do_action('spdm_file_list_column_before_sort_thumbs');
-		
-		echo '<div style="clear:both"></div>';
-        if ($_GET['pid'] != 0) {
+	    if ($_GET['pid'] != 0) {
+	
             $query_project = $wpdb->get_results("SELECT *
 
 	
@@ -1364,7 +1414,13 @@ function sp_cu_remove_project(){
 									
 
 									 ", ARRAY_A);
-            echo '
+									 
+					 
+									 
+          
+			do_action('spdm_file_list_column_before_folder_back');
+		
+	 echo '
 
 				<div class="dlg_cdm_thumbnail_folder">
 
@@ -1388,15 +1444,20 @@ function sp_cu_remove_project(){
 
 		';
         }
-        if (count($r_projects) > 0) {
+	
+	
+		$r_projects = apply_filters('sp_cdm_project_array_filter', $r_projects);
+		
+
+	    if (count($r_projects) > 0) {
             for ($i = 0; $i < count($r_projects); $i++) {
-                  if ($r_projects[$i]['project_name'] != "" && cdm_file_permissions($r_projects[$i]['id']) == 1 ) {
-            
-				
-				
-				//if(cdm_has_permission($_GET['uid'],$r_projects[$i]['uid'],$r_projects[$i]['pid'],'folder') ==1 ){
-			
-			        echo '
+                if ($r_projects[$i]['project_name'] != "" && in_array( $r_projects[$i]['pid'],$current_user_projects) ) {
+                  
+					
+
+
+
+				   echo '
 
 		<div class="dlg_cdm_thumbnail_folder">
 
@@ -1418,16 +1479,17 @@ function sp_cu_remove_project(){
 		
 
 		';
-				//}
                 }
             }
         }
-        //
         if ($_GET['sort'] == '') {
-            $sort = $this->order_by();
+            $sort = spdm_ajax::order_by();
+		
         } else {
             $sort = $_GET['sort'];
         }
+
+		
         if ($_GET['pid'] == "" or $_GET['pid'] == "0" or $_GET['pid'] == "undefined" or $_GET['pid'] == "null") {
             if ($_REQUEST['search'] != "") {
                 $search_file .= " AND (name LIKE '%" . $_REQUEST['search'] . "%' or  tags LIKE '%" . $_REQUEST['search'] . "%')  ";
@@ -1435,40 +1497,65 @@ function sp_cu_remove_project(){
                 $search_file .= " AND pid = 0  AND parent = 0  ";
             }
 			$search_file = apply_filters("sp_cdm_file_search_query", $search_file, $_GET['pid']);
-            $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where (uid = '" . $_GET['uid'] . "' " . $find_groups . ")  	 " . $search_file . " order by " . $sort . " ", ARRAY_A);
+           	$query = "SELECT *  FROM " . $wpdb->prefix . "sp_cu   where (uid = '" . $_GET['uid'] . "' " . $find_groups . ")  	 " . $search_file . " order by " . $sort . " ";
+		   	$query = apply_filters('sp_cdm_query_string', $query);
+			
+		    $r = $wpdb->get_results($query, ARRAY_A);
+			
         } else {
+			$search_file .= " where (pid = '" . $_GET['pid'] . "')";
             if ($_REQUEST['search'] != "") {
                 $search_file .= " AND (name LIKE '%" . $_REQUEST['search'] . "%' or  tags LIKE '%" . $_REQUEST['search'] . "%')  ";
             } else {
                 $search_file .= "  AND parent = 0   ";
             }
 			$search_file = apply_filters("sp_cdm_file_search_query", $search_file, $_GET['pid']);
-            $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where (pid = '" . $_GET['pid'] . "') " . $search_file . "  order by " . $sort . "  ", ARRAY_A);
+            $query = "SELECT *  FROM " . $wpdb->prefix . "sp_cu   " . $search_file . "  order by " . $sort . "  ";
+		
+			$query = apply_filters("sp_cdm_file_main_responsive_query", $query , $_GET['pid']);
+		
+			$r = $wpdb->get_results( $query , ARRAY_A);
+			
         }
+		
 		
 		if(get_option('sp_cu_release_the_kraken') == 1){
 		unset($r);
-		if($_GET['pid'] == ''){
-		
-		$_GET['pid'] = 0;
-		
+		unset($search_file);
+				if($_GET['pid'] == ''){
+				
+				$_GET['pid'] = 0;
+				
 		}
 		
+		 if ($_GET['pid'] == "" or $_GET['pid'] == "0" or $_GET['pid'] == "undefined" or $_GET['pid'] == "null") {
 		
-		
-		 if ($_REQUEST['search'] == "") {
-		
-			 $search_file .= " AND (pid = '" . $_GET['pid'] . "') ";
+			 $search_file .= " AND (pid = '0') "; 
+		 }else{
+			 $search_file .= " AND (pid = '" . $_GET['pid'] . "') "; 
 		 }
+		  
 		 $search_file = apply_filters("sp_cdm_file_search_query", $search_file, $_GET['pid']);
-		 $query = "SELECT *  FROM " . $wpdb->prefix . "sp_cu  where id != ''   " . $search_file . "  order by " . $sort . "  ";
-		// echo  $query ;
-		 $r = $wpdb->get_results( $query , ARRAY_A);	
 		 
+		  if ($_REQUEST['search'] != "") {
+               	unset( $search_file);
+			    $search_file .= " AND (name LIKE '%" . $_REQUEST['search'] . "%' or  tags LIKE '%" . $_REQUEST['search'] . "%')  ";
+            } 
+		 $query = "SELECT *  FROM " . $wpdb->prefix . "sp_cu  where id != ''   " . $search_file . "  order by " . $sort . "  ";
+	
+		
+		 $r = $wpdb->get_results( $query , ARRAY_A);	
+	
 		
 		}
+		 if ($_REQUEST['search'] == "") {
+		$r = apply_filters('sp_cdm_file_loop_array', $r,$_GET['pid']);
+			}
+			
+			
         for ($i = 0; $i < count($r); $i++) {
-            $ext        = preg_replace('/^.*\./', '', $r[$i]['file']);
+			
+			 $ext        = preg_replace('/^.*\./', '', $r[$i]['file']);
             $images_arr = array(
                 "jpg",
                 "png",
@@ -1487,7 +1574,7 @@ function sp_cu_remove_project(){
 			}
 	  
 			
-            if (in_array(strtolower($ext), $images_arr)) {
+         if (in_array(strtolower($ext), $images_arr)) {
                 if (get_option('sp_cu_overide_upload_path') != '' && get_option('sp_cu_overide_upload_url') == '') {
                     $img = '<img src="' . SP_CDM_PLUGIN_URL . 'images/package_labled.png">';
                 } else {
@@ -1525,13 +1612,28 @@ function sp_cu_remove_project(){
             }
 			
 			$img = apply_filters('sp_cdm_viewfile_image', $img,$r[$i]);
-			if(get_option('sp_cu_file_direct_access') == 1){
+		    $ext   = preg_replace('/^.*\./', '', $r[$i]['file']);
+            $r_cat = $wpdb->get_results("SELECT name  FROM " . $wpdb->prefix . "sp_cu_cats   where id = '" . $r[$i]['cid'] . "' ", ARRAY_A);
+            if ($r_cat[0]['name'] == '') {
+                $cat = stripslashes($r_cat[0]['name']);
+            } else {
+                $cat = '';
+            }
+            if ($_REQUEST['search'] != "" && sp_cdm_get_project_name($r[$i]['pid']) != false) {
+                $project_name = ' <em>('.sp_cdm_folder_name() .': ' . sp_cdm_get_project_name($r[$i]['pid']) . ')</em> ';
+            } else {
+                $project_name = '';
+            }
+           
+		   if(get_option('sp_cu_file_direct_access') == 1){
 			$file_link = 	'window.open(\'' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[$i]['id'].'|'.$r[$i]['date'].'|'.$r[$i]['file']) . '\'); void(0)'; ;
 			}else{
 			$file_link =  'cdmViewFile(' . $r[$i]['id'] . ')';	
 			}
-			if(cdm_file_permissions($r[$i]['pid']) == 1){
-            echo '<div class="dlg_cdm_thumbnail_folder">
+			
+			
+			if( in_array( $r[$i]['pid'],$current_user_projects)){
+		    echo '<div class="dlg_cdm_thumbnail_folder">
 
 			<div class="dlg_cdm_thumbnail_image">
 
@@ -1550,9 +1652,12 @@ function sp_cu_remove_project(){
 				echo '
 
 				</div>';
-			}
+		}
         }
-        echo '<div style="clear:both"></div></div>';
+        echo '<div style="clear:both"></div></div></div>';
+	
+	
+	
     }
     function download_project()
     {
