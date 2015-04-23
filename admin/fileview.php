@@ -14,7 +14,7 @@ function view(){
 	jQuery(document).ready(function() {
 	
 	jQuery("#user_uid").change(function() {
-		jQuery.cookie("pid", 0);
+		jQuery.cookie("pid", 0, { expires: 7 , path:"/" });
 	window.location = "admin.php?page=sp-client-document-manager-fileview&id=" + jQuery("#user_uid").val();
 	
 	

@@ -483,7 +483,7 @@ $html .='
 
   
 
-						<div class="sp_change_indicator_button"><input id="dlg-upload"  type="submit" name="submit" value="' . __("Upload", "sp-cdm") . '" ></div>
+						<div class="sp_change_indicator_button"><input id="dlg-upload"  type="submit" name="sp-cdm-community-upload" value="' . __("Upload", "sp-cdm") . '" ></div>
 
 						<div class="sp_change_indicator" ></div>	
 ';
@@ -563,7 +563,7 @@ return $html;
         global $user_ID;
         global $current_user;
         if ($_GET['dlg-delete-file'] != "") {
-            $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where  id = " . $_GET['dlg-delete-file'] . "", ARRAY_A);
+            $r = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where  id = %d",$_GET['dlg-delete-file']), ARRAY_A);
             unlink('' . SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '');
             $wpdb->query("
 
@@ -571,7 +571,7 @@ return $html;
 
 	");
         }
-        if ($_POST['submit'] != "") {
+        if ($_POST['sp-cdm-community-upload'] != "") {
             $data       = $_POST;
             $files      = $_FILES;
             $a['uid']   = $user_ID;
@@ -789,5 +789,6 @@ add_action('sp_cu_add_file_link', 'sp_cu_add_file_link_free', 5);
 add_shortcode('sp-client-media-manager', 'display_sp_client_upload');
 add_shortcode('sp-client-document-manager', 'display_sp_client_upload');
 add_action('wp_footer', 'display_sp_client_upload_process');
+add_action('admin_footer', 'display_sp_client_upload_process');
 }
 ?>
