@@ -438,7 +438,7 @@ $html .='
   
   
   		
-        $html .= sp_cdm_display_projects();
+       # $html .= sp_cdm_display_projects();
       
 	    if (@CU_PREMIUM == 1) {
             $html .= sp_cdm_display_categories();
@@ -562,6 +562,11 @@ return $html;
         global $wpdb;
         global $user_ID;
         global $current_user;
+		
+		if($_GET['page'] == 'sp-client-document-manager-fileview' && $_GET['id'] != ''){
+		$user_ID = $_GET['id'];	
+		}
+		
         if ($_GET['dlg-delete-file'] != "") {
             $r = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where  id = %d",$_GET['dlg-delete-file']), ARRAY_A);
             unlink('' . SP_CDM_UPLOADS_DIR . '' . $r[0]['uid'] . '/' . $r[0]['file'] . '');
@@ -576,13 +581,13 @@ return $html;
             $files      = $_FILES;
             $a['uid']   = $user_ID;
             $a['name']  = $data['dlg-upload-name'];
-            $a['pid']   = $data['pid'];
+            $a['pid']   = $_COOKIE['pid'];
             $a['cid']   = $data['cid'];
             $a['tags']  = $data['tags'];
             $a['notes'] = $data['dlg-upload-notes'];
             check_folder_sp_client_upload();
             if ($files['dlg-upload-file']['name'] != "") {
-                $upload = sp_uploadFile($files);
+                $upload = sp_uploadFile($files,$uid);
 				
 				
 				

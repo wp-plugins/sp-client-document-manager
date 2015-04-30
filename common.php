@@ -1,5 +1,31 @@
 <?php
-	
+
+
+	function sp_cdm_file_upload_rename($filename,$uid){
+		
+		
+		$actual_name = pathinfo($filename,PATHINFO_FILENAME);
+		$original_name = $actual_name;
+		$extension = pathinfo($filename, PATHINFO_EXTENSION);
+
+		
+		$i = 1;
+		while(file_exists(''.SP_CDM_UPLOADS_DIR.''.$uid.'/'.$actual_name.".".$extension))
+
+		{           
+			$actual_name = (string)$original_name.$i;
+			$filename = $actual_name.".".$extension;
+			$i++;
+		}
+		
+		
+		
+		
+	return $filename;	
+	}
+
+
+	add_filter('sp_cdm/premium/upload/file_rename','sp_cdm_file_upload_rename',10,2);
 	
 	function sp_cdm_get_user_projects($uid = false){
 		global $current_user,$wpdb;
@@ -985,11 +1011,14 @@ function sp_uploadFile($files, $history = NULL){
 
 	global $current_user;
 
-	 
-			
+		if($_GET['page'] == 'sp-client-document-manager-fileview' && $_GET['id'] != ''){
+		$user_ID = $_GET['id'];	
+		}	
 
 			$dir = ''.SP_CDM_UPLOADS_DIR.''.$user_ID.'/';
-
+ if (!is_dir($dir)) {
+            mkdir($dir, 0777);
+        }
 			$count = sp_array_remove_empty($files['dlg-upload-file']['name']);
 
 
@@ -1006,16 +1035,17 @@ function sp_uploadFile($files, $history = NULL){
 					}
 				
 
-		$dir = ''.SP_CDM_UPLOADS_DIR.''.$current_user->ID.'/';
+		$dir = ''.SP_CDM_UPLOADS_DIR.''.$user_ID.'/';
 
 	
 
-	$filename = ''.sp_client_upload_filename($current_user->ID) .''.$files['dlg-upload-file']['name'][0].'';
+	$filename = ''.sp_client_upload_filename($user_ID) .''.$files['dlg-upload-file']['name'][0].'';
 
 	$filename = strtolower($filename);
 
 	$filename = sanitize_file_name($filename);
 	$filename    = remove_accents($filename);
+	$filename 	 = apply_filters('sp_cdm/premium/upload/file_rename',$filename,$user_ID);
 	$target_path = $dir .$filename; 
 
 	
@@ -1128,7 +1158,6 @@ $return_file = "".rand(100000, 100000000000)."_Archive.zip";
 
 $zip->setZipFile($dir.$return_file);
 
-		
 
 	return $return_file;	
 
@@ -1139,16 +1168,15 @@ $zip->setZipFile($dir.$return_file);
 	}else{
 
   $name = $files['dlg-upload-file']['name'][1];
-				 $wp_filetype = wp_check_filetype( $name );
-				   if ( ! $wp_filetype['ext'] && ! current_user_can( 'unfiltered_upload' ) ){
-	              return  'upload_error';
-					}
+				# $wp_filetype = wp_check_filetype( $name );
+				 #  if ( ! $wp_filetype['ext'] && ! current_user_can( 'unfiltered_upload' ) ){
+	              #return  'upload_error';
+					#}
 
-	$dir = ''.SP_CDM_UPLOADS_DIR.''.$current_user->ID.'/';
+	$dir = ''.SP_CDM_UPLOADS_DIR.''.$user_ID.'/';
 
-	
 
-	$filename = ''.sp_client_upload_filename($current_user->ID) .''.$files['dlg-upload-file']['name'][1].'';
+	$filename = ''.sp_client_upload_filename($user_ID) .''.$files['dlg-upload-file']['name'][1].'';
 
 	$filename = strtolower($filename);
 
@@ -1156,7 +1184,6 @@ $zip->setZipFile($dir.$return_file);
 	$filename    = remove_accents($filename);
 	$target_path = $dir .$filename; 
 
-	
 
 	move_uploaded_file($files['dlg-upload-file']['tmp_name'][1], $target_path);
 
@@ -1171,7 +1198,6 @@ $zip->setZipFile($dir.$return_file);
 		cdm_thumbPdf($target_path);
 		}
 	}
-
 
 	return $filename;
 
