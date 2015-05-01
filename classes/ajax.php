@@ -917,11 +917,12 @@ echo '
         if ($_GET['pid'] == "" or $_GET['pid'] == "0" or $_GET['pid'] == "undefined" or $_GET['pid'] == "null") {
             if ($_REQUEST['search'] != "") {
                 $search_file .= " AND (name LIKE '%" . $_REQUEST['search'] . "%' or  tags LIKE '%" . $_REQUEST['search'] . "%')  ";
-            } else {
+            	$r_projects_groups_addon_search = str_replace("wp_sp_cu_project.id", "pid",$r_projects_groups_addon);
+			} else {
                 $search_file .= " AND pid = 0  AND parent = 0  ";
             }
 			$search_file = apply_filters("sp_cdm_file_search_query", $search_file, $_GET['pid']);
-            $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where (uid = '" . $_GET['uid'] . "' " . $find_groups . ")  	 " . $search_file . " order by " . $sort . " ", ARRAY_A);
+            $r = $wpdb->get_results("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where (uid = '" . $_GET['uid'] . "' ".$r_projects_groups_addon_search.")  	 " . $search_file . " order by " . $sort . " ", ARRAY_A);
 			
         } else {
             if ($_REQUEST['search'] != "") {
@@ -1493,11 +1494,12 @@ function sp_cu_remove_project(){
         if ($_GET['pid'] == "" or $_GET['pid'] == "0" or $_GET['pid'] == "undefined" or $_GET['pid'] == "null") {
             if ($_REQUEST['search'] != "") {
                 $search_file .= " AND (name LIKE '%" . $_REQUEST['search'] . "%' or  tags LIKE '%" . $_REQUEST['search'] . "%')  ";
-            } else {
+            $r_projects_groups_addon_search = str_replace("wp_sp_cu_project.id", "pid",$r_projects_groups_addon);
+			} else {
                 $search_file .= " AND pid = 0  AND parent = 0  ";
             }
 			$search_file = apply_filters("sp_cdm_file_search_query", $search_file, $_GET['pid']);
-           	$query = "SELECT *  FROM " . $wpdb->prefix . "sp_cu   where (uid = '" . $_GET['uid'] . "' " . $find_groups . ")  	 " . $search_file . " order by " . $sort . " ";
+           	$query = "SELECT *  FROM " . $wpdb->prefix . "sp_cu   where (uid = '" . $_GET['uid'] . "' ".$r_projects_groups_addon_search.")  	 " . $search_file . " order by " . $sort . " ";
 		   	$query = apply_filters('sp_cdm_query_string', $query);
 			
 		    $r = $wpdb->get_results($query, ARRAY_A);
