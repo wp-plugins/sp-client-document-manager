@@ -1634,7 +1634,7 @@ function sp_cu_remove_project(){
 			}
 			
 			
-			if( in_array( $r[$i]['pid'],$current_user_projects)){
+			if( in_array( $r[$i]['pid'],$current_user_projects)  or   $r[$i]['pid'] == 0){
 		    echo '<div class="dlg_cdm_thumbnail_folder">
 
 			<div class="dlg_cdm_thumbnail_image">
