@@ -1121,9 +1121,11 @@ echo '
 
 										ORDER by name";
 							
-						
+					  $r_projects_query = apply_filters('sp_cdm_project_query_final', $r_projects_query);		
 						
 		if(get_option('sp_cu_release_the_kraken') == 1){
+			
+			
 								unset($r_projects_query);								
 								$r_projects_query =	 "SELECT 										 
 													" . $wpdb->prefix . "sp_cu_project.id,
@@ -1140,14 +1142,16 @@ echo '
 										
 										" . $search_project . " ORDER by name
 ";
+
+
 		}
 								
 						
-		  $r_projects_query = apply_filters('sp_cdm_project_query_final', $r_projects_query);
+	
 
 		   $r_projects = $wpdb->get_results($r_projects_query, ARRAY_A);
         }
-	
+		
 		
 		if($_GET['pid'] == 'drafts'){
 		unset($r_projects);
@@ -1452,7 +1456,7 @@ function sp_cu_remove_project(){
 
 	    if (count($r_projects) > 0) {
             for ($i = 0; $i < count($r_projects); $i++) {
-                if ($r_projects[$i]['project_name'] != "" && in_array( $r_projects[$i]['pid'],$current_user_projects) ) {
+                if ($r_projects[$i]['project_name'] != "" && in_array( $r_projects[$i]['pid'],$current_user_projects) or get_option('sp_cu_release_the_kraken') == 1) {
                   
 					
 
