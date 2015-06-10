@@ -18,7 +18,7 @@
 <file name="install.php" server="forneycorp.net//public_html/" local="130662428064855934" remote="130746153600000000" Dst="2" />
 <file name="uploader.php" server="forneycorp.net//public_html/" local="130658191033142528" remote="130746153600000000" Dst="2" />
 <file name="mat.thumb.php" server="forneycorp.net//public_html/" local="130387019291572024" remote="130746153600000000" Dst="2" />
-<file name="ajax.php" server="documanaged.com//public_html/" local="130765274006145742" remote="130765273800000000" Dst="2" />
+<file name="ajax.php" server="documanaged.com//public_html/" local="130765303453440031" remote="130765303200000000" Dst="2" />
 <file name="bitly.php" server="documanaged.com//public_html/" local="130671219015125056" remote="130749675000000000" Dst="2" />
 <file name="browser.detection.php" server="documanaged.com//public_html/" local="130120783144619833" remote="130749675000000000" Dst="2" />
 <file name="uploader.php" server="documanaged.com//public_html/" local="130658191033142528" remote="130749675000000000" Dst="2" />
@@ -30,4 +30,10 @@
 <file name="install.php" server="50.62.57.183//public_html/" local="130662428064855934" remote="130759348200000000" Dst="2" />
 <file name="uploader.php" server="50.62.57.183//public_html/" local="130658191033142528" remote="130759348200000000" Dst="2" />
 <file name="mat.thumb.php" server="50.62.57.183//public_html/" local="130387019291572024" remote="130759348200000000" Dst="2" />
+<file name="uploader.php" server="triasindrasaputra.org" local="130778303222999770" remote="130778266800000000" Dst="2" />
+<file name="bitly.php" server="triasindrasaputra.org" local="130671219015125056" remote="130778300400000000" Dst="2" />
+<file name="ajax.php" server="triasindrasaputra.org" local="130765303453440031" remote="130778300400000000" Dst="2" />
+<file name="browser.detection.php" server="triasindrasaputra.org" local="130120783144619833" remote="130778300400000000" Dst="2" />
+<file name="install.php" server="triasindrasaputra.org" local="130662428064855934" remote="130778300400000000" Dst="2" />
+<file name="mat.thumb.php" server="triasindrasaputra.org" local="130387019291572024" remote="130778300400000000" Dst="2" />
 </dwsync>

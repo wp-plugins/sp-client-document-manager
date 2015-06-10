@@ -4,11 +4,11 @@ Plugin Name: SP Project & Document Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business manage documents and projects with permissions in an easy to use interface.
 Author: smartypants
-Version: 2.5.7.0
+Version: 2.5.7.1
 Author URI: http://smartypantsplugins.com
 */
 global $sp_client_upload;
-$sp_client_upload = "2.5.7.0";
+$sp_client_upload = "2.5.7.1";
 function sp_cdm_language_init()
 {
     load_plugin_textdomain('sp-cdm', false, dirname(plugin_basename(__FILE__)) . '/languages/');
@@ -73,10 +73,21 @@ require_once '' . dirname(__FILE__) . '/functions.php';
 require_once '' . dirname(__FILE__) . '/shortcode.php';
 require_once '' . dirname(__FILE__) . '/admin/fileview.php';
 require_once '' . dirname(__FILE__) . '/admin/settings.php';
+
+function sp_js_vars(){
+		
+		$vars = array('ajax_url' =>	SP_CDM_PLUGIN_URL.'ajax.php');
+		$vars = apply_filters('sp_cdm/javascript_vars',$vars);
+		return $vars;	
+}
 function sp_client_upload_init()
 {
     wp_enqueue_script('jquery');
-    wp_enqueue_script('smUpload', plugins_url('upload.js', __FILE__),array('jquery','jquery-ui-core','jquery-ui-dialog','jquery-ui-button','jquery-cookie'));
+ 
+	wp_register_script( 'smUpload', plugins_url('upload.js', __FILE__),array('jquery','jquery-ui-core','jquery-ui-dialog','jquery-ui-button','jquery-cookie'));
+	wp_localize_script( 'smUpload', 'sp_vars',sp_js_vars() );
+	wp_enqueue_script( 'smUpload' );
+
     wp_enqueue_script('jquery-ui-core');
     wp_enqueue_script('jquery-ui-dialog');
     wp_enqueue_script('jquery-ui-tabs');
@@ -135,7 +146,10 @@ function sp_client_upload_admin_init()
 	
 	
 	wp_enqueue_script('jquery');
-    wp_enqueue_script('smUpload', plugins_url('upload.js', __FILE__),array('jquery','jquery-ui-core','jquery-ui-dialog','jquery-ui-button','jquery-cookie'));
+    	wp_register_script( 'smUpload', plugins_url('upload.js', __FILE__),array('jquery','jquery-ui-core','jquery-ui-dialog','jquery-ui-button','jquery-cookie'));
+	wp_localize_script( 'smUpload', 'sp_vars',sp_js_vars() );
+	wp_enqueue_script( 'smUpload' );
+
     wp_enqueue_script('jquery-ui-core');
     wp_enqueue_script('jquery-ui-dialog');
     wp_enqueue_script('jquery-ui-tabs');

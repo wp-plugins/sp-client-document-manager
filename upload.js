@@ -10,7 +10,7 @@ if(!(window.console && console.log)) {
 
 function cdm_refresh_file_view(fid){
 	jQuery(".view-file-content").empty();
-	 jQuery(".view-file-content").load(jQuery('#sp_cu_ajax_url').val()  + "?function=view-file&id=" + fid);
+	 jQuery(".view-file-content").load(sp_vars.ajax_url  + "?function=view-file&id=" + fid);
 }
 
 function cdm_check_file_perms(pid){
@@ -20,7 +20,7 @@ function cdm_check_file_perms(pid){
 
 			   type: "POST",
 
-			   url: jQuery('#sp_cu_ajax_url').val() + '?function=check-file-permissions&pid='+ pid ,			  
+			   url: sp_vars.ajax_url + '?function=check-file-permissions&pid='+ pid ,			  
 
 			   success: function(msg){
 				  // alert(msg);
@@ -44,7 +44,7 @@ function cdm_check_folder_perms(pid){
 
 			   type: "POST",
 
-			   url: jQuery('#sp_cu_ajax_url').val() + '?function=check-folder-permissions&pid='+ pid ,			  
+			   url: sp_vars.ajax_url + '?function=check-folder-permissions&pid='+ pid ,			  
 
 			   success: function(msg){
 				  
@@ -69,7 +69,7 @@ function sp_cu_reload_all_projects(context_folder_pid){
 
 			   type: "POST",
 
-			   url: jQuery('#sp_cu_ajax_url').val() + '?function=reload-project-dropdown&pid='+ context_folder_pid,			  
+			   url: sp_vars.ajax_url + '?function=reload-project-dropdown&pid='+ context_folder_pid,			  
 
 			   success: function(msg){
 

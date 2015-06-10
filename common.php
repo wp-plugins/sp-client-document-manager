@@ -1,6 +1,31 @@
 <?php
 
-
+if(!function_exists('sp_share_space_members')){
+	
+	
+	function sp_share_space_members_file($file_uid){
+		global $wpdb,$current_user;
+		
+			$r = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_groups_assign WHERE  uid = '" . $file_uid . "'", ARRAY_A);
+	
+		for($i=0; $i<count($r ); $i++){
+		
+				
+			$r_check = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu_groups_assign WHERE  gid = '" . $r[$i]['gid'] . "'", ARRAY_A);
+			
+			for($i=0; $i<count($r_check ); $i++){
+				$ids[] =$r_check [$i]['uid'];
+			}
+		}
+		if(in_array($current_user->ID,$ids)){
+		return true;
+		}else{
+		return false;	
+		}
+		
+	}
+	
+}
 	function sp_cdm_file_upload_rename($filename,$uid){
 		
 		

@@ -687,7 +687,7 @@ jQuery(document).ready(function() {
                 #$html .= '<p style="color:red">' . __("Please upload a file!", "sp-cdm") . '</p>';
             }
         }
-		do_action('sp_cdm_bottom_uploader_page');
+
         echo $html;
 		
 		
@@ -767,7 +767,7 @@ jQuery(document).ready(function() {
             }
 				$html .= apply_filters('sp_cdm_upload_view',$upload_view,$overide_uid );
 				$html = apply_filters('sp_cdm_upload_bottom',$html);
-				
+						do_action('sp_cdm_bottom_uploader_page');
 		
         } else {
             return '<script type="text/javascript">
