@@ -459,8 +459,9 @@ function cdm_file_permissions($pid){
 							  if(class_exists('sp_cdm_groups_addon_projects')){
 							  //check roles permission
 							    $folder_perm_roles =sp_cdm_groups_addon_projects::get_permissions('' .$sp_cdm_groups_perm->namesake . '_role_permission_add_' . $pid . '');
+								#print_r(  $folder_perm_roles);
 								$user_roles = $current_user->roles;
-							
+							#	print_r($user_roles);
 	 			 				 if(count($user_roles) > 0){
 										   foreach ($user_roles as $key =>$role) {
 											 
@@ -470,7 +471,7 @@ function cdm_file_permissions($pid){
 											  
 										   }
 									   }
-	 							
+	 						
 	 		  				//check to see if user is part of a buddy press group that has access to this folder
 							
 								

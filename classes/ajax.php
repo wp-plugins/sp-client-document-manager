@@ -982,6 +982,7 @@ echo '
 			$file_link =  'cdmViewFile(' . $r[$i]['id'] . ')';	
 			}
 			if(cdm_file_permissions($r[$i]['pid']) == 1){
+			$file_link = apply_filters('spcdm/file_list/link', $file_link, $r[$i]);
 			echo '
 				<td class="cdm_file_icon ext_' . $ext . '" onclick="cdmViewFile(' . $r[$i]['id'] . ')"></td>
 
@@ -1003,6 +1004,12 @@ echo '
     function thumbnails()
     {
     global $wpdb, $current_user;
+	
+			$back_image = '' . SP_CDM_PLUGIN_URL . 'images/my_projects_folder.png';
+			$back_image = apply_filters('spcdm/files/images/back_button', $back_image);
+			$folder_image = '' . SP_CDM_PLUGIN_URL . 'images/my_projects_folder.png';
+				$folder_image = apply_filters('spcdm/files/images/folder_button', $folder_image);
+	
          if (function_exists('cdmFindGroups')) {
             $find_groups = cdmFindGroups($_GET['uid'], 1);
         }
@@ -1424,12 +1431,12 @@ function sp_cu_remove_project(){
 									 
           
 			do_action('spdm_file_list_column_before_folder_back');
-		
+			
 	 echo '
 
 				<div class="dlg_cdm_thumbnail_folder">
 
-				<a href="javascript:sp_cdm_load_project(' . $query_project[0]['parent'] . ')"><img src="' . SP_CDM_PLUGIN_URL . 'images/my_projects_folder.png">
+				<a href="javascript:sp_cdm_load_project(' . $query_project[0]['parent'] . ')"><img src="'.$back_image.'">
 
 				<div class="dlg_cdm_thumb_title">
 
@@ -1452,7 +1459,7 @@ function sp_cu_remove_project(){
 	
 	
 		$r_projects = apply_filters('sp_cdm_project_array_filter', $r_projects);
-		
+	
 
 	    if (count($r_projects) > 0) {
             for ($i = 0; $i < count($r_projects); $i++) {
@@ -1466,7 +1473,7 @@ function sp_cu_remove_project(){
 
 		<div class="dlg_cdm_thumbnail_folder">
 
-				<a href="javascript:sp_cdm_load_project(' . $r_projects[$i]['pid'] . ')"><img src="' . SP_CDM_PLUGIN_URL . 'images/my_projects_folder.png">
+				<a href="javascript:sp_cdm_load_project(' . $r_projects[$i]['pid'] . ')"><img src="'.$folder_image .'">
 
 				<div class="dlg_cdm_thumb_title">
 
@@ -1639,6 +1646,7 @@ function sp_cu_remove_project(){
 			
 			
 			if( in_array( $r[$i]['pid'],$current_user_projects)  or   $r[$i]['pid'] == 0 or get_option('sp_cu_release_the_kraken') == 1){
+		  $file_link = apply_filters('spcdm/file_list/link', $file_link, $r[$i]);
 		    echo '<div class="dlg_cdm_thumbnail_folder">
 
 			<div class="dlg_cdm_thumbnail_image">
