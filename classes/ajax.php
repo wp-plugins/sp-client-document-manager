@@ -1673,23 +1673,136 @@ function sp_cu_remove_project(){
 	
 	
     }
+	
+function sub_folders($id,$main,$zip){
+	 global $wpdb, $current_user;
+
+	
+	$folders   = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project where parent = %d", $id), ARRAY_A);
+
+	#echo "SELECT *  FROM " . $wpdb->prefix . "sp_cu_project where parent = $id  ";
+		#print_r($folders);
+	if(count($folders) > 0){
+			
+			 for ($j = 0; $j < count($folders); $j++) {
+				$dir = $this->get_folder_structure($folders[$j]['id']);
+			 $zip->addDirectory($dir);
+			$main =   $dir;
+				
+						$r =  $this->folder_files($folders[$j]['id']);
+						//	print_r($r);
+					 for ($i = 0; $i < count($r); $i++) {
+						
+						 $dir         = '' . SP_CDM_UPLOADS_DIR . '' . $r[$i]['uid'] . '/';
+  #   echo $main.'/'.$r[$i]['file'];
+							 $zip->addFile(file_get_contents($dir . $r[$i]['file']), $main.''.$r[$i]['file'], filectime($dir . $r[$i]['file']));	 
+						 
+						 unset($dir);
+						 
+					
+						
+						 }
+						 	 $this->sub_folders($folders[$j]['id'],$main,$zip);
+			
+		}
+				
+		
+	}
+	
+	
+}
+	function folder_files($id){
+		global $wpdb, $current_user;
+		
+		$r_project   = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu where pid = %d", $id), ARRAY_A);
+		
+		return $r_project;
+		
+	}
+	function folder_name($id){
+		global $wpdb, $current_user;
+		$r_project   = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project where id = %d", $id), ARRAY_A);
+		
+		return stripslashes($r_project[0]['name']);
+	}
+function get_folder_structure($pid){
+	$array =  array_reverse($this->get_structure($pid));
+	
+	
+	foreach($array as $id =>$name){
+		
+	$folder .= ''.$name.'/';	
+	}
+	return $folder;
+}
+function get_structure($pid,$folder_structure = array()){
+	 global $wpdb, $current_user;
+	
+	$r  = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project where id = %d", $pid), ARRAY_A);
+	$folder_structure[$r[0]['id']] = $this->folder_name($r[0]['id']);
+	if($r[0]['parent'] == 0){
+	$folder_structure[$r[0]['id']] = $this->folder_name($r[0]['id']);
+	}else{
+		
+		$s  = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project where id = %d",$r[0]['parent']), ARRAY_A);
+		$folder_structure[$s[0]['id']] = $this->folder_name($s[0]['id']);
+		$folder_structure = $this->get_structure($r[0]['parent'],$folder_structure);
+		
+			
+		
+				
+	}
+	
+
+	return $folder_structure;
+}
     function download_project()
     {
         global $wpdb, $current_user;
-        $user_ID     = $_GET['id'];
-        $r           = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where pid = %d order by date desc,",$user_ID ), ARRAY_A);
-        $r_project   = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project where id = %d  ",$user_ID ), ARRAY_A);
-        $return_file = "" . preg_replace('/[^\w\d_ -]/si', '', stripslashes($r_project[0]['name'])) . ".zip";
-        $zip         = new Zip();
-        $dir         = '' . SP_CDM_UPLOADS_DIR . '' . $r_project[0]['uid'] . '/';
-        $path        = '' . SP_CDM_UPLOADS_DIR_URL . '' . $r_project[0]['uid'] . '/';
-        //@unlink($dir.$return_file);
-        for ($i = 0; $i < count($r); $i++) {
-            $zip->addFile(file_get_contents($dir . $r[$i]['file']), $r[$i]['file'], filectime($dir . $r[$i]['file']));
-        }
+        $pid     = $_GET['id'];
+		
+			$zip         = new Zip();
+		
+		
+		
+		$folders   = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project where id = %d",$pid), ARRAY_A);
+		$zip_dir = "" . SP_CDM_UPLOADS_DIR."".AUTH_KEY."/";
+		$zip_path        = '' . SP_CDM_UPLOADS_DIR_URL . '' . AUTH_KEY. '/';
+		 if (!is_dir($zip_dir)) {
+            mkdir($zip_dir, 0777);
+      }
+		 $return_file = "" . preg_replace('/[^\w\d_ -]/si', '', sanitize_title($folders[0]['name'])) . "-".time().".zip";
+	
+	#echo "SELECT *  FROM " . $wpdb->prefix . "sp_cu_project where id  IN(".$folders_id.") order by name ";
+	#print_r($folders);
+	 for ($j = 0; $j < count($folders); $j++) {
+				
+			 $zip->addDirectory($this->folder_name($folders[$j]['id']));
+			 			
+			  $r =  $this->folder_files($folders[$j]['id']);
+			
+					 for ($i = 0; $i < count($r); $i++) {
+						
+						 $dir         = '' . SP_CDM_UPLOADS_DIR . '' . $r[$i]['uid'] . '/';
+    
+						 $zip->addFile(file_get_contents($dir . $r[$i]['file']), $this->folder_name($folders[$j]['id']).'/'.$r[$i]['file'], filectime($dir . $r[$i]['file']));	 
+						 
+						 unset($dir);
+						 
+						
+						
+						 }
+		 $this->sub_folders($folders[$j]['id'],$this->folder_name($folders[$j]['id']),$zip);				 
+			
+		}
+		
+		
+		
         $zip->finalize(); // as we are not using getZipData or getZipFile, we need to call finalize ourselves.
-        $zip->setZipFile($dir . $return_file);
-        header("Location: " . $path . $return_file . "");
+        $zip->setZipFile($zip_dir . $return_file);
+
+        header("Location: " . $zip_path . $return_file . "");
+		
     }
     function download_archive()
     {

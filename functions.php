@@ -1,4 +1,34 @@
 <?php
+
+
+register_activation_hook(__FILE__, 'sp_zip_cleanup_cron_activation');
+register_deactivation_hook(__FILE__, 'sp_zip_cleanup_cron_deactivation');
+if(get_option('sp_zip_cleanup_cron') == false){
+	add_action('init','sp_zip_cleanup_cron_activation');
+	update_option('sp_zip_cleanup_cron',1);
+}
+add_action('sp_zip_cleanup_cron', 'sp_zip_cleanup_cron_process');
+
+
+function sp_zip_cleanup_cron_deactivation() {
+	wp_clear_scheduled_hook('sp_zip_cleanup_cron');
+}
+function sp_zip_cleanup_cron_activation() {
+	wp_schedule_event(time(), 'twicedaily', 'sp_zip_cleanup_cron');
+}
+
+function sp_zip_cleanup_cron_process() {
+	
+$zip_dir = "" . SP_CDM_UPLOADS_DIR."".AUTH_KEY."/";	
+	
+$files = glob(''.$zip_dir.'*'); // get all file names
+foreach($files as $file){ // iterate files
+  if(is_file($file))
+    unlink($file); // delete file
+}
+}
+
+
 if (!function_exists('sp_client_upload_settings')) {
 	function sp_cdm_remove_accents($string) {
     if ( !preg_match('/[\x80-\xff]/', $string) )
