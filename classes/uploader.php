@@ -80,13 +80,13 @@ class cdm_uploader{
 		echo '<script type="text/javascript">
 			
 			function cdmOpenModal(name){
-				
+				jQuery(".cdm-modal").remodal({ hashTracking: false});	
 			  var inst = jQuery.remodal.lookup[jQuery("[data-remodal-id=" + name + "]").data("remodal")];
 				inst.open();	
 				
 			}
 			function cdmCloseModal(name){
-				
+				jQuery(".cdm-modal").remodal({ hashTracking: false});	
 			  var inst = jQuery.remodal.lookup[jQuery("[data-remodal-id=" + name + "]").data("remodal")];
 				inst.close();	
 				
@@ -114,14 +114,14 @@ class cdm_uploader{
 				jQuery(".view-file-content").empty();
 				
 				 var url = "'.SP_CDM_PLUGIN_URL.'ajax.php?function=view-file&id=" + file;
-			  jQuery(".cdm-modal").remodal({ hashTracking: false});	
+			 
 			
 				
 				 jQuery.get(url, function (data) {
 				 jQuery(".view-file-content").html(data);
 						
 				
-				
+				 jQuery(".cdm-modal").remodal({ hashTracking: false});	
 				 var inst = jQuery.remodal.lookup[jQuery("[data-remodal-id=file]").data("remodal")];
 				 inst.open();
 				 

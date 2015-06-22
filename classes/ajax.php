@@ -28,6 +28,7 @@ class spdm_ajax
 		
         
 		global $wpdb, $current_user, $cdm_comments, $cdm_google, $cdm_log;
+		if ( is_user_logged_in() ) 
         $file_types = array();
 		$r = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where id = %d order by date desc", $_GET['id']), ARRAY_A);
 			$ext = substr(strrchr($r[0]['file'], '.'), 1);
@@ -376,8 +377,9 @@ $info_right_column  .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$
     }
     function delete_file($file_id = NULL)
     {
-        global $wpdb, $current_user;
 		
+        global $wpdb, $current_user;
+		if ( is_user_logged_in() ) 
 		if($file_id != NULL){
 		$file_id = $file_id;	
 		}else{
@@ -404,6 +406,7 @@ $info_right_column  .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$
     function get_file_info()
     {
         global $wpdb, $current_user;
+		if ( is_user_logged_in() ) 
         header('Cache-Control: no-cache, must-revalidate');
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
         header('Content-type: application/json');
@@ -418,7 +421,7 @@ $info_right_column  .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$
     function remove_cat($project_id= NULL)
     {
         global $wpdb, $current_user;
-		
+		if ( is_user_logged_in() ) 
 		if($project_id != NULL){
 		$project_id = $project_id;	
 		}else{
@@ -459,7 +462,9 @@ $info_right_column  .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$
     }
     function save_cat()
     {
+		
         global $wpdb, $current_user;
+		if ( is_user_logged_in() ) 
         $insert['name'] = $_POST['name'];
         if ($_POST['id'] != "") {
             $where['id'] = $_POST['id'];
@@ -478,6 +483,7 @@ $info_right_column  .= apply_filters('sp_cdm_file_view_info', $extra_file_info,$
     function file_list()
     {
         global $wpdb, $current_user;
+		if ( is_user_logged_in() ) 
          if (function_exists('cdmFindGroups')) {
             $find_groups = cdmFindGroups($_GET['uid'], 1);
         }
@@ -1004,7 +1010,7 @@ echo '
     function thumbnails()
     {
     global $wpdb, $current_user;
-	
+	if ( is_user_logged_in() ) 
 			$back_image = '' . SP_CDM_PLUGIN_URL . 'images/my_projects_folder.png';
 			$back_image = apply_filters('spcdm/files/images/back_button', $back_image);
 			$folder_image = '' . SP_CDM_PLUGIN_URL . 'images/my_projects_folder.png';
@@ -1676,7 +1682,7 @@ function sp_cu_remove_project(){
 	
 function sub_folders($id,$main,$zip){
 	 global $wpdb, $current_user;
-
+if ( is_user_logged_in() ) 
 	
 	$folders   = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project where parent = %d", $id), ARRAY_A);
 
@@ -1695,7 +1701,7 @@ function sub_folders($id,$main,$zip){
 						
 						 $dir         = '' . SP_CDM_UPLOADS_DIR . '' . $r[$i]['uid'] . '/';
   #   echo $main.'/'.$r[$i]['file'];
-							 $zip->addFile(file_get_contents($dir . $r[$i]['file']), $main.''.$r[$i]['file'], filectime($dir . $r[$i]['file']));	 
+							 $zip->addFile($this->get_file($dir . $r[$i]['file']), $main.''.$r[$i]['file'], filectime($dir . $r[$i]['file']));	 
 						 
 						 unset($dir);
 						 
@@ -1713,7 +1719,7 @@ function sub_folders($id,$main,$zip){
 }
 	function folder_files($id){
 		global $wpdb, $current_user;
-		
+		if ( is_user_logged_in() ) 
 		$r_project   = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu where pid = %d", $id), ARRAY_A);
 		
 		return $r_project;
@@ -1721,11 +1727,15 @@ function sub_folders($id,$main,$zip){
 	}
 	function folder_name($id){
 		global $wpdb, $current_user;
+		if ( is_user_logged_in() ) 
 		$r_project   = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project where id = %d", $id), ARRAY_A);
 		
 		return stripslashes($r_project[0]['name']);
 	}
 function get_folder_structure($pid){
+	
+		global $wpdb, $current_user;
+		if ( is_user_logged_in() ) 
 	$array =  array_reverse($this->get_structure($pid));
 	
 	
@@ -1736,7 +1746,8 @@ function get_folder_structure($pid){
 	return $folder;
 }
 function get_structure($pid,$folder_structure = array()){
-	 global $wpdb, $current_user;
+		global $wpdb, $current_user;
+		if ( is_user_logged_in() ) 
 	
 	$r  = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project where id = %d", $pid), ARRAY_A);
 	$folder_structure[$r[0]['id']] = $this->folder_name($r[0]['id']);
@@ -1755,10 +1766,23 @@ function get_structure($pid,$folder_structure = array()){
 	
 
 	return $folder_structure;
-}
+}	
+	function get_file($file){
+		
+	$filename =$file;
+	$handle = fopen($filename, "r");
+	$contents = fread($handle, filesize($filename));
+	fclose($handle);	
+		return $contents;
+	}
     function download_project()
     {
-        global $wpdb, $current_user;
+		
+		
+		define('WP_MEMORY_LIMIT', '1024M');
+		ini_set('memory_limit','1024M');	
+      	global $wpdb, $current_user;
+		if ( is_user_logged_in() ) 
         $pid     = $_GET['id'];
 		
 			$zip         = new Zip();
@@ -1785,7 +1809,7 @@ function get_structure($pid,$folder_structure = array()){
 						
 						 $dir         = '' . SP_CDM_UPLOADS_DIR . '' . $r[$i]['uid'] . '/';
     
-						 $zip->addFile(file_get_contents($dir . $r[$i]['file']), $this->folder_name($folders[$j]['id']).'/'.$r[$i]['file'], filectime($dir . $r[$i]['file']));	 
+						 $zip->addFile($this->get_file($dir . $r[$i]['file']), $this->folder_name($folders[$j]['id']).'/'.$r[$i]['file'], filectime($dir . $r[$i]['file']));	 
 						 
 						 unset($dir);
 						 
@@ -1806,7 +1830,8 @@ function get_structure($pid,$folder_structure = array()){
     }
     function download_archive()
     {
-        global $wpdb, $current_user;
+       	global $wpdb, $current_user;
+		if ( is_user_logged_in() ) 
         $user_ID     = $_GET['id'];
         $dir         = '' . SP_CDM_UPLOADS_DIR . '' . $user_ID . '/';
         $path        = '' . SP_CDM_UPLOADS_DIR_URL . '' . $user_ID . '/';
