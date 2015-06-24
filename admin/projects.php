@@ -20,7 +20,7 @@ $selected = $r[0]['uid'];
 }
             if ($_GET['id'] != "") {
                 $r = $wpdb->get_results("SELECT  * FROM " . $wpdb->prefix . "sp_cu_project where id = '" . $_GET['id'] . "'  ", ARRAY_A);
-                echo '<input type="hidden" name="id" value="' . $r[0]['id'] . '">';
+                echo '<input type="hidden" name="id" value="' . $r[0]['id'] . '"><input type="hidden" name="old_id" value="' . $r[0]['id'] . '">';
          $selected = $r[0]['uid'];
 		 
 		    } //$_GET['id'] != ""
@@ -141,6 +141,37 @@ if($r[$i]['parent'] == 0 or class_exists('spdm_sub_projects')){
 			
 			return $html;
 		}
+		
+		function move_sub_folders($id,$uid){
+			global $wpdb;
+			 
+			 $projects = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project   where parent = %d",$id), ARRAY_A);
+			 
+			 if( $projects != false){
+			  for ($p = 0; $p < count( $projects); $p++) {
+			 $insert['uid']  = $uid;
+			 $where['id'] =  $projects[$p]['id'];
+			 $wpdb->update("" . $wpdb->prefix . "sp_cu_project", $insert, $where);
+                  
+                 
+					$r = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where pid = %d", $projects[$p]['id']), ARRAY_A);	
+					 if($r != false){
+						 for ($i = 0; $i < count($r); $i++) {
+							 if(file_exists('' . SP_CDM_UPLOADS_DIR . ''.$r[$i]['uid'].'/'.$r[$i]['file'].'')){
+								rename('' . SP_CDM_UPLOADS_DIR . ''.$r[$i]['uid'].'/'.$r[$i]['file'].'', '' . SP_CDM_UPLOADS_DIR . '' . $uid . '/'.$r[$i]['file'].'');
+							 }
+						 }
+					 }
+					
+					
+					$update['uid']        = $uid;
+                    $where_project['pid'] =  $projects[$p]['id'];
+                  
+				    $wpdb->update("" . $wpdb->prefix . "sp_cu", $update, $where_project);
+					$this->move_sub_folders(  $projects[$p]['id'],$uid);
+			  }
+			 }
+		}
         function view()
         {
             global $wpdb;
@@ -158,10 +189,25 @@ if($r[$i]['parent'] == 0 or class_exists('spdm_sub_projects')){
 			    if ($_POST['id'] != "") {
                     $where['id'] = $_POST['id'];
                     $wpdb->update("" . $wpdb->prefix . "sp_cu_project", $insert, $where);
-                    $update['uid']        = $_POST['uid'];
+                  
+                 
+					$r = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where pid = %d", $_POST['id']), ARRAY_A);	
+					 if($r != false){
+					 for ($i = 0; $i < count($r); $i++) {
+						 if(file_exists('' . SP_CDM_UPLOADS_DIR . ''.$r[$i]['uid'].'/'.$r[$i]['file'].'')){
+								rename('' . SP_CDM_UPLOADS_DIR . ''.$r[$i]['uid'].'/'.$r[$i]['file'].'', '' . SP_CDM_UPLOADS_DIR . '' . $_POST['uid'] . '/'.$r[$i]['file'].'');
+							 }
+						}
+					 }
+					
+					
+					$update['uid']        = $_POST['uid'];
                     $where_project['pid'] = $_POST['id'];
-                    $wpdb->update("" . $wpdb->prefix . "sp_cu", $update, $where_project);
-                    $insert_id = $_POST['id'];
+                  
+				    $wpdb->update("" . $wpdb->prefix . "sp_cu", $update, $where_project);
+					$this->move_sub_folders( $_POST['id'],$_POST['uid']);
+					$insert_id = $_POST['id'];
+					
 					do_action('sp_cdm_edit_project_update', $insert_id);
                 } else {
                     $wpdb->insert("" . $wpdb->prefix . "sp_cu_project", $insert);
