@@ -178,6 +178,10 @@ if($r[$i]['parent'] == 0 or class_exists('spdm_sub_projects')){
 			  echo '<h2>' . sp_cdm_folder_name(1) . '</h2>' . sp_client_upload_nav_menu() . '';
 			
             if ($_POST['save-project'] != "") {
+				
+				$old_project_details = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu_project   where id = %d", $_POST['id']), ARRAY_A);	
+				
+				
                 $insert['name'] = $_POST['project-name'];
                 $insert['uid']  = $_POST['uid'];
                if($_POST['parent'] != ''){
@@ -190,7 +194,14 @@ if($r[$i]['parent'] == 0 or class_exists('spdm_sub_projects')){
                     $where['id'] = $_POST['id'];
                     $wpdb->update("" . $wpdb->prefix . "sp_cu_project", $insert, $where);
                   
-                 
+				  #move files if ID is different
+                 if($old_project_details[0]['uid'] != $_POST['uid']){
+					 #make folder if it doesnt exist
+					  $dir = '' . SP_CDM_UPLOADS_DIR . '' . $_POST['uid'] . '/';
+						if (!is_dir($dir)) {
+							mkdir($dir, 0777);
+						}
+					#get all files in this folder and move them
 					$r = $wpdb->get_results($wpdb->prepare("SELECT *  FROM " . $wpdb->prefix . "sp_cu   where pid = %d", $_POST['id']), ARRAY_A);	
 					 if($r != false){
 					 for ($i = 0; $i < count($r); $i++) {
@@ -200,12 +211,16 @@ if($r[$i]['parent'] == 0 or class_exists('spdm_sub_projects')){
 						}
 					 }
 					
-					
+					#update the user id for files in this folder
 					$update['uid']        = $_POST['uid'];
-                    $where_project['pid'] = $_POST['id'];
-                  
+                    $where_project['pid'] = $_POST['id'];                  
 				    $wpdb->update("" . $wpdb->prefix . "sp_cu", $update, $where_project);
+					
+					#move all sub folders
 					$this->move_sub_folders( $_POST['id'],$_POST['uid']);
+					
+				 }
+					
 					$insert_id = $_POST['id'];
 					
 					do_action('sp_cdm_edit_project_update', $insert_id);
