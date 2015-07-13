@@ -301,15 +301,22 @@ function sp_cdm_link_to_file(){
 				
 			
 			$url = cdm_shortcode_url('fid='.$_GET['sp-cdm-link'].'');
-			if(get_option('sp_cu_dashboard_page') != ''){
-				$url = get_permalink(get_option('sp_cu_dashboard_page') );	
-				if ( get_option('permalink_structure') != '' ) { 	
-				$url = ''.$url.'?fid='.$_GET['sp-cdm-link'].''	;		
-				}else{				
-				$url = ''.$url.'&fid='.$_GET['sp-cdm-link'].''	;				
-				}
+			
+			if(get_option('sp_cu_dashboard_page') != '' && class_exists('sp_cdm_dashboard')){
+				$page = get_page(get_option('sp_cu_dashboard_page') );
+				 if ($page->post_status == 'publish') {
+				
+						$url = get_permalink(get_option('sp_cu_dashboard_page') );	
+						if ( get_option('permalink_structure') != '' ) { 	
+						$url = ''.$url.'?fid='.$_GET['sp-cdm-link'].''	;		
+						}else{				
+						$url = ''.$url.'&fid='.$_GET['sp-cdm-link'].''	;				
+						}
+				 }
 			}
 			$url = apply_filters('sp_cdm_before_link_redirect',$url);
+			
+		
 			wp_redirect($url);
 			
 	

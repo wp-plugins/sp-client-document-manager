@@ -4,11 +4,11 @@ Plugin Name: SP Project & Document Manager
 Plugin URI: http://smartypantsplugins.com/
 Description: A WordPress plug-in that allows your business manage documents and projects with permissions in an easy to use interface.
 Author: smartypants
-Version: 2.5.7.6
+Version: 2.5.7.7
 Author URI: http://smartypantsplugins.com
 */
 global $sp_client_upload;
-$sp_client_upload = "2.5.7.6";
+$sp_client_upload = "2.5.7.7";
 function sp_cdm_language_init()
 {
     load_plugin_textdomain('sp-cdm', false, dirname(plugin_basename(__FILE__)) . '/languages/');
@@ -114,21 +114,14 @@ function sp_client_upload_load_css()
 	global $sp_client_upload;
   
     if (get_option('sp_cu_jqueryui_theme') != 'none') {
-        if (get_option('sp_cu_jqueryui_theme') == '') {
-            $theme = 'smoothness';
-        } else {
-            $theme = get_option('sp_cu_jqueryui_theme');
-        }
-        if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-            wp_register_style('jquery-ui-css', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/' . $theme . '/jquery-ui.min.css');
-        } else {
-            wp_register_style('jquery-ui-css', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/' . $theme . '/jquery-ui.min.css');
-        }
+       
+        wp_register_style('jquery-ui-css', '//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.min.css');
+		wp_enqueue_style('jquery-ui-css');
     }
 	
 wp_enqueue_style('cdm-style', plugins_url('style.css', __FILE__), array(), $sp_client_upload);
 
-    wp_enqueue_style('jquery-ui-css');
+    
     //echo '<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" >';
 }
 
