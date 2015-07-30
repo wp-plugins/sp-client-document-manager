@@ -29,6 +29,7 @@
 #cdm_nav_buttons .sp_cdm_add_folder{ background-image:url(images/folder-add-icon.png);}
 #cdm_nav_buttons .sp_cdm_dropbox{ background-image:url(images/dropbox.png);}
 #cdm_nav_buttons .sp_cdm_refresh{ background-image:url(images/refresh-icon.png);}
+#cdm_nav_buttons .sp_cdm_logout{ background-image:url(images/logout.png);}
 .sp_cdm_error{padding:5px;margin:3px;border:1px dashed red; background-color:#ffd5d5;color:#000;}
 .sp_cdm_success{padding:5px;margin:3px;border:1px dashed green; background-color:#DFFCDA;color:green;}
 

@@ -230,6 +230,8 @@ add_filter('sp_cdm_upload_view','sp_cdm_show_folder_linked');
 function sp_cdm_show_file_linked($html){
 	global $wpdb;
 		$fid = $_GET['fid'];
+		
+	
 		if($fid != ''){
 		$fid = base64_decode($fid);
 		$r  = $wpdb->get_results("SELECT * FROM " . $wpdb->prefix . "sp_cu WHERE id = '" . $wpdb->escape($fid)  . "'", ARRAY_A);
@@ -258,13 +260,13 @@ add_filter('sp_cdm_upload_view','sp_cdm_show_file_linked');
 function sp_cdm_file_link($fid){
 			
 				
-		return ''.get_site_url().'/?sp-cdm-link='.base64_encode($fid).'';		
+		return ''.get_site_url().'/?sp-cdm-link='.base64_encode($fid).'&view=1';		
 			
 }
 function sp_cdm_folder_link($fid){
 			
 				
-		return ''.get_site_url().'/?cdm-f='.base64_encode($fid).'';		
+		return ''.get_site_url().'/?cdm-f='.base64_encode($fid).'&view=1';		
 			
 }
 
@@ -825,7 +827,7 @@ function sp_cdm_thumbnail($url,$w = NULL,$h= NULL){
 	}
 	$settings['crop'] = false;
 
-
+	
 			return bfi_thumb($url, $settings);
 }
 

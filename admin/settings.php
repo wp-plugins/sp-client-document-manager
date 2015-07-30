@@ -687,7 +687,10 @@ Having problems? <a href="admin.php?page=sp-client-document-manager-settings&for
  <td >Disable Folders</td><td>
  <input type="checkbox" name="sp_cdm_disable_features[base][disable_folders]"   value="1" ' . sp_client_upload_settings_checkbox($disable_features, 'base', 'disable_folders'). '></td>
  </tr>
- 
+  <tr>
+ <td >Disable Logout Button</td><td>
+ <input type="checkbox" name="sp_cdm_disable_features[base][disable_logout]"   value="1" ' . sp_client_upload_settings_checkbox($disable_features, 'base', 'disable_logout'). '></td>
+ </tr>
  ';
  
  do_action('sp_cdm_disable_features', $disable_features);

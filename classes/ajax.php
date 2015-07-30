@@ -245,6 +245,7 @@ jQuery(".viewFileTabs").responsiveTabs({
 		$info_left_column .= '
 <a ' . $target . ' href="' . SP_CDM_PLUGIN_URL . 'download.php?fid=' .base64_encode($r[0]['id'].'|'.$r[0]['date'].'|'.$r[0]['file']) . '" title="Download" style="margin-right:15px"  >
 
+
 ' . $img . '
 
 </a>
