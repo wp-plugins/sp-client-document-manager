@@ -752,7 +752,7 @@ jQuery(document).ready(function() {
                 $html .= '   <a href="javascript:cdm_ajax_search()"  class="sp_cdm_refresh">' . __("Refresh", "sp-cdm") . '</a> ';
             }
 			if(sp_cdm_is_featured_disabled('premium', 'file_sanitization') == false){
-			$html .= '   <a href="'. wp_logout_url( get_permalink() ).'"  class="sp_cdm_logout" >' . __("Logout", "sp-cdm") . '</a> ';
+			$html .= '   <a href="'. cdm_logout_url().'"  class="sp_cdm_logout" >' . __("Logout", "sp-cdm") . '</a> ';
 			}
 			$html .='<div style="clear:both"></div>';
 			

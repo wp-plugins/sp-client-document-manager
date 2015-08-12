@@ -3,8 +3,8 @@ Contributors: smartypants
 Donate link: http://smartypantsplugins.com/donate/
 Tags: document management, records manager, customer file manager, document manager, project management, file sharing, Dropbox importer, Google Drive importer, enterprise document control, Distribution, Retrieval & storage, Versioning, Productivity
 Requires at least: 3.5
-Tested up to: 4.2.3
-Stable tag: 2.5.7.8
+Tested up to: 4.2.4
+Stable tag: 2.5.7.9
 
 Project & Document Manager. file sharing & management tool to upload, share, track, group, distribute & organize any type of document.
 
@@ -24,9 +24,11 @@ Works with WordPress Multi Site!
 Login with:  user: test   password: test
 
 **Industries Served**
+
 * Healthcare, Banking & Finance, Legal, Education ,Consulting, Research firms Government, Architecture, Printers, Photographers, Manufacturing, Chemical, Distributors, Web Developers, Virtual offices, Media to name a few
 
 **Overall Features**
+
 * Enhanced file and document security
 * Ability to choose and upload multiple files
 * Delete uploaded documents
@@ -42,10 +44,12 @@ Login with:  user: test   password: test
 * Responsive
 
 **Client / Customers**
+
 * Clients upload files and Documents online to their own personal page
 * Clients can create or add to existing projects
 
 **Administrator Side Features**
+
 * Complete control on who can access specific files
 * Turn off ability for Clients to upload documents instantly.
 * Notification via email when a client uploads a file
@@ -96,7 +100,6 @@ Login with:  user: test   password: test
 * Dropbox integration to allow your users to import files directly from their dropbox
 * Google Drive Importer, supports multiple files
 * Add unlimited sub folders for better organizing
-* File importer, upload multiple files with a zip file.
 * Share projects with buddypress and wordpress roles!
 * AES Encryption to secure file data
 * Tasks and Reminders for files
@@ -249,7 +252,7 @@ The premium version relies on common functions to operate, please activate the F
 
 
 == Changelog ==
-= 2.5.7.5 =
+= 2.5.7.8 =
 
 * Added a log out button
 

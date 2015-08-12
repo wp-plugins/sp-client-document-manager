@@ -9,7 +9,18 @@ if(get_option('sp_zip_cleanup_cron') == false){
 }
 add_action('sp_zip_cleanup_cron', 'sp_zip_cleanup_cron_process');
 
-
+function cdm_logout_url(){
+		global $wp_query;
+		$post_id = $wp_query->post->ID;
+		
+	
+		
+	
+	$logout = wp_logout_url(  get_post_permalink($post_id ) );
+	$logout = apply_filters('spcdm/links/logout',$logout);
+	return $logout;
+	
+}
 function sp_zip_cleanup_cron_deactivation() {
 	wp_clear_scheduled_hook('sp_zip_cleanup_cron');
 }
