@@ -74,8 +74,6 @@ Login with:  user: test   password: test
 
 **Premium Features**
 
-
-**Overall Premium Features**
 * Mobile ready with a updated responsive layout
 * Add custom fields to your client upload form, Sort the fields, view them in the file view page or in admin
 * Search by tags
